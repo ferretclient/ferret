@@ -876,12 +876,16 @@ export const parseOpenApiCollection = (data, options = {}) => {
             );
           })
           .reduce((requests, [method, operationObject]) => {
-            const variants = Array.isArray(operationObject['x-ferret-variants']) ? operationObject['x-ferret-variants'] : [];
+            // Specs exported by Bruno carry the same variants under `x-bruno-variants`.
+            const variants = [operationObject['x-ferret-variants'], operationObject['x-bruno-variants']]
+              .filter(Array.isArray)
+              .flat();
             const operations = [operationObject, ...variants.filter((variant) => variant && typeof variant === 'object')];
 
             operations.forEach((operation) => {
               const operationObjectCleaned = { ...operation };
               delete operationObjectCleaned['x-ferret-variants'];
+              delete operationObjectCleaned['x-bruno-variants'];
               const mergedParams = mergeParams(pathItemParams, operationObjectCleaned.parameters || []);
 
               requests.push({

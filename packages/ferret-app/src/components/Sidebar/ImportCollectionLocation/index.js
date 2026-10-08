@@ -49,6 +49,8 @@ const getCollectionName = (format, rawData) => {
       return 'WSDL Collection';
     case 'ferret-zip':
       return rawData.collectionName || 'Ferret Collection';
+    case 'bruno-folder':
+      return rawData.collectionName || 'Bruno Collection';
     default:
       return 'Collection';
   }
@@ -84,7 +86,8 @@ const convertCollection = async (format, rawData, { groupingType, collectionForm
         collection = await processOpenCollection(rawData);
         break;
       case 'ferret-zip':
-        // ZIP doesn't need conversion
+      case 'bruno-folder':
+        // Copied and converted by the main process on import
         collection = rawData;
         break;
       default:
@@ -116,7 +119,8 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
   const optionsDropdownTippyRef = useRef();
   const isOpenApi = format === 'openapi';
   const isPostman = format === 'postman';
-  const isZipImport = format === 'ferret-zip';
+  // Collections that already exist as files are copied as-is; there is nothing to configure.
+  const isFileImport = format === 'ferret-zip' || format === 'bruno-folder';
   const isOpenApiFromUrl = isOpenApi && !!sourceUrl && !filePath;
   const isOpenApiFromFile = isOpenApi && !!filePath && !sourceUrl;
   const isSwagger2 = isOpenApi && rawData?.swagger && String(rawData.swagger).startsWith('2');
@@ -247,14 +251,14 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
   }, [inputRef]);
 
   const onSubmit = async () => {
-    if (isZipImport) {
+    if (isFileImport) {
       const errors = await formik.validateForm();
       if (Object.keys(errors).length > 0) {
         formik.setTouched({ collectionLocation: true });
         return;
       }
       const collectionLocation = formik.values.collectionLocation;
-      handleSubmit(rawData, collectionLocation, { format: collectionFormat, isZipImport: true });
+      handleSubmit(rawData, collectionLocation, { format: collectionFormat, isFileImport: true });
     } else {
       formik.handleSubmit();
     }
@@ -271,7 +275,7 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
           handleCancel={onClose}
           dataTestId="import-collection-location-modal"
           footerLeft={
-            !isZipImport ? (
+            !isFileImport ? (
               <div className="advanced-options flex">
                 <Dropdown onCreate={onOptionsDropdownCreate} icon={<ImportOptions />} placement="bottom-start">
                   <div
@@ -334,7 +338,7 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
                 </span>
               </div>
 
-              {showAdvancedOptions && !isZipImport && (
+              {showAdvancedOptions && !isFileImport && (
                 <div className="mt-4">
                   <label htmlFor="format" className="flex items-center font-medium">
                     File Format

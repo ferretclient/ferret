@@ -16,6 +16,7 @@ export { sortByNameThenSequence } from './collection';
 export { normalizeOpenApiSyncConfigs } from './openapi-sync';
 
 export { HTTP_SCRIPT_KEYS, GRPC_SCRIPT_KEYS, SCRIPT_TYPES } from './scripts';
+export { convertBrunoScript, convertBrunoAppCode } from './bruno';
 
 export { buildHar } from './generate-code/har';
 export type {

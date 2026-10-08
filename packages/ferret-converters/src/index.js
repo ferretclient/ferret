@@ -7,3 +7,4 @@ export { default as wsdlToFerret } from './wsdl/wsdl-to-ferret.js';
 export { default as postmanTranslation } from './postman/postman-translations.js';
 export { openCollectionToFerret } from './opencollection/opencollection-to-ferret.js';
 export { ferretToOpenCollection } from './opencollection/ferret-to-opencollection.js';
+export { brunoToFerret, isBrunoCollectionExport } from './bruno/bruno-to-ferret.js';

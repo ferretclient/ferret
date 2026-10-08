@@ -56,6 +56,8 @@ fer run users --env Local --reporter-html results.html
 
 Collections can be imported from Postman, Insomnia, OpenAPI, WSDL and OpenCollection files.
 
+Coming from Bruno? Import a Bruno collection folder, zip or JSON export and it is converted to Ferret: `bruno.json` becomes `ferret.json`, `.bru` files become `.fer`, and scripts using `bru.*` are rewritten to `fer.*`. The original Bruno folder is never modified.
+
 ### Privacy
 
 Ferret only connects to:

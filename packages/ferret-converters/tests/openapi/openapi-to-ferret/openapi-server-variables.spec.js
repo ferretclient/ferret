@@ -383,6 +383,28 @@ describe('x-ferret-variants import', () => {
     expect(requests.every((request) => !request.request['x-ferret-variants'])).toBe(true);
   });
 
+  it('should import variants from specs exported by Bruno (x-bruno-variants)', () => {
+    const spec = {
+      openapi: '3.0.0',
+      info: { title: 'Variant API', version: '1.0.0' },
+      servers: [{ url: 'https://api.example.com' }],
+      paths: {
+        '/users': {
+          get: {
+            'summary': 'Get active users',
+            'responses': { 200: { description: 'OK' } },
+            'x-bruno-variants': [{ summary: 'Get inactive users', responses: { 200: { description: 'OK' } } }]
+          }
+        }
+      }
+    };
+
+    const requests = openApiToFerret(spec).items.filter((item) => item.type === 'http-request');
+
+    expect(requests.map((request) => request.name)).toEqual(['Get active users', 'Get inactive users']);
+    expect(requests.every((request) => !request.request['x-bruno-variants'])).toBe(true);
+  });
+
   it('should import variant operation-level servers as request baseUrl vars', () => {
     const spec = {
       openapi: '3.0.0',

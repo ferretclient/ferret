@@ -83,7 +83,8 @@ const { getCertsAndProxyConfig } = require('./network/cert-utils');
 const collectionWatcher = require('../app/collection-watcher');
 const { transformFerretConfigBeforeSave, transformFerretConfigAfterRead } = require('../utils/transformFerretConfig');
 const { REQUEST_TYPES } = require('../utils/constants');
-const { findUniqueFolderName } = require('../utils/collection-import');
+const { findUniqueFolderName, openImportedCollectionDir } = require('../utils/collection-import');
+const { convertBrunoCollectionDir, importBrunoCollectionFolder } = require('../utils/bruno-import');
 const { renameEnvironmentExtendsReferences } = require('../utils/environments');
 const { saveSpecAndUpdateMetadata, cleanupSpecFilesForCollection } = require('./openapi-sync');
 const {
@@ -2653,17 +2654,16 @@ const registerRendererEventHandlers = (mainWindow, watcher) => {
       const zip = new AdmZip(zipFilePath);
       const entries = zip.getEntries().map((e) => e.entryName);
 
-      return entries.some(
-        (name) =>
-          name === 'ferret.json'
-          || name === 'opencollection.yml'
-          || /^[^/]+\/ferret\.json$/.test(name)
-          || /^[^/]+\/opencollection\.yml$/.test(name)
-      );
+      // ferret.json, bruno.json (converted on import) or opencollection.yml, at the root or one folder down
+      return entries.some((name) => /^(?:[^/]+\/)?(?:ferret\.json|bruno\.json|opencollection\.yml)$/.test(name));
     } catch {
       return false;
     }
   });
+
+  ipcMain.handle('renderer:import-bruno-collection-folder', (event, folderPath, collectionLocation) =>
+    importBrunoCollectionFolder(mainWindow, folderPath, collectionLocation)
+  );
 
   ipcMain.handle('renderer:import-collection-zip', async (event, zipFilePath, collectionLocation) => {
     try {
@@ -2716,65 +2716,12 @@ const registerRendererEventHandlers = (mainWindow, watcher) => {
           }
         }
 
-        const ferretJsonPath = path.join(collectionDir, 'ferret.json');
-        const openCollectionYmlPath = path.join(collectionDir, 'opencollection.yml');
-
-        if (!fs.existsSync(ferretJsonPath) && !fs.existsSync(openCollectionYmlPath)) {
-          throw new Error('Invalid collection: Neither ferret.json nor opencollection.yml found in the ZIP file');
-        }
-
-        // Ensure config files are not symlinks
-        if (fs.existsSync(ferretJsonPath) && fs.lstatSync(ferretJsonPath).isSymbolicLink()) {
-          throw new Error('Security error: ferret.json cannot be a symbolic link');
-        }
-        if (fs.existsSync(openCollectionYmlPath) && fs.lstatSync(openCollectionYmlPath).isSymbolicLink()) {
-          throw new Error('Security error: opencollection.yml cannot be a symbolic link');
-        }
-
-        let collectionName = 'Imported Collection';
-        let ferretConfig = { name: collectionName, version: '1', type: 'collection', ignore: ['node_modules', '.git'] };
-        if (fs.existsSync(openCollectionYmlPath)) {
-          try {
-            const content = fs.readFileSync(openCollectionYmlPath, 'utf8');
-            const parsed = parseCollection(content, { format: 'yml' });
-            ferretConfig = parsed.ferretConfig || ferretConfig;
-            collectionName = ferretConfig.name || collectionName;
-          } catch (e) {
-            console.error(`Error parsing opencollection.yml at ${openCollectionYmlPath}:`, e);
-          }
-        } else if (fs.existsSync(ferretJsonPath)) {
-          try {
-            ferretConfig = JSON.parse(fs.readFileSync(ferretJsonPath, 'utf8'));
-            collectionName = ferretConfig.name || collectionName;
-          } catch (e) {
-            console.error(`Error parsing ferret.json at ${ferretJsonPath}:`, e);
-          }
-        }
-
-        let sanitizedName = sanitizeName(collectionName);
-        if (!sanitizedName) {
-          sanitizedName = `untitled-${Date.now()}`;
-        }
-        let finalCollectionPath = path.join(collectionLocation, sanitizedName);
-        let counter = 1;
-        while (fs.existsSync(finalCollectionPath)) {
-          finalCollectionPath = path.join(collectionLocation, `${sanitizedName} (${counter})`);
-          counter++;
-        }
-
-        await fsExtra.move(collectionDir, finalCollectionPath);
+        // A Bruno zip holds bruno.json / .bru files; converting is a no-op for Ferret zips.
+        await convertBrunoCollectionDir(collectionDir);
+        const finalCollectionPath = await openImportedCollectionDir(collectionDir, collectionLocation, mainWindow);
         if (tempDir !== collectionDir) {
           await fsExtra.remove(tempDir).catch(() => { });
         }
-
-        const uid = generateUidBasedOnHash(finalCollectionPath);
-        ferretConfig = await transformFerretConfigAfterRead(ferretConfig, finalCollectionPath);
-        const { size, filesCount } = await getCollectionStats(finalCollectionPath);
-        ferretConfig.size = size;
-        ferretConfig.filesCount = filesCount;
-
-        mainWindow.webContents.send('main:collection-opened', finalCollectionPath, uid, ferretConfig);
-        ipcMain.emit('main:collection-opened', mainWindow, finalCollectionPath, uid, ferretConfig);
 
         return finalCollectionPath;
       } catch (error) {

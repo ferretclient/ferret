@@ -49,8 +49,8 @@ const processEnvironmentData = (data, fileName, filePath) => {
   const invalid = [];
 
   try {
-    // Handle new single-file format with environments array
-    if (data.info && data.info.type === 'ferret-environment' && Array.isArray(data.environments)) {
+    // Handle new single-file format with environments array (Bruno writes the same shape)
+    if (data.info && ['ferret-environment', 'bruno-environment'].includes(data.info.type) && Array.isArray(data.environments)) {
       data.environments.forEach((env, index) => {
         try {
           valid.push(validateFerretEnvironment(env, filePath, fileName));

@@ -3,11 +3,15 @@ import { normalizeEnvName } from 'utils/environments';
 export const IMPORT_STEPS = { UPLOAD: 'UPLOAD', REVIEW: 'REVIEW' };
 export const ENV_STATUS = { NEW: 'new', DUPLICATE: 'duplicate', INVALID: 'invalid' };
 
+// Bruno writes the same environment export format under its own type name.
+const FERRET_ENVIRONMENT_TYPES = ['ferret-environment', 'bruno-environment'];
+const isFerretEnvironmentExport = (data) => FERRET_ENVIRONMENT_TYPES.includes(data?.info?.type);
+
 export const detectEnvironmentFormat = (data) => {
-  if (data.info && data.info.type === 'ferret-environment') {
+  if (isFerretEnvironmentExport(data)) {
     return 'ferret';
   } else if (Array.isArray(data)) {
-    return data.some((env) => env.info && env.info.type === 'ferret-environment') ? 'ferret' : 'postman';
+    return data.some(isFerretEnvironmentExport) ? 'ferret' : 'postman';
   } else if (data.id && data.values) {
     return 'postman';
   }

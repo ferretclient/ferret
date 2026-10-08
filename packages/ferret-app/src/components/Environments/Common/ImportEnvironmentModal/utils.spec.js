@@ -1,6 +1,7 @@
 import { coerceEnvColor, coerceEnvName } from 'utils/environments';
 import {
   buildReviewItems,
+  detectEnvironmentFormat,
   ENV_STATUS,
   initialResolutions,
   initialSelection,
@@ -137,5 +138,18 @@ describe('initialSelection / initialResolutions', () => {
 
   it('defaults every conflict to landing as a new environment', () => {
     expect([...initialResolutions(items)]).toEqual([['env-1', RESOLUTION_TYPES.CREATE_NEW]]);
+  });
+});
+
+describe('detectEnvironmentFormat', () => {
+  it('treats Ferret and Bruno environment exports as the native format', () => {
+    expect(detectEnvironmentFormat({ info: { type: 'ferret-environment' }, environments: [] })).toBe('ferret');
+    expect(detectEnvironmentFormat({ info: { type: 'bruno-environment' }, environments: [] })).toBe('ferret');
+    expect(detectEnvironmentFormat([{ name: 'dev', variables: [], info: { type: 'bruno-environment' } }])).toBe('ferret');
+  });
+
+  it('still recognises Postman environments', () => {
+    expect(detectEnvironmentFormat({ id: 'abc', values: [] })).toBe('postman');
+    expect(detectEnvironmentFormat([{ id: 'abc', values: [] }])).toBe('postman');
   });
 });

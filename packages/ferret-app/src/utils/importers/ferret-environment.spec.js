@@ -266,3 +266,20 @@ describe('importFerretEnvironment — environment colour', () => {
     ]);
   });
 });
+
+describe('importFerretEnvironment — Bruno exports', () => {
+  it('imports every environment of a multi-environment file exported by Bruno', () => {
+    const { valid: environments, invalid } = importFerretEnvironment([
+      parsedFile({
+        info: { type: 'bruno-environment', exportedUsing: 'Bruno/v2.0.0' },
+        environments: [
+          { name: 'dev', variables: [{ name: 'host', value: 'localhost', type: 'text', enabled: true, secret: false }] },
+          { name: 'prod', variables: [] }
+        ]
+      })
+    ]);
+
+    expect(invalid).toEqual([]);
+    expect(environments.map((env) => env.name)).toEqual(['dev', 'prod']);
+  });
+});

@@ -1,9 +1,18 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const fsExtra = require('fs-extra');
 const { ipcMain } = require('electron');
 const { sanitizeName, createDirectory, writeFile, safeWriteFileSync, getCollectionStats } = require('./filesystem');
 const { generateUidBasedOnHash, stringifyJson } = require('./common');
-const { stringifyRequestViaWorker, stringifyCollection, stringifyEnvironment, stringifyFolder, DEFAULT_COLLECTION_FORMAT } = require('@useferret/filestore');
+const { transformFerretConfigAfterRead } = require('./transformFerretConfig');
+const {
+  stringifyRequestViaWorker,
+  stringifyCollection,
+  stringifyEnvironment,
+  stringifyFolder,
+  parseCollection,
+  DEFAULT_COLLECTION_FORMAT
+} = require('@useferret/filestore');
 const { transformProxyConfig } = require('@useferret/requests/dist/cjs');
 
 /**
@@ -142,7 +151,73 @@ async function importCollection(collection, collectionLocation, mainWindow, uniq
   return { collectionPath, uid, ferretConfig };
 }
 
+/**
+ * Moves an already-extracted collection directory (holding ferret.json or opencollection.yml)
+ * into collectionLocation under a unique folder name, then opens it. Returns the final path.
+ */
+async function openImportedCollectionDir(collectionDir, collectionLocation, mainWindow) {
+  const ferretJsonPath = path.join(collectionDir, 'ferret.json');
+  const openCollectionYmlPath = path.join(collectionDir, 'opencollection.yml');
+
+  if (!fs.existsSync(ferretJsonPath) && !fs.existsSync(openCollectionYmlPath)) {
+    throw new Error('Invalid collection: Neither ferret.json nor opencollection.yml found');
+  }
+
+  // Ensure config files are not symlinks
+  if (fs.existsSync(ferretJsonPath) && fs.lstatSync(ferretJsonPath).isSymbolicLink()) {
+    throw new Error('Security error: ferret.json cannot be a symbolic link');
+  }
+  if (fs.existsSync(openCollectionYmlPath) && fs.lstatSync(openCollectionYmlPath).isSymbolicLink()) {
+    throw new Error('Security error: opencollection.yml cannot be a symbolic link');
+  }
+
+  let collectionName = 'Imported Collection';
+  let ferretConfig = { name: collectionName, version: '1', type: 'collection', ignore: ['node_modules', '.git'] };
+  if (fs.existsSync(openCollectionYmlPath)) {
+    try {
+      const content = fs.readFileSync(openCollectionYmlPath, 'utf8');
+      const parsed = parseCollection(content, { format: 'yml' });
+      ferretConfig = parsed.ferretConfig || ferretConfig;
+      collectionName = ferretConfig.name || collectionName;
+    } catch (e) {
+      console.error(`Error parsing opencollection.yml at ${openCollectionYmlPath}:`, e);
+    }
+  } else if (fs.existsSync(ferretJsonPath)) {
+    try {
+      ferretConfig = JSON.parse(fs.readFileSync(ferretJsonPath, 'utf8'));
+      collectionName = ferretConfig.name || collectionName;
+    } catch (e) {
+      console.error(`Error parsing ferret.json at ${ferretJsonPath}:`, e);
+    }
+  }
+
+  let sanitizedName = sanitizeName(collectionName);
+  if (!sanitizedName) {
+    sanitizedName = `untitled-${Date.now()}`;
+  }
+  let finalCollectionPath = path.join(collectionLocation, sanitizedName);
+  let counter = 1;
+  while (fs.existsSync(finalCollectionPath)) {
+    finalCollectionPath = path.join(collectionLocation, `${sanitizedName} (${counter})`);
+    counter++;
+  }
+
+  await fsExtra.move(collectionDir, finalCollectionPath);
+
+  const uid = generateUidBasedOnHash(finalCollectionPath);
+  ferretConfig = await transformFerretConfigAfterRead(ferretConfig, finalCollectionPath);
+  const { size, filesCount } = await getCollectionStats(finalCollectionPath);
+  ferretConfig.size = size;
+  ferretConfig.filesCount = filesCount;
+
+  mainWindow.webContents.send('main:collection-opened', finalCollectionPath, uid, ferretConfig);
+  ipcMain.emit('main:collection-opened', mainWindow, finalCollectionPath, uid, ferretConfig);
+
+  return finalCollectionPath;
+}
+
 module.exports = {
   importCollection,
-  findUniqueFolderName
+  findUniqueFolderName,
+  openImportedCollectionDir
 };

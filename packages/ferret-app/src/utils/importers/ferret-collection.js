@@ -1,6 +1,7 @@
 import { FerretError } from 'utils/common/error';
 import { validateSchema, transformItemsInCollection, updateUidsInCollection, hydrateSeqInCollection } from './common';
 import { transformExampleStatusInCollection } from '@useferret/common';
+import { brunoToFerret, isBrunoCollectionExport } from '@useferret/converters';
 
 const stripExportMetadata = (collection) => {
   delete collection.exportedAt;
@@ -10,7 +11,8 @@ const stripExportMetadata = (collection) => {
 
 export const processFerretCollection = async (jsonData) => {
   try {
-    let collection = stripExportMetadata(jsonData);
+    // Bruno exports share this shape; convert their config key and `bru` scripts first.
+    let collection = stripExportMetadata(isBrunoCollectionExport(jsonData) ? brunoToFerret(jsonData) : jsonData);
     collection = hydrateSeqInCollection(collection);
     collection = updateUidsInCollection(collection);
     collection = transformItemsInCollection(collection);

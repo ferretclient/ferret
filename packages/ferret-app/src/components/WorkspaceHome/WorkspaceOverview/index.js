@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { IconPlus, IconFolder, IconDownload } from '@tabler/icons';
-import { importCollection, importCollectionFromZip } from 'providers/ReduxStore/slices/collections/actions';
+import { importCollection, importCollectionFromFiles } from 'providers/ReduxStore/slices/collections/actions';
 import { setIsCreatingCollection, setIsOpeningCollection, toggleSidebarCollapse } from 'providers/ReduxStore/slices/app';
 import { setLocalStorageValue, SIDEBAR_COLLAPSED_KEY } from 'utils/common/localStorage';
 import toast from 'react-hot-toast';
@@ -78,8 +78,8 @@ const WorkspaceOverview = ({ workspace }) => {
   };
 
   const handleImportCollectionLocation = (convertedCollection, collectionLocation, options = {}) => {
-    const importAction = options.isZipImport
-      ? importCollectionFromZip(convertedCollection.zipFilePath, collectionLocation)
+    const importAction = options.isFileImport
+      ? importCollectionFromFiles(convertedCollection, collectionLocation)
       : importCollection(convertedCollection, collectionLocation, options);
 
     dispatch(importAction)

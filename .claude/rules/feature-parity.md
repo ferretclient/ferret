@@ -47,8 +47,12 @@ bugs to the shared logic, not the reporting surface.
 | AWS SigV4 | `ipc/network/awsv4auth-helper.js` | `runner/awsv4auth-helper.js` |
 
 - A new app runner option (tags, delay, bail) needs a `fer run` flag, or a stated reason.
-- Import: the app imports Postman, Insomnia, OpenAPI, WSDL and OpenCollection; `fer import`
-  (`commands/import.js`) only OpenAPI and WSDL. Changes to a shared converter affect both.
+- Import: the app imports Postman, Insomnia, OpenAPI, WSDL, OpenCollection and Bruno (JSON
+  exports, zips and collection folders); `fer import` (`commands/import.js`) only OpenAPI and WSDL.
+  Changes to a shared converter affect both. Bruno conversion is split by layer: script text in
+  `@useferret/common` (`convertBrunoScript`), single files in `@useferret/filestore`
+  (`convertBrunoFile`), JSON exports in `@useferret/converters` (`brunoToFerret`), and folders
+  and zips in `ferret-electron/src/utils/bruno-import.js`.
 - **Known-divergent by design.** The CLI has no preferences store (so no `resolveInheritedSettings`),
   no Electron window, no system-browser OAuth, and no `@useferret/schema` validation. Its runner
   handles only `REQUEST_ITEM_TYPES = ['http-request', 'graphql-request']`

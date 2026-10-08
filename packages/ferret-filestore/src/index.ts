@@ -170,6 +170,8 @@ export const parseDotEnv = (content: string): Record<string, string> => {
 };
 
 export { redactLargeFerTextBlocks, restoreRedactedBlocks };
+export { convertBrunoFile } from './bruno';
+export type { ConvertedFile } from './bruno';
 export type { RedactedBlock, RedactionResult } from './formats/fer/utils/redact-large-text-blocks';
 export { FerParserWorker };
 export * from './types';

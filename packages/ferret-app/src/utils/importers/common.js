@@ -89,9 +89,9 @@ export const updateUidsInCollection = (_collection) => {
 };
 
 export const filterItemsInCollection = (collection) => {
-  // this filters out the ferret.json item in older collection exports
+  // older Bruno exports include the collection's bruno.json as an item
   collection.items = filter(collection.items, (item) => {
-    if (item?.name === 'ferret' && item?.type === 'json') {
+    if (item?.name === 'bruno' && item?.type === 'json') {
       return false;
     }
     return true;

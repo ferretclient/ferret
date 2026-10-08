@@ -1,5 +1,9 @@
 import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { IconFileImport } from '@tabler/icons';
+import path from 'utils/common/path';
+import { existsSync } from 'utils/filesystem';
+import { browseDirectory } from 'providers/ReduxStore/slices/collections/actions';
 import { toastError } from 'utils/common/error';
 import jsyaml from 'js-yaml';
 import { isPostmanCollection } from 'utils/importers/postman-collection';
@@ -38,6 +42,7 @@ const FileTab = ({
   handleSubmit,
   setErrorMessage
 }) => {
+  const dispatch = useDispatch();
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef(null);
   const { theme } = useTheme();
@@ -69,6 +74,25 @@ const FileTab = ({
       setDragActive(true);
     } else if (e.type === 'dragleave') {
       setDragActive(false);
+    }
+  };
+
+  const handleBrowseBrunoFolder = async () => {
+    try {
+      const folderPath = await dispatch(browseDirectory());
+      if (!folderPath) return;
+
+      const [hasBrunoJson, hasOpenCollection] = await Promise.all([
+        existsSync(path.join(folderPath, 'bruno.json')),
+        existsSync(path.join(folderPath, 'opencollection.yml'))
+      ]);
+      if (!hasBrunoJson && !hasOpenCollection) {
+        throw new Error('This folder is not a Bruno collection: it has no bruno.json or opencollection.yml');
+      }
+
+      await handleSubmit({ rawData: { folderPath, collectionName: path.basename(folderPath) }, type: 'bruno-folder' });
+    } catch (err) {
+      toastError(err, 'Import Bruno collection failed');
     }
   };
 
@@ -274,7 +298,18 @@ const FileTab = ({
             </button>
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-            Supports Ferret, OpenCollection, Postman, Insomnia, OpenAPI 3.x / Swagger 2.0, WSDL, and ZIP formats
+            Supports Ferret, Bruno, OpenCollection, Postman, Insomnia, OpenAPI 3.x / Swagger 2.0, WSDL, and ZIP formats
+          </p>
+          <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-3">
+            Coming from Bruno?{' '}
+            <button
+              className="underline cursor-pointer"
+              onClick={handleBrowseBrunoFolder}
+              style={{ color: theme.textLink }}
+              data-testid="import-bruno-folder"
+            >
+              Import a Bruno collection folder
+            </button>
           </p>
         </div>
       </div>

@@ -3207,12 +3207,16 @@ export const importCollection = (collection, collectionLocation, options = {}) =
   });
 };
 
-export const importCollectionFromZip = (zipFilePath, collectionLocation) => async (dispatch, getState) => {
+// Imports a collection that already exists as files — a zip archive or a Bruno collection
+// folder. The main process copies it into collectionLocation, converting Bruno files on the way.
+export const importCollectionFromFiles = ({ zipFilePath, folderPath }, collectionLocation) => async (dispatch, getState) => {
   const { ipcRenderer } = window;
   const state = getState();
   const activeWorkspace = state.workspaces.workspaces.find((w) => w.uid === state.workspaces.activeWorkspaceUid);
 
-  const collectionPath = await ipcRenderer.invoke('renderer:import-collection-zip', zipFilePath, collectionLocation);
+  const collectionPath = zipFilePath
+    ? await ipcRenderer.invoke('renderer:import-collection-zip', zipFilePath, collectionLocation)
+    : await ipcRenderer.invoke('renderer:import-bruno-collection-folder', folderPath, collectionLocation);
 
   if (activeWorkspace && activeWorkspace.pathname && activeWorkspace.type !== 'default') {
     const collectionName = path.basename(collectionPath);
