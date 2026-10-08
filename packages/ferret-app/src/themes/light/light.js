@@ -1,10 +1,11 @@
 import { rgba } from 'polished';
 export const palette = {
+  // Ferret brand: teal for primary actions, azure (see hues.AZURE) for links and drafts
   primary: {
-    SOLID: 'hsl(33, 80%, 46%)',
-    TEXT: 'hsl(33, 67%, 45%)',
-    STRONG: 'hsl(33, 67%, 50%)',
-    SUBTLE: 'hsl(33, 69%, 56%)'
+    SOLID: 'hsl(181, 82%, 28%)',
+    TEXT: 'hsl(181, 80%, 26%)',
+    STRONG: 'hsl(181, 70%, 32%)',
+    SUBTLE: 'hsl(181, 55%, 42%)'
   },
   hues: {
     RED: 'hsl(8,   60%, 52%)',
@@ -17,13 +18,14 @@ export const palette = {
     TEAL: 'hsl(178, 50%, 36%)',
     CYAN: 'hsl(195, 55%, 42%)',
     BLUE: 'hsl(214, 55%, 45%)',
+    AZURE: 'hsl(208, 85%, 42%)',
     INDIGO: 'hsl(235, 45%, 45%)',
     VIOLET: 'hsl(258, 42%, 50%)',
     PURPLE: 'hsl(280, 45%, 48%)',
     PINK: 'hsl(328, 50%, 48%)'
   },
   system: {
-    CONTROL_ACCENT: '#b96f1d'
+    CONTROL_ACCENT: '#0d8285'
   },
   background: {
     BASE: '#ffffff',
@@ -89,8 +91,8 @@ const lightTheme = {
   mode: 'light',
   brand: palette.primary.SOLID,
   text: palette.text.BASE,
-  textLink: palette.hues.BLUE,
-  draftColor: '#cc7b1b',
+  textLink: palette.hues.AZURE,
+  draftColor: palette.hues.AZURE,
   bg: palette.background.BASE,
 
   primary: {
@@ -581,8 +583,8 @@ const lightTheme = {
         bg: 'transparent',
         hoverBg: 'rgba(0, 0, 0, 0.05)',
         selected: {
-          bg: 'rgba(217, 119, 6, 0.2)',
-          border: '#d97706'
+          bg: rgba(palette.primary.SOLID, 0.2),
+          border: palette.primary.SOLID
         },
         text: '#343434',
         secondaryText: '#838383',
@@ -611,8 +613,8 @@ const lightTheme = {
   },
 
   examples: {
-    buttonBg: '#D977061A',
-    buttonColor: '#D97706',
+    buttonBg: rgba(palette.primary.SOLID, 0.1),
+    buttonColor: palette.primary.SOLID,
     buttonText: '#fff',
     buttonIconColor: '#000',
     border: palette.border.BORDER0,

@@ -44,20 +44,6 @@ module.exports = function aboutFerret({ version }) {
                 font-size: 14px;
                 color: #555;
             }
-            .link {
-                display: inline-block;
-                margin-top: 10px;
-                padding: 10px 15px;
-                background-color: #F4AA41;
-                color: white;
-                text-decoration: none;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background 0.3s;
-            }
-            .link:hover {
-                background-color: #F4AA41;
-            }
         </style>
     </head>
     <body>

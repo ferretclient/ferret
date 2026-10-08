@@ -1,11 +1,12 @@
 import { rgba, lighten } from 'polished';
 
 export const palette = {
+  // Ferret brand: teal for primary actions, azure (see hues.AZURE) for links and drafts
   primary: {
-    SOLID: 'hsl(39, 74%, 59%)',
-    TEXT: 'hsl(39, 74%, 64%)',
-    STRONG: 'hsl(39, 74%, 64%)',
-    SUBTLE: 'hsl(39, 74%, 54%)'
+    SOLID: 'hsl(174, 62%, 50%)',
+    TEXT: 'hsl(174, 62%, 58%)',
+    STRONG: 'hsl(174, 62%, 58%)',
+    SUBTLE: 'hsl(174, 55%, 44%)'
   },
   hues: {
     RED: 'hsl(8, 70%, 52%)',
@@ -18,13 +19,14 @@ export const palette = {
     TEAL: 'hsl(170, 70%, 60%)',
     CYAN: 'hsl(190, 82%, 72%)',
     BLUE: 'hsl(210, 90%, 76%)',
+    AZURE: 'hsl(206, 92%, 70%)',
     INDIGO: 'hsl(202, 88%, 72%)',
     VIOLET: 'hsl(260, 75%, 78%)',
     PURPLE: 'hsl(285, 72%, 75%)',
     PINK: 'hsl(305, 59%, 74%)'
   },
   system: {
-    CONTROL_ACCENT: '#D9A342'
+    CONTROL_ACCENT: '#33cbb8'
   },
   background: {
     BASE: 'hsl(0deg 0% 10%)',
@@ -97,8 +99,8 @@ const darkTheme = {
   mode: 'dark',
   brand: palette.primary.SOLID,
   text: palette.text.BASE,
-  textLink: palette.hues.BLUE,
-  draftColor: '#cc7b1b',
+  textLink: palette.hues.AZURE,
+  draftColor: palette.hues.AZURE,
   bg: palette.background.BASE,
 
   primary: {
@@ -258,7 +260,7 @@ const darkTheme = {
   },
 
   workspace: {
-    accent: '#D9A342',
+    accent: palette.system.CONTROL_ACCENT,
     border: '#444',
     button: {
       bg: colors.GRAY_2
@@ -592,8 +594,8 @@ const darkTheme = {
         bg: 'transparent',
         hoverBg: 'rgba(255, 255, 255, 0.05)',
         selected: {
-          bg: 'rgba(245, 158, 11, 0.2)',
-          border: '#d9a342'
+          bg: rgba(palette.primary.SOLID, 0.2),
+          border: palette.primary.SOLID
         },
         text: '#d4d4d4',
         secondaryText: palette.text.SUBTEXT1,
@@ -622,9 +624,9 @@ const darkTheme = {
   },
 
   examples: {
-    buttonBg: '#d9a3421A',
-    buttonColor: '#d9a342',
-    buttonText: '#fff',
+    buttonBg: rgba(palette.primary.SOLID, 0.1),
+    buttonColor: palette.primary.SOLID,
+    buttonText: palette.utility.BLACK,
     buttonIconColor: '#fff',
     border: '#444',
     urlBar: {
