@@ -16,7 +16,7 @@ jest.mock('electron', () => {
     },
     app: {
       getPath: jest.fn(() => require('node:os').tmpdir()),
-      getVersion: jest.fn(() => '2.0.0')
+      getVersion: jest.fn(() => '0.1.0')
     },
     dialog: {
       showOpenDialog: jest.fn()

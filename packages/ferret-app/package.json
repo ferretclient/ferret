@@ -1,6 +1,6 @@
 {
   "name": "@useferret/app",
-  "version": "2.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -36,7 +36,7 @@
     "@tiptap/starter-kit": "^2.11.2",
     "@useferret/common": "0.1.0",
     "@useferret/graphql-docs": "0.1.0",
-    "@useferret/schema": "0.7.0",
+    "@useferret/schema": "0.1.0",
     "@xterm/addon-fit": "^0.10.0",
     "@xterm/xterm": "^5.5.0",
     "classnames": "^2.3.1",

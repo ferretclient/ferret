@@ -1030,7 +1030,7 @@ const registerRendererEventHandlers = (mainWindow, watcher) => {
       }
 
       const { app } = require('electron');
-      const appVersion = app?.getVersion() || '2.0.0';
+      const appVersion = app?.getVersion() || require('../../package.json').version;
 
       // For single environments and folder exports, include info in each environment
       const environmentWithInfo = (environment) => ({
