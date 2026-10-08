@@ -53,6 +53,8 @@
   },
   "scripts": {
     "setup": "node ./scripts/setup.js",
+    "test": "npm test --workspaces --if-present",
+    "check": "npm run lint && npm test",
     "watch:converters": "npm run watch --workspace=packages/ferret-converters",
     "dev": "node ./scripts/dev.js",
     "watch": "npm run dev:watch",

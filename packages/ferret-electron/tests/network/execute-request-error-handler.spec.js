@@ -83,11 +83,15 @@ describe('executeRequestOnFailHandler', () => {
     const mockHandler = jest.fn();
     const request = { onFailHandler: mockHandler };
 
+    // Fail resolution in-process: a real lookup of an unknown host can take longer than the
+    // test timeout on resolvers that retry (Windows takes ~11s), making the test flaky.
+    const failingLookup = (hostname, _options, callback) => {
+      callback(Object.assign(new Error(`getaddrinfo ENOTFOUND ${hostname}`), { code: 'ENOTFOUND', hostname }));
+    };
+
     let error;
     try {
-      await axios.get('https://this-domain-definitely-does-not-exist-12345.com/api/test', {
-        timeout: 5000
-      });
+      await axios.get('https://unresolvable.invalid/api/test', { lookup: failingLookup });
     } catch (err) {
       error = err;
     }

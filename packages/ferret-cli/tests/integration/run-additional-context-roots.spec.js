@@ -10,10 +10,10 @@ const FIXTURE_WORKSPACE = path.resolve(
   __dirname, '..', '..', '..', '..',
   'tests', 'scripting', 'additional-context-roots', 'fixtures', 'workspace'
 );
-// The fixture .fer files hit http://localhost:8081/ping — the Ferret testbench
-// address, so the Playwright e2e can reuse the same fixture unchanged. The
-// unit-test CI job doesn't start the testbench, so this suite always binds
-// its own mock on that port.
+// The fixture .fer files hit http://127.0.0.1:8081/ping — the Ferret testbench
+// port, so the Playwright e2e can reuse the same fixture unchanged. Unit-test
+// runs don't start the testbench, so this suite always binds its own mock on
+// that port. The IPv4 literal avoids `localhost` resolving to ::1 first.
 const TESTBENCH_PORT = 8081;
 
 describe('CLI run — additionalContextRoots npm module resolution', () => {

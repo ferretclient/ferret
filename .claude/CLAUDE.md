@@ -11,8 +11,12 @@ npm run dev              # Run electron + react concurrently
 npm run dev:watch        # Same, with hot-reload of the electron main process
 npm run storybook        # Component dev (ferret-app)
 npm run lint:fix         # ESLint fix
-npm test --workspaces    # Unit tests (Jest) across all packages
+npm test                 # Unit tests (Jest) across all packages
+npm run check            # Lint + all unit tests
 ```
+
+There is no hosted CI. Checks run locally through git hooks: pre-commit lints staged files,
+pre-push runs `npm test`. Unit tests need the shared packages built (`npm run setup`).
 
 Full script list: root `package.json`. Setup: `nvm use && npm i --legacy-peer-deps && npm run setup` (Node **v22.12.0**, see `.nvmrc`).
 
