@@ -1,0 +1,63 @@
+meta {
+  name: directWrite
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{localhost}}/ping
+  body: none
+  auth: inherit
+}
+
+script:pre-request {
+  const jar = fer.cookies.jar()
+  await jar.clear();
+}
+
+tests {
+  const jar = fer.cookies.jar()
+
+  await fer.cookies.add({ key: 'a', value: '1' });
+  test("add() should add a new cookie", function() {
+    expect(fer.cookies.get('a')).to.equal('1');
+  });
+
+  await fer.cookies.upsert({ key: 'a', value: '2' });
+  test("upsert() should update an existing cookie", function() {
+    expect(fer.cookies.get('a')).to.equal('2');
+  });
+
+  await fer.cookies.upsert({ key: 'newCookie', value: 'inserted' });
+  test("upsert() should insert a cookie that does not exist", function() {
+    expect(fer.cookies.has('newCookie')).to.be.true;
+    expect(fer.cookies.get('newCookie')).to.equal('inserted');
+  });
+  await fer.cookies.remove('newCookie');
+
+  await fer.cookies.remove('a');
+  test("remove() should remove a cookie", function() {
+    expect(fer.cookies.has('a')).to.be.false;
+  });
+
+  await fer.cookies.add({ key: 'b', value: '3' });
+  await fer.cookies.delete('b');
+  test("delete() should delete a cookie", function() {
+    expect(fer.cookies.has('b')).to.be.false;
+  });
+
+  await fer.cookies.add({ key: 'c', value: '4' });
+  test("clear() should remove all cookies after add", function() {
+    expect(fer.cookies.count()).to.be.at.least(1);
+  });
+  await fer.cookies.clear();
+  test("clear() should leave zero cookies", function() {
+    expect(fer.cookies.count()).to.equal(0);
+  });
+
+  await jar.clear()
+}
+
+settings {
+  encodeUrl: true
+}

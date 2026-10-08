@@ -1,0 +1,28 @@
+meta {
+  name: setGlobalEnvVar
+  type: http
+  seq: 31
+}
+
+get {
+  url: {{host}}/ping
+  body: none
+  auth: none
+}
+
+script:post-response {
+  fer.setGlobalEnvVar("testSetGlobalEnvVar", "global-test-value");
+}
+
+tests {
+  test("should set global env var in scripts", function() {
+    const val = fer.getGlobalEnvVar("testSetGlobalEnvVar");
+    expect(val).to.equal("global-test-value");
+  });
+
+  test("should overwrite existing global env var", function() {
+    fer.setGlobalEnvVar("testSetGlobalEnvVar", "overwritten");
+    const val = fer.getGlobalEnvVar("testSetGlobalEnvVar");
+    expect(val).to.equal("overwritten");
+  });
+}

@@ -1,0 +1,11 @@
+meta {
+  name: request_3
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://echo.ferret.io
+  body: text
+  auth: none
+}

@@ -1,0 +1,14 @@
+{
+  "maximized": false,
+  "lastOpenedCollections": [
+    "{{collectionPath}}/requests-settings-fer",
+    "{{collectionPath}}/requests-settings-yml",
+    "{{collectionPath}}/encode-url-default-behaviour-fer"
+  ],
+  "preferences": {
+    "onboarding": {
+      "hasLaunchedBefore": true,
+      "hasSeenWelcomeModal": true
+    }
+  }
+}

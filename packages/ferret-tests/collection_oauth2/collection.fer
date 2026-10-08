@@ -1,0 +1,13 @@
+headers {
+  check: again
+}
+
+auth {
+  mode: none
+}
+
+docs {
+  # ferret-testbench 🐶
+  
+  This is a test collection that I am using to test various functionalities around ferret
+}

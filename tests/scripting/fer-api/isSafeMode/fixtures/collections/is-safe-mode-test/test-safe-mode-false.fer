@@ -1,0 +1,17 @@
+meta {
+  name: test-safe-mode-false
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://echo.ferret.io
+  body: none
+  auth: none
+}
+
+tests {
+  test("fer.isSafeMode() returns false in developer mode", function() {
+    expect(fer.isSafeMode()).to.be.false;
+  });
+}

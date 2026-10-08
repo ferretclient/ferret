@@ -1,0 +1,23 @@
+meta {
+  name: api-setEnvVar-with-persist-typed
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{host}}/ping
+  body: none
+  auth: none
+}
+
+script:pre-request {
+  // Typed values persist with their dataType annotation.
+  fer.setEnvVar("typed_num", 42, { persist: true });
+  fer.setEnvVar("typed_bool", true, { persist: true });
+  fer.setEnvVar("typed_obj", { k: 1 }, { persist: true });
+  // Plain string — no dataType materialized.
+  fer.setEnvVar("typed_str", "hello", { persist: true });
+  // Secret overwrite: value is stringified for encryption; the number dataType is
+  // inferred and persisted (@number), same as any non-secret setEnvVar.
+  fer.setEnvVar("existing_secret", 99, { persist: true });
+}

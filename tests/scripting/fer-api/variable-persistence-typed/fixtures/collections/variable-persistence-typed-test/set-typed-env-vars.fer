@@ -1,0 +1,25 @@
+meta {
+  name: set-typed-env-vars
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://testbench-sanity.ferret.io/ping
+  body: none
+  auth: none
+}
+
+script:post-response {
+  fer.setEnvVar("envNum", 42);
+  fer.setEnvVar("envBool", true);
+  fer.setEnvVar("envObj", { port: 3000, ssl: true });
+}
+
+tests {
+  test("typed env vars are readable as their original types", function() {
+    expect(fer.getEnvVar("envNum")).to.equal(42);
+    expect(fer.getEnvVar("envBool")).to.equal(true);
+    expect(fer.getEnvVar("envObj")).to.deep.equal({ port: 3000, ssl: true });
+  });
+}

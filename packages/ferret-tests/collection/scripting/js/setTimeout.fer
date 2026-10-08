@@ -1,0 +1,32 @@
+meta {
+  name: setTimeout
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{host}}/ping
+  body: none
+  auth: none
+}
+
+script:pre-request {
+  fer.setVar("test-js-set-timeout", "");
+  await new Promise((resolve, reject) => {
+    setTimeout(() => {
+      fer.setVar("test-js-set-timeout", "ferret");
+      resolve();
+    }, 1000);
+  });
+  
+  const v = fer.getVar("test-js-set-timeout");
+  fer.setVar("test-js-set-timeout", v + "-is-awesome");
+  
+}
+
+tests {
+  test("setTimeout()", function() {
+    const v = fer.getVar("test-js-set-timeout")
+    expect(v).to.eql("ferret-is-awesome");
+  });
+}

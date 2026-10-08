@@ -1,0 +1,25 @@
+meta {
+  name: set-typed-collection-vars
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://testbench-sanity.ferret.io/ping
+  body: none
+  auth: none
+}
+
+script:post-response {
+  fer.setCollectionVar("collNum", 7);
+  fer.setCollectionVar("collBool", false);
+  fer.setCollectionVar("collObj", { region: "eu", retries: 3 });
+}
+
+tests {
+  test("typed collection vars are readable as their original types", function() {
+    expect(fer.getCollectionVar("collNum")).to.equal(7);
+    expect(fer.getCollectionVar("collBool")).to.equal(false);
+    expect(fer.getCollectionVar("collObj")).to.deep.equal({ region: "eu", retries: 3 });
+  });
+}

@@ -1,0 +1,14 @@
+services:
+  ferret-cli:
+    image: useferret/cli:latest
+    container_name: ferret-cli-runner
+    volumes:
+      - ./collection:/ferret
+      - ./reports:/reports
+    command:
+      run echo
+      -r
+      --env Prod
+      --reporter-json /reports/results.json
+      --reporter-junit /reports/results.xml
+      --reporter-html /reports/results.html

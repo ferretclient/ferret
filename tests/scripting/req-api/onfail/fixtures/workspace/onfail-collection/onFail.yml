@@ -1,0 +1,29 @@
+info:
+  name: onFail
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: http://127.0.0.1:45123/nope
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        fer.setVar("var", "original");
+        fer.setEnvVar("envVar", "original");
+        fer.setGlobalEnvVar("globalEnvVar", "original");
+
+        if (fer.getVar("var") !== "original") throw new Error("var was not set");
+        if (fer.getEnvVar("envVar") !== "original") throw new Error("envVar was not set");
+        if (fer.getGlobalEnvVar("globalEnvVar") !== "original") throw new Error("globalEnvVar was not set");
+
+        req.onFail(() => {
+          fer.setVar("var", "updated");
+          fer.setEnvVar("envVar", "updated");
+          fer.setGlobalEnvVar("globalEnvVar", "updated");
+        });
+
+settings:
+  timeout: 500

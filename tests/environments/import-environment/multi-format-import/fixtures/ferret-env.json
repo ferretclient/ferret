@@ -1,0 +1,6 @@
+{
+  "name": "Ferret Env",
+  "variables": [
+    { "name": "base_url", "value": "https://ferret.example.com", "enabled": true, "secret": false }
+  ]
+}

@@ -1,0 +1,7 @@
+vars {
+  host: https://testbench-sanity.ferret.io
+}
+
+vars:secret [
+  existing_secret
+]

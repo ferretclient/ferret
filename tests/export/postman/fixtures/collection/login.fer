@@ -1,0 +1,17 @@
+meta {
+  name: Login
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://example.com/login
+}
+
+script:pre-request {
+  fer.setEnvVar('token', 'abc');
+}
+
+script:post-response {
+  fer.setVar('userId', '42');
+}

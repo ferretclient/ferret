@@ -1,0 +1,10 @@
+{
+  "collections": [
+    {
+      "path": "{{projectRoot}}/tests/environments/import-environment/ferret-env-import/global-env-import/fixtures/collection",
+      "securityConfig": {
+        "jsSandboxMode": "safe"
+      }
+    }
+  ]
+}

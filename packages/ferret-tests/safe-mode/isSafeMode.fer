@@ -1,0 +1,17 @@
+meta {
+  name: isSafeMode
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{host}}/ping
+  body: none
+  auth: none
+}
+
+tests {
+  test("fer.isSafeMode() returns true in the default sandbox", function() {
+    expect(fer.isSafeMode()).to.equal(true);
+  });
+}

@@ -1,0 +1,10 @@
+info:
+  name: child
+  type: folder
+
+request:
+  scripts:
+    - type: before-request
+      code: |-
+        fer.setEnvVar("childDir", __dirname);
+        fer.setEnvVar("childFile", __filename);

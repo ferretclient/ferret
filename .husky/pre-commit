@@ -1,0 +1,6 @@
+npx nano-staged
+
+if git diff --cached --name-only | grep -q '^packages/ferret-sqlite/migrations/'; then
+  npm run schema --workspace=packages/ferret-sqlite --silent
+  git add packages/ferret-sqlite/SCHEMA.md
+fi

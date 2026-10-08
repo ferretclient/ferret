@@ -1,0 +1,8 @@
+meta {
+  name: collection
+}
+
+vars:pre-request {
+  host: https://testbench-sanity.ferret.io
+  existingCollVar: original-coll-value
+}

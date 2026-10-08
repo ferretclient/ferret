@@ -1,0 +1,7 @@
+meta {
+  name: fer
+}
+
+vars:pre-request {
+  folder-var: folder-var-value
+}

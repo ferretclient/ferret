@@ -1,0 +1,4 @@
+vars {
+  host: https://testbench-sanity.ferret.io
+  existingVar: original-value
+}

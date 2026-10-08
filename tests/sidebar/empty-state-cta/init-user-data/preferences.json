@@ -1,0 +1,18 @@
+{
+  "lastOpenedCollections": [
+    "{{collectionPath}}/empty-fer",
+    "{{collectionPath}}/empty-yml",
+    "{{collectionPath}}/fer-with-js",
+    "{{collectionPath}}/yml-with-js",
+    "{{collectionPath}}/fer-with-request",
+    "{{collectionPath}}/yml-with-request",
+    "{{collectionPath}}/fer-folder-with-js",
+    "{{collectionPath}}/yml-with-folder"
+  ],
+  "preferences": {
+    "onboarding": {
+      "hasLaunchedBefore": true,
+      "hasSeenWelcomeModal": true
+    }
+  }
+}

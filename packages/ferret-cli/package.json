@@ -1,0 +1,77 @@
+{
+  "name": "@useferret/cli",
+  "version": "1.16.0",
+  "license": "MIT",
+  "main": "src/index.js",
+  "bin": {
+    "fer": "./bin/fer.js"
+  },
+  "bugs": {
+    "url": "https://github.com/jakahann/ferret-app/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jakahann/ferret-app.git"
+  },
+  "keywords": [
+    "API",
+    "testing",
+    "automation",
+    "cli",
+    "command-line",
+    "ferret",
+    "HTTP requests",
+    "rest-api",
+    "api-client",
+    "api-automation",
+    "request-handling",
+    "mock-api",
+    "http-client",
+    "async",
+    "promise",
+    "javascript",
+    "nodejs",
+    "automation-tool",
+    "postman-alternative",
+    "api-scripting"
+  ],
+  "scripts": {
+    "test": "node --experimental-vm-modules $(npx which jest)",
+    "test:ci": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "readme.md",
+    "package.json"
+  ],
+  "dependencies": {
+    "@aws-sdk/credential-providers": "3.1019.0",
+    "@useferret/common": "0.1.0",
+    "@useferret/converters": "^0.1.0",
+    "@useferret/filestore": "^0.1.0",
+    "@useferret/js": "0.12.0",
+    "@useferret/lang": "0.12.0",
+    "@useferret/requests": "^0.1.0",
+    "aws4-axios": "^3.3.15",
+    "axios": "1.18.0",
+    "axios-ntlm": "^1.4.2",
+    "chai": "^4.3.7",
+    "chalk": "^3.0.0",
+    "cli-table3": "^0.6.5",
+    "decomment": "^0.9.5",
+    "form-data": "4.0.4",
+    "fs-extra": "^10.1.0",
+    "http-proxy-agent": "^7.0.0",
+    "https-proxy-agent": "^7.0.2",
+    "iconv-lite": "^0.6.3",
+    "js-yaml": "4.3.1",
+    "lodash": "4.18.1",
+    "naive-ui": "2.45.3",
+    "qs": "^6.15.2",
+    "socks-proxy-agent": "^8.0.2",
+    "vue": "3.5.43",
+    "xmlbuilder": "^15.1.1",
+    "yargs": "^17.6.2"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "collections": [
+    {
+      "path": "{{projectRoot}}/packages/ferret-tests/collection",
+      "securityConfig": {
+        "jsSandboxMode": "developer"
+      }
+    }
+  ]
+}

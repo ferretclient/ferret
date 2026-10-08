@@ -1,0 +1,9 @@
+meta {
+  name: fer-echo
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://echo.ferret.io
+}

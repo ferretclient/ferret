@@ -1,0 +1,33 @@
+meta {
+  name: request
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://www.example.com
+  body: none
+  auth: none
+}
+
+script:pre-request {
+  console.log("request pre");
+}
+
+script:post-response {
+  {
+    console.log("request post");
+  
+    const sequence = fer.getVar('sequence') || [];
+    sequence.push(3);
+    fer.setVar('sequence', sequence);
+  }
+}
+
+tests {
+  test("sandwich script execution is proper", function() {
+    const sequence = fer.getVar('sequence');
+    fer.setVar('sequence', null);
+    expect(sequence.toString()).to.equal([3,2,1].toString());
+  });
+}

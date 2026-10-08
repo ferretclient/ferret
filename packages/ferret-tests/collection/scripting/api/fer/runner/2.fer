@@ -1,0 +1,19 @@
+meta {
+  name: 2
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://echo.ferret.io
+  body: none
+  auth: none
+}
+
+script:pre-request {
+  fer.runner.skipRequest();
+}
+
+script:post-response {
+  fer.setVar('fer.runner.skipRequest', false);
+}

@@ -1,0 +1,32 @@
+meta {
+  name: deleteGlobalEnvVar
+  type: http
+  seq: 19
+}
+
+get {
+  url: {{host}}/ping
+  body: none
+  auth: none
+}
+
+script:pre-request {
+  fer.setGlobalEnvVar("testDeleteGlobalEnvVar", "to-be-deleted");
+}
+
+script:post-response {
+  fer.deleteGlobalEnvVar("testDeleteGlobalEnvVar");
+}
+
+tests {
+  test("should delete global env var", function() {
+    const val = fer.getGlobalEnvVar("testDeleteGlobalEnvVar");
+    expect(val).to.be.undefined;
+  });
+
+  test("should not throw when deleting non-existent key", function() {
+    expect(function() {
+      fer.deleteGlobalEnvVar("non-existent-key");
+    }).to.not.throw();
+  });
+}

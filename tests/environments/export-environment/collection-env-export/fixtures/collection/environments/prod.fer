@@ -1,0 +1,12 @@
+vars {
+  @description('''Single-line host desc''')
+  host: https://echo.ferret.io
+}
+
+vars:secret [
+  @description('''
+    Secret line one
+    Secret line two
+  ''')
+  secretToken
+]

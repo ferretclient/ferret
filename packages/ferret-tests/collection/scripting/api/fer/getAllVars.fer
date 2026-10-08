@@ -1,0 +1,31 @@
+meta {
+  name: getAllVars
+  type: http
+  seq: 24
+}
+
+get {
+  url: {{host}}/ping
+  body: none
+  auth: none
+}
+
+script:pre-request {
+  fer.setVar("testGetAllVarsA", "alphaValue");
+  fer.setVar("testGetAllVarsB", "betaValue");
+}
+
+tests {
+  test("should return all runtime vars", function() {
+    const vars = fer.getAllVars();
+    expect(vars.testGetAllVarsA).to.equal("alphaValue");
+    expect(vars.testGetAllVarsB).to.equal("betaValue");
+  });
+
+  test("should return a shallow copy", function() {
+    const vars = fer.getAllVars();
+    vars.testGetAllVarsA = "mutated";
+    const vars2 = fer.getAllVars();
+    expect(vars2.testGetAllVarsA).to.equal("alphaValue");
+  });
+}
