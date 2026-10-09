@@ -38,6 +38,9 @@ const BRUNO_REQUEST = [
 
 const OPENCOLLECTION_YML = (name) => `opencollection: 1.0.0\n\ninfo:\n  name: ${name}\nbundled: false\nextensions:\n  bruno:\n    ignore:\n      - node_modules\n      - .git\n`;
 
+// Shape of a global environment written by Bruno 3, including a secret variable that has no value.
+const GLOBAL_ENVIRONMENT_YML = 'name: shared\nvariables:\n  - name: host\n    value: "example.com"\n  - secret: true\n    name: token\n';
+
 const workspaceYml = (collections) => [
   'opencollection: 1.0.0',
   'info:',
@@ -88,7 +91,7 @@ describe('Bruno workspace import', () => {
       'collections/collection1/Untitled.yml': 'info:\n  name: Untitled\n  type: http\n  seq: 1\n\nhttp:\n  method: GET\n  url: example.com\n',
       'collections/legacy/bruno.json': JSON.stringify({ version: '1', name: 'legacy', type: 'collection' }),
       'collections/legacy/Get user.bru': BRUNO_REQUEST,
-      'environments/shared.yml': 'name: shared\nvariables:\n  - name: host\n    value: example.com\n'
+      'environments/shared.yml': GLOBAL_ENVIRONMENT_YML
     });
 
     const result = await importBrunoWorkspaceFolder(workspaceDir, targetDir);
@@ -110,7 +113,7 @@ describe('Bruno workspace import', () => {
     expect(fs.existsSync(path.join(imported, 'collections/legacy/ferret.json'))).toBe(true);
     expect(fs.existsSync(path.join(imported, 'collections/legacy/bruno.json'))).toBe(false);
     expect(fs.readFileSync(path.join(imported, 'collections/legacy/Get user.fer'), 'utf8')).toContain('fer.setVar("userId", 1);');
-    expect(fs.readFileSync(path.join(imported, 'environments/shared.yml'), 'utf8')).toContain('host');
+    expect(fs.readFileSync(path.join(imported, 'environments/shared.yml'), 'utf8')).toBe(GLOBAL_ENVIRONMENT_YML);
   });
 
   it('leaves the source workspace untouched', async () => {
