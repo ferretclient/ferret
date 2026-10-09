@@ -59,6 +59,8 @@ const sameWidthModifier = {
  * @param {string} props.label - Label text displayed above the select
  * @param {string} props.description - Description text displayed below the label
  * @param {string} props.className - Additional CSS class for the wrapper
+ * @param {function} props.appendTo - Where the menu is attached, e.g. `() => document.body`. Use it when the select sits
+ *   inside a scrolling or clipping container (a table cell), where the default placement inside the parent is cut off
  */
 const Select = ({
   data,
@@ -81,6 +83,7 @@ const Select = ({
   required = false,
   size = 'md',
   className,
+  appendTo,
   'data-testid': testId
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -366,6 +369,7 @@ const Select = ({
           onClickOutside={handleClickOutside}
           popperOptions={{ modifiers: [sameWidthModifier] }}
           maxWidth="none"
+          appendTo={appendTo}
         >
           <div
             ref={menuRef}

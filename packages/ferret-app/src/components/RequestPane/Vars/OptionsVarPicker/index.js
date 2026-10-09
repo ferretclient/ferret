@@ -22,6 +22,7 @@ const OptionsVarPicker = ({ options, value, onChange }) => {
       value={currentValue}
       onChange={onChange}
       allowDeselect={false}
+      appendTo={() => document.body}
       placeholder="Choose an option"
       data-testid="request-var-options-picker"
     />

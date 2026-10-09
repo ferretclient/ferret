@@ -30,6 +30,7 @@ const OptionsValueEditor = ({ variable, onChange }) => {
           value={variable.value}
           onChange={(key) => onChange({ value: key })}
           allowDeselect={false}
+          appendTo={() => document.body}
           placeholder="Default option"
           data-testid="env-var-options-default"
         />

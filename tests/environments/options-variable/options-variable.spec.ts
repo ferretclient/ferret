@@ -87,6 +87,42 @@ for (const { format, collectionName } of FORMATS) {
       });
     });
 
+    // These dropdowns sit inside scrolling tables, which clip a menu attached to the cell: the options
+    // existed in the page but could not be seen or clicked.
+    test(`(${format}) the default option can be picked from the dropdown in the environment editor`, async ({ pageWithUserData: page }) => {
+      const locators = buildCommonLocators(page);
+
+      await locators.sidebar.collection(collectionName).click();
+      await locators.environment.selector().click();
+      await locators.environment.collectionTab().click();
+      await locators.environment.configureButton().click();
+
+      const picker = locators.environment.varRow('company').getByTestId('env-var-options-default');
+      await expect(picker).toContainText('Company2');
+
+      await picker.click();
+      await page.getByRole('option').filter({ hasText: 'Company1' }).click();
+
+      await expect(picker).toContainText('Company1');
+    });
+
+    test(`(${format}) the option of a same-named request variable can be changed in the Vars table`, async ({ pageWithUserData: page }) => {
+      const locators = buildCommonLocators(page);
+
+      await locators.sidebar.collection(collectionName).click();
+      await selectEnvironment(page, 'BC');
+      await openRequest(page, collectionName, 'override');
+      await selectRequestPaneTab(page, 'Vars');
+
+      const picker = page.getByTestId('request-vars-req').getByTestId('request-var-options-picker');
+      await expect(picker).toContainText('Company1');
+
+      await picker.click();
+      await page.getByRole('option', { name: 'Company2' }).click();
+
+      await expect(picker).toContainText('Company2');
+    });
+
     test(`(${format}) a request chooses an option from its Vars tab without typing a variable`, async ({ pageWithUserData: page }) => {
       const locators = buildCommonLocators(page);
 
