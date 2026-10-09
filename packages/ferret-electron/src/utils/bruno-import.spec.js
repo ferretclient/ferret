@@ -6,7 +6,7 @@ jest.mock('electron', () => ({
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { importBrunoCollectionFolder, convertBrunoCollectionDir } = require('./bruno-import');
+const { importBrunoCollectionFolder, convertBrunoCollectionDir, findBrunoCollections, importBrunoFolder } = require('./bruno-import');
 
 const writeFiles = (root, files) => {
   for (const [relativePath, content] of Object.entries(files)) {
@@ -93,6 +93,78 @@ describe('Bruno collection import', () => {
     await expect(importBrunoCollectionFolder({ webContents: { send: jest.fn() } }, emptyDir, targetDir)).rejects.toThrow(
       'Not a Bruno collection'
     );
+  });
+
+  describe('a folder that holds several collections', () => {
+    let parentDir;
+
+    const brunoCollection = (dir) => ({
+      [`${dir}/bruno.json`]: JSON.stringify({ version: '1', name: path.basename(dir), type: 'collection' }),
+      [`${dir}/Get.bru`]: BRUNO_REQUEST
+    });
+
+    beforeEach(() => {
+      parentDir = path.join(workRoot, 'all-bruno');
+      writeFiles(parentDir, {
+        ...brunoCollection('Billing'),
+        ...brunoCollection('Team/Orders'),
+        'Team/notes.txt': 'not a collection',
+        'node_modules/Hidden/bruno.json': '{"version":"1","name":"Hidden","type":"collection"}',
+        'Empty/readme.md': 'nothing here'
+      });
+    });
+
+    it('finds each collection once, skipping node_modules and not searching inside a collection', async () => {
+      writeFiles(parentDir, brunoCollection('Billing/Nested'));
+
+      const found = await findBrunoCollections(parentDir);
+
+      expect(found).toEqual([path.join(parentDir, 'Billing'), path.join(parentDir, 'Team', 'Orders')]);
+    });
+
+    it('treats the folder itself as the only collection when it is one', async () => {
+      expect(await findBrunoCollections(sourceDir)).toEqual([sourceDir]);
+    });
+
+    it('does not look deeper than four levels', async () => {
+      writeFiles(parentDir, brunoCollection('a/b/c/d/Deep'));
+      writeFiles(parentDir, brunoCollection('a/b/c/Reachable'));
+
+      const found = await findBrunoCollections(parentDir);
+
+      expect(found).toContain(path.join(parentDir, 'a', 'b', 'c', 'Reachable'));
+      expect(found).not.toContain(path.join(parentDir, 'a', 'b', 'c', 'd', 'Deep'));
+    });
+
+    it('converts and imports every collection and leaves the sources untouched', async () => {
+      const mainWindow = { webContents: { send: jest.fn() } };
+
+      const result = await importBrunoFolder(mainWindow, parentDir, targetDir);
+
+      expect(result.failed).toEqual([]);
+      expect(result.imported).toEqual([path.join(targetDir, 'Billing'), path.join(targetDir, 'Orders')]);
+      for (const importedPath of result.imported) {
+        expect(fs.existsSync(path.join(importedPath, 'ferret.json'))).toBe(true);
+        expect(fs.readFileSync(path.join(importedPath, 'Get.fer'), 'utf8')).toContain('fer.setVar("userId", res.body.id);');
+      }
+      expect(mainWindow.webContents.send).toHaveBeenCalledTimes(2);
+      expect(fs.existsSync(path.join(parentDir, 'Billing', 'bruno.json'))).toBe(true);
+    });
+
+    it('keeps importing when one collection fails and reports it', async () => {
+      writeFiles(parentDir, { 'Broken/bruno.json': '{}', 'Broken/Clash.bru': BRUNO_REQUEST, 'Broken/Clash.fer': 'already here' });
+
+      const result = await importBrunoFolder({ webContents: { send: jest.fn() } }, parentDir, targetDir);
+
+      expect(result.imported).toHaveLength(2);
+      expect(result.failed).toEqual([{ path: path.join(parentDir, 'Broken'), message: expect.stringContaining('already exists') }]);
+    });
+
+    it('rejects a folder without any Bruno collection', async () => {
+      await expect(importBrunoFolder({ webContents: { send: jest.fn() } }, path.join(parentDir, 'Empty'), targetDir)).rejects.toThrow(
+        'No Bruno collections found'
+      );
+    });
   });
 
   it('leaves a Ferret collection unchanged', async () => {

@@ -6,7 +6,7 @@ Ferret reads Bruno collections and converts them to its own format. You can keep
 
 | What you have | How |
 | --- | --- |
-| A Bruno **collection folder** (`.bru` files, or the YAML format) | *Import Collection* → **Import a Bruno collection folder** |
+| A Bruno **collection folder** (`.bru` files, or the YAML format), or a **folder that holds several collections** | *Import Collection* → **Import a Bruno folder** |
 | A **zip** of a Bruno collection | drop the zip into *Import Collection* |
 | A Bruno **JSON export** | drop the `.json` file into *Import Collection* |
 | Bruno **environment exports** | the environment import dialog |
@@ -31,6 +31,7 @@ YAML collections keep their formatting and comments: the file is edited, not rew
 ## After importing
 
 - Open the collection and run a request. If a script behaves differently, check it for `bru` used in a way the converter cannot see, such as building the name from strings (`global['b' + 'ru']`).
+- **A whole folder at once.** Pick a folder that contains Bruno collections (for example the folder where you keep all of them) and Ferret finds every collection in it, up to four levels deep, and lists them before you confirm. All of them are converted into the location you choose, and a collection that fails to convert is reported without stopping the others. `node_modules`, `.git` and symlinks are skipped, and a collection inside another collection is not imported separately.
 - Collections are independent copies. Changes you make in Ferret do not flow back to the Bruno folder.
 
 ## What is not included

@@ -50,7 +50,9 @@ const getCollectionName = (format, rawData) => {
     case 'ferret-zip':
       return rawData.collectionName || 'Ferret Collection';
     case 'bruno-folder':
-      return rawData.collectionName || 'Bruno Collection';
+      return rawData.collectionPaths?.length > 1
+        ? `${rawData.collectionName} (${rawData.collectionPaths.length} collections)`
+        : rawData.collectionName || 'Bruno Collection';
     default:
       return 'Collection';
   }
@@ -299,6 +301,13 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
                 Name
               </label>
               <div className="mt-2">{collectionName}</div>
+              {format === 'bruno-folder' && rawData.collectionPaths?.length > 1 && (
+                <ul className="mt-2 list-disc ml-5" data-testid="import-bruno-collection-list">
+                  {rawData.collectionPaths.map((collectionPath) => (
+                    <li key={collectionPath} title={collectionPath}>{path.basename(collectionPath)}</li>
+                  ))}
+                </ul>
+              )}
 
               <>
                 <label htmlFor="collectionLocation" className="font-medium mt-4 flex items-center">

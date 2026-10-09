@@ -84,7 +84,7 @@ const collectionWatcher = require('../app/collection-watcher');
 const { transformFerretConfigBeforeSave, transformFerretConfigAfterRead } = require('../utils/transformFerretConfig');
 const { REQUEST_TYPES } = require('../utils/constants');
 const { findUniqueFolderName, openImportedCollectionDir } = require('../utils/collection-import');
-const { convertBrunoCollectionDir, importBrunoCollectionFolder } = require('../utils/bruno-import');
+const { convertBrunoCollectionDir, findBrunoCollections, importBrunoFolder } = require('../utils/bruno-import');
 const { renameEnvironmentExtendsReferences } = require('../utils/environments');
 const { saveSpecAndUpdateMetadata, cleanupSpecFilesForCollection } = require('./openapi-sync');
 const {
@@ -2661,8 +2661,10 @@ const registerRendererEventHandlers = (mainWindow, watcher) => {
     }
   });
 
-  ipcMain.handle('renderer:import-bruno-collection-folder', (event, folderPath, collectionLocation) =>
-    importBrunoCollectionFolder(mainWindow, folderPath, collectionLocation)
+  ipcMain.handle('renderer:find-bruno-collections', (event, folderPath) => findBrunoCollections(folderPath));
+
+  ipcMain.handle('renderer:import-bruno-folder', (event, folderPath, collectionLocation) =>
+    importBrunoFolder(mainWindow, folderPath, collectionLocation)
   );
 
   ipcMain.handle('renderer:import-collection-zip', async (event, zipFilePath, collectionLocation) => {

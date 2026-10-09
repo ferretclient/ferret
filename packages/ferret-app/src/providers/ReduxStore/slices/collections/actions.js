@@ -3207,26 +3207,34 @@ export const importCollection = (collection, collectionLocation, options = {}) =
   });
 };
 
-// Imports a collection that already exists as files — a zip archive or a Bruno collection
-// folder. The main process copies it into collectionLocation, converting Bruno files on the way.
+// Imports collections that already exist as files — a zip archive, or a folder with one or more
+// Bruno collections. The main process copies each into collectionLocation, converting Bruno files on
+// the way. Resolves to the path of the first imported collection; a Bruno collection that fails is
+// reported in a toast while the others are still imported.
 export const importCollectionFromFiles = ({ zipFilePath, folderPath }, collectionLocation) => async (dispatch, getState) => {
   const { ipcRenderer } = window;
   const state = getState();
   const activeWorkspace = state.workspaces.workspaces.find((w) => w.uid === state.workspaces.activeWorkspaceUid);
 
-  const collectionPath = zipFilePath
-    ? await ipcRenderer.invoke('renderer:import-collection-zip', zipFilePath, collectionLocation)
-    : await ipcRenderer.invoke('renderer:import-bruno-collection-folder', folderPath, collectionLocation);
-
-  if (activeWorkspace && activeWorkspace.pathname && activeWorkspace.type !== 'default') {
-    const collectionName = path.basename(collectionPath);
-    await ipcRenderer.invoke('renderer:add-collection-to-workspace', activeWorkspace.pathname, {
-      name: collectionName,
-      path: collectionPath
-    });
+  let importedPaths;
+  if (zipFilePath) {
+    importedPaths = [await ipcRenderer.invoke('renderer:import-collection-zip', zipFilePath, collectionLocation)];
+  } else {
+    const { imported, failed } = await ipcRenderer.invoke('renderer:import-bruno-folder', folderPath, collectionLocation);
+    importedPaths = imported;
+    failed.forEach(({ path: failedPath, message }) => toast.error(`${path.basename(failedPath)} was not imported: ${message}`));
   }
 
-  return collectionPath;
+  if (activeWorkspace && activeWorkspace.pathname && activeWorkspace.type !== 'default') {
+    for (const collectionPath of importedPaths) {
+      await ipcRenderer.invoke('renderer:add-collection-to-workspace', activeWorkspace.pathname, {
+        name: path.basename(collectionPath),
+        path: collectionPath
+      });
+    }
+  }
+
+  return importedPaths[0];
 };
 
 /**

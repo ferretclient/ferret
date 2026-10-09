@@ -87,6 +87,12 @@ const WorkspaceOverview = ({ workspace }) => {
         setImportCollectionLocationModalOpen(false);
         setImportData(null);
         handleImportResolved(convertedCollection, importedItem);
+      })
+      .catch((error) => {
+        // Other imports report their own failures; file imports happen in the main process and throw.
+        if (options.isFileImport) {
+          toast.error(`Import failed: ${error.message}`);
+        }
       });
   };
 

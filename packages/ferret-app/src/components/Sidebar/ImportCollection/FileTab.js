@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { IconFileImport } from '@tabler/icons';
 import path from 'utils/common/path';
-import { existsSync } from 'utils/filesystem';
 import { browseDirectory } from 'providers/ReduxStore/slices/collections/actions';
 import { toastError } from 'utils/common/error';
 import jsyaml from 'js-yaml';
@@ -82,15 +81,12 @@ const FileTab = ({
       const folderPath = await dispatch(browseDirectory());
       if (!folderPath) return;
 
-      const [hasBrunoJson, hasOpenCollection] = await Promise.all([
-        existsSync(path.join(folderPath, 'bruno.json')),
-        existsSync(path.join(folderPath, 'opencollection.yml'))
-      ]);
-      if (!hasBrunoJson && !hasOpenCollection) {
-        throw new Error('This folder is not a Bruno collection: it has no bruno.json or opencollection.yml');
+      const collectionPaths = await window.ipcRenderer.invoke('renderer:find-bruno-collections', folderPath);
+      if (!collectionPaths.length) {
+        throw new Error('No Bruno collections found in this folder (looked for bruno.json or opencollection.yml, up to four levels deep)');
       }
 
-      await handleSubmit({ rawData: { folderPath, collectionName: path.basename(folderPath) }, type: 'bruno-folder' });
+      await handleSubmit({ rawData: { folderPath, collectionPaths, collectionName: path.basename(folderPath) }, type: 'bruno-folder' });
     } catch (err) {
       toastError(err, 'Import Bruno collection failed');
     }
@@ -308,7 +304,7 @@ const FileTab = ({
               style={{ color: theme.textLink }}
               data-testid="import-bruno-folder"
             >
-              Import a Bruno collection folder
+              Import a Bruno folder
             </button>
           </p>
         </div>
