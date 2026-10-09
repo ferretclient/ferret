@@ -1,6 +1,6 @@
 FROM node:22-slim
 
-LABEL maintainer="Ferret <support@ferret.io>"
+LABEL maintainer="Ferret (https://github.com/jakahann/ferret-app)"
 
 ARG FERRET_VERSION
 ENV FERRET_VERSION=${FERRET_VERSION}
@@ -10,8 +10,8 @@ LABEL org.opencontainers.image.description="Ferret CLI - Open source IDE for exp
 LABEL org.opencontainers.image.licenses="MIT"
 LABEL org.opencontainers.image.title="Ferret CLI"
 LABEL org.opencontainers.image.version="${FERRET_VERSION}"
-LABEL org.opencontainers.image.url="https://ferret.io"
-LABEL org.opencontainers.image.documentation="https://docs.ferret.io/fer-cli/overview"
+LABEL org.opencontainers.image.url="https://github.com/jakahann/ferret-app"
+LABEL org.opencontainers.image.documentation="https://github.com/jakahann/ferret-app/blob/main/docs/cli.md"
 
 ENV LC_ALL="en_US.UTF-8" \
     LANG="en_US.UTF-8" \

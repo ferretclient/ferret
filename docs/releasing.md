@@ -27,7 +27,7 @@ Tag `1.0.0` only when all of these are true:
 - [ ] The end-to-end suite passes, apart from tests that need proxy host names (see below).
 - [ ] A packaged installer (not just `npm run dev`) was installed and used on **each** of Windows, macOS and Linux.
 - [ ] Installers are **signed** (Windows code-signing certificate; Apple Developer ID with notarization), so users do not get security warnings.
-- [ ] The placeholder addresses are real: the `ferret.io` website and docs hosts, the support and security email addresses, and the package scope you publish under.
+- [ ] The repository is public, so the documentation links, issue tracker and private vulnerability reporting (**Settings → Code security → Private vulnerability reporting**) work for everyone. If you later buy a domain, update the links listed in `git grep "jakahann/ferret-app"`.
 - [ ] You have decided what is part of the stable promise: the `.fer` and `.yml` file formats, the `fer.*` script API, and the CLI options.
 - [ ] Anything you do not want to support is removed or clearly marked experimental.
 

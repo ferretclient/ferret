@@ -19,7 +19,7 @@
     "packages/ferret-filestore",
     "packages/ferret-sqlite"
   ],
-  "homepage": "https://ferret.io",
+  "homepage": "https://github.com/jakahann/ferret-app",
   "devDependencies": {
     "@eslint/compat": "^1.3.2",
     "@faker-js/faker": "^7.6.0",

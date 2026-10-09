@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "name": "ferret",
   "description": "Opensource API Client for Exploring and Testing APIs",
-  "homepage": "https://ferret.io",
+  "homepage": "https://github.com/jakahann/ferret-app",
   "repository": {
     "type": "git",
     "url": "https://github.com/jakahann/ferret-app.git"

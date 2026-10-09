@@ -108,6 +108,6 @@ This documentation supports Markdown formatting! You can use:
 - **Bold** and *italic* text
 - \`code blocks\` and syntax highlighting
 - Tables and lists
-- [Links](https://ferret.io)
+- [Links](https://github.com/jakahann/ferret-app)
 - And more!
 `;

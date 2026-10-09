@@ -4,7 +4,7 @@ With Ferret CLI, you can now run your API collections with ease using simple com
 
 This makes it easier to test your APIs in different environments, automate your testing process, and integrate your API tests with your continuous integration and deployment workflows.
 
-For detailed documentation, visit [Ferret CLI Documentation](https://docs.ferret.io/fer-cli/overview).
+For detailed documentation, visit [Ferret CLI Documentation](https://github.com/jakahann/ferret-app/blob/main/docs/cli.md).
 
 ## Installation
 

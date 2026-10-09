@@ -16,7 +16,7 @@ const SUPPORT_GROUPS = [
       {
         key: 'documentation',
         icon: IconBook,
-        url: 'https://docs.ferret.io',
+        url: 'https://github.com/jakahann/ferret-app/tree/main/docs',
         label: 'COMMON.DOCUMENTATION',
         description: 'SUPPORT.DOCUMENTATION_DESCRIPTION'
       },

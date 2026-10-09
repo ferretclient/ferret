@@ -6,7 +6,7 @@ We appreciate responsible disclosure and value contributions that help improve F
 
 ## Reporting a Vulnerability  
 
-To report a security issue, please email us at [security@ferret.io](mailto:security@ferret.io)
+To report a security issue, use GitHub's private reporting: open the repository's **Security** tab and choose [**Report a vulnerability**](https://github.com/jakahann/ferret-app/security/advisories/new). Only the maintainers can see the report.
 
 When reporting a vulnerability, please include as many details as possible to help us investigate:  
 

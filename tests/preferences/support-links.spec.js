@@ -15,5 +15,5 @@ test('Should verify all support links with correct URL in preference > Support t
   expect(await locator_reportissues.getAttribute('href')).toEqual('https://github.com/jakahann/ferret-app/issues');
 
   const locator_documentation = page.getByRole('link', { name: 'Documentation', exact: true });
-  expect(await locator_documentation.getAttribute('href')).toEqual('https://docs.ferret.io');
+  expect(await locator_documentation.getAttribute('href')).toEqual('https://github.com/jakahann/ferret-app/tree/main/docs');
 });
