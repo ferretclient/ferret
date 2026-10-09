@@ -33,6 +33,10 @@ describe('registerSqliteIpc', () => {
       'datastore:file-index:file_index_clear',
       'datastore:runner_responses:get_runner_response',
       'datastore:runner_responses:delete_runner_responses_for_collection',
+      'datastore:request_history:list_history',
+      'datastore:request_history:get_history_entry',
+      'datastore:request_history:delete_history_entry',
+      'datastore:request_history:delete_all_history',
       'datastore:files:stat',
       'datastore:files:read'
     ]);

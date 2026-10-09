@@ -54,6 +54,7 @@ const { registerMountIpc } = require('./ipc/mount');
 const { registerSqliteIpc } = require('./ipc/sqlite');
 const sqliteService = require('./services/sqlite');
 const { clearAllRunnerResponses } = require('./services/runner-exchange');
+const { pruneHistory } = require('./services/request-history');
 const { registerWsdlIpc } = require('./ipc/wsdl');
 const collectionWatcher = require('./app/collection-watcher');
 const WorkspaceWatcher = require('./app/workspace-watcher');
@@ -453,7 +454,8 @@ app.on('ready', async () => {
   registerMountIpc();
   sqliteService.openDatabase();
   clearAllRunnerResponses().catch((err) => console.warn('[runner] failed to clear stored responses', err));
-  registerSqliteIpc();
+  pruneHistory().catch((err) => console.warn('[history] failed to prune on startup', err));
+  registerSqliteIpc(mainWindow);
   appDocuments.handleProtocol();
   registerAppDocumentIpc(appDocuments, mainWindow);
   registerWsdlIpc();

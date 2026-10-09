@@ -15,7 +15,7 @@ script:pre-request {
   
   // Set up test cookies before the request
   try {
-    await jar.setCookies('https://testbench-sanity.ferret.io', [
+    await jar.setCookies('http://localhost:8081', [
       {
         key: 'test_cookie_1',
         value: 'value1',
@@ -42,7 +42,7 @@ script:pre-request {
     console.log("Test cookies set up successfully in pre-request script");
     
     // Verify cookies were set
-    const cookies = await jar.getCookies('https://testbench-sanity.ferret.io');
+    const cookies = await jar.getCookies('http://localhost:8081');
     console.log(`${cookies.length} cookies set for domain`);
     
   } catch (error) {
@@ -56,7 +56,7 @@ script:post-response {
   
   // Verify cookies exist before deletion
   try {
-    const cookiesBeforeDeletion = await jar.getCookies('https://testbench-sanity.ferret.io');
+    const cookiesBeforeDeletion = await jar.getCookies('http://localhost:8081');
   
     test("cookies should exist before clearing", function() {
     expect(cookiesBeforeDeletion).to.be.an('array');
@@ -69,11 +69,11 @@ script:post-response {
     }
     
     // Delete all cookies for the domain
-    await jar.deleteCookies('https://testbench-sanity.ferret.io');
+    await jar.deleteCookies('http://localhost:8081');
     console.log("deleteCookies operation completed in post-response");
     
     // Verify deletion worked
-    const cookiesAfterDeletion = await jar.getCookies('https://testbench-sanity.ferret.io');
+    const cookiesAfterDeletion = await jar.getCookies('http://localhost:8081');
     console.log(`Found ${cookiesAfterDeletion.length} cookies after deletion`);
     
   } catch (error) {
@@ -85,7 +85,7 @@ script:post-response {
 tests {
   const jar = fer.cookies.jar()
   
-  jar.getCookies("https://testbench-sanity.ferret.io", function(error, remainingCookies) {
+  jar.getCookies("http://localhost:8081", function(error, remainingCookies) {
     if(error) {
       console.error("Error checking remaining cookies:", error)
       throw new Error(`Failed to get remaining cookies: ${error.message || error}`)

@@ -18,6 +18,6 @@ assert {
 tests {
   test("req.getHost()", function() {
     const host = req.getHost();
-    expect(host).to.equal("testbench-sanity.ferret.io");
+    expect(host).to.equal("localhost:8081");
   });
 }

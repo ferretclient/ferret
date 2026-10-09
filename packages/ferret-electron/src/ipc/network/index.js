@@ -47,6 +47,7 @@ const { getCertsAndProxyConfig, buildCertsAndProxyConfig } = require('./cert-uti
 const { easterEggResponse } = require('../../utils/woof');
 const { createRunnerExchangeEmitters } = require('./runner-exchange');
 const { saveRunnerResponseBody } = require('../../services/runner-exchange');
+const { recordHistory } = require('../../services/request-history');
 const { buildFormUrlEncodedPayload, isFormData, getMediaType, extractBoundaryFromContentType } = require('@useferret/common').utils;
 
 const ERROR_OCCURRED_WHILE_EXECUTING_REQUEST = 'Error occurred while executing the request!';
@@ -1389,6 +1390,9 @@ const registerNetworkIpc = (mainWindow) => {
     const envVars = getEnvVars(environment);
     const processEnvVars = getProcessEnvVars(collectionUid);
     const response = await runRequest({ item, collection, envVars, processEnvVars, runtimeVariables, runInBackground: false });
+    recordHistory({ item, collection, response }).then((saved) => {
+      if (saved) mainWindow.webContents.send('main:history-updated');
+    });
     if (response.stream) {
       const stream = response.stream;
       response.stream = { running: response.status >= 200 && response.status < 300 };

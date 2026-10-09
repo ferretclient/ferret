@@ -15,7 +15,7 @@ describe('Postman to Ferret Converter with Examples', () => {
           method: 'GET',
           header: [],
           url: {
-            raw: 'https://testbench-sanity.ferret.io/ping',
+            raw: 'http://localhost:8081/ping',
             protocol: 'https',
             host: ['testbench-sanity', 'useferret', 'com'],
             path: ['ping']
@@ -28,7 +28,7 @@ describe('Postman to Ferret Converter with Examples', () => {
               method: 'GET',
               header: [],
               url: {
-                raw: 'https://testbench-sanity.ferret.io/ping',
+                raw: 'http://localhost:8081/ping',
                 protocol: 'https',
                 host: ['testbench-sanity', 'useferret', 'com'],
                 path: ['ping']
@@ -74,7 +74,7 @@ describe('Postman to Ferret Converter with Examples', () => {
                 }
               },
               url: {
-                raw: 'https://testbench-sanity.ferret.io/ping',
+                raw: 'http://localhost:8081/ping',
                 protocol: 'https',
                 host: ['testbench-sanity', 'useferret', 'com'],
                 path: ['ping']
@@ -118,7 +118,7 @@ describe('Postman to Ferret Converter with Examples', () => {
     expect(successExample.name).toBe('Success Response');
     expect(successExample.type).toBe('http-request');
     expect(successExample.itemUid).toBe(request.uid);
-    expect(successExample.request.url).toBe('https://testbench-sanity.ferret.io/ping');
+    expect(successExample.request.url).toBe('http://localhost:8081/ping');
     expect(successExample.request.method).toBe('GET');
     expect(successExample.response.status).toEqual(200);
     expect(successExample.response.statusText).toBe('OK');
@@ -135,7 +135,7 @@ describe('Postman to Ferret Converter with Examples', () => {
     expect(errorExample.name).toBe('Error Response');
     expect(errorExample.type).toBe('http-request');
     expect(errorExample.itemUid).toBe(request.uid);
-    expect(errorExample.request.url).toBe('https://testbench-sanity.ferret.io/ping');
+    expect(errorExample.request.url).toBe('http://localhost:8081/ping');
     expect(errorExample.request.method).toBe('GET');
     expect(errorExample.response.status).toEqual(500);
     expect(errorExample.response.statusText).toBe('Internal Server Error');

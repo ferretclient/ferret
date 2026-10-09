@@ -1,5 +1,5 @@
 vars {
-  host: https://testbench-sanity.ferret.io
+  host: http://localhost:8081
   bearer_auth_token: your_secret_token
   basic_auth_password: della
   env.var1: envVar1

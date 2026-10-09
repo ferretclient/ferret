@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: https://echo.ferret.io
+  url: http://localhost:8081/echo
   body: text
   auth: none
 }

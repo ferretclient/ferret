@@ -1,6 +1,8 @@
 # Ferret CLI Docker Images
 
-Official Docker images for [Ferret CLI](https://ferret.io), enabling container-native API collection runs in CI/CD pipelines and local environments without requiring Node.js or npm on the host. See the [Ferret CLI docs](https://docs.ferret.io/bru-cli/overview) for CLI usage.
+> **Not published yet.** The images below are the intended release layout. The Dockerfiles install `@useferret/cli` from npm, so they can be built only after the CLI package is published, and the `useferret/cli` registries do not exist yet.
+
+Official Docker images for [Ferret CLI](https://ferret.io), enabling container-native API collection runs in CI/CD pipelines and local environments without requiring Node.js or npm on the host. See the [Ferret CLI docs](https://docs.ferret.io/fer-cli/overview) for CLI usage.
 
 ## Registries
 
@@ -92,7 +94,7 @@ docker run --rm useferret/cli --version
 
 > **Cross-platform note:** the examples below use `$(pwd)` which works in Bash / Zsh / Git Bash / WSL. On Windows native shells, substitute `$(pwd)` with `${PWD}` (PowerShell) or `%cd%` (CMD).
 
-> **Adding `fer` options:** The examples below show docker-specific flags. For all `fer run` options — recurse (`-r`), environments, variables, reporters, bail, and more — see the [Ferret CLI docs](https://docs.ferret.io/bru-cli/overview).
+> **Adding `fer` options:** The examples below show docker-specific flags. For all `fer run` options — recurse (`-r`), environments, variables, reporters, bail, and more — see the [Ferret CLI docs](https://docs.ferret.io/fer-cli/overview).
 
 ```bash
 # run every request in the Ferret collection (current dir)

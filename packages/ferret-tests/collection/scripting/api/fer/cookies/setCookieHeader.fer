@@ -14,7 +14,7 @@ script:pre-request {
   const jar = fer.cookies.jar();
   
   // Set a cookie that should be sent with the upcoming request
-  await jar.setCookie('https://echo.ferret.io', {
+  await jar.setCookie('http://localhost:8081/echo', {
     key: 'auth',
     value: 'token123',
     path: '/',

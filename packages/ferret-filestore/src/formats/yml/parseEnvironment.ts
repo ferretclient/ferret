@@ -46,7 +46,15 @@ export const toFerretEnvironmentVariables = (variables: (Variable | SecretVariab
       secret: false
     };
 
-    if (isTypedValue(v.value)) {
+    const options = (v as Variable & { options?: unknown }).options;
+    if (Array.isArray(options)) {
+      variable.dataType = 'options';
+      variable.value = ensureString(isTypedValue(v.value) ? v.value.data : v.value);
+      variable.options = options.map((option: any) => ({
+        key: ensureString(option?.key),
+        value: ensureString(option?.value)
+      }));
+    } else if (isTypedValue(v.value)) {
       Object.assign(variable, fromOpenCollectionTypedValue(v.value));
     } else {
       variable.value = ensureString(v.value);

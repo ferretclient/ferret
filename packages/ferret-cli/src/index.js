@@ -20,11 +20,12 @@ const run = async () => {
   }
 
   const { argv } = yargs
+    .scriptName('fer')
     .strict()
     .commandDir('commands')
     .epilogue(CLI_EPILOGUE)
     .usage('Usage: $0 <command> [options]')
-    .demandCommand(1, 'Woof!! Let\'s play with some APIs!!')
+    .demandCommand(1, 'Please specify a command, e.g. "fer run" or "fer import"')
     .help('h')
     .alias('h', 'help');
 };

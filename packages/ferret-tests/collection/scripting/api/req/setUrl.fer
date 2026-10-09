@@ -17,12 +17,12 @@ assert {
 }
 
 script:pre-request {
-  req.setUrl("https://testbench-sanity.ferret.io/ping");
+  req.setUrl("http://localhost:8081/ping");
 }
 
 tests {
   test("req.setUrl()", function() {
     const url = req.getUrl();
-    expect(url).to.equal("https://testbench-sanity.ferret.io/ping");
+    expect(url).to.equal("http://localhost:8081/ping");
   });
 }

@@ -66,8 +66,13 @@ export {
 } from './environment-inheritance';
 
 export {
-  toVariablesMap
+  toVariablesMap,
+  isOptionsVariable,
+  resolveOptionsVariableValue,
+  validateEnvironmentVariableOptions,
+  OPTIONS_DATATYPE
 } from './environment-variables';
+export type { EnvironmentVariableOption } from './environment-variables';
 
 export {
   toBool,

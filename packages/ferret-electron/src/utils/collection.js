@@ -7,7 +7,7 @@ const os = require('os');
 const { preferencesUtil } = require('../store/preferences');
 const path = require('path');
 const { DEFAULT_COLLECTION_FORMAT } = require('@useferret/filestore');
-const { parseValueByDataType } = require('@useferret/common/utils');
+const { parseValueByDataType, isOptionsVariable, resolveOptionsVariableValue } = require('@useferret/common/utils');
 const { GRPC_SCRIPT_KEYS, getEffectiveTags, getFolderTags, getOwnTags } = require('@useferret/common');
 
 /**
@@ -16,7 +16,7 @@ const { GRPC_SCRIPT_KEYS, getEffectiveTags, getFolderTags, getOwnTags } = requir
  * draft dataType changes — e.g. a user picking `@number` on a "42" string
  * via the UI takes effect at request-execution time without requiring a save.
  */
-const resolveTypedValue = (v) => parseValueByDataType(v.value, v.dataType);
+const resolveTypedValue = (v) => (isOptionsVariable(v) ? resolveOptionsVariableValue(v) : parseValueByDataType(v.value, v.dataType));
 
 const FORMAT_CONFIG = {
   yml: { ext: '.yml', collectionFile: 'opencollection.yml', folderFile: 'folder.yml' },

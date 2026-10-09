@@ -5,14 +5,14 @@ meta {
 }
 
 post {
-  url: https://echo.ferret.io
+  url: http://localhost:8081/echo
   body: none
   auth: inherit
 }
 
 tests {
   await test("send request with a get url string", async () => {
-    const res = await fer.sendRequest("https://testbench-sanity.ferret.io/ping");
+    const res = await fer.sendRequest("http://localhost:8081/ping");
     expect(res.data).to.eql('pong');
   });
 }

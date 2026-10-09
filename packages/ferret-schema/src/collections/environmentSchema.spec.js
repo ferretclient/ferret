@@ -99,4 +99,22 @@ describe('Environment Schema Validation', () => {
       await expect(environmentSchema.validate(env)).rejects.toThrow();
     });
   });
+
+  describe('options variables', () => {
+    const options = [{ key: 'Company1', value: '12345' }, { key: 'Company2', value: '43214' }];
+
+    it('validates an options variable', async () => {
+      const env = buildEnvironment({ variables: [buildVariable({ value: 'Company1', dataType: 'options', options })] });
+
+      await expect(environmentSchema.validate(env)).resolves.toBeTruthy();
+    });
+
+    it('rejects an option with unknown fields', async () => {
+      const env = buildEnvironment({
+        variables: [buildVariable({ value: 'Company1', dataType: 'options', options: [{ key: 'A', value: '1', extra: true }] })]
+      });
+
+      await expect(environmentSchema.validate(env)).rejects.toThrow();
+    });
+  });
 });

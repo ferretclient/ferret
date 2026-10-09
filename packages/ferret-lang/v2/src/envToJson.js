@@ -5,6 +5,7 @@ const {
   unescapeAnnotationDoubleQuotedArg,
   applyDescriptionFromAnnotations,
   extractTypedAnnotations,
+  extractOptionsAnnotations,
   validatedEnvironmentExtendsFrom
 } = require('./utils');
 
@@ -116,6 +117,7 @@ const mapPairListToKeyValPairs = (pairList = []) => {
     }
 
     extractTypedAnnotations(rawAnnotations, result);
+    extractOptionsAnnotations(rawAnnotations, result);
 
     return expandDescriptionOrphanRows(result);
   });

@@ -6,7 +6,7 @@ variables:
   - name: localhost
     value: http://localhost:8081
   - name: echo-host
-    value: https://echo.ferret.io
+    value: http://localhost:8081/echo
   - name: typed_env_num
     value:
       type: number

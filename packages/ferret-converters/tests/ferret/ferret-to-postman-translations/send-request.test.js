@@ -5,7 +5,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform raw JSON body to Postman format', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -29,7 +29,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Accept': 'application/json',
@@ -59,7 +59,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform raw text body', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain',
@@ -72,7 +72,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'text/plain',
@@ -90,7 +90,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform raw JSON object body', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -114,7 +114,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Accept': 'application/json',
@@ -145,7 +145,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const code = `
         const additionalData = { "y": 2, "z": 3 };
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -161,7 +161,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       expect(translatedCode).toBe(`
         const additionalData = { "y": 2, "z": 3 };
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'application/json',
@@ -183,7 +183,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform urlencoded body with single key-value pair', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -202,7 +202,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Accept': 'application/json',
@@ -228,7 +228,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform urlencoded body with multiple key-value pairs', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -245,7 +245,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -273,7 +273,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform urlencoded body when no Content-Type header exists', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             data: {
                 "key1": "value1",
@@ -285,7 +285,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       // Without Content-Type header, defaults to raw mode
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             body: {
                 mode: "raw",
@@ -302,7 +302,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform urlencoded body with incorrect Content-Type header', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain',
@@ -317,7 +317,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       // With text/plain Content-Type, defaults to raw mode
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'text/plain',
@@ -338,7 +338,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const code = `
         const rest = { "key3": "value3", "key4": "value4" };
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -354,7 +354,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       expect(translatedCode).toBe(`
         const rest = { "key3": "value3", "key4": "value4" };
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -381,7 +381,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const code = `
         const rest = { "key1": "value1", "key2": "value2" };
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -395,7 +395,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       expect(translatedCode).toBe(`
         const rest = { "key1": "value1", "key2": "value2" };
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -417,7 +417,7 @@ describe('Ferret to Postman Send Request Translation', () => {
         const rest1 = { "key1": "value1" };
         const rest2 = { "key2": "value2" };
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -434,7 +434,7 @@ describe('Ferret to Postman Send Request Translation', () => {
         const rest1 = { "key1": "value1" };
         const rest2 = { "key2": "value2" };
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -462,7 +462,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform formdata body with single key-value pair', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -480,7 +480,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'multipart/form-data',
@@ -505,7 +505,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform formdata body with multiple key-value pairs', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -525,7 +525,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'multipart/form-data',
@@ -556,7 +556,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform formdata body when no Content-Type header exists', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             data: {
                 "firstName": "John",
@@ -573,7 +573,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       // Without Content-Type header, defaults to raw mode
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             body: {
                 mode: "raw",
@@ -595,7 +595,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform formdata body with incorrect Content-Type header', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain',
@@ -615,7 +615,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       // With text/plain Content-Type, defaults to raw mode
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'text/plain',
@@ -641,7 +641,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const code = `
         const additionalFields = { "email": "john@example.com", "phone": "123-456-7890" };
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -662,7 +662,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       expect(translatedCode).toBe(`
         const additionalFields = { "email": "john@example.com", "phone": "123-456-7890" };
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'multipart/form-data',
@@ -694,7 +694,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const code = `
         const formData = { "name": "John", "age": "30" };
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -708,7 +708,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       expect(translatedCode).toBe(`
         const formData = { "name": "John", "age": "30" };
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'multipart/form-data',
@@ -730,7 +730,7 @@ describe('Ferret to Postman Send Request Translation', () => {
         const dynamicKey = "dynamicField";
         const rest = { [dynamicKey]: "dynamicValue", "staticField": "staticValue" };
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -746,7 +746,7 @@ describe('Ferret to Postman Send Request Translation', () => {
         const dynamicKey = "dynamicField";
         const rest = { [dynamicKey]: "dynamicValue", "staticField": "staticValue" };
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'multipart/form-data',
@@ -771,7 +771,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should rename headers property to header', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET',
             headers: {
                 'X-Custom-Header': 'custom-value',
@@ -782,7 +782,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET',
             header: {
                 'X-Custom-Header': 'custom-value',
@@ -797,7 +797,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform response property access', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET'
         }, function (error, response) {
             const status = response.status;
@@ -813,7 +813,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET'
         }, function(error, response) {
             const status = response.code;
@@ -833,7 +833,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform callback function', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET'
         }, function (error, response) {
             console.log(response.data);
@@ -842,7 +842,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET'
         }, function(error, response) {
             console.log(response.json());
@@ -853,7 +853,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should handle arrow function callbacks', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET'
         }, (error, response) => {
             console.log(response.data);
@@ -862,7 +862,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET'
         }, function(error, response) {
             console.log(response.json());
@@ -873,7 +873,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should handle async arrow function callbacks', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET'
         }, async (error, response) => {
             await new Promise(resolve => {
@@ -887,7 +887,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET'
         }, async function(error, response) {
             await new Promise(resolve => {
@@ -905,7 +905,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform requestConfig passed as a variable', () => {
       const code = `
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -925,7 +925,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Accept': 'application/json',
@@ -951,7 +951,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform requestConfig with multi-level variable references', () => {
       const code = `
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -967,7 +967,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'application/json',
@@ -988,7 +988,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform urlencoded body mode with variable config', () => {
       const code = `
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -1005,7 +1005,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -1031,7 +1031,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform formdata body mode with variable config', () => {
       const code = `
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -1048,7 +1048,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'multipart/form-data',
@@ -1074,7 +1074,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform variable config without callback', () => {
       const code = `
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
@@ -1085,7 +1085,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET',
             header: {
                 'Accept': 'application/json'
@@ -1098,7 +1098,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform variable config with raw text body', () => {
       const code = `
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain',
@@ -1112,7 +1112,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'POST',
             header: {
                 'Content-Type': 'text/plain',
@@ -1131,7 +1131,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform variable config with arrow function callback', () => {
       const code = `
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
@@ -1144,7 +1144,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET',
             header: {
                 'Accept': 'application/json'
@@ -1159,7 +1159,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform variable config with async arrow function callback', () => {
       const code = `
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
@@ -1173,7 +1173,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET',
             header: {
                 'Accept': 'application/json'
@@ -1191,7 +1191,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should transform sendRequest without callback', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
@@ -1201,7 +1201,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET',
             header: {
                 'Accept': 'application/json'
@@ -1214,11 +1214,11 @@ describe('Ferret to Postman Send Request Translation', () => {
   describe('Simple URL Request', () => {
     it('should handle string URL argument', () => {
       const code = `
-        fer.sendRequest('https://echo.ferret.io');
+        fer.sendRequest('http://localhost:8081/echo');
       `;
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
-        pm.sendRequest('https://echo.ferret.io');
+        pm.sendRequest('http://localhost:8081/echo');
       `);
     });
   });
@@ -1228,7 +1228,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const code = `
         try {
             fer.sendRequest({
-                url: 'https://echo.ferret.io',
+                url: 'http://localhost:8081/echo',
                 method: 'GET'
             }, function (error, response) {
                 if (error) {
@@ -1244,7 +1244,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       expect(translatedCode).toBe(`
         try {
             pm.sendRequest({
-                url: 'https://echo.ferret.io',
+                url: 'http://localhost:8081/echo',
                 method: 'GET'
             }, function(error, response) {
                 if (error) {
@@ -1261,7 +1261,7 @@ describe('Ferret to Postman Send Request Translation', () => {
     it('should handle sendRequest with conditional logic in callback', () => {
       const code = `
         fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET'
         }, function (error, response) {
             if (response.status === 200) {
@@ -1275,7 +1275,7 @@ describe('Ferret to Postman Send Request Translation', () => {
       const translatedCode = translateFerToPostman(code);
       expect(translatedCode).toBe(`
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'http://localhost:8081/echo',
             method: 'GET'
         }, function(error, response) {
             if (response.code === 200) {

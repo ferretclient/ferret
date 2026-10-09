@@ -76,6 +76,10 @@ const defaultPreferences = {
     file: {
       enabled: false
     }
+  },
+  history: {
+    enabled: true,
+    saveBodies: true
   }
 };
 
@@ -171,6 +175,10 @@ const preferencesSchema = Yup.object().shape({
     file: Yup.object({
       enabled: Yup.boolean()
     })
+  }).optional(),
+  history: Yup.object({
+    enabled: Yup.boolean(),
+    saveBodies: Yup.boolean()
   }).optional()
 });
 
@@ -363,6 +371,10 @@ const preferencesUtil = {
   },
   shouldSendCookies: () => {
     return get(getPreferences(), 'request.sendCookies', true);
+  },
+  getHistoryPreferences: () => {
+    const history = get(getPreferences(), 'history', {});
+    return { enabled: history.enabled !== false, saveBodies: history.saveBodies !== false };
   },
   getResponsePaneOrientation: () => {
     return get(getPreferences(), 'layout.responsePaneOrientation', 'horizontal');

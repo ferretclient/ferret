@@ -3,7 +3,7 @@ const path = require('path');
 const chalk = require('chalk');
 const { parseEnvironment } = require('@useferret/filestore');
 const { getEnvVars } = require('../utils/fer');
-const { resolveEnvironmentInheritance: resolveEnvironmentInheritanceCommon } = require('@useferret/common').utils;
+const { resolveEnvironmentInheritance: resolveEnvironmentInheritanceCommon, isOptionsVariable } = require('@useferret/common').utils;
 
 /**
  * Parse a Ferret JSON environment object and normalize variables
@@ -21,7 +21,8 @@ const parseEnvironmentJson = (parsed = {}) => {
       value: variable.value,
       type: variable.type || 'text',
       enabled: variable.enabled !== false,
-      secret: variable.secret || false
+      secret: variable.secret || false,
+      ...(isOptionsVariable(variable) ? { dataType: variable.dataType, options: variable.options } : {})
     }))
   };
 
@@ -116,8 +117,16 @@ const loadEnvironmentFromFile = ({ filePath, name, resolveInheritance = true }) 
     variables.__name__ = name || environmentNameOf(filePath);
   }
 
+  // name → options of each options variable, so `--env-var name=OptionKey` can select an option
+  const options = Object.fromEntries(
+    [...(environment?.inheritedVariables || []), ...(environment?.variables || [])]
+      .filter((v) => v.enabled && isOptionsVariable(v))
+      .map((v) => [v.name, v.options])
+  );
+
   return {
     variables,
+    options,
     inheritedVariables: environment?.inheritedVariables || [],
     ownVariables: (environment?.variables || []).filter((v) => v.enabled)
   };

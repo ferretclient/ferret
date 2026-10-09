@@ -197,16 +197,44 @@ const resolveDescriptionAnnotations = (annotations, description) => {
   return { descArr, other };
 };
 
+// Environment `options` variables are stored as an `@options` marker plus one
+// `@option('key=value')` per choice; the variable's value is the default key.
+const OPTIONS_ANNOTATION = 'options';
+const OPTION_ANNOTATION = 'option';
+
+const buildOptionAnnotations = (options = []) =>
+  options.map((option) => ({ name: OPTION_ANNOTATION, value: `${option.key}=${option.value ?? ''}` }));
+
 const buildAnnotationsFromVariable = (variable) => {
-  const { annotations = [], dataType, description } = variable;
-  const dataTypeFiltered = annotations.filter((a) => !FERRET_VARIABLE_DATATYPES.includes(a.name));
+  const { annotations = [], dataType, description, options } = variable;
+  const dataTypeFiltered = annotations.filter(
+    (a) => !FERRET_VARIABLE_DATATYPES.includes(a.name) && a.name !== OPTIONS_ANNOTATION && a.name !== OPTION_ANNOTATION
+  );
   const { descArr, other } = resolveDescriptionAnnotations(dataTypeFiltered, description);
+
+  if (dataType === OPTIONS_ANNOTATION) {
+    return [{ name: OPTIONS_ANNOTATION }, ...buildOptionAnnotations(options), ...descArr, ...other];
+  }
 
   if (dataType && dataType !== 'string') {
     return [{ name: dataType }, ...descArr, ...other];
   }
 
   return [...descArr, ...other];
+};
+
+const extractOptionsAnnotations = (rawAnnotations, result) => {
+  if (!rawAnnotations?.some((a) => a.name === OPTIONS_ANNOTATION)) return;
+
+  result.dataType = OPTIONS_ANNOTATION;
+  result.options = rawAnnotations
+    .filter((a) => a.name === OPTION_ANNOTATION && typeof a.value === 'string')
+    .map((a) => {
+      const separator = a.value.indexOf('=');
+      return separator === -1
+        ? { key: a.value, value: '' }
+        : { key: a.value.slice(0, separator), value: a.value.slice(separator + 1) };
+    });
 };
 
 const extractTypedAnnotations = (rawAnnotations, result) => {
@@ -286,6 +314,7 @@ module.exports = {
   getValueUrl,
   serializeAnnotations,
   extractTypedAnnotations,
+  extractOptionsAnnotations,
   buildAnnotationsFromVariable,
   serializeVar,
   applyDescriptionFromAnnotations,

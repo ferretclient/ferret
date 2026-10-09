@@ -15,7 +15,7 @@ script:pre-request {
   
   // Set cookie before the request
   try {
-    await jar.setCookie("https://testbench-sanity.ferret.io", {
+    await jar.setCookie("http://localhost:8081", {
       key: "auth",
       value: "1234",
       path: "/path"
@@ -37,7 +37,7 @@ tests {
   });
   
   // Test: Verify the cookie was set by retrieving it
-  const cookieData = await jar.getCookie("https://testbench-sanity.ferret.io/path", "auth");
+  const cookieData = await jar.getCookie("http://localhost:8081/path", "auth");
   
   test("should retrieve the set cookie with correct properties", function() {
       expect(cookieData.key).to.equal("auth");
@@ -48,7 +48,7 @@ tests {
   });
   
   // Test: Additional verification - check all cookies for the domain
-  const allCookies = await jar.getCookies("https://testbench-sanity.ferret.io/path");
+  const allCookies = await jar.getCookies("http://localhost:8081/path");
   
   test("should find the cookie in domain cookie list", function() {
     expect(allCookies).to.be.an('array');

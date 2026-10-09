@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: https://echo.ferret.io/:request_path_param?request_query_param=request_query_param_value
+  url: http://localhost:8081/echo/:request_path_param?request_query_param=request_query_param_value
   body: text
   auth: basic
 }

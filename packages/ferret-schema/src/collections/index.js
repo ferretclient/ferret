@@ -23,7 +23,18 @@ const environmentVariablesSchema = Yup.object({
   enabled: Yup.boolean().defined(),
   secret: Yup.boolean(),
   description: Yup.string().nullable(),
-  dataType: Yup.string().oneOf(FERRET_VARIABLE_DATATYPES).nullable()
+  // 'options' is environment-only: `options` lists the choices and `value` holds the default key
+  dataType: Yup.string().oneOf([...FERRET_VARIABLE_DATATYPES, 'options']).nullable(),
+  options: Yup.array()
+    .of(
+      Yup.object({
+        key: Yup.string().defined(),
+        value: Yup.string().defined()
+      })
+        .noUnknown(true)
+        .strict()
+    )
+    .nullable()
 })
   .noUnknown(true)
   .strict();

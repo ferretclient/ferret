@@ -84,7 +84,7 @@ const circularRefsData = {
       }
     }
   },
-  servers: [{ url: 'https://echo.ferret.io' }]
+  servers: [{ url: 'http://localhost:8081/echo' }]
 };
 
 // More complex circular reference test with a longer chain
@@ -207,7 +207,7 @@ const complexCircularRefsData = {
       }
     }
   },
-  servers: [{ url: 'https://echo.ferret.io' }]
+  servers: [{ url: 'http://localhost:8081/echo' }]
 };
 
 const circularRefsOutput = {
@@ -220,7 +220,7 @@ const circularRefsOutput = {
           name: 'baseUrl',
           secret: false,
           type: 'text',
-          value: 'https://echo.ferret.io'
+          value: 'http://localhost:8081/echo'
         }
       ]
     }

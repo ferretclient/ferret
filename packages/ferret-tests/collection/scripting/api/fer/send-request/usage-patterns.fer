@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: https://echo.ferret.io
+  url: http://localhost:8081/echo
   body: none
   auth: inherit
 }
@@ -14,7 +14,7 @@ tests {
   // pattern 1: using async/await
   await test("post request with async/await - success case", async () => {
     const res = await fer.sendRequest({
-      url: 'https://echo.ferret.io',
+      url: 'http://localhost:8081/echo',
       method: 'POST',
       data: 'ping'
     });
@@ -24,7 +24,7 @@ tests {
   await test("post request with async/await - error case", async () => {
     try {
       await fer.sendRequest({
-        url: 'https://echo.ferret.io/invalid',
+        url: 'http://localhost:8081/echo/invalid',
         method: 'POST',
         data: 'ping'
       }); 
@@ -37,7 +37,7 @@ tests {
   // pattern 2: using promise (.then/.catch)
   await test("post request with promise chain - success case", async () => {
     await fer.sendRequest({
-      url: 'https://echo.ferret.io',
+      url: 'http://localhost:8081/echo',
       method: 'POST',
       data: 'ping'
     })
@@ -48,7 +48,7 @@ tests {
   
   await test("post request with promise chain - error case", async () => {
     await fer.sendRequest({
-      url: 'https://echo.ferret.io/invalid',
+      url: 'http://localhost:8081/echo/invalid',
       method: 'POST',
       data: 'ping'
     })
@@ -60,7 +60,7 @@ tests {
   // pattern 3: using callbacks
   await test("post request with callback - success case", async () => {
     await fer.sendRequest({
-      url: 'https://echo.ferret.io',
+      url: 'http://localhost:8081/echo',
       method: 'POST',
       data: 'ping'
     }, function(error, response) {
@@ -70,7 +70,7 @@ tests {
   
   await test("post request with callback - error case", async () => {
     await fer.sendRequest({
-      url: 'https://echo.ferret.io/invalid',
+      url: 'http://localhost:8081/echo/invalid',
       method: 'POST',
       data: 'ping'
     }, function(error, response) {

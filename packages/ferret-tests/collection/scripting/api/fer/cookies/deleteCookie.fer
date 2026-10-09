@@ -13,7 +13,7 @@ get {
 script:pre-request {
   const jar = fer.cookies.jar()
   
-  await jar.setCookies('https://testbench-sanity.ferret.io', [
+  await jar.setCookies('http://localhost:8081', [
     {
       key: 'cookie_to_delete',
       value: 'will_be_deleted',
@@ -34,16 +34,16 @@ script:pre-request {
 script:post-response {
   const jar = fer.cookies.jar()
   
-  const cookiesBefore = await jar.getCookies('https://testbench-sanity.ferret.io');
+  const cookiesBefore = await jar.getCookies('http://localhost:8081');
   console.log(`Found ${cookiesBefore.length} cookies before deletion`);
   
-  const targetCookie = await jar.getCookie('https://testbench-sanity.ferret.io', 'cookie_to_delete');
+  const targetCookie = await jar.getCookie('http://localhost:8081', 'cookie_to_delete');
   test("cookie should exist before deletion", function() {
     expect(targetCookie).to.not.be.null;
     expect(targetCookie.key).to.equal('cookie_to_delete');
   });
   
-  await jar.deleteCookie('https://testbench-sanity.ferret.io', 'cookie_to_delete');
+  await jar.deleteCookie('http://localhost:8081', 'cookie_to_delete');
   console.log("Cookie deleted");
 }
 
@@ -51,17 +51,17 @@ tests {
   const jar = fer.cookies.jar()
   
   test("should have deleted the target cookie", async function() {
-    const deletedCookie = await jar.getCookie('https://testbench-sanity.ferret.io', 'cookie_to_delete');
+    const deletedCookie = await jar.getCookie('http://localhost:8081', 'cookie_to_delete');
     expect(deletedCookie).to.be.null;
   });
   
   test("should keep other cookies intact", async function() {
-    const cookieToKeep = await jar.getCookie('https://testbench-sanity.ferret.io', 'cookie_to_keep');
+    const cookieToKeep = await jar.getCookie('http://localhost:8081', 'cookie_to_keep');
     expect(cookieToKeep).to.not.be.null;
     expect(cookieToKeep.key).to.equal('cookie_to_keep');
   });
   
-  jar.deleteCookie("https://testbench-sanity.ferret.io", "cookie_to_keep", function(error) {
+  jar.deleteCookie("http://localhost:8081", "cookie_to_keep", function(error) {
     test("should successfully delete with callback", function() {
       expect(error).to.be.null;
     });

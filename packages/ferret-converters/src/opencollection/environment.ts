@@ -14,12 +14,22 @@ import type {
   FerretEnvironmentVariable
 } from './types';
 
+interface OCVariableOption {
+  key: string;
+  value: string;
+}
+
 interface OCVariable extends Omit<Variable, 'value'> {
   name: string;
   value?: string | { type: string; data: unknown };
   secret?: boolean;
   disabled?: boolean;
+  // Ferret options variable: `value` is then the key of the default option
+  options?: OCVariableOption[];
 }
+
+const toOptionStrings = (options: unknown[]): OCVariableOption[] =>
+  options.map((option: any) => ({ key: String(option?.key ?? ''), value: String(option?.value ?? '') }));
 
 export const fromOpenCollectionEnvironments = (environments: Environment[] | undefined): FerretEnvironment[] => {
   if (!environments?.length) {
@@ -54,11 +64,15 @@ export const fromOpenCollectionEnvironments = (environments: Environment[] | und
         return result;
       }
 
-      if (variable.value === undefined) {
+      if (variable.value === undefined && !Array.isArray(variable.options)) {
         return result;
       }
 
-      if (isTypedValue(variable.value)) {
+      if (Array.isArray(variable.options)) {
+        result.dataType = 'options';
+        result.value = isTypedValue(variable.value) ? String(variable.value.data ?? '') : String(variable.value ?? '');
+        result.options = toOptionStrings(variable.options);
+      } else if (isTypedValue(variable.value)) {
         Object.assign(result, fromOpenCollectionTypedValue(variable.value));
       } else if (typeof variable.value === 'string') {
         result.value = variable.value;
@@ -94,7 +108,12 @@ export const toOpenCollectionEnvironments = (environments: FerretEnvironment[] |
           // Secret variables don't include the value in export.
         } else {
           const valueStr = serializeVariableValue(v.value);
-          ocVar.value = hasTypedMetadata(v) ? toOpenCollectionTypedValue(v, valueStr) : valueStr;
+          if (v.dataType === 'options') {
+            ocVar.value = valueStr;
+            ocVar.options = toOptionStrings(v.options || []);
+          } else {
+            ocVar.value = hasTypedMetadata(v) ? toOpenCollectionTypedValue(v, valueStr) : valueStr;
+          }
         }
 
         if (v.enabled === false) {

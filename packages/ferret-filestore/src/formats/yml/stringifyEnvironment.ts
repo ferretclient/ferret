@@ -2,7 +2,7 @@ import type { Environment as FerretEnvironment, EnvironmentVariable as FerretEnv
 import type { Environment } from '@opencollection/types/config/environments';
 import type { Variable, SecretVariable } from '@opencollection/types/common/variables';
 import { stringifyYml } from './utils';
-import { hasTypedMetadata, toOpenCollectionTypedValue, serializeVariableValue } from './common/datatype';
+import { hasTypedMetadata, toOpenCollectionTypedValue, serializeVariableValue, type TypedVariableFields } from './common/datatype';
 import { validatedEnvironmentExtendsFrom } from '@useferret/common/utils';
 
 export const toOpenCollectionEnvironmentVariables = (variables: FerretEnvironmentVariable[]): (Variable | SecretVariable)[] | undefined => {
@@ -12,13 +12,17 @@ export const toOpenCollectionEnvironmentVariables = (variables: FerretEnvironmen
 
   const ocVariables: (Variable | SecretVariable)[] = variables
     .map((v: FerretEnvironmentVariable): Variable | SecretVariable => {
+      // 'options' is not an OpenCollection value type: options variables carry an `options` list instead.
+      const isOptions = v.dataType === 'options';
+      const typed: TypedVariableFields = { dataType: isOptions ? undefined : v.dataType as TypedVariableFields['dataType'] };
+
       if (v.secret === true) {
         const secretVar: SecretVariable = {
           secret: true,
           name: v.name || ''
         };
-        if (hasTypedMetadata(v)) {
-          secretVar.type = v.dataType;
+        if (hasTypedMetadata(typed)) {
+          secretVar.type = typed.dataType;
         }
         if (v.enabled === false) {
           secretVar.disabled = true;
@@ -31,10 +35,17 @@ export const toOpenCollectionEnvironmentVariables = (variables: FerretEnvironmen
 
       const valueStr = serializeVariableValue(v.value);
 
+      // An options variable keeps its default key as a plain value next to the `options` list.
       const variable: Variable = {
         name: v.name || '',
-        value: hasTypedMetadata(v) ? toOpenCollectionTypedValue(v, valueStr) : valueStr
+        value: hasTypedMetadata(typed) ? toOpenCollectionTypedValue(typed, valueStr) : valueStr
       };
+      if (isOptions) {
+        (variable as Variable & { options?: { key: string; value: string }[] }).options = (v.options || []).map((option) => ({
+          key: option.key,
+          value: option.value ?? ''
+        }));
+      }
 
       if (v.enabled === false) {
         variable.disabled = true;

@@ -295,7 +295,7 @@ components:
         type: "string"
         default: "value2"
 servers:
-  - url: "https://echo.ferret.io"
+  - url: "http://localhost:8081/echo"
 `;
 
 const expectedOutput = {
@@ -310,7 +310,7 @@ const expectedOutput = {
           secret: false,
           type: 'text',
           uid: 'mockeduuidvalue123456',
-          value: 'https://echo.ferret.io'
+          value: 'http://localhost:8081/echo'
         }
       ]
     }

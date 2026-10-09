@@ -13,7 +13,7 @@ get {
 tests {
   test("should interpolate envs", function() {
     const interpolated = fer.interpolate("url: {{host}}")
-    expect(interpolated).to.equal("url: https://testbench-sanity.ferret.io");
+    expect(interpolated).to.equal("url: http://localhost:8081");
   });
   
   test("should interpolate random variables", function() {

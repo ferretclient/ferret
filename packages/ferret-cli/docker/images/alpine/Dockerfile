@@ -11,7 +11,7 @@ LABEL org.opencontainers.image.licenses="MIT"
 LABEL org.opencontainers.image.title="Ferret CLI"
 LABEL org.opencontainers.image.version="${FERRET_VERSION}"
 LABEL org.opencontainers.image.url="https://ferret.io"
-LABEL org.opencontainers.image.documentation="https://docs.ferret.io/bru-cli/overview"
+LABEL org.opencontainers.image.documentation="https://docs.ferret.io/fer-cli/overview"
 
 ENV LC_ALL="en_US.UTF-8" \
     LANG="en_US.UTF-8" \

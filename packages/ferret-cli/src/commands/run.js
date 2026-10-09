@@ -373,6 +373,8 @@ const handler = async function (argv) {
 
     const runtimeVariables = {};
     let envVars = {};
+    // name → options of the loaded environment's options variables (see --env-var below)
+    let envOptions = {};
     let globalEnvVars = {};
     let envFileDescriptor = null;
     let globalEnvFileDescriptor = null;
@@ -406,11 +408,12 @@ const handler = async function (argv) {
       try {
         // An `--env-file` is loaded exactly as the file reads: its `extends` chain is left
         // unresolved, even when the path points at one of the collection's own environments.
-        const { variables: environmentVariables, ownVariables } = loadEnvironmentFromFile({
+        const { variables: environmentVariables, ownVariables, options: environmentOptions } = loadEnvironmentFromFile({
           filePath: envFilePath,
           resolveInheritance: false
         });
         envVars = environmentVariables;
+        envOptions = environmentOptions;
         envFileVariables = ownVariables;
         envFileDescriptor = {
           path: envFilePath,
@@ -439,8 +442,9 @@ const handler = async function (argv) {
         const defaultEnvFilePath = path.join(collectionPath, 'environments', `${defaultEnvironment}${envExt}`);
         if (await exists(defaultEnvFilePath)) {
           try {
-            const { variables: environmentVariables, inheritedVariables: inheritedEnvironmentVariables } = loadEnvironmentFromFile({ filePath: defaultEnvFilePath, name: defaultEnvironment });
+            const { variables: environmentVariables, inheritedVariables: inheritedEnvironmentVariables, options: environmentOptions } = loadEnvironmentFromFile({ filePath: defaultEnvFilePath, name: defaultEnvironment });
             envVars = { ...envVars, ...environmentVariables };
+            envOptions = { ...envOptions, ...environmentOptions };
             envFileDescriptor = {
               path: defaultEnvFilePath,
               format: collection.format,
@@ -469,8 +473,9 @@ const handler = async function (argv) {
         process.exit(constants.EXIT_STATUS.ERROR_ENV_NOT_FOUND);
       }
       try {
-        const { variables: environmentVariables, inheritedVariables: inheritedEnvironmentVariables } = loadEnvironmentFromFile({ filePath: collectionEnvFilePath, name: env });
+        const { variables: environmentVariables, inheritedVariables: inheritedEnvironmentVariables, options: environmentOptions } = loadEnvironmentFromFile({ filePath: collectionEnvFilePath, name: env });
         envVars = { ...envVars, ...environmentVariables };
+        envOptions = { ...envOptions, ...environmentOptions };
         envFileDescriptor = {
           path: collectionEnvFilePath,
           format: collection.format,
@@ -561,8 +566,11 @@ const handler = async function (argv) {
             );
             process.exit(constants.EXIT_STATUS.ERROR_INCORRECT_ENV_OVERRIDE);
           }
-          envVars[match[1]] = match[2];
-          envVarOverrides.set(match[1], match[2]);
+          // For an options variable, an option key selects that option's value
+          const optionValue = envOptions[match[1]]?.find((option) => option.key === match[2])?.value;
+          const overrideValue = optionValue ?? match[2];
+          envVars[match[1]] = overrideValue;
+          envVarOverrides.set(match[1], overrideValue);
         }
       }
     }

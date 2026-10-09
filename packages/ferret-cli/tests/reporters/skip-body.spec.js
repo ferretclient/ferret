@@ -10,7 +10,7 @@ const createMockResult = () => ({
   test: { filename: 'echo/echo-post.fer' },
   request: {
     method: 'POST',
-    url: 'https://echo.ferret.io',
+    url: 'http://localhost:8081/echo',
     headers: { 'content-type': 'application/json' },
     data: { ...REQUEST_DATA }
   },
@@ -19,7 +19,7 @@ const createMockResult = () => ({
     statusText: 'OK',
     headers: { 'content-type': 'application/json' },
     data: { ...RESPONSE_DATA },
-    url: 'https://echo.ferret.io',
+    url: 'http://localhost:8081/echo',
     responseTime: 150
   },
   error: null,

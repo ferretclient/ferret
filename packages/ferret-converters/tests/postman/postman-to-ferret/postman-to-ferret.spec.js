@@ -349,7 +349,7 @@ describe('postman-collection', () => {
             method: 'GET',
             header: [],
             url: {
-              raw: 'https://echo.ferret.io/get',
+              raw: 'http://localhost:8081/echo/get',
               protocol: 'https',
               host: ['echo', 'useferret', 'com'],
               path: ['get']
@@ -365,7 +365,7 @@ describe('postman-collection', () => {
             method: 'POST',
             header: [],
             url: {
-              raw: 'https://echo.ferret.io/post',
+              raw: 'http://localhost:8081/echo/post',
               protocol: 'https',
               host: ['echo', 'useferret', 'com'],
               path: ['post']
@@ -378,7 +378,7 @@ describe('postman-collection', () => {
             method: 'PUT',
             header: [],
             url: {
-              raw: 'https://echo.ferret.io/put',
+              raw: 'http://localhost:8081/echo/put',
               protocol: 'https',
               host: ['echo', 'useferret', 'com'],
               path: ['put']

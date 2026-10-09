@@ -17,7 +17,7 @@ describe('Ferret to Postman Converter with Tests and Scripts', () => {
         tags: [],
         examples: [],
         request: {
-          url: 'https://echo.ferret.io',
+          url: 'http://localhost:8081/echo',
           method: 'POST',
           headers: [],
           params: [],
@@ -76,7 +76,7 @@ describe('Ferret to Postman Converter with Tests and Scripts', () => {
             tags: [],
             examples: [],
             request: {
-              url: 'https://echo.ferret.io',
+              url: 'http://localhost:8081/echo',
               method: 'POST',
               headers: [],
               params: [],
@@ -135,7 +135,7 @@ describe('Ferret to Postman Converter with Tests and Scripts', () => {
                 tags: [],
                 examples: [],
                 request: {
-                  url: 'https://echo.ferret.io',
+                  url: 'http://localhost:8081/echo',
                   method: 'POST',
                   headers: [],
                   params: [],

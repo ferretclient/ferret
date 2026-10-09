@@ -1,4 +1,4 @@
-import { toVariablesMap } from './environment-variables';
+import { toVariablesMap, resolveOptionsVariableValue, validateEnvironmentVariableOptions } from './environment-variables';
 
 type VariableProps = {
   name?: string;
@@ -59,5 +59,44 @@ describe('toVariablesMap', () => {
     ];
 
     expect(toVariablesMap(variables)).toEqual({ token: 'plain-token' });
+  });
+});
+
+const companies = [
+  { key: 'Company1', value: '12345' },
+  { key: 'Company2', value: '43214' }
+];
+
+describe('options variables', () => {
+  it('resolve to the value of the selected option', () => {
+    expect(resolveOptionsVariableValue({ dataType: 'options', options: companies, value: 'Company2' })).toBe('43214');
+  });
+
+  it('fall back to the first option when nothing is selected', () => {
+    expect(resolveOptionsVariableValue({ dataType: 'options', options: companies, value: '' })).toBe('12345');
+    expect(resolveOptionsVariableValue({ dataType: 'options', options: [], value: '' })).toBe('');
+  });
+
+  it('pass through a value that is not one of the keys', () => {
+    expect(resolveOptionsVariableValue({ dataType: 'options', options: companies, value: '99999' })).toBe('99999');
+  });
+
+  it('are resolved by toVariablesMap', () => {
+    expect(toVariablesMap([
+      { name: 'company', value: 'Company2', enabled: true, dataType: 'options', options: companies },
+      { name: 'host', value: 'api.example.com', enabled: true }
+    ])).toEqual({ company: '43214', host: 'api.example.com' });
+  });
+});
+
+describe('validateEnvironmentVariableOptions', () => {
+  it('accepts unique, non-empty names', () => {
+    expect(validateEnvironmentVariableOptions(companies)).toBeNull();
+  });
+
+  it('rejects empty, duplicate and "=" names', () => {
+    expect(validateEnvironmentVariableOptions([{ key: ' ', value: '1' }])).toBe('Every option needs a name');
+    expect(validateEnvironmentVariableOptions([{ key: 'A', value: '1' }, { key: 'A', value: '2' }])).toContain('more than once');
+    expect(validateEnvironmentVariableOptions([{ key: 'A=B', value: '1' }])).toContain('cannot contain "="');
   });
 });

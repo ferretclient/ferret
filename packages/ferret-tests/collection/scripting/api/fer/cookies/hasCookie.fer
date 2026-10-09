@@ -13,23 +13,23 @@ get {
 script:pre-request {
   const jar = fer.cookies.jar()
 
-  jar.setCookie("https://testbench-sanity.ferret.io", "existing_cookie", "some_value")
+  jar.setCookie("http://localhost:8081", "existing_cookie", "some_value")
 }
 
 tests {
   const jar = fer.cookies.jar()
 
   test("should return true for a cookie that exists", async function() {
-    const exists = await jar.hasCookie('https://testbench-sanity.ferret.io', 'existing_cookie');
+    const exists = await jar.hasCookie('http://localhost:8081', 'existing_cookie');
     expect(exists).to.be.true;
   });
 
   test("should return false for a cookie that does not exist", async function() {
-    const exists = await jar.hasCookie('https://testbench-sanity.ferret.io', 'nonexistent_cookie');
+    const exists = await jar.hasCookie('http://localhost:8081', 'nonexistent_cookie');
     expect(exists).to.be.false;
   });
 
-  jar.hasCookie("https://testbench-sanity.ferret.io", "existing_cookie", function(error, exists) {
+  jar.hasCookie("http://localhost:8081", "existing_cookie", function(error, exists) {
     test("should work with callback pattern", function() {
       expect(error).to.be.null;
       expect(exists).to.be.true;

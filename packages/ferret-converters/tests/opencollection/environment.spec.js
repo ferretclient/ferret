@@ -166,3 +166,34 @@ describe('OpenCollection environment round-trip — inheritance', () => {
     expect(toOpenCollectionEnvironments([env])[0]).not.toHaveProperty('extends');
   });
 });
+
+describe('OpenCollection environments — options variables', () => {
+  const options = [{ key: 'Company1', value: '12345' }, { key: 'Company2', value: '43214' }];
+
+  it('exports the default key as the value next to the options list', () => {
+    const [env] = toOpenCollectionEnvironments([
+      {
+        uid: 'e1',
+        name: 'prod',
+        variables: [{ uid: 'v1', name: 'company', value: 'Company2', type: 'text', enabled: true, secret: false, dataType: 'options', options }]
+      }
+    ]);
+
+    expect(env.variables[0]).toEqual({ name: 'company', value: 'Company2', options });
+  });
+
+  it('imports options, including a variable without a default', () => {
+    const [env] = fromOpenCollectionEnvironments([
+      {
+        name: 'prod',
+        variables: [
+          { name: 'company', value: 'Company1', options: [{ key: 'Company1', value: 12345 }] },
+          { name: 'region', options: [{ key: 'EU', value: 'eu-1' }] }
+        ]
+      }
+    ]);
+
+    expect(env.variables[0]).toMatchObject({ value: 'Company1', dataType: 'options', options: [{ key: 'Company1', value: '12345' }] });
+    expect(env.variables[1]).toMatchObject({ value: '', dataType: 'options', options: [{ key: 'EU', value: 'eu-1' }] });
+  });
+});

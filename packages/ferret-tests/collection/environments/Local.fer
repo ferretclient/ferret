@@ -9,7 +9,7 @@ vars {
   bark: {{process.env.PROC_ENV_VAR}}
   foo: bar
   testSetEnvVar: ferret-29653
-  echo-host: https://echo.ferret.io
+  echo-host: http://localhost:8081/echo
   client_id: client_id_1
   client_secret: client_secret_1
   auth_url: http://localhost:8080/api/auth/oauth2/authorization_code/authorize

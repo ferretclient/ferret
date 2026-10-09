@@ -83,8 +83,7 @@ app.get('/redirect-to-ping', function (req, res) {
   return res.redirect('/ping');
 });
 
-// Echoes the request back in one flat shape
-app.all('/api/echo/everything', (req, res) => {
+const echoRequest = (req, res) => {
   return res.json({
     method: req.method,
     url: req.originalUrl,
@@ -92,19 +91,21 @@ app.all('/api/echo/everything', (req, res) => {
     headers: req.headers,
     body: req.rawBody
   });
-});
+};
+
+// Echoes the request back in one flat shape
+app.all('/api/echo/everything', echoRequest);
+
+// Local stand-in for a hosted echo service: any method and any path under /echo answers with the
+// request it received, so e2e fixtures that only need "a URL that responds" stay offline.
+const ECHO_PREFIX = /^\/echo(\/|$)/;
+app.all(ECHO_PREFIX, echoRequest);
 
 // The global JSON parser rejects malformed bodies before the route above runs.
 // Recover that case by echoing the raw bytes instead of surfacing a 400.
 app.use((err, req, res, next) => {
-  if (req.path === '/api/echo/everything') {
-    return res.json({
-      method: req.method,
-      url: req.originalUrl,
-      query: req.query,
-      headers: req.headers,
-      body: req.rawBody
-    });
+  if (req.path === '/api/echo/everything' || ECHO_PREFIX.test(req.path)) {
+    return echoRequest(req, res);
   }
   return next(err);
 });

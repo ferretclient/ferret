@@ -14,7 +14,7 @@ script:pre-request {
   const jar = fer.cookies.jar()
   await jar.clear();
 
-  await jar.setCookie("https://testbench-sanity.ferret.io", {
+  await jar.setCookie("http://localhost:8081", {
     key: "domainA",
     value: "valueA",
     path: "/",
@@ -33,7 +33,7 @@ tests {
   const jar = fer.cookies.jar()
 
   await test("cookies on domain A are not visible on domain B", async function() {
-    const cookiesA = await jar.getCookies("https://testbench-sanity.ferret.io");
+    const cookiesA = await jar.getCookies("http://localhost:8081");
     const cookiesB = await jar.getCookies("https://other.example.com");
 
     const keysA = cookiesA.map(function(c) { return c.key; });
@@ -53,8 +53,8 @@ tests {
   });
 
   await test("jar.getCookie() respects domain isolation", async function() {
-    const cookieA = await jar.getCookie("https://testbench-sanity.ferret.io", "domainA");
-    const cookieBOnA = await jar.getCookie("https://testbench-sanity.ferret.io", "domainB");
+    const cookieA = await jar.getCookie("http://localhost:8081", "domainA");
+    const cookieBOnA = await jar.getCookie("http://localhost:8081", "domainB");
 
     expect(cookieA).to.not.be.null;
     expect(cookieA.value).to.equal("valueA");
