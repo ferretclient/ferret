@@ -44,7 +44,7 @@ test.describe('Multipart Form - Multiple File Upload', () => {
 
     await createCollection(page, 'multipart-multi-upload', tmpDir);
     await createRequest(page, 'test-multi-upload', '', {
-      url: 'https://testbench-sanity.ferret.io/api/echo/json',
+      url: 'http://localhost:8081/api/echo/json',
       method: 'POST',
       inFolder: false
     });

@@ -1,0 +1,13 @@
+info:
+  name: override
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{host}}/ping?company={{company}}"
+
+runtime:
+  variables:
+    - name: company
+      value: "12345"

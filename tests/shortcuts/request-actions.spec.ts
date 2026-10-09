@@ -27,7 +27,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
       test('sends request when cursor is in JSON body editor', async ({ pageWithUserData: page }) => {
         // Create a POST request in the shared collection pointing to the echo server
         await createRequest(page, 'cmd-enter-req-body', 'kb-collection', {
-          url: 'https://echo.ferret.io',
+          url: 'http://localhost:8081/echo',
           method: 'POST'
         });
         await openRequest(page, 'kb-collection', 'cmd-enter-req-body', { persist: true });
@@ -52,7 +52,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
 
       test('sends request when cursor is in response body editor', async ({ pageWithUserData: page }) => {
         await createRequest(page, 'cmd-enter-req-resp', 'kb-collection', {
-          url: 'https://echo.ferret.io',
+          url: 'http://localhost:8081/echo',
           method: 'POST'
         });
         await openRequest(page, 'kb-collection', 'cmd-enter-req-resp', { persist: true });
@@ -84,7 +84,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
 
       test('sends request when cursor is in pre-request Vars value editor', async ({ pageWithUserData: page }) => {
         await createRequest(page, 'cmd-enter-req-vars', 'kb-collection', {
-          url: 'https://echo.ferret.io',
+          url: 'http://localhost:8081/echo',
           method: 'POST'
         });
         await openRequest(page, 'kb-collection', 'cmd-enter-req-vars', { persist: true });
@@ -130,7 +130,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
 
         // Create a POST request in the shared collection pointing to the echo server
         await createRequest(page, 'shift-enter-req-body', 'kb-collection', {
-          url: 'https://echo.ferret.io',
+          url: 'http://localhost:8081/echo',
           method: 'POST'
         });
         await openRequest(page, 'kb-collection', 'shift-enter-req-body', { persist: true });
@@ -164,7 +164,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
         await pressShortcut(page, 'Shift', 'Enter');
 
         await createRequest(page, 'shift-enter-req-resp', 'kb-collection', {
-          url: 'https://echo.ferret.io',
+          url: 'http://localhost:8081/echo',
           method: 'POST'
         });
         await openRequest(page, 'kb-collection', 'shift-enter-req-resp', { persist: true });
@@ -206,7 +206,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
         await pressShortcut(page, 'Shift', 'Enter');
 
         await createRequest(page, 'shift-enter-req-vars', 'kb-collection', {
-          url: 'https://echo.ferret.io',
+          url: 'http://localhost:8081/echo',
           method: 'POST'
         });
         await openRequest(page, 'kb-collection', 'shift-enter-req-vars', { persist: true });

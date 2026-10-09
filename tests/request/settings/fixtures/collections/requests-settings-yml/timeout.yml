@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: https://testbench-sanity.ferret.io/redirect-to-ping
+  url: http://localhost:8081/redirect-to-ping
   auth: inherit
 
 settings:

@@ -16,7 +16,7 @@ test.describe('Move across folders within the same collection', () => {
     await createFolder(page, 'folder-b', collectionName);
 
     await expandFolder(page, 'folder-a');
-    await createRequest(page, requestName, 'folder-a', { inFolder: true, url: 'https://echo.ferret.io' });
+    await createRequest(page, requestName, 'folder-a', { inFolder: true, url: 'http://localhost:8081/echo' });
 
     await test.step('Drag the request from folder-a into folder-b', async () => {
       const source = sidebar.folderScope('folder-a').locator('.collection-item-name').filter({ hasText: requestName });
@@ -43,7 +43,7 @@ test.describe('Move across folders within the same collection', () => {
     await expandFolder(page, 'parent-a');
     await createFolder(page, movedFolderName, 'parent-a', false);
     await expandFolder(page, movedFolderName);
-    await createRequest(page, 'nested-req', movedFolderName, { inFolder: true, url: 'https://echo.ferret.io' });
+    await createRequest(page, 'nested-req', movedFolderName, { inFolder: true, url: 'http://localhost:8081/echo' });
 
     await test.step('Drag "moved-folder" from parent-a into parent-b', async () => {
       const source = sidebar.folderScope('parent-a').locator('.collection-item-name').filter({ hasText: movedFolderName });

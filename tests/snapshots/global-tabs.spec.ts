@@ -19,7 +19,7 @@ test.describe('Snapshot: Global Tab Restoration', () => {
 
     await test.step('Create collection and open singleton tabs', async () => {
       await createCollection(page, 'TestCol', colPath);
-      await createRequest(page, 'ReqAlpha', 'TestCol', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'ReqAlpha', 'TestCol', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'TestCol', 'ReqAlpha', { persist: true });
 
       await createEnvironment(page, 'GlobalSnapEnv', 'global');

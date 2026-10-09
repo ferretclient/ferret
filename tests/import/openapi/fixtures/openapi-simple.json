@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://echo.ferret.io",
+      "url": "http://localhost:8081/echo",
       "description": "Echo test server"
     }
   ],

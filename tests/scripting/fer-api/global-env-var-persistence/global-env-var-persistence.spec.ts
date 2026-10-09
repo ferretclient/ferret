@@ -24,7 +24,7 @@ test.describe('Global environment variable persistence via script', () => {
 
     await test.step('Verify "baseUrl" still exists with original value', async () => {
       await expect(locators.environment.variableRowByName('baseUrl')).toBeVisible();
-      await expect(locators.environment.variableValue('baseUrl')).toContainText('https://testbench-sanity.ferret.io');
+      await expect(locators.environment.variableValue('baseUrl')).toContainText('http://localhost:8081');
     });
 
     await test.step('Close global environment config', async () => {
@@ -55,7 +55,7 @@ test.describe('Global environment variable persistence via script', () => {
 
     await test.step('Verify "baseUrl" still exists with original value', async () => {
       await expect(locators.environment.variableRowByName('baseUrl')).toBeVisible();
-      await expect(locators.environment.variableValue('baseUrl')).toContainText('https://testbench-sanity.ferret.io');
+      await expect(locators.environment.variableValue('baseUrl')).toContainText('http://localhost:8081');
     });
 
     await test.step('Close global environment config', async () => {

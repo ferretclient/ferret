@@ -18,7 +18,7 @@ const DEFAULT_SENT_HEADERS: Array<[string, string | RegExp]> = [
   ['Accept', 'application/json, text/plain, */*'],
   ['User-Agent', /^ferret-runtime\/\S+$/],
   ['Accept-Encoding', 'gzip, compress, deflate, br'],
-  ['Host', 'testbench-sanity.ferret.io'],
+  ['Host', 'localhost:8081'],
   ['Connection', 'keep-alive']
 ];
 
@@ -55,7 +55,7 @@ test('Request inherits No Auth from the folder — collection Bearer Token is ov
       inFolder: true,
       requestType: 'http',
       method: 'GET',
-      url: 'https://testbench-sanity.ferret.io/api/auth/bearer/protected'
+      url: 'http://localhost:8081/api/auth/bearer/protected'
     });
     await openRequest(page, collectionName, requestName);
     await selectRequestPaneTab(page, 'Auth');

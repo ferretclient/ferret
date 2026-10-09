@@ -54,11 +54,11 @@ test('migration clears stale tabs for the same collection in another workspace',
   await test.step('Create a fer collection and persist ReqA in the default workspace', async () => {
     await createCollection(page, 'SharedCol', collectionParentPath, 'fer');
     await createRequest(page, 'ReqA', 'SharedCol', {
-      url: 'https://echo.ferret.io',
+      url: 'http://localhost:8081/echo',
       method: 'GET'
     });
     await createRequest(page, 'ReqB', 'SharedCol', {
-      url: 'https://echo.ferret.io',
+      url: 'http://localhost:8081/echo',
       method: 'GET'
     });
     await openRequest(page, 'SharedCol', 'ReqA', { persist: true });

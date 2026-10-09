@@ -8,7 +8,7 @@ test.describe.serial('Copy and Paste with Keyboard Shortcuts', () => {
 
   test('should copy and paste request using keyboard shortcuts', async ({ page, createTmpDir }) => {
     await createCollection(page, 'keyboard-test', await createTmpDir('keyboard-test'));
-    await createRequest(page, 'test-request', 'keyboard-test', { url: 'https://echo.ferret.io' });
+    await createRequest(page, 'test-request', 'keyboard-test', { url: 'http://localhost:8081/echo' });
 
     const collection = page.locator('.collection-name').filter({ hasText: 'keyboard-test' });
     const requestItem = page.locator('.collection-item-name').filter({ hasText: 'test-request' });

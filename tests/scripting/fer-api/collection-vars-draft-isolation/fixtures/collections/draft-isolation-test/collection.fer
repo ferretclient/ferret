@@ -3,5 +3,5 @@ headers {
 }
 
 vars:pre-request {
-  host: https://testbench-sanity.ferret.io
+  host: http://localhost:8081
 }

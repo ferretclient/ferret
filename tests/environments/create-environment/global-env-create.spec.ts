@@ -37,7 +37,7 @@ test.describe('Global Environment Create Tests', () => {
       await createEnvironment(page, 'Test Global Environment', 'global');
 
       await addEnvironmentVariables(page, [
-        { name: 'host', value: 'https://echo.ferret.io' },
+        { name: 'host', value: 'http://localhost:8081/echo' },
         { name: 'userId', value: '1' },
         { name: 'postTitle', value: 'Global Test Post from Environment' },
         { name: 'postBody', value: 'This is a global test post body with environment variables' },
@@ -56,10 +56,10 @@ test.describe('Global Environment Create Tests', () => {
 
     await test.step('Verify response contains environment variables', async () => {
       await expectResponseContains(page, [
-        '"userId": 1',
-        '"title": "Global Test Post from Environment"',
-        '"body": "This is a global test post body with environment variables"',
-        '"apiToken": "global-secret-token-12345"'
+        '\\"userId\\": 1',
+        '\\"title\\": \\"Global Test Post from Environment\\"',
+        '\\"body\\": \\"This is a global test post body with environment variables\\"',
+        '\\"apiToken\\": \\"global-secret-token-12345\\"'
       ]);
     });
   });

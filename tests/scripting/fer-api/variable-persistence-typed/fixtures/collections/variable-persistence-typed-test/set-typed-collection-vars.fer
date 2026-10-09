@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: https://testbench-sanity.ferret.io/ping
+  url: http://localhost:8081/ping
   body: none
   auth: none
 }

@@ -51,7 +51,7 @@ test.describe('CLI JSON Environment File Support', () => {
     expect(fs.existsSync(outputPath)).toBe(true);
     const report = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
     const result = report.results[0];
-    expect(result.request.url).toBe('https://echo.ferret.io');
+    expect(result.request.url).toBe('http://localhost:8081/echo');
     expect(result.response.status).toEqual(200);
 
     try {

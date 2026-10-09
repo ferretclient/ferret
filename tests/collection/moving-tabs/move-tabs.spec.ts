@@ -17,7 +17,7 @@ test.describe('Move tabs', () => {
     await page.locator('.collection-item-name').filter({ hasText: 'test-folder' }).dblclick();
     await expect(page.locator('.request-tab .tab-label').filter({ hasText: 'test-folder' })).toBeVisible();
 
-    await createRequest(page, 'test-request', 'source-collection-drag-drop', { url: 'https://echo.ferret.io' });
+    await createRequest(page, 'test-request', 'source-collection-drag-drop', { url: 'http://localhost:8081/echo' });
 
     // Open the request tab
     await page.locator('.collection-item-name').filter({ hasText: 'test-request' }).dblclick();
@@ -67,7 +67,7 @@ test.describe('Move tabs', () => {
     await page.locator('.collection-item-name').filter({ hasText: 'test-folder' }).dblclick();
     await expect(page.locator('.request-tab .tab-label').filter({ hasText: 'test-folder' })).toBeVisible();
 
-    await createRequest(page, 'test-request', 'source-collection-keyboard-shortcut', { url: 'https://echo.ferret.io' });
+    await createRequest(page, 'test-request', 'source-collection-keyboard-shortcut', { url: 'http://localhost:8081/echo' });
 
     // Open the request tab
     await page.locator('.collection-item-name').filter({ hasText: 'test-request' }).dblclick();

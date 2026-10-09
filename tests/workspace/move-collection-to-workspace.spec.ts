@@ -51,7 +51,7 @@ test.describe('Move collection into workspace', () => {
 
       await test.step('Create an external collection with a request', async () => {
         await createCollection(page, collectionName, externalLocation);
-        await createRequest(page, 'ping', collectionName, { url: 'https://echo.ferret.io', method: 'GET' });
+        await createRequest(page, 'ping', collectionName, { url: 'http://localhost:8081/echo', method: 'GET' });
         expect(fs.existsSync(sourcePath)).toBe(true);
         expect(fs.existsSync(destinationPath)).toBe(false);
       });
@@ -138,10 +138,10 @@ test.describe('Move collection into workspace', () => {
       await createCollection(page, collectionName, externalLocation);
 
       await test.step('Create a saved request, then dirty it to produce an unsaved draft', async () => {
-        await createRequest(page, 'ping', collectionName, { url: 'https://echo.ferret.io', method: 'GET' });
+        await createRequest(page, 'ping', collectionName, { url: 'http://localhost:8081/echo', method: 'GET' });
         await openRequest(page, collectionName, 'ping');
         await locators.request.urlInput().click();
-        await page.locator('#request-url textarea').fill('https://echo.ferret.io/changed');
+        await page.locator('#request-url textarea').fill('http://localhost:8081/echo/changed');
         await expect(locators.tabs.draftIndicator()).toBeVisible({ timeout: 5000 });
       });
 
@@ -163,8 +163,8 @@ test.describe('Move collection into workspace', () => {
       const requestFiles = fs.readdirSync(destinationPath).filter((entry) => entry.startsWith('ping'));
       expect(requestFiles.length).toBeGreaterThan(0);
       const movedRequestContent = fs.readFileSync(path.join(destinationPath, requestFiles[0]), 'utf-8');
-      expect(movedRequestContent).toContain('https://echo.ferret.io');
-      expect(movedRequestContent).not.toContain('https://echo.ferret.io/changed');
+      expect(movedRequestContent).toContain('http://localhost:8081/echo');
+      expect(movedRequestContent).not.toContain('http://localhost:8081/echo/changed');
 
       await expect(locators.sidebar.collection(collectionName)).toBeVisible({ timeout: 10000 });
     } finally {

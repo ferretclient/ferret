@@ -10,7 +10,7 @@ const isRequestSaved = async (saveButton: Locator) => {
 
 const setup = async (page: Page, createTmpDir: (tag?: string | undefined) => Promise<string>) => {
   await createCollection(page, 'source-collection', await createTmpDir('source-collection'));
-  await createRequest(page, 'test-request', 'source-collection', { url: 'https://echo.ferret.io' });
+  await createRequest(page, 'test-request', 'source-collection', { url: 'http://localhost:8081/echo' });
 };
 
 test.describe.serial('save requests', () => {
@@ -23,7 +23,7 @@ test.describe.serial('save requests', () => {
     await setup(page, createTmpDir);
 
     const locators = buildCommonLocators(page);
-    const originalUrl = 'https://echo.ferret.io';
+    const originalUrl = 'http://localhost:8081/echo';
     const replacementUrl = 'ws://localhost:8082';
 
     const clearText = async (text: string) => {

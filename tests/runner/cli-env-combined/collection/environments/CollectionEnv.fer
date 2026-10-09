@@ -1,5 +1,5 @@
 vars {
-  baseUrl: https://echo.ferret.io
+  baseUrl: http://localhost:8081/echo
   overrideVar: collection-value
   collectionOnly: from-collection
 }

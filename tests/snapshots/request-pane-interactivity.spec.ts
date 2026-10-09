@@ -264,7 +264,7 @@ test.describe('Snapshot: Request Pane Interactivity', () => {
       await page.getByTestId('graphql-request').click();
       await page.getByTestId('request-name').fill('ReqGraphSnapshot');
       await page.getByTestId('new-request-url').locator('.CodeMirror').click();
-      await page.keyboard.type('https://echo.ferret.io/graphql');
+      await page.keyboard.type('http://localhost:8081/echo/graphql');
       await locators.modal.button('Create').click();
 
       await openRequest(page, 'TestCol', 'ReqGraphSnapshot', { persist: true });

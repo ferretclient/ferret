@@ -9,7 +9,7 @@ import { buildCommonLocators } from '../../utils/page/locators';
 // back to `persistedValue`.
 
 const ENV_FILE_ORIGINAL = `vars {
-  host: https://testbench-sanity.ferret.io
+  host: http://localhost:8081
   plain_var: original_plain
 }
 

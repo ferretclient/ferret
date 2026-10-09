@@ -42,7 +42,7 @@ test.describe('Global environment draft merge with script-set variables', () => 
       await expect(locators.environment.variableValue('scriptGlobalToken')).toContainText('from-script-456');
 
       await expect(locators.environment.variableRowByName('baseUrl')).toBeVisible();
-      await expect(locators.environment.variableValue('baseUrl')).toContainText('https://testbench-sanity.ferret.io');
+      await expect(locators.environment.variableValue('baseUrl')).toContainText('http://localhost:8081');
     });
   });
 });

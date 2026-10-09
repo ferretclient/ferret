@@ -37,7 +37,7 @@ test.describe.serial('Multipart Form - File Select Without Key', () => {
     await test.step('Create collection and request', async () => {
       await createCollection(page, 'multipart-file-select', tmpDir);
       await createRequest(page, 'test-file-select', '', {
-        url: 'https://testbench-sanity.ferret.io/api/echo/json',
+        url: 'http://localhost:8081/api/echo/json',
         method: 'POST',
         inFolder: false
       });

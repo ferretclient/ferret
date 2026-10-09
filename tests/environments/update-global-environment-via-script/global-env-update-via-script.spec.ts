@@ -56,7 +56,7 @@ test.describe('Global Environment Variable Update via Script', () => {
 
     await test.step('"baseUrl" is unchanged', async () => {
       await expect(
-        locators.environment.varRowsByValue('baseUrl', 'https://echo.ferret.io')
+        locators.environment.varRowsByValue('baseUrl', 'http://localhost:8081/echo')
       ).toHaveCount(1);
     });
 

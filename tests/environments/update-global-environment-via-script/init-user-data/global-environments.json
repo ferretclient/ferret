@@ -7,7 +7,7 @@
 				{
 					"uid": "VXKOZdkYw0DyI4mlhn6Wr",
 					"name": "baseUrl",
-					"value": "https://echo.ferret.io",
+					"value": "http://localhost:8081/echo",
 					"type": "text",
 					"secret": false,
 					"enabled": true

@@ -1,0 +1,13 @@
+{
+  "maximized": false,
+  "lastOpenedCollections": [
+    "{{projectRoot}}/tests/environments/options-variable/fixtures/fer",
+    "{{projectRoot}}/tests/environments/options-variable/fixtures/yml"
+  ],
+  "preferences": {
+    "onboarding": {
+      "hasLaunchedBefore": true,
+      "hasSeenWelcomeModal": true
+    }
+  }
+}

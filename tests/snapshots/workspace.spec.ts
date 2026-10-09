@@ -34,7 +34,7 @@ test.describe('Snapshot: Deleted Workspace Restoration', () => {
     await test.step('Create a collection in default workspace and mount it', async () => {
       await createCollection(page, 'Default Workspace Col', defaultCollectionPath);
       await createRequest(page, 'Default Workspace Req', 'Default Workspace Col', {
-        url: 'https://echo.ferret.io',
+        url: 'http://localhost:8081/echo',
         method: 'GET'
       });
       await openRequest(page, 'Default Workspace Col', 'Default Workspace Req', { persist: true });
@@ -80,7 +80,7 @@ test.describe('Snapshot: Deleted Workspace Restoration', () => {
     await test.step('Create collection and request in default workspace', async () => {
       await createCollection(page, 'Default Workspace Col', defaultCollectionPath);
       await createRequest(page, 'Default Workspace Req', 'Default Workspace Col', {
-        url: 'https://echo.ferret.io',
+        url: 'http://localhost:8081/echo',
         method: 'GET'
       });
       await openRequest(page, 'Default Workspace Col', 'Default Workspace Req', { persist: true });
@@ -125,7 +125,7 @@ test.describe('Snapshot: Deleted Workspace Restoration', () => {
     await test.step('Create collection and request in default workspace', async () => {
       await createCollection(page, 'Default Workspace Col', defaultCollectionPath);
       await createRequest(page, 'Default Workspace Req', 'Default Workspace Col', {
-        url: 'https://echo.ferret.io',
+        url: 'http://localhost:8081/echo',
         method: 'GET'
       });
       await openRequest(page, 'Default Workspace Col', 'Default Workspace Req', { persist: true });
@@ -170,7 +170,7 @@ test.describe('Snapshot: Deleted Workspace Restoration', () => {
     await test.step('Create request in default workspace', async () => {
       await createCollection(page, 'Default Workspace Col', defaultCollectionPath);
       await createRequest(page, 'Default Workspace Req', 'Default Workspace Col', {
-        url: 'https://echo.ferret.io',
+        url: 'http://localhost:8081/echo',
         method: 'GET'
       });
       await openRequest(page, 'Default Workspace Col', 'Default Workspace Req', { persist: true });
@@ -182,7 +182,7 @@ test.describe('Snapshot: Deleted Workspace Restoration', () => {
 
       await createCollection(page, 'Deleted Workspace Col', deletedWorkspaceCollectionPath);
       await createRequest(page, 'Deleted Workspace Req', 'Deleted Workspace Col', {
-        url: 'https://echo.ferret.io',
+        url: 'http://localhost:8081/echo',
         method: 'GET'
       });
       await openRequest(page, 'Deleted Workspace Col', 'Deleted Workspace Req', { persist: true });
@@ -222,7 +222,7 @@ test.describe('Snapshot: Deleted Workspace Restoration', () => {
     await test.step('Create default workspace request', async () => {
       await createCollection(page, 'Default Workspace Col', defaultCollectionPath);
       await createRequest(page, 'Default Workspace Req', 'Default Workspace Col', {
-        url: 'https://echo.ferret.io',
+        url: 'http://localhost:8081/echo',
         method: 'GET'
       });
       await openRequest(page, 'Default Workspace Col', 'Default Workspace Req', { persist: true });
@@ -234,7 +234,7 @@ test.describe('Snapshot: Deleted Workspace Restoration', () => {
 
       await createCollection(page, 'Malformed Workspace Col', malformedWorkspaceCollectionPath);
       await createRequest(page, 'Malformed Workspace Req', 'Malformed Workspace Col', {
-        url: 'https://echo.ferret.io',
+        url: 'http://localhost:8081/echo',
         method: 'GET'
       });
       await openRequest(page, 'Malformed Workspace Col', 'Malformed Workspace Req', { persist: true });

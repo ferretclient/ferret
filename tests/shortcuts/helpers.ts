@@ -194,6 +194,6 @@ export const fillAndCreateNewRequest = async (page: Page, requestName: string) =
   await expect(locators.request.requestNameInput()).toBeVisible();
   await locators.request.requestNameInput().fill(requestName);
   await locators.request.newRequestUrl().click();
-  await page.keyboard.type('https://echo.ferret.io');
+  await page.keyboard.type('http://localhost:8081/echo');
   await locators.modal.button('Create').click();
 };

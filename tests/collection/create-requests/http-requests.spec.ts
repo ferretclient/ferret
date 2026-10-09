@@ -25,7 +25,7 @@ test.describe('Create HTTP Requests', () => {
 
       await page.getByTestId('request-name').fill('Root HTTP Request');
       await page.getByTestId('new-request-url').locator('.CodeMirror').click();
-      await page.keyboard.type('https://echo.ferret.io');
+      await page.keyboard.type('http://localhost:8081/echo');
       await locators.modal.button('Create').click();
     });
 
@@ -52,7 +52,7 @@ test.describe('Create HTTP Requests', () => {
 
       await page.getByTestId('request-name').fill('Folder HTTP Request');
       await page.getByTestId('new-request-url').locator('.CodeMirror').click();
-      await page.keyboard.type('https://echo.ferret.io');
+      await page.keyboard.type('http://localhost:8081/echo');
       await locators.modal.button('Create').click();
     });
 

@@ -1,6 +1,6 @@
 vars {
   @description('''Single-line host desc''')
-  host: https://echo.ferret.io
+  host: http://localhost:8081/echo
 }
 
 vars:secret [

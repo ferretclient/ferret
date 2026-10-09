@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: https://echo.ferret.io/api/users/:userId?name=john&age=30
+  url: http://localhost:8081/echo/api/users/:userId?name=john&age=30
   body: none
   auth: none
 }
@@ -47,8 +47,8 @@ tests {
     const preReqHost = fer.getVar('preReqHost');
     const postResHost = fer.getVar('postResHost');
   
-    expect(preReqHost).to.equal('echo.ferret.io');
-    expect(postResHost).to.equal('echo.ferret.io');
+    expect(preReqHost).to.equal('localhost:8081/echo');
+    expect(postResHost).to.equal('localhost:8081/echo');
   });
   
   test("getPath() returns correct path", function() {

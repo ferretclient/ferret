@@ -2,4 +2,4 @@ name: Test
 
 variables:
   - name: host
-    value: https://testbench-sanity.ferret.io
+    value: http://localhost:8081

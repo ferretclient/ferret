@@ -70,8 +70,8 @@ test.describe('Snapshot: Tab Persistence', () => {
 
     await test.step('Create collection with two requests and open both', async () => {
       await createCollection(page, 'TestCol', colPath);
-      await createRequest(page, 'ReqAlpha', 'TestCol', { url: 'https://echo.ferret.io', method: 'GET' });
-      await createRequest(page, 'ReqBeta', 'TestCol', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'ReqAlpha', 'TestCol', { url: 'http://localhost:8081/echo', method: 'GET' });
+      await createRequest(page, 'ReqBeta', 'TestCol', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'TestCol', 'ReqAlpha', { persist: true });
       await openRequest(page, 'TestCol', 'ReqBeta', { persist: true });
     });
@@ -112,8 +112,8 @@ test.describe('Snapshot: Tab Persistence', () => {
 
     await test.step('Create two requests and focus ReqAlpha', async () => {
       await createCollection(page, 'TestCol', colPath);
-      await createRequest(page, 'ReqAlpha', 'TestCol', { url: 'https://echo.ferret.io', method: 'GET' });
-      await createRequest(page, 'ReqBeta', 'TestCol', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'ReqAlpha', 'TestCol', { url: 'http://localhost:8081/echo', method: 'GET' });
+      await createRequest(page, 'ReqBeta', 'TestCol', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'TestCol', 'ReqBeta', { persist: true });
       await openRequest(page, 'TestCol', 'ReqAlpha', { persist: true });
 
@@ -146,8 +146,8 @@ test.describe('Snapshot: Tab Persistence', () => {
 
     await test.step('Create two requests, open both, close one', async () => {
       await createCollection(page, 'TestCol', colPath);
-      await createRequest(page, 'ReqKeep', 'TestCol', { url: 'https://echo.ferret.io', method: 'GET' });
-      await createRequest(page, 'ReqClose', 'TestCol', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'ReqKeep', 'TestCol', { url: 'http://localhost:8081/echo', method: 'GET' });
+      await createRequest(page, 'ReqClose', 'TestCol', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'TestCol', 'ReqKeep', { persist: true });
       await openRequest(page, 'TestCol', 'ReqClose', { persist: true });
 
@@ -183,7 +183,7 @@ test.describe('Snapshot: Tab Persistence', () => {
 
     await test.step('Create request and switch to Headers tab', async () => {
       await createCollection(page, 'TestCol', colPath);
-      await createRequest(page, 'Req1', 'TestCol', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'Req1', 'TestCol', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'TestCol', 'Req1', { persist: true });
       await selectRequestPaneTab(page, 'Headers');
     });
@@ -379,7 +379,7 @@ test.describe('Snapshot: Workspace State', () => {
 
     await test.step('Create ColA with request in default workspace', async () => {
       await createCollection(page, 'ColA', colAPath);
-      await createRequest(page, 'ReqA', 'ColA', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'ReqA', 'ColA', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'ColA', 'ReqA', { persist: true });
     });
 
@@ -398,7 +398,7 @@ test.describe('Snapshot: Workspace State', () => {
 
     await test.step('Create ColB with request in WorkspaceB', async () => {
       await createCollection(page, 'ColB', colBPath);
-      await createRequest(page, 'ReqB', 'ColB', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'ReqB', 'ColB', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'ColB', 'ReqB', { persist: true });
     });
 
@@ -438,7 +438,7 @@ test.describe('Snapshot: Collection State', () => {
 
     await test.step('Create collection and open a request (expands it)', async () => {
       await createCollection(page, 'TestCol', colPath);
-      await createRequest(page, 'Req1', 'TestCol', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'Req1', 'TestCol', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'TestCol', 'Req1', { persist: true });
 
       // Verify collection is expanded (request is visible in sidebar)
@@ -490,7 +490,7 @@ test.describe('Snapshot: Multi-Workspace Tab Isolation', () => {
 
     await test.step('Create ReqA in default workspace', async () => {
       await createCollection(page, 'ColA', colAPath);
-      await createRequest(page, 'ReqA', 'ColA', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'ReqA', 'ColA', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'ColA', 'ReqA', { persist: true });
     });
 
@@ -507,7 +507,7 @@ test.describe('Snapshot: Multi-Workspace Tab Isolation', () => {
       await expect(page.getByTestId('workspace-name')).toHaveText('WorkspaceB', { timeout: 10000 });
 
       await createCollection(page, 'ColB', colBPath);
-      await createRequest(page, 'ReqB', 'ColB', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'ReqB', 'ColB', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'ColB', 'ReqB', { persist: true });
     });
 
@@ -566,8 +566,8 @@ test.describe('Snapshot: Multi-Workspace Tab Isolation', () => {
 
     await test.step('Create shared collection in default workspace and open ReqA', async () => {
       await createCollection(page, 'SharedCol', sharedColPath);
-      await createRequest(page, 'ReqA', 'SharedCol', { url: 'https://echo.ferret.io', method: 'GET' });
-      await createRequest(page, 'ReqB', 'SharedCol', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'ReqA', 'SharedCol', { url: 'http://localhost:8081/echo', method: 'GET' });
+      await createRequest(page, 'ReqB', 'SharedCol', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'SharedCol', 'ReqA', { persist: true });
     });
 
@@ -725,7 +725,7 @@ test.describe('Snapshot: File Structure', () => {
 
     await test.step('Create collection and open a request', async () => {
       await createCollection(page, 'TestCol', colPath);
-      await createRequest(page, 'Req1', 'TestCol', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'Req1', 'TestCol', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'TestCol', 'Req1', { persist: true });
     });
 
@@ -790,7 +790,7 @@ test.describe('Snapshot: Basic Request Movement', () => {
 
     await test.step('Create collection and open a request', async () => {
       await createCollection(page, 'TestCol', colPath);
-      await createRequest(page, 'Req1', 'TestCol', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'Req1', 'TestCol', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'TestCol', 'Req1', { persist: true });
       await selectRequestPaneTab(page, 'Headers');
     });
@@ -836,7 +836,7 @@ test.describe('Snapshot: Basic Request Movement', () => {
       await page.getByTestId('graphql-request').click();
       await page.getByTestId('request-name').fill('ReqGraph');
       await page.getByTestId('new-request-url').locator('.CodeMirror').click();
-      await page.keyboard.type('https://echo.ferret.io/graphql');
+      await page.keyboard.type('http://localhost:8081/echo/graphql');
       await locators.modal.button('Create').click();
 
       await openRequest(page, 'TestCol', 'ReqGraph', { persist: true });

@@ -8,7 +8,7 @@ test.describe.serial('Copy and Paste Requests', () => {
 
   test('should copy and paste a request within the same collection', async ({ page, createTmpDir }) => {
     await createCollection(page, 'test-collection', await createTmpDir('test-collection'));
-    await createRequest(page, 'original-request', 'test-collection', { url: 'https://echo.ferret.io' });
+    await createRequest(page, 'original-request', 'test-collection', { url: 'http://localhost:8081/echo' });
 
     const collection = page.locator('.collection-name').filter({ hasText: 'test-collection' });
 

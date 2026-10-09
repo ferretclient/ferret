@@ -2,4 +2,4 @@ name: Local
 
 variables:
   - name: host
-    value: https://echo.ferret.io
+    value: http://localhost:8081/echo

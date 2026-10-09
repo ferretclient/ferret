@@ -4,7 +4,7 @@ import path from 'path';
 import { sendRequest } from '../../utils/page';
 
 const ENV_FILE_ORIGINAL = `vars {
-  host: https://testbench-sanity.ferret.io
+  host: http://localhost:8081
 }
 
 vars:secret [

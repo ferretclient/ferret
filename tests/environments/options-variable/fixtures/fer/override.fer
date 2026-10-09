@@ -1,0 +1,15 @@
+meta {
+  name: override
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{host}}/ping?company={{company}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  company: 12345
+}

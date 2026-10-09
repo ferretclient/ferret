@@ -14,7 +14,7 @@ export interface WriteRequestOptions {
   seq: number;
   /** HTTP verb (lowercased into the request block); default 'get' */
   method?: string;
-  /** Request URL; default 'https://echo.ferret.io' */
+  /** Request URL; default 'http://localhost:8081/echo' */
   url?: string;
   /** Names of saved response examples to attach to the request */
   examples?: string[];
@@ -43,7 +43,7 @@ export const writeFerFolder = (dir: string, name: string, seq: number) => {
  * packages/ferret-lang/v2/tests/examples/fixtures/fer/ferToJson-single-example.fer).
  */
 export const writeFerRequest = (dir: string, name: string, options: WriteRequestOptions) => {
-  const { seq, method = 'get', url = 'https://echo.ferret.io', examples = [] } = options;
+  const { seq, method = 'get', url = 'http://localhost:8081/echo', examples = [] } = options;
   const exampleBlocks = examples
     .map((ex) => `\nexample {\n  name: ${ex}\n  request: {\n    url: ${url}\n    method: ${method}\n    mode: none\n  }\n}\n`)
     .join('');

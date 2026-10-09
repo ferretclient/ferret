@@ -49,8 +49,8 @@ test.describe('CLI Combined Environment Support (--env and --env-file)', () => {
     const report = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
     const result = report.results[0];
 
-    // baseUrl should be from collection env (https://echo.ferret.io), not global (https://global.example.com)
-    expect(result.request.url).toBe('https://echo.ferret.io');
+    // baseUrl should be from collection env (http://localhost:8081/echo), not global (https://global.example.com)
+    expect(result.request.url).toBe('http://localhost:8081/echo');
 
     // overrideVar should be from collection env, not global
     const body = JSON.parse(result.request.data);
@@ -99,7 +99,7 @@ test.describe('CLI Combined Environment Support (--env and --env-file)', () => {
     const result = report.results[0];
 
     // Should use collection env values
-    expect(result.request.url).toBe('https://echo.ferret.io');
+    expect(result.request.url).toBe('http://localhost:8081/echo');
 
     const body = JSON.parse(result.request.data);
     expect(body.overrideVar).toBe('collection-value');

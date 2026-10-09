@@ -1,5 +1,5 @@
 vars {
-  host: https://testbench-sanity.ferret.io
+  host: http://localhost:8081
 }
 
 vars:secret [

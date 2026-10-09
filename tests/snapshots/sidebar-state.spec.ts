@@ -19,7 +19,7 @@ test.describe('Snapshot: Sidebar-Tab Restoration', () => {
 
     await test.step('Create collection with a request open it', async () => {
       await createCollection(page, 'TestCol', colPath);
-      await createRequest(page, 'ReqAlpha', 'TestCol', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'ReqAlpha', 'TestCol', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'TestCol', 'ReqAlpha', { persist: true });
     });
 
@@ -51,7 +51,7 @@ test.describe('Snapshot: Sidebar-Tab Restoration', () => {
 
     await test.step('Create collection and keep one request tab open', async () => {
       await createCollection(page, 'TestCol', colPath);
-      await createRequest(page, 'ReqAlpha', 'TestCol', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'ReqAlpha', 'TestCol', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'TestCol', 'ReqAlpha', { persist: true });
     });
 
@@ -87,7 +87,7 @@ test.describe('Snapshot: Sidebar-Tab Restoration', () => {
 
     await test.step('Create request, create example, then make request last active', async () => {
       await createCollection(page, 'TestCol', colPath);
-      await createRequest(page, 'ReqAlpha', 'TestCol', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'ReqAlpha', 'TestCol', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'TestCol', 'ReqAlpha', { persist: true });
 
       await createExampleFromSidebar(page, 'ReqAlpha', 'Example One');
@@ -129,7 +129,7 @@ test.describe('Snapshot: Sidebar-Tab Restoration', () => {
 
     await test.step('Create request and example, then make example active', async () => {
       await createCollection(page, 'TestCol', colPath);
-      await createRequest(page, 'ReqAlpha', 'TestCol', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'ReqAlpha', 'TestCol', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'TestCol', 'ReqAlpha', { persist: true });
 
       await createExampleFromSidebar(page, 'ReqAlpha', 'Example One');
@@ -163,7 +163,7 @@ test.describe('Snapshot: Sidebar-Tab Restoration', () => {
 
     await test.step('Create request and two examples with duplicate names, then activate second', async () => {
       await createCollection(page, 'TestCol', colPath);
-      await createRequest(page, 'ReqAlpha', 'TestCol', { url: 'https://echo.ferret.io', method: 'GET' });
+      await createRequest(page, 'ReqAlpha', 'TestCol', { url: 'http://localhost:8081/echo', method: 'GET' });
       await openRequest(page, 'TestCol', 'ReqAlpha', { persist: true });
 
       await createExampleFromSidebar(page, 'ReqAlpha', 'DupExample', 'first-desc');

@@ -1,0 +1,16 @@
+{
+  "collections": [
+    {
+      "path": "{{projectRoot}}/tests/environments/options-variable/fixtures/fer",
+      "securityConfig": {
+        "jsSandboxMode": "safe"
+      }
+    },
+    {
+      "path": "{{projectRoot}}/tests/environments/options-variable/fixtures/yml",
+      "securityConfig": {
+        "jsSandboxMode": "safe"
+      }
+    }
+  ]
+}

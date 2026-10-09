@@ -1,0 +1,7 @@
+vars {
+  host: http://127.0.0.1:8081
+  @options
+  @option('Company1=12345')
+  @option('Company2=43214')
+  company: Company2
+}

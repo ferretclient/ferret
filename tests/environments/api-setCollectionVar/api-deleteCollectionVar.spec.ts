@@ -9,7 +9,7 @@ const COLLECTION_FILE_ORIGINAL = `meta {
 }
 
 vars:pre-request {
-  host: https://testbench-sanity.ferret.io
+  host: http://localhost:8081
   existingCollVar: original-coll-value
 }
 `;

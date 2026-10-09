@@ -1,0 +1,12 @@
+name: BC
+
+variables:
+  - name: host
+    value: http://127.0.0.1:8081
+  - name: company
+    value: Company2
+    options:
+      - key: Company1
+        value: "12345"
+      - key: Company2
+        value: "43214"

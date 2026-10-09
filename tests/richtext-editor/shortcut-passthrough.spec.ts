@@ -49,7 +49,7 @@ test.describe('Rich Text Editor - Keyboard Shortcut Interop with Global Hotkeys'
     const prosemirror = locators.docs.proseMirror();
 
     await test.step('Give the request a real URL, so a regression (Send Request also firing) would be unambiguous', async () => {
-      await setRequestUrlAndSave(page, 'https://echo.ferret.io');
+      await setRequestUrlAndSave(page, 'http://localhost:8081/echo');
       await expect(prosemirror).toBeVisible();
     });
 

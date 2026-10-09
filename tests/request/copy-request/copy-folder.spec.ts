@@ -13,7 +13,7 @@ test.describe.serial('Copy and Paste Folders', () => {
     await createFolder(page, 'folder-to-copy', 'test-collection');
     await expandFolder(page, 'folder-to-copy');
     await createRequest(page, 'request-in-folder', 'folder-to-copy', {
-      url: 'https://echo.ferret.io/test',
+      url: 'http://localhost:8081/echo/test',
       inFolder: true
     });
 

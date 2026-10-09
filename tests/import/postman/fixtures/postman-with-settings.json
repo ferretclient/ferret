@@ -18,7 +18,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "https://echo.ferret.io/api/get",
+          "raw": "http://localhost:8081/echo/api/get",
           "protocol": "https",
           "host": [
             "echo",
@@ -42,7 +42,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "https://echo.ferret.io/api/get",
+          "raw": "http://localhost:8081/echo/api/get",
           "protocol": "https",
           "host": [
             "echo",

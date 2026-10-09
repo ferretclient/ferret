@@ -7,7 +7,7 @@
         {
           "uid": "GlobEnvTypedVar000001",
           "name": "baseUrl",
-          "value": "https://testbench-sanity.ferret.io",
+          "value": "http://localhost:8081",
           "type": "text",
           "secret": false,
           "enabled": true

@@ -23,8 +23,8 @@ test.describe('Close all tabs lands on workspace overview', () => {
 
       await test.step('Create a collection and open two requests', async () => {
         await createCollection(page, 'ColOverview', collectionPath);
-        await createRequest(page, 'ReqOne', 'ColOverview', { url: 'https://echo.ferret.io', method: 'GET' });
-        await createRequest(page, 'ReqTwo', 'ColOverview', { url: 'https://echo.ferret.io', method: 'GET' });
+        await createRequest(page, 'ReqOne', 'ColOverview', { url: 'http://localhost:8081/echo', method: 'GET' });
+        await createRequest(page, 'ReqTwo', 'ColOverview', { url: 'http://localhost:8081/echo', method: 'GET' });
         await openRequest(page, 'ColOverview', 'ReqOne', { persist: true });
         await openRequest(page, 'ColOverview', 'ReqTwo', { persist: true });
         await expect(locators.tabs.requestTab('ReqOne')).toBeVisible();

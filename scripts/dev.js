@@ -34,8 +34,10 @@ const portRegex = /Local:\s+http:\/\/localhost:(\d+)/;
 
 console.log(`\n${colors.bright}${colors.yellow}🚀 Starting Ferret development environment...${colors.reset}\n`);
 
-// Start the rsbuild dev server
-const webProcess = spawn('npm', ['run', 'dev'], {
+// Start the rsbuild dev server. FERRET_DEV_PORT picks its port, e.g. when another
+// project already serves on 3000; Electron then follows whatever port is detected below.
+const requestedPort = process.env.FERRET_DEV_PORT;
+const webProcess = spawn('npm', ['run', 'dev', ...(requestedPort ? ['--', '--port', requestedPort] : [])], {
   cwd: webDir,
   stdio: ['inherit', 'pipe', 'pipe'],
   shell: true
@@ -45,9 +47,10 @@ webProcess.stdout.on('data', (data) => {
   const output = data.toString();
   process.stdout.write(output);
 
-  // Try to detect the port from rsbuild output
+  // Try to detect the port from rsbuild output. Strip ANSI colour codes first: when colour is
+  // forced (e.g. FORCE_COLOR) rsbuild puts them between "Local:" and the URL.
   if (!detectedPort) {
-    const match = output.match(portRegex);
+    const match = output.replace(/\x1b\[[0-9;]*m/g, '').match(portRegex);
     if (match) {
       detectedPort = match[1];
       log.success(`Detected dev server on port ${colors.bright}${detectedPort}${colors.reset}`);

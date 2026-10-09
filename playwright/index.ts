@@ -20,6 +20,10 @@ const defaultPreferences = {
     onboarding: {
       hasLaunchedBefore: true,
       hasSeenWelcomeModal: true
+    },
+    history: {
+      enabled: true,
+      saveBodies: true
     }
   }
 };
