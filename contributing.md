@@ -1,6 +1,6 @@
 ## Let's make Ferret better, together!!
 
-We are happy that you are looking to improve Ferret. Below are the guidelines to run Ferret on your computer.
+We are happy that you are looking to improve Ferret. Below are the guidelines to run Ferret on your computer. For a step-by-step walkthrough from `git clone` to a running app, see [Getting started](docs/getting-started.md).
 
 ### Technology Stack
 
@@ -36,7 +36,7 @@ All packages live under `packages/`:
 | `ferret-filestore` | File storage and parsing of collection files |
 | `ferret-sqlite` | SQLite storage layer |
 | `ferret-lang` | `.fer` language parser |
-| `ferret-toml` | TOML parser |
+| `ferret-toml` | TOML helpers (not used by the app today) |
 | `ferret-schema` / `ferret-schema-types` | Schema validation and shared types |
 | `ferret-js` | Script, test, vars and assert runtimes |
 | `ferret-query` | Query with deep navigation, filter and map support |
@@ -106,6 +106,15 @@ npm run watch:requests
 npm run watch:converters
 ```
 
+#### Use a different dev port
+
+The UI dev server uses port `3000`. If it is taken, set `FERRET_DEV_PORT` (it applies to both the dev server and the app):
+
+```sh
+FERRET_DEV_PORT=3100 npm run dev            # macOS / Linux / Git Bash
+$env:FERRET_DEV_PORT = 3100; npm run dev    # Windows PowerShell
+```
+
 #### Customize Electron `userData` path
 
 If `ELECTRON_USER_DATA_PATH` env-variable is present and its development mode, then `userData` path is modified accordingly.
@@ -120,17 +129,7 @@ This will create a `ferret-test` folder on your Desktop and use it as the `userD
 
 ### Troubleshooting
 
-You might encounter a `Unsupported platform` error when you run `npm install`. To fix this, you will need to delete `node_modules` and `package-lock.json` and run `npm install`. This should install all the necessary packages needed to run the app.
-
-```shell
-# Delete node_modules in sub-directories
-find ./ -type d -name "node_modules" -print0 | while read -d $'\0' dir; do
-  rm -rf "$dir"
-done
-
-# Delete package-lock in sub-directories
-find . -type f -name "package-lock.json" -delete
-```
+If `npm install` reports `Unsupported platform` or leaves the install in a strange state, re-run `npm run setup`. It deletes every `node_modules` folder first and installs again, on every operating system. Other common problems (port in use, `node:sqlite` errors, stale shared packages) are covered in [Getting started](docs/getting-started.md#troubleshooting).
 
 ### Testing
 
@@ -167,20 +166,33 @@ npm test --workspaces --if-present
 #### End-to-end tests
 
 ```bash
-# run the e2e test suite
+# run the e2e test suite (long: roughly 1,600 tests)
 npm run test:e2e
 
-# run a single e2e test file
+# a quick subset tagged @sanity
+npm run test:e2e:sanity
+
+# run a single e2e test file or folder
 npx playwright test tests/collection/create-collection.spec.ts --project=default
+npx playwright test tests/history --project=default
 ```
 
-### Linting
+The suite launches the real Electron app and needs the UI dev server (port `3000`, or `FERRET_DEV_PORT`) and the test server (port `8081`); Playwright starts both for you. The tests only talk to `localhost`, apart from the proxy specs under `tests/proxy`, which need proxy host names that exist only on a hosted test network and are expected to fail locally.
+
+### Linting and local checks
 
 ```bash
-npm run lint:fix
+npm run lint:fix     # fix lint problems
+npm run check        # lint + all unit tests
 ```
 
+There is no hosted CI, so checks run on your machine through git hooks: ESLint runs on the files you commit, and the full unit test suite runs when you `git push` (skip it once with `git push --no-verify`). Please run `npm run check` before opening a pull request.
+
 Please also follow our [coding standards](CODING_STANDARDS.md).
+
+### Building an installer and releasing
+
+`npm run dist` builds an installer for the operating system you are on. Maintainers publish releases with the workflow described in [Releasing](docs/releasing.md); `npm run version:set <version>` sets one version on every package.
 
 ### Raising Pull Requests
 

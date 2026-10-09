@@ -27,7 +27,6 @@ packages/
   ferret-toml/         Thin wrapper over @iarna/toml (orphaned — on no live data path)
   ferret-cli/          Command-line runner (run straight from src/)
   ferret-tests/        Test servers (express: HTTP/HTTPS/proxy/GraphQL)
-  ferret-docs/         @useferret/docs — placeholder stub (only package.json + readme, no src/)
 tests/                Playwright e2e tests
 playwright/           Test fixtures and helpers (index.ts)
 ```
@@ -40,7 +39,7 @@ Build tool per package (matters for the "rebuild shared packages" step in `.clau
 - **tsc only**: ferret-schema-types.
 - **rsbuild**: ferret-app.
 - **no build step (consumed straight from `src/`)**: ferret-js, ferret-lang, ferret-schema,
-  ferret-toml, ferret-cli, ferret-electron, ferret-tests, ferret-docs.
+  ferret-toml, ferret-cli, ferret-electron, ferret-tests.
 
 The 8 packages that must be rebuilt after editing (they emit `dist/`): ferret-common,
 ferret-requests, ferret-filestore, ferret-sqlite, ferret-converters, ferret-query, ferret-graphql-docs,

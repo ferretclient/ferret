@@ -73,6 +73,8 @@
     "build:graphql-docs": "npm run build --workspace=packages/ferret-graphql-docs",
     "build:schema-types": "npm run build --workspace=packages/ferret-schema-types",
     "build:electron": "node ./scripts/build-electron.js",
+    "dist": "npm run build:web && npm run build:electron",
+    "version:set": "node ./scripts/set-version.js",
     "build:electron:benchmark": "cross-env FERRET_BENCHMARK=true npm run build:benchmark --workspace=packages/ferret-app && cross-env FERRET_BENCHMARK=true node scripts/build-electron.js",
     "build:electron:mac": "./scripts/build-electron.sh mac",
     "build:electron:win": "./scripts/build-electron.sh win",

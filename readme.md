@@ -1,88 +1,112 @@
 <br />
-<img src="assets/images/logo-transparent.png" width="80"/>
+<img src="assets/images/logo-transparent.png" width="120" alt="Ferret logo"/>
 
-### Ferret - Open-source IDE for exploring and testing APIs.
+### Ferret: an offline API client for exploring and testing APIs
 
-[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://ferret.io)
+Ferret is a desktop app and command-line tool for sending requests, writing tests and organising API collections. Your collections are ordinary files in a folder, so you can version them with Git like any other code.
 
-Ferret is an offline-first API client. It stores your collections directly in a folder on your filesystem, as plain-text `.fer` files or OpenCollection YAML, so you can version and review them with Git or any other version control system.
+**Local by design.** No account, no cloud sync, no telemetry, no background calls to any server. Ferret only connects to the addresses in the requests you send, to proxies you configure, and to Git remotes you use.
 
-There is no cloud sync and no account: your data stays on your device.
-
-## Table of Contents
+## Contents
 
 - [Features](#features)
-- [Building from Source](#building-from-source)
-- [Ferret CLI](#ferret-cli)
-- [Run with Docker](#run-with-docker)
-- [Contribute](#contribute)
+- [Download](#download)
+- [Run from source](#run-from-source)
+- [Command line](#command-line)
+- [Documentation](#documentation)
+- [Coming from Bruno](#coming-from-bruno)
+- [Contributing](#contributing)
 - [Security](#security)
 - [License](#license)
 
 ## Features
 
-- HTTP, GraphQL, gRPC and WebSocket requests
-- Collections stored as plain-text files you can commit, diff and review
-- Environments, variables and secrets
-- Pre-request and post-response scripting, tests and assertions
-- Import from Postman, Insomnia, OpenAPI and WSDL
-- Collection runner in the desktop app and the CLI
-- Runs on macOS, Windows and Linux
+- **Protocols:** HTTP, GraphQL, gRPC and WebSocket requests
+- **Collections as files:** `.fer` text files or OpenCollection YAML, one file per request, easy to diff and review
+- **Environments and variables:** several scopes, secrets that stay out of the files, data types, and **options** variables that let you pick a value by name (for example one of several company IDs)
+- **Scripting and tests:** JavaScript before and after each request, Chai `expect` tests, no-code assertions, a sandboxed Safe Mode and a Developer Mode with npm packages
+- **Collection runner** in the app and the **`fer` CLI** for CI, with JSON, JUnit and self-contained HTML reports
+- **Request history:** every request you send, searchable and stored only on your computer, with credentials masked
+- **Import:** Postman, Insomnia, OpenAPI, WSDL, OpenCollection and Bruno collections
+- **Git integration**, a local **mock server**, response examples, cookies, proxies, client certificates and OAuth 2.0
+- Light and dark themes (teal and azure) plus 20 more to choose from
+- Windows, macOS and Linux
 
-## Building from Source
+## Download
 
-Ferret requires Node **v22.12.0** (see `.nvmrc`).
+Installers for Windows, macOS and Linux are published on the repository's **Releases** page. Builds are not signed yet, so your operating system will warn the first time you open one:
 
-```sh
-nvm use
-npm i --legacy-peer-deps
-npm run setup
+- **Windows:** SmartScreen shows "Windows protected your PC". Choose **More info → Run anyway**.
+- **macOS:** right-click the app and choose **Open**, then confirm.
+- **Linux:** make the AppImage executable (`chmod +x`) and run it, or install the `.deb` / `.rpm`.
 
-# Start the desktop app in development mode
-npm run dev
+No release yet, or you prefer to build it yourself? Follow the next section.
+
+## Run from source
+
+You need **Git** and **Node.js 22.12.x** (see [`.nvmrc`](.nvmrc); install it with [nvm](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows)).
+
+```bash
+git clone https://github.com/jakahann/ferret-app.git
+cd ferret-app
+
+nvm use              # picks the Node version from .nvmrc (macOS / Linux)
+npm run setup        # installs everything and builds the shared packages (a few minutes)
+
+npm run dev          # opens Ferret in development mode
 ```
 
-See the [contributing guide](contributing.md) for the full development setup.
+Other things you will want:
 
-## Ferret CLI
-
-The **Ferret CLI** runs your API collections from the command line, which is ideal for automated testing and CI/CD pipelines.
-
-```sh
-npm install -g @useferret/cli
+```bash
+npm run dist         # build an installer for your operating system (output: packages/ferret-electron/out)
+npm run check        # lint + all unit tests
+npm test             # unit tests only
 ```
 
-Navigate to the directory containing your collection and run it:
+If port `3000` is busy, start with `FERRET_DEV_PORT=3100 npm run dev` (PowerShell: `$env:FERRET_DEV_PORT = 3100; npm run dev`).
 
-```sh
-# Run every request in the collection
-fer run
+The full walkthrough, with Windows, macOS and Linux details, running the tests, and troubleshooting, is in **[docs/getting-started.md](docs/getting-started.md)**.
 
-# Run a single request
-fer run request.fer
+## Command line
 
-# Run a folder against a specific environment
-fer run folder --env Local
+The `fer` command runs a collection without the app, which is what you want in CI:
+
+```bash
+cd packages/ferret-cli && npm link          # once, from a clone: puts `fer` on your PATH
+
+fer run                                     # every request in the current collection
+fer run --env Local --reporter-junit results.xml
+fer run --env Local --env-var company=Company2
 ```
 
-For the full command reference, see the [Ferret CLI documentation](https://docs.ferret.io/fer-cli/overview).
+Ferret is not on npm yet, so the CLI runs from a clone for now. See **[docs/cli.md](docs/cli.md)** for every option and the exit codes.
 
-## Run with Docker
+## Documentation
 
-Docker images for the **Ferret CLI** let you run API collections in CI/CD pipelines without installing Node.js on the host.
+| Guide | What it covers |
+| --- | --- |
+| [Getting started](docs/getting-started.md) | clone, install, run, test and build, with troubleshooting |
+| [Environments and variables](docs/environments.md) | scopes, secrets, data types and options variables |
+| [Scripting, tests and assertions](docs/scripting.md) | the `req`, `res` and `fer` APIs and the sandbox modes |
+| [Command line](docs/cli.md) | `fer run` and `fer import`, reports, CI and exit codes |
+| [Request history](docs/request-history.md) | what is saved, privacy and settings |
+| [Importing from Bruno](docs/importing-from-bruno.md) | what is converted and how |
+| [Releasing](docs/releasing.md) | versions, signing and publishing installers (maintainers) |
+| [Playwright testing guide](docs/playwright-testing-guide.md) | writing and running end-to-end tests |
+| [Contributing](contributing.md) and [coding standards](CODING_STANDARDS.md) | working on Ferret itself |
 
-```sh
-docker pull useferret/cli:latest
+The same basics are available inside the app: **Help → Documentation** opens the built-in readme.
 
-# Run a collection by mounting the current directory
-docker run -v $(pwd):/ferret useferret/cli run
-```
+## Coming from Bruno
 
-## Contribute
+Ferret imports Bruno collections: a collection folder (`.bru` or YAML), a zip, or a JSON export. Open **Import Collection** and choose **Import a Bruno collection folder**. Files are converted to Ferret's format (`.fer`, `ferret.json`) and `bru.*` scripts become `fer.*`. Your original folder is not modified. Details: [Importing from Bruno](docs/importing-from-bruno.md).
 
-Contributions are welcome. Please check out the [contributing guide](contributing.md).
+## Contributing
 
-Even if you are not able to contribute code, please file bugs and feature requests on [GitHub](https://github.com/jakahann/ferret-app/issues).
+Contributions are welcome. Start with the [contributing guide](contributing.md), which explains the project layout, how to run and test your changes, and how to open a pull request. Bugs and feature requests go in [GitHub issues](https://github.com/jakahann/ferret-app/issues).
+
+There is no hosted CI. Checks run locally: linting on commit, the unit tests on push, and `npm run check` any time.
 
 ## Security
 

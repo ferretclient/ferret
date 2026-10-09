@@ -1,0 +1,132 @@
+# Builds the Windows, macOS and Linux installers and publishes them as a GitHub release.
+#
+# Runs ONLY when a version tag (v1.2.3) is pushed, or when started by hand from the Actions tab.
+# It never runs on ordinary pushes or pull requests, because macOS minutes cost ten times as much
+# as Linux minutes. Tests are run locally before tagging (see docs/releasing.md).
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to release (for example v0.2.0). It must already exist.'
+        required: true
+        type: string
+      draft:
+        description: 'Create the release as a draft so it can be reviewed before it is published'
+        type: boolean
+        default: true
+
+concurrency:
+  group: release-${{ github.event.inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+env:
+  RELEASE_TAG: ${{ github.event.inputs.tag || github.ref_name }}
+
+jobs:
+  check-version:
+    name: Tag matches package version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.RELEASE_TAG }}
+      - name: Compare tag with the app version
+        run: |
+          APP_VERSION=$(node -p "require('./packages/ferret-electron/package.json').version")
+          if [ "$RELEASE_TAG" != "v$APP_VERSION" ]; then
+            echo "Tag $RELEASE_TAG does not match the app version v$APP_VERSION. Run 'npm run version:set <version>' and commit first."
+            exit 1
+          fi
+
+  build:
+    name: Build ${{ matrix.label }}
+    needs: check-version
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            label: Windows
+          - os: macos-latest
+            label: macOS
+          - os: ubuntu-latest
+            label: Linux
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.RELEASE_TAG }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install dependencies and build shared packages
+        run: npm run setup
+
+      # Signing is optional: with none of these secrets set the installers are unsigned.
+      - name: Build installer
+        run: npm run dist
+        env:
+          CSC_LINK: ${{ secrets.CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+
+      - name: Build Linux packages (.deb, .rpm)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update && sudo apt-get install -y rpm
+          npm run dist:deb --workspace=packages/ferret-electron
+          npm run dist:rpm --workspace=packages/ferret-electron
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: installers-${{ matrix.label }}
+          if-no-files-found: error
+          path: |
+            packages/ferret-electron/out/*.exe
+            packages/ferret-electron/out/*.dmg
+            packages/ferret-electron/out/*.pkg
+            packages/ferret-electron/out/*.zip
+            packages/ferret-electron/out/*.AppImage
+            packages/ferret-electron/out/*.deb
+            packages/ferret-electron/out/*.rpm
+
+  publish:
+    name: Publish release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Create checksums
+        working-directory: dist
+        run: sha256sum * > SHA256SUMS.txt
+
+      - name: Create the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          FLAGS="--generate-notes --verify-tag"
+          # Anything below 1.0 is a pre-release.
+          case "$RELEASE_TAG" in v0.*|*-*) FLAGS="$FLAGS --prerelease" ;; esac
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.event.inputs.draft }}" = "true" ]; then
+            FLAGS="$FLAGS --draft"
+          fi
+          gh release create "$RELEASE_TAG" dist/* \
+            --repo "${{ github.repository }}" \
+            --title "Ferret ${RELEASE_TAG#v}" \
+            $FLAGS

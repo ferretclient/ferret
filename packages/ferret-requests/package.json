@@ -1,6 +1,6 @@
 {
   "name": "@useferret/requests",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "^9.7.0",
-    "@useferret/common": "0.1.0",
+    "@useferret/common": "0.2.0",
     "@grpc/grpc-js": "^1.14.4",
     "@grpc/proto-loader": "^0.7.15",
     "@types/qs": "^6.9.18",
