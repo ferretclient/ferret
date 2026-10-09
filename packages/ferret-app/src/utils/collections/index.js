@@ -17,7 +17,7 @@ import {
   doesFolderHaveItemsMatchSearchText,
   doesCollectionHaveItemsMatchingSearchText
 } from 'utils/collections/search';
-import { resolveEnvironmentInheritance, toVariablesMap, isOptionsVariable } from '@useferret/common/utils';
+import { resolveEnvironmentInheritance, toVariablesMap, isOptionsVariable, resolveOptionsVariableValue } from '@useferret/common/utils';
 
 const replaceTabsWithSpaces = (str, numSpaces = 2) => {
   if (!str || !str.length || !isString(str)) {
@@ -1262,12 +1262,12 @@ export const getEnvironmentVariables = (collection) => {
 };
 
 /**
- * name → options of the active environment's options variables, so a request variable of the
- * same name can be picked from that list.
+ * The active environment's options variables with the value each one currently resolves to, so a
+ * request can offer the choice and show which option is the environment's default.
  */
-export const getEnvironmentOptionVariables = (collection) => {
+export const getEnvironmentOptionSelections = (collection) => {
   if (!collection?.activeEnvironmentUid) {
-    return {};
+    return [];
   }
 
   const environment = resolveEnvironmentInheritance({
@@ -1276,12 +1276,22 @@ export const getEnvironmentOptionVariables = (collection) => {
     merge: true
   });
 
-  return Object.fromEntries(
-    (environment?.variables || [])
-      .filter((variable) => variable.enabled && variable.name && isOptionsVariable(variable))
-      .map((variable) => [variable.name, variable.options])
-  );
+  return (environment?.variables || [])
+    .filter((variable) => variable.enabled && variable.name && isOptionsVariable(variable))
+    .map((variable) => ({
+      name: variable.name,
+      options: variable.options,
+      defaultValue: String(resolveOptionsVariableValue(variable) ?? '')
+    }));
 };
+
+/**
+ * name → options of the active environment's options variables, so a request variable of the
+ * same name can be picked from that list.
+ */
+export const getEnvironmentOptionVariables = (collection) => Object.fromEntries(
+  getEnvironmentOptionSelections(collection).map(({ name, options }) => [name, options])
+);
 
 export const getEnvironmentVariablesMasked = (collection) => {
   // Return an empty array if the collection is invalid or not provided

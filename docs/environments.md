@@ -46,7 +46,9 @@ Use an `options` variable when one setting has a fixed set of known values that 
 
 ### Choose a different option for one request
 
-Open the request's **Vars** tab and add a request variable with the **same name** (`company`). Its value cell becomes a dropdown of the environment's option names, and that request sends the value of the one you pick. The choice is saved with the request, and other requests keep using the environment's default.
+Select the environment, open the request's **Vars** tab, and look at the **Environment options** section at the top. Every options variable of the active environment is listed with a dropdown of its option names; pick one and that request sends its value. Nothing needs to be typed.
+
+Behind the scenes the choice is stored as an ordinary request variable of the same name (`company`), so it is saved with the request and shows up in the **Pre Request** table. Choosing the environment's own default option removes that variable again. Other requests keep using the environment's default. You can also create the variable by hand: a request variable named like an options variable shows the same dropdown in its value cell.
 
 If the environment is later changed so that a request's saved value no longer matches any option, the picker shows it as `<value> (not in options)` instead of guessing.
 
