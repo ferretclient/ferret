@@ -1361,25 +1361,34 @@ export const exportWorkspaceAction = (workspaceUid) => {
   };
 };
 
+// Adds a workspace the main process has just imported and opened, and switches to it.
+const openImportedWorkspace = (result) => async (dispatch) => {
+  if (result.success) {
+    dispatch(createWorkspace({
+      uid: result.workspaceUid,
+      pathname: result.workspacePath,
+      ...result.workspaceConfig
+    }));
+
+    await dispatch(switchWorkspace(result.workspaceUid));
+  }
+
+  return result;
+};
+
 export const importWorkspaceAction = (zipFilePath, extractLocation) => {
   return async (dispatch) => {
-    try {
-      const result = await ipcRenderer.invoke('renderer:import-workspace', zipFilePath, extractLocation);
+    const result = await ipcRenderer.invoke('renderer:import-workspace', zipFilePath, extractLocation);
+    return dispatch(openImportedWorkspace(result));
+  };
+};
 
-      if (result.success) {
-        dispatch(createWorkspace({
-          uid: result.workspaceUid,
-          pathname: result.workspacePath,
-          ...result.workspaceConfig
-        }));
-
-        await dispatch(switchWorkspace(result.workspaceUid));
-      }
-
-      return result;
-    } catch (error) {
-      throw error;
-    }
+// Converts a Bruno workspace folder to a Ferret workspace inside extractLocation and opens it.
+// Resolves with `collectionCount` and `warnings` (collections or environments that were not converted).
+export const importBrunoWorkspaceAction = (workspaceFolder, extractLocation) => {
+  return async (dispatch) => {
+    const result = await ipcRenderer.invoke('renderer:import-bruno-workspace', workspaceFolder, extractLocation);
+    return dispatch(openImportedWorkspace(result));
   };
 };
 

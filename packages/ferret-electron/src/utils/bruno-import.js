@@ -139,6 +139,7 @@ const importBrunoFolder = async (mainWindow, folderPath, collectionLocation) => 
 };
 
 module.exports = {
+  isBrunoCollectionDir,
   convertBrunoCollectionDir,
   findBrunoCollections,
   importBrunoCollectionFolder,

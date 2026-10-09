@@ -4,10 +4,12 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 import get from 'lodash/get';
-import { IconFileZip } from '@tabler/icons';
+import { IconFileZip, IconFolder } from '@tabler/icons';
 import Modal from 'components/Modal';
 import { browseDirectory } from 'providers/ReduxStore/slices/collections/actions';
-import { importWorkspaceAction } from 'providers/ReduxStore/slices/workspaces/actions';
+import { importWorkspaceAction, importBrunoWorkspaceAction } from 'providers/ReduxStore/slices/workspaces/actions';
+import path from 'utils/common/path';
+import { existsSync } from 'utils/filesystem';
 import { formatIpcError } from 'utils/common/error';
 import { multiLineMsg } from 'utils/common/index';
 import Help from 'components/Help';
@@ -17,6 +19,7 @@ const ImportWorkspace = ({ onClose }) => {
   const preferences = useSelector((state) => state.app.preferences);
   const [dragActive, setDragActive] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFolder, setSelectedFolder] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const fileInputRef = useRef(null);
   const locationInputRef = useRef(null);
@@ -32,12 +35,18 @@ const ImportWorkspace = ({ onClose }) => {
       workspaceLocation: Yup.string().min(1, 'location is required').required('location is required')
     }),
     onSubmit: async (values) => {
-      if (isSubmitting || !selectedFile) return;
+      if (isSubmitting || !(selectedFile || selectedFolder)) return;
 
       try {
         setIsSubmitting(true);
-        await dispatch(importWorkspaceAction(selectedFile.path, values.workspaceLocation));
-        toast.success('Workspace imported successfully!');
+        if (selectedFolder) {
+          const result = await dispatch(importBrunoWorkspaceAction(selectedFolder.path, values.workspaceLocation));
+          toast.success(`Workspace imported: ${result.collectionCount} collection${result.collectionCount === 1 ? '' : 's'}`);
+          result.warnings.forEach((warning) => toast.error(warning));
+        } else {
+          await dispatch(importWorkspaceAction(selectedFile.path, values.workspaceLocation));
+          toast.success('Workspace imported successfully!');
+        }
         onClose();
       } catch (error) {
         toast.error(multiLineMsg('Failed to import workspace', formatIpcError(error)));
@@ -119,7 +128,23 @@ const ImportWorkspace = ({ onClose }) => {
       });
   };
 
+  const handleBrowseBrunoWorkspace = () => {
+    dispatch(browseDirectory())
+      .then(async (dirPath) => {
+        if (typeof dirPath !== 'string' || dirPath.length === 0) return;
+        if (!(await existsSync(path.join(dirPath, 'workspace.yml')))) {
+          toast.error('This folder has no workspace.yml, so it is not a Bruno workspace');
+          return;
+        }
+        setSelectedFolder({ name: path.basename(dirPath), path: dirPath });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const handleClearFile = () => {
+    setSelectedFolder(null);
     setSelectedFile(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
@@ -132,7 +157,7 @@ const ImportWorkspace = ({ onClose }) => {
     }
   }, [locationInputRef]);
 
-  const canSubmit = selectedFile && formik.values.workspaceLocation && !isSubmitting;
+  const canSubmit = (selectedFile || selectedFolder) && formik.values.workspaceLocation && !isSubmitting;
 
   return (
     <Modal
@@ -145,12 +170,12 @@ const ImportWorkspace = ({ onClose }) => {
     >
       <div className="flex flex-col">
         <div className="mb-4">
-          <h3 className="font-semibold mb-2">Workspace File</h3>
-          {selectedFile ? (
+          <h3 className="font-semibold mb-2">Workspace</h3>
+          {selectedFile || selectedFolder ? (
             <div className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800">
               <div className="flex items-center gap-2">
-                <IconFileZip size={20} className="text-gray-500" />
-                <span className="text-gray-700 dark:text-gray-300">{selectedFile.name}</span>
+                {selectedFolder ? <IconFolder size={20} className="text-gray-500" /> : <IconFileZip size={20} className="text-gray-500" />}
+                <span className="text-gray-700 dark:text-gray-300" data-testid="import-workspace-selected">{(selectedFile || selectedFolder).name}</span>
               </div>
               <button
                 type="button"
@@ -196,6 +221,17 @@ const ImportWorkspace = ({ onClose }) => {
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   Supports exported Ferret workspace zip files
+                </p>
+                <p className="mt-3 text-gray-600 dark:text-gray-300">
+                  Coming from Bruno?{' '}
+                  <button
+                    type="button"
+                    className="text-blue-500 underline cursor-pointer"
+                    onClick={handleBrowseBrunoWorkspace}
+                    data-testid="import-bruno-workspace"
+                  >
+                    Choose a Bruno workspace folder
+                  </button>
                 </p>
               </div>
             </div>

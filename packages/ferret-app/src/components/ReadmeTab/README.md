@@ -62,7 +62,7 @@ Every request you send is recorded on your computer, with credentials masked. Op
 
 Collections can be imported from Postman, Insomnia, OpenAPI, WSDL and OpenCollection files.
 
-Coming from Bruno? Import a Bruno folder (one collection, or a folder holding several), zip or JSON export and it is converted to Ferret: `bruno.json` becomes `ferret.json`, `.bru` files become `.fer`, and scripts using `bru.*` are rewritten to `fer.*`. The original Bruno folder is never modified.
+Coming from Bruno? Import a Bruno folder (one collection, or a folder holding several), a whole Bruno workspace (workspace menu → Import workspace), a zip or a JSON export and it is converted to Ferret: `bruno.json` becomes `ferret.json`, `.bru` files become `.fer`, and scripts using `bru.*` are rewritten to `fer.*`. The original Bruno folder is never modified.
 
 ### Privacy
 

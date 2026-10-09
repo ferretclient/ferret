@@ -7,6 +7,7 @@ const { ipcMain, dialog } = require('electron');
 const isDev = require('electron-is-dev');
 const { createDirectory, isDirectory, mkdirUnique, sanitizeName, writeFile, DEFAULT_GITIGNORE, removeGitMetadata } = require('../utils/filesystem');
 const yaml = require('js-yaml');
+const { importBrunoWorkspaceFolder } = require('../utils/bruno-workspace-import');
 const LastOpenedWorkspaces = require('../store/last-opened-workspaces');
 const { defaultWorkspaceManager } = require('../store/default-workspace');
 const { globalEnvironmentsManager } = require('../store/workspace-environments');
@@ -345,6 +346,38 @@ const registerWorkspaceIpc = (mainWindow, workspaceWatcher) => {
     }
   });
 
+  // Validates a freshly imported workspace folder, registers it as opened and tells the renderer.
+  const openImportedWorkspace = (finalWorkspacePath) => {
+    validateWorkspacePath(finalWorkspacePath);
+
+    const finalConfig = readWorkspaceConfig(finalWorkspacePath);
+    validateWorkspaceConfig(finalConfig);
+
+    const workspaceUid = getWorkspaceUid(finalWorkspacePath);
+    const isDefault = workspaceUid === 'default';
+    const configForClient = prepareWorkspaceConfigForClient(finalConfig, finalWorkspacePath, isDefault);
+
+    lastOpenedWorkspaces.add(finalWorkspacePath);
+
+    mainWindow.webContents.send('main:workspace-opened', finalWorkspacePath, workspaceUid, configForClient);
+
+    if (workspaceWatcher) {
+      workspaceWatcher.addWatcher(mainWindow, finalWorkspacePath);
+    }
+
+    return {
+      success: true,
+      workspaceConfig: configForClient,
+      workspaceUid,
+      workspacePath: finalWorkspacePath
+    };
+  };
+
+  ipcMain.handle('renderer:import-bruno-workspace', async (event, workspaceFolder, workspaceLocation) => {
+    const { workspacePath, collectionCount, warnings } = await importBrunoWorkspaceFolder(workspaceFolder, workspaceLocation);
+    return { ...openImportedWorkspace(workspacePath), collectionCount, warnings };
+  });
+
   ipcMain.handle('renderer:import-workspace', async (event, zipFilePath, extractLocation) => {
     try {
       if (!zipFilePath || !fs.existsSync(zipFilePath)) {
@@ -395,29 +428,7 @@ const registerWorkspaceIpc = (mainWindow, workspaceWatcher) => {
           await fsExtra.move(tempDir, finalWorkspacePath);
         }
 
-        validateWorkspacePath(finalWorkspacePath);
-
-        const finalConfig = readWorkspaceConfig(finalWorkspacePath);
-        validateWorkspaceConfig(finalConfig);
-
-        const workspaceUid = getWorkspaceUid(finalWorkspacePath);
-        const isDefault = workspaceUid === 'default';
-        const configForClient = prepareWorkspaceConfigForClient(finalConfig, finalWorkspacePath, isDefault);
-
-        lastOpenedWorkspaces.add(finalWorkspacePath);
-
-        mainWindow.webContents.send('main:workspace-opened', finalWorkspacePath, workspaceUid, configForClient);
-
-        if (workspaceWatcher) {
-          workspaceWatcher.addWatcher(mainWindow, finalWorkspacePath);
-        }
-
-        return {
-          success: true,
-          workspaceConfig: configForClient,
-          workspaceUid,
-          workspacePath: finalWorkspacePath
-        };
+        return openImportedWorkspace(finalWorkspacePath);
       } catch (error) {
         await fsExtra.remove(tempDir).catch(() => {});
         throw error;

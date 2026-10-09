@@ -52,7 +52,8 @@ bugs to the shared logic, not the reporting surface.
   Changes to a shared converter affect both. Bruno conversion is split by layer: script text in
   `@useferret/common` (`convertBrunoScript`), single files in `@useferret/filestore`
   (`convertBrunoFile`), JSON exports in `@useferret/converters` (`brunoToFerret`), and folders
-  and zips in `ferret-electron/src/utils/bruno-import.js`.
+  and zips in `ferret-electron/src/utils/bruno-import.js`, and whole workspaces (`workspace.yml`) in
+  `ferret-electron/src/utils/bruno-workspace-import.js`, which reuses the folder converter per collection.
 - **Known-divergent by design.** The CLI has no preferences store (so no `resolveInheritedSettings`),
   no Electron window, no system-browser OAuth, and no `@useferret/schema` validation. Its runner
   handles only `REQUEST_ITEM_TYPES = ['http-request', 'graphql-request']`

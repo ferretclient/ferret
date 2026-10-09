@@ -102,7 +102,7 @@ The same basics are available inside the app: **Help → Documentation** opens t
 
 ## Coming from Bruno
 
-Ferret imports Bruno collections: a collection folder (`.bru` or YAML), a folder that holds several collections, a zip, or a JSON export. Open **Import Collection** and choose **Import a Bruno folder**. Files are converted to Ferret's format (`.fer`, `ferret.json`) and `bru.*` scripts become `fer.*`. Your original folder is not modified. Details: [Importing from Bruno](docs/importing-from-bruno.md).
+Ferret imports Bruno collections: a collection folder (`.bru` or YAML), a folder that holds several collections, a whole workspace folder, a zip, or a JSON export. Open **Import Collection** and choose **Import a Bruno folder**. Files are converted to Ferret's format (`.fer`, `ferret.json`) and `bru.*` scripts become `fer.*`. Your original folder is not modified. Details: [Importing from Bruno](docs/importing-from-bruno.md).
 
 ## Contributing
 

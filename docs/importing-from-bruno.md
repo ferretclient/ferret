@@ -7,12 +7,26 @@ Ferret reads Bruno collections and converts them to its own format. You can keep
 | What you have | How |
 | --- | --- |
 | A Bruno **collection folder** (`.bru` files, or the YAML format), or a **folder that holds several collections** | *Import Collection* → **Import a Bruno folder** |
+| A Bruno **workspace folder** (Bruno 3, the folder with a `workspace.yml`) | the workspace menu in the title bar → **Import workspace** → **Choose a Bruno workspace folder** |
 | A **zip** of a Bruno collection | drop the zip into *Import Collection* |
 | A Bruno **JSON export** | drop the `.json` file into *Import Collection* |
 | Bruno **environment exports** | the environment import dialog |
 | An **OpenAPI** file exported by Bruno | the normal OpenAPI import (request variants are kept) |
 
 For a folder or zip, Ferret copies the collection into the location you choose and converts the copy. `.git` and `node_modules` are not copied; run `npm install` in the new folder if your scripts use npm packages.
+
+## Importing a whole workspace
+
+A Bruno workspace is a folder with a `workspace.yml`, a `collections/` folder and an `environments/` folder for global environments. Ferret uses the same layout, so the import keeps the workspace as it is:
+
+- The folder is copied to the location you choose and converted there; the original is not changed.
+- Every collection listed in `workspace.yml` is converted, and the workspace keeps its name and collection order.
+- A collection stored **outside** the workspace folder is copied into `collections/` and its entry is pointed there, like Bruno's "Move into Workspace". The original stays where it was.
+- Files in `environments/` are converted when they need it (YAML environments are already compatible).
+- Anything that could not be imported, such as a listed collection whose folder is missing, is reported in a message and the rest still imports.
+- The workspace opens and becomes the active one.
+
+Bruno's own application data (preferences, cookies and stored secrets) is not part of a workspace folder and is not imported. The default workspace Bruno keeps in its application data folder can be imported once you copy it into a normal folder.
 
 ## What is converted
 
