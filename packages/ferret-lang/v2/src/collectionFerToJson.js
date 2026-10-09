@@ -6,7 +6,8 @@ const {
   parseAnnotationMultilineTextBlock,
   unescapeAnnotationDoubleQuotedArg,
   applyDescriptionFromAnnotations,
-  extractTypedAnnotations
+  extractTypedAnnotations,
+  extractOptionsAnnotations
 } = require('./utils');
 
 // this is done to avoid breaking existing pairlist mapping so
@@ -129,7 +130,10 @@ const mapPairListToKeyValPairs = (pairList = [], parseEnabled = true, extractTyp
     if (!parseEnabled) {
       const result = { name, value };
       if (rawAnnotations && rawAnnotations.length) result.annotations = rawAnnotations;
-      if (extractTypes) extractTypedAnnotations(rawAnnotations, result);
+      if (extractTypes) {
+        extractTypedAnnotations(rawAnnotations, result);
+        extractOptionsAnnotations(rawAnnotations, result);
+      }
       return result;
     }
 
@@ -144,7 +148,10 @@ const mapPairListToKeyValPairs = (pairList = [], parseEnabled = true, extractTyp
       result.annotations = rawAnnotations;
       applyDescriptionFromAnnotations(result, rawAnnotations);
     }
-    if (extractTypes) extractTypedAnnotations(rawAnnotations, result);
+    if (extractTypes) {
+      extractTypedAnnotations(rawAnnotations, result);
+      extractOptionsAnnotations(rawAnnotations, result);
+    }
     return result;
   });
 };

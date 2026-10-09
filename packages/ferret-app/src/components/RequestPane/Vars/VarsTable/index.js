@@ -9,6 +9,7 @@ import InfoTip from 'components/InfoTip';
 import DataTypeSelector from 'components/DataTypeSelector';
 import VarValueCell from 'components/VarValueCell';
 import OptionsVarPicker from 'components/RequestPane/Vars/OptionsVarPicker';
+import OptionsValueEditor from 'components/OptionsValueEditor';
 import { valueToString } from '@useferret/common/utils';
 import EditableTable from 'components/EditableTable';
 import { createDescriptionColumn } from 'components/EditableTable/descriptionColumn';
@@ -45,6 +46,8 @@ const VarsTable = ({ item, collection, vars, varType, initialScroll = 0, isDraft
       type: varType
     }));
   }, [dispatch, collection.uid, item.uid, varType]);
+
+  const updateRow = (row, fields) => handleVarsChange((vars || []).map((v) => (v.uid === row.uid ? { ...v, ...fields } : v)));
 
   const handleVarDrag = useCallback(({ updateReorderedItem }) => {
     dispatch(moveVar({
@@ -92,12 +95,16 @@ const VarsTable = ({ item, collection, vars, varType, initialScroll = 0, isDraft
       ),
       placeholder: varType === 'request' ? 'Value' : 'Expr',
       render: ({ row, value, onChange, isLastEmptyRow, rowIndex }) => {
-        // A request variable named like an options environment variable picks one of its options.
-        const options = varType === 'request' && !isLastEmptyRow ? environmentOptions[row.name] : null;
+        // A request variable of the options type carries its own list of choices.
+        const ownsOptions = varType === 'request' && !isLastEmptyRow && row.dataType === 'options';
+        // Otherwise a request variable named like an options environment variable picks one of its options.
+        const options = varType === 'request' && !isLastEmptyRow && !ownsOptions ? environmentOptions[row.name] : null;
 
         return (
           <VarValueCell
-            editor={options ? (
+            editor={ownsOptions ? (
+              <OptionsValueEditor variable={row} onChange={(fields) => updateRow(row, fields)} />
+            ) : options ? (
               <OptionsVarPicker options={options} value={value} onChange={onChange} />
             ) : (
               <MultiLineEditor
@@ -119,10 +126,8 @@ const VarsTable = ({ item, collection, vars, varType, initialScroll = 0, isDraft
                     variable={row}
                     theme={storedTheme}
                     resolvableVariables={resolvableVariables}
-                    onChange={(fields) => {
-                      const updated = (vars || []).map((v) => v.uid === row.uid ? { ...v, ...fields } : v);
-                      handleVarsChange(updated);
-                    }}
+                    allowOptions
+                    onChange={(fields) => updateRow(row, fields)}
                   />
                 )
               : null}

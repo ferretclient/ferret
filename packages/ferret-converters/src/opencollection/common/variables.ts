@@ -7,6 +7,7 @@ import type {
 import {
   isTypedValue,
   hasTypedMetadata,
+  TypedVariableFields,
   toOpenCollectionTypedValue,
   fromOpenCollectionTypedValue,
   serializeVariableValue
@@ -33,7 +34,12 @@ export const fromOpenCollectionVariables = (variables: Variable[] | undefined): 
       local: false
     };
 
-    if (isTypedValue(v.value)) {
+    const options = (v as Variable & { options?: unknown }).options;
+    if (Array.isArray(options)) {
+      variable.dataType = 'options';
+      variable.value = isTypedValue(v.value) ? String(v.value.data ?? '') : typeof v.value === 'string' ? v.value : '';
+      variable.options = options.map((option: any) => ({ key: String(option?.key ?? ''), value: String(option?.value ?? '') }));
+    } else if (isTypedValue(v.value)) {
       Object.assign(variable, fromOpenCollectionTypedValue(v.value));
     } else if (typeof v.value === 'string') {
       variable.value = v.value;
@@ -64,10 +70,20 @@ export const toOpenCollectionVariables = (vars: FerretVars | { req?: FerretVaria
 
   const ocVariables: Variable[] = reqVarsArray.map((v: FerretVariable): Variable => {
     const valueStr = serializeVariableValue(v.value);
+    // 'options' is not an OpenCollection value type: an options variable keeps its default key as a plain
+    // value next to an `options` list.
+    const isOptions = v.dataType === 'options';
+    const typed: TypedVariableFields = { dataType: isOptions ? undefined : v.dataType as TypedVariableFields['dataType'] };
     const variable: Variable = {
       name: v.name || '',
-      value: hasTypedMetadata(v) ? toOpenCollectionTypedValue(v, valueStr) : valueStr
+      value: hasTypedMetadata(typed) ? toOpenCollectionTypedValue(typed, valueStr) : valueStr
     };
+    if (isOptions) {
+      (variable as Variable & { options?: { key: string; value: string }[] }).options = (v.options || []).map((option) => ({
+        key: option.key,
+        value: option.value ?? ''
+      }));
+    }
 
     if (v.description && typeof v.description === 'string' && v.description.trim().length) {
       variable.description = v.description;

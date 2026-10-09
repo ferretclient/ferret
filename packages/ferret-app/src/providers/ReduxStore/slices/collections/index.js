@@ -2345,13 +2345,15 @@ export const collectionsSlice = createSlice({
         item.draft = cloneDeep(item);
       }
       item.draft.request.vars = item.draft.request.vars || {};
-      const mappedVars = map(vars, ({ uid, name = '', value = '', description = '', enabled = true, local = false, dataType, annotations }) => ({
+      const mappedVars = map(vars, ({ uid, name = '', value = '', description = '', enabled = true, local = false, dataType, options, annotations }) => ({
         uid: uid || uuid(),
         name,
         value,
         description,
         enabled,
         ...(dataType && dataType !== 'string' ? { dataType } : {}),
+        // The choices of an options variable travel with it, even while the list is still empty.
+        ...(dataType === 'options' ? { options: options || [] } : {}),
         ...(annotations?.length ? { annotations } : {}),
         ...(type === 'response' ? { local } : {})
       }));
@@ -2706,7 +2708,7 @@ export const collectionsSlice = createSlice({
         folder.draft = cloneDeep(folder.root);
       }
 
-      const mappedVars = map(vars, ({ uid, name = '', value = '', description = '', enabled = true, local = false, dataType, annotations }) => ({
+      const mappedVars = map(vars, ({ uid, name = '', value = '', description = '', enabled = true, local = false, dataType, options, annotations }) => ({
 
         uid: uid || uuid(),
         name,
@@ -2714,6 +2716,8 @@ export const collectionsSlice = createSlice({
         description,
         enabled,
         ...(dataType && dataType !== 'string' ? { dataType } : {}),
+        // The choices of an options variable travel with it, even while the list is still empty.
+        ...(dataType === 'options' ? { options: options || [] } : {}),
         ...(annotations?.length ? { annotations } : {}),
         ...(type === 'response' ? { local } : {})
       }));
@@ -2971,13 +2975,15 @@ export const collectionsSlice = createSlice({
           root: cloneDeep(collection.root)
         };
       }
-      const mappedVars = map(vars, ({ uid, name = '', value = '', description = '', enabled = true, local = false, dataType, annotations }) => ({
+      const mappedVars = map(vars, ({ uid, name = '', value = '', description = '', enabled = true, local = false, dataType, options, annotations }) => ({
         uid: uid || uuid(),
         name,
         value,
         description,
         enabled,
         ...(dataType && dataType !== 'string' ? { dataType } : {}),
+        // The choices of an options variable travel with it, even while the list is still empty.
+        ...(dataType === 'options' ? { options: options || [] } : {}),
         ...(annotations?.length ? { annotations } : {}),
         ...(type === 'response' ? { local } : {})
       }));

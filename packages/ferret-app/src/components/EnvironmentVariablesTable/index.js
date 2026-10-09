@@ -17,7 +17,7 @@ import MultiLineEditor from 'components/MultiLineEditor/index';
 import SecretEyeButton from 'components/MultiLineEditor/SecretEyeButton';
 import DataTypeSelector from 'components/DataTypeSelector';
 import VarValueCell from 'components/VarValueCell';
-import OptionsValueEditor from './OptionsValueEditor';
+import OptionsValueEditor from 'components/OptionsValueEditor';
 import StyledWrapper, { CHECKBOX_COLUMN_WIDTH, ACTIONS_COLUMN_WIDTH } from './StyledWrapper';
 import { uuid } from 'utils/common';
 import { useFormik } from 'formik';

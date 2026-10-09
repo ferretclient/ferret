@@ -87,6 +87,58 @@ for (const { format, collectionName } of FORMATS) {
       });
     });
 
+    test(`(${format}) a request can define its own options variable and choose from it`, async ({ pageWithUserData: page }) => {
+      const locators = buildCommonLocators(page);
+
+      await locators.sidebar.collection(collectionName).click();
+      await selectEnvironment(page, 'BC');
+      await expandHistory(page);
+      // The fixture collections are used in place, so nothing here may be saved: the request stays a draft.
+      await openRequest(page, collectionName, 'companies');
+      await locators.request.urlLine().click();
+      await page.keyboard.press('End');
+      await page.keyboard.type('&region={{region}}');
+      await selectRequestPaneTab(page, 'Vars');
+
+      const table = page.getByTestId('request-vars-req');
+      const row = table.locator('tbody tr').first();
+
+      await test.step('Add a request variable and give it the options type', async () => {
+        await table.locator('tbody tr').first().getByTestId('column-name').locator('input').fill('region');
+        // The type selector is revealed when the row is hovered.
+        await row.hover();
+        await locators.dataTypeSelector.trigger(row).click();
+        await locators.dataTypeSelector.menuItem('options').click();
+        await expect(row.getByTestId('env-var-options-edit')).toContainText('Add options');
+      });
+
+      await test.step('Define the choices', async () => {
+        await row.getByTestId('env-var-options-edit').click();
+        const modal = page.getByTestId('env-var-options-modal');
+        await modal.getByTestId('env-var-option-add').click();
+        await modal.getByTestId('env-var-option-key-0').fill('North');
+        await modal.getByTestId('env-var-option-value-0').fill('n-1');
+        await modal.getByTestId('env-var-option-add').click();
+        await modal.getByTestId('env-var-option-key-1').fill('South');
+        await modal.getByTestId('env-var-option-value-1').fill('s-2');
+        await modal.getByRole('button', { name: 'Save' }).click();
+        await expect(modal).toBeHidden();
+        await expect(row.getByTestId('env-var-options-edit')).toContainText('Edit (2)');
+      });
+
+      await test.step('The request sends the default (first) option, then the one picked from the dropdown', async () => {
+        await sendRequest(page, 200);
+        await expect(page.getByTestId('history-row').first()).toContainText('region=n-1');
+
+        await row.getByTestId('env-var-options-default').click();
+        await page.getByRole('option').filter({ hasText: 'South' }).click();
+        await expect(row.getByTestId('env-var-options-default')).toContainText('South');
+
+        await sendRequest(page, 200);
+        await expect(page.getByTestId('history-row').first()).toContainText('region=s-2');
+      });
+    });
+
     // These dropdowns sit inside scrolling tables, which clip a menu attached to the cell: the options
     // existed in the page but could not be seen or clicked.
     test(`(${format}) the default option can be picked from the dropdown in the environment editor`, async ({ pageWithUserData: page }) => {

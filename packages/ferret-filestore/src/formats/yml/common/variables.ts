@@ -5,6 +5,7 @@ import { uuid, ensureString } from '../../../utils';
 import {
   isTypedValue,
   hasTypedMetadata,
+  TypedVariableFields,
   toOpenCollectionTypedValue,
   fromOpenCollectionTypedValue,
   serializeVariableValue
@@ -27,10 +28,20 @@ export const toOpenCollectionVariables = (variables: FerretFolderRequest['vars']
 
   const ocVariables: Variable[] = reqVarsArray.map((v: FerretVariable): Variable => {
     const valueStr = serializeVariableValue(v.value);
+    // 'options' is not an OpenCollection value type: an options variable keeps its default key as a plain
+    // value next to an `options` list.
+    const isOptions = v.dataType === 'options';
+    const typed: TypedVariableFields = { dataType: isOptions ? undefined : v.dataType as TypedVariableFields['dataType'] };
     const variable: Variable = {
       name: v.name || '',
-      value: hasTypedMetadata(v) ? toOpenCollectionTypedValue(v, valueStr) : valueStr
+      value: hasTypedMetadata(typed) ? toOpenCollectionTypedValue(typed, valueStr) : valueStr
     };
+    if (isOptions) {
+      (variable as Variable & { options?: { key: string; value: string }[] }).options = (v.options || []).map((option) => ({
+        key: option.key,
+        value: option.value ?? ''
+      }));
+    }
 
     if (v?.description?.trim().length) {
       variable.description = v.description;
@@ -65,7 +76,15 @@ export const toFerretVariables = (variables: Variable[] | null | undefined): { r
       local: false
     };
 
-    if (isTypedValue(v.value)) {
+    const options = (v as Variable & { options?: unknown }).options;
+    if (Array.isArray(options)) {
+      base.dataType = 'options';
+      base.value = ensureString(isTypedValue(v.value) ? v.value.data : v.value);
+      base.options = options.map((option: any) => ({
+        key: ensureString(option?.key),
+        value: ensureString(option?.value)
+      }));
+    } else if (isTypedValue(v.value)) {
       Object.assign(base, fromOpenCollectionTypedValue(v.value));
     } else {
       base.value = ensureString(v.value);

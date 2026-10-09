@@ -1479,6 +1479,9 @@ export const getTreePathFromCollectionToItem = (collection, _item) => {
   return path;
 };
 
+// What a request, folder or collection variable resolves to: an options variable yields its chosen option's value.
+const resolveVariableValue = (variable) => (isOptionsVariable(variable) ? resolveOptionsVariableValue(variable) : variable.value);
+
 const mergeVars = (collection, requestTreePath = []) => {
   let collectionVariables = {};
   let folderVariables = {};
@@ -1487,7 +1490,7 @@ const mergeVars = (collection, requestTreePath = []) => {
   let collectionRequestVars = get(collectionRoot, 'request.vars.req', []);
   collectionRequestVars.forEach((_var) => {
     if (_var.enabled) {
-      collectionVariables[_var.name] = _var.value;
+      collectionVariables[_var.name] = resolveVariableValue(_var);
     }
   });
   for (let i of requestTreePath) {
@@ -1501,14 +1504,14 @@ const mergeVars = (collection, requestTreePath = []) => {
       let vars = get(folderRoot, 'request.vars.req', []);
       vars.forEach((_var) => {
         if (_var.enabled) {
-          folderVariables[_var.name] = _var.value;
+          folderVariables[_var.name] = resolveVariableValue(_var);
         }
       });
     } else {
       let vars = i.draft ? get(i, 'draft.request.vars.req', []) : get(i, 'request.vars.req', []);
       vars.forEach((_var) => {
         if (_var.enabled) {
-          requestVariables[_var.name] = _var.value;
+          requestVariables[_var.name] = resolveVariableValue(_var);
         }
       });
     }
@@ -1841,7 +1844,7 @@ export const getVariableScope = (variableName, collection, item) => {
     if (requestVar) {
       return {
         type: 'request',
-        value: requestVar.value,
+        value: resolveVariableValue(requestVar),
         data: { item, variable: requestVar }
       };
     }
@@ -1863,7 +1866,7 @@ export const getVariableScope = (variableName, collection, item) => {
       if (folderVar) {
         return {
           type: 'folder',
-          value: folderVar.value,
+          value: resolveVariableValue(folderVar),
           data: { folder: pathItem, variable: folderVar }
         };
       }
@@ -1900,7 +1903,7 @@ export const getVariableScope = (variableName, collection, item) => {
   if (collectionVar) {
     return {
       type: 'collection',
-      value: collectionVar.value,
+      value: resolveVariableValue(collectionVar),
       data: { collection, variable: collectionVar }
     };
   }

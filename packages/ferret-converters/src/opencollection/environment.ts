@@ -3,6 +3,7 @@ import { uuid } from '../common/index.js';
 import {
   isTypedValue,
   hasTypedMetadata,
+  TypedVariableFields,
   toOpenCollectionTypedValue,
   fromOpenCollectionTypedValue,
   serializeVariableValue
@@ -112,7 +113,9 @@ export const toOpenCollectionEnvironments = (environments: FerretEnvironment[] |
             ocVar.value = valueStr;
             ocVar.options = toOptionStrings(v.options || []);
           } else {
-            ocVar.value = hasTypedMetadata(v) ? toOpenCollectionTypedValue(v, valueStr) : valueStr;
+            // Not an options variable here, so the data type is one of the OpenCollection value types.
+            const typed = v as TypedVariableFields;
+            ocVar.value = hasTypedMetadata(typed) ? toOpenCollectionTypedValue(typed, valueStr) : valueStr;
           }
         }
 

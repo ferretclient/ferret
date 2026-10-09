@@ -6,6 +6,7 @@ import { updateTableColumnWidths } from 'providers/ReduxStore/slices/tabs';
 import MultiLineEditor from 'components/MultiLineEditor';
 import InfoTip from 'components/InfoTip';
 import DataTypeSelector from 'components/DataTypeSelector';
+import OptionsValueEditor from 'components/OptionsValueEditor';
 import VarValueCell from 'components/VarValueCell';
 import { valueToString } from '@useferret/common/utils';
 import EditableTable from 'components/EditableTable';
@@ -42,6 +43,8 @@ const VarsTable = ({ folder, collection, vars, varType, initialScroll = 0, isDra
       type: varType
     }));
   }, [dispatch, collection.uid, folder.uid, varType]);
+
+  const updateRow = (row, fields) => handleVarsChange((vars || []).map((v) => (v.uid === row.uid ? { ...v, ...fields } : v)));
 
   const handleReorder = useCallback(({ updateReorderedItem }) => {
     dispatch(moveFolderVar({ type: varType, collectionUid: collection.uid, folderUid: folder.uid, updateReorderedItem }));
@@ -84,7 +87,9 @@ const VarsTable = ({ folder, collection, vars, varType, initialScroll = 0, isDra
       placeholder: varType === 'request' ? 'Value' : 'Expr',
       render: ({ row, value, onChange, isLastEmptyRow, rowIndex }) => (
         <VarValueCell
-          editor={(
+          editor={varType === 'request' && !isLastEmptyRow && row.dataType === 'options' ? (
+            <OptionsValueEditor variable={row} onChange={(fields) => updateRow(row, fields)} />
+          ) : (
             <MultiLineEditor
               value={valueToString(value)}
               name={`${rowIndex}.value`}
@@ -103,10 +108,8 @@ const VarsTable = ({ folder, collection, vars, varType, initialScroll = 0, isDra
                   variable={row}
                   theme={storedTheme}
                   resolvableVariables={resolvableVariables}
-                  onChange={(fields) => {
-                    const updated = (vars || []).map((v) => v.uid === row.uid ? { ...v, ...fields } : v);
-                    handleVarsChange(updated);
-                  }}
+                  allowOptions
+                  onChange={(fields) => updateRow(row, fields)}
                 />
               )
             : null}

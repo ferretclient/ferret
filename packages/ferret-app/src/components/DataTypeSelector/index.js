@@ -57,7 +57,7 @@ export const getTypeChangeFields = (variable, type) => {
   return { dataType };
 };
 
-// `allowOptions` adds the environment-only `options` type (a list of named values to pick from).
+// `allowOptions` adds the `options` type (a list of named values to pick from).
 const DataTypeSelector = ({ variable, resolvableVariables, onChange, compact = false, allowOptions = false }) => {
   const selectedType = variable.dataType || 'string';
   const typeError = validateVariableType(variable.value, selectedType, resolvableVariables);

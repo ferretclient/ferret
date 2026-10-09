@@ -6,6 +6,7 @@ const { sanitizeName } = require('./filesystem');
 const { getEffectiveTags, getFolderTags, getOwnTags } = require('@useferret/common');
 const { parseRequest, parseCollection, parseFolder, stringifyCollection, stringifyFolder, stringifyEnvironment, stringifyRequest, DEFAULT_COLLECTION_FORMAT } = require('@useferret/filestore');
 const { sortByNameThenSequence } = require('@useferret/common');
+const { isOptionsVariable, resolveOptionsVariableValue } = require('@useferret/common').utils;
 const constants = require('../constants');
 const chalk = require('chalk');
 
@@ -140,6 +141,9 @@ const mergeHeaders = (collection, request, requestTreePath, options = {}) => {
   ];
 };
 
+// An options variable yields its chosen option's value; the Electron runtime does the same.
+const resolveVariableValue = (variable) => (isOptionsVariable(variable) ? resolveOptionsVariableValue(variable) : variable.value);
+
 const mergeVars = (collection, request, requestTreePath) => {
   let reqVars = new Map();
   const collectionRoot = collection?.draft?.root || collection?.root || {};
@@ -147,8 +151,8 @@ const mergeVars = (collection, request, requestTreePath) => {
   let collectionVariables = {};
   collectionRequestVars.forEach((_var) => {
     if (_var.enabled) {
-      reqVars.set(_var.name, _var.value);
-      collectionVariables[_var.name] = _var.value;
+      reqVars.set(_var.name, resolveVariableValue(_var));
+      collectionVariables[_var.name] = resolveVariableValue(_var);
     }
   });
   let folderVariables = {};
@@ -159,16 +163,16 @@ const mergeVars = (collection, request, requestTreePath) => {
       let vars = get(folderRoot, 'request.vars.req', []);
       vars.forEach((_var) => {
         if (_var.enabled) {
-          reqVars.set(_var.name, _var.value);
-          folderVariables[_var.name] = _var.value;
+          reqVars.set(_var.name, resolveVariableValue(_var));
+          folderVariables[_var.name] = resolveVariableValue(_var);
         }
       });
     } else {
       const vars = i?.draft ? get(i, 'draft.request.vars.req', []) : get(i, 'request.vars.req', []);
       vars.forEach((_var) => {
         if (_var.enabled) {
-          reqVars.set(_var.name, _var.value);
-          requestVariables[_var.name] = _var.value;
+          reqVars.set(_var.name, resolveVariableValue(_var));
+          requestVariables[_var.name] = resolveVariableValue(_var);
         }
       });
     }

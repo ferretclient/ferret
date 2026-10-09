@@ -52,6 +52,35 @@ Behind the scenes the choice is stored as an ordinary request variable of the sa
 
 If the environment is later changed so that a request's saved value no longer matches any option, the picker shows it as `<value> (not in options)` instead of guessing.
 
+### Options on a request, folder or collection
+
+An `options` variable does not have to come from an environment. In the **Vars** table of a request, a folder or a collection, open the small type dropdown in a variable's value cell and choose **options**. The cell then shows a dropdown for the choice and an **Add options** / **Edit** button for the list, exactly as in the environment editor. The variable sends the value of the option you chose.
+
+Use this when only one request needs the choices, or when you want a request to carry its own list instead of the environment's. A request-level options variable overrides a variable of the same name from an outer level, like any other request variable. Hover the row if you do not see the type dropdown.
+
+The list is saved in the request's file, in both file formats:
+
+```
+vars:pre-request {
+  @options
+  @option('North=n-1')
+  @option('South=s-2')
+  region: North
+}
+```
+
+```yaml
+runtime:
+  variables:
+    - name: region
+      value: North
+      options:
+        - key: North
+          value: n-1
+        - key: South
+          value: s-2
+```
+
 ### Command line and files
 
 ```bash

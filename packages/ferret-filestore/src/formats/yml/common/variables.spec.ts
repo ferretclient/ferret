@@ -125,3 +125,59 @@ describe('toFerretVariables', () => {
     expect(req![0].description).toBe('note');
   });
 });
+
+describe('options variables on a request, folder or collection', () => {
+  const company = {
+    uid: 'u1',
+    name: 'company',
+    value: 'Company1',
+    enabled: true,
+    dataType: 'options',
+    options: [
+      { key: 'Company1', value: '12345' },
+      { key: 'Company2', value: '43214' }
+    ]
+  } as any;
+
+  it('writes the default key as a plain value next to an options list', () => {
+    expect(toOpenCollectionVariables([company])).toEqual([
+      {
+        name: 'company',
+        value: 'Company1',
+        options: [
+          { key: 'Company1', value: '12345' },
+          { key: 'Company2', value: '43214' }
+        ]
+      }
+    ]);
+  });
+
+  it('reads the options list back as an options variable', () => {
+    const { req } = toFerretVariables(toOpenCollectionVariables([company]));
+
+    expect(req[0]).toMatchObject({
+      name: 'company',
+      value: 'Company1',
+      dataType: 'options',
+      options: [
+        { key: 'Company1', value: '12345' },
+        { key: 'Company2', value: '43214' }
+      ]
+    });
+  });
+
+  it('keeps option values as strings and a disabled options variable disabled', () => {
+    const [out] = toOpenCollectionVariables([{ ...company, enabled: false, options: [{ key: 'A', value: '1' }] }]) as any[];
+    expect(out.disabled).toBe(true);
+
+    const { req } = toFerretVariables([{ name: 'n', value: 'A', options: [{ key: 'A', value: 1 }] } as any]);
+    expect(req[0].options).toEqual([{ key: 'A', value: '1' }]);
+  });
+
+  it('leaves variables without options untouched', () => {
+    const { req } = toFerretVariables(toOpenCollectionVariables([{ uid: 'u2', name: 'plain', value: 'x', enabled: true } as any]));
+
+    expect(req[0].dataType).toBeUndefined();
+    expect(req[0].options).toBeUndefined();
+  });
+});

@@ -9,6 +9,18 @@ const annotationSchema = Yup.object({
 }).noUnknown(true)
   .strict();
 
+// The choices of an `options` variable (environment, folder, collection or request level)
+const variableOptionsSchema = Yup.array()
+  .of(
+    Yup.object({
+      key: Yup.string().defined(),
+      value: Yup.string().defined()
+    })
+      .noUnknown(true)
+      .strict()
+  )
+  .nullable();
+
 const environmentVariablesSchema = Yup.object({
   uid: uidSchema,
   name: Yup.string().nullable(),
@@ -23,18 +35,9 @@ const environmentVariablesSchema = Yup.object({
   enabled: Yup.boolean().defined(),
   secret: Yup.boolean(),
   description: Yup.string().nullable(),
-  // 'options' is environment-only: `options` lists the choices and `value` holds the default key
+  // For 'options', `options` lists the choices and `value` holds the default key
   dataType: Yup.string().oneOf([...FERRET_VARIABLE_DATATYPES, 'options']).nullable(),
-  options: Yup.array()
-    .of(
-      Yup.object({
-        key: Yup.string().defined(),
-        value: Yup.string().defined()
-      })
-        .noUnknown(true)
-        .strict()
-    )
-    .nullable()
+  options: variableOptionsSchema
 })
   .noUnknown(true)
   .strict();
@@ -145,7 +148,8 @@ const varsSchema = Yup.object({
     )
     .nullable(),
   enabled: Yup.boolean(),
-  dataType: Yup.string().oneOf(FERRET_VARIABLE_DATATYPES).nullable(),
+  dataType: Yup.string().oneOf([...FERRET_VARIABLE_DATATYPES, 'options']).nullable(),
+  options: variableOptionsSchema,
 
   // todo
   // anoop(4 feb 2023) - nobody uses this, and it needs to be removed

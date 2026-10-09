@@ -6,6 +6,7 @@ import { updateTableColumnWidths } from 'providers/ReduxStore/slices/tabs';
 import MultiLineEditor from 'components/MultiLineEditor';
 import InfoTip from 'components/InfoTip';
 import DataTypeSelector from 'components/DataTypeSelector';
+import OptionsValueEditor from 'components/OptionsValueEditor';
 import VarValueCell from 'components/VarValueCell';
 import { valueToString } from '@useferret/common/utils';
 import EditableTable from 'components/EditableTable';
@@ -37,6 +38,8 @@ const VarsTable = ({ collection, vars, varType, initialScroll = 0, isDraft }) =>
   const handleVarsChange = useCallback((updatedVars) => {
     dispatch(setCollectionVars({ collectionUid: collection.uid, vars: updatedVars, type: varType }));
   }, [dispatch, collection.uid, varType]);
+
+  const updateRow = (row, fields) => handleVarsChange((vars || []).map((v) => (v.uid === row.uid ? { ...v, ...fields } : v)));
 
   const handleReorder = useCallback(({ updateReorderedItem }) => {
     dispatch(moveCollectionVar({ type: varType, collectionUid: collection.uid, updateReorderedItem }));
@@ -78,7 +81,9 @@ const VarsTable = ({ collection, vars, varType, initialScroll = 0, isDraft }) =>
       placeholder: varType === 'request' ? 'Value' : 'Expr',
       render: ({ row, value, onChange, isLastEmptyRow, rowIndex }) => (
         <VarValueCell
-          editor={(
+          editor={varType === 'request' && !isLastEmptyRow && row.dataType === 'options' ? (
+            <OptionsValueEditor variable={row} onChange={(fields) => updateRow(row, fields)} />
+          ) : (
             <MultiLineEditor
               value={valueToString(value)}
               name={`${rowIndex}.value`}
@@ -96,10 +101,8 @@ const VarsTable = ({ collection, vars, varType, initialScroll = 0, isDraft }) =>
                   variable={row}
                   theme={storedTheme}
                   resolvableVariables={resolvableVariables}
-                  onChange={(fields) => {
-                    const updated = (vars || []).map((v) => v.uid === row.uid ? { ...v, ...fields } : v);
-                    handleVarsChange(updated);
-                  }}
+                  allowOptions
+                  onChange={(fields) => updateRow(row, fields)}
                 />
               )
             : null}

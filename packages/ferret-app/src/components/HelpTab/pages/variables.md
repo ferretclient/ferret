@@ -34,6 +34,8 @@ Sometimes a setting has a few known values, for example several company IDs. Giv
 
 Each request can then choose its own: open the request's **Vars** tab and use the **Environment options** section at the top. The dropdown shows the names, and the request sends the matching value.
 
+A request does not need an environment for this. In a request's **Vars** table, open the small type dropdown in a variable's value cell (hover the row if you do not see it) and choose **options**. Add the choices with **Add options**, then pick one from the dropdown. Folders and collections can do the same in their own **Vars** tab.
+
 ### When a variable does not resolve
 
 If a request still shows `{{name}}` or the server complains about it:
