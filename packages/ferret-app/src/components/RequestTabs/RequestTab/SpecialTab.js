@@ -124,7 +124,7 @@ const SpecialTab = ({ handleCloseClick, type, tabName, handleDoubleClick, hasDra
         return (
           <>
             <IconBook size={14} strokeWidth={1.5} className="special-tab-icon flex-shrink-0" />
-            <span className="ml-1 tab-name">Readme</span>
+            <span className="ml-1 tab-name">Help</span>
           </>
         );
       }

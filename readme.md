@@ -98,7 +98,7 @@ Ferret is not on npm yet, so the CLI runs from a clone for now. See **[docs/cli.
 | [Playwright testing guide](docs/playwright-testing-guide.md) | writing and running end-to-end tests |
 | [Contributing](contributing.md) and [coding standards](CODING_STANDARDS.md) | working on Ferret itself |
 
-The same basics are available inside the app: **Help → Documentation** opens the built-in readme.
+The app has its own offline Help: **Help → Documentation** opens a set of pages that explain how Ferret works and walk you through creating your first request.
 
 ## Coming from Bruno
 

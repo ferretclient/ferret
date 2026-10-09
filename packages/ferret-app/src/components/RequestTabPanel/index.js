@@ -47,7 +47,7 @@ import OpenAPISpecTab from 'components/OpenAPISpecTab';
 import ApiSpecTab from 'components/ApiSpecTab';
 import MockServerDashboard from 'components/MockServer/MockServerDashboard';
 import MockResponse from 'components/MockServer/MockResponse';
-import ReadmeTab from 'components/ReadmeTab';
+import HelpTab from 'components/HelpTab';
 import { resolveMockServerInstance } from 'utils/mock-server/mock-server-instances';
 import CollapsedPanelIndicator from './CollapsedPanelIndicator';
 import { clampRequestHeightForResponse } from './paneSize';
@@ -414,7 +414,7 @@ const RequestTabPanel = () => {
   }
 
   if (focusedTab.type === 'readme') {
-    return <ReadmeTab />;
+    return <HelpTab />;
   }
 
   if (focusedTab.type === 'workspaceOverview') {

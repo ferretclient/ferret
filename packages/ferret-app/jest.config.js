@@ -1,7 +1,8 @@
 module.exports = {
   rootDir: '.',
   transform: {
-    '^.+\\.[jt]sx?$': 'babel-jest'
+    '^.+\\.[jt]sx?$': 'babel-jest',
+    '^.+\\.md$': '<rootDir>/jest.markdownTransform.js'
   },
   transformIgnorePatterns: [
     '/node_modules/(?!strip-json-comments|nanoid|xml-formatter)/'
