@@ -56,6 +56,10 @@ const General = () => {
           return !(this.parent.enabled && (value === undefined || value === ''));
         })
     }),
+    history: Yup.object({
+      enabled: Yup.boolean(),
+      saveBodies: Yup.boolean()
+    }),
     defaultLocation: Yup.string().max(1024)
   });
 
@@ -75,6 +79,10 @@ const General = () => {
       autoSave: {
         enabled: get(preferences, 'autoSave.enabled', false),
         interval: get(preferences, 'autoSave.interval', 1000)
+      },
+      history: {
+        enabled: get(preferences, 'history.enabled', true),
+        saveBodies: get(preferences, 'history.saveBodies', true)
       },
       defaultLocation: get(preferences, 'general.defaultLocation', '')
     },
@@ -110,6 +118,10 @@ const General = () => {
         autoSave: {
           enabled: newPreferences.autoSave.enabled,
           interval: newPreferences.autoSave.interval
+        },
+        history: {
+          enabled: newPreferences.history.enabled,
+          saveBodies: newPreferences.history.saveBodies
         },
         general: {
           defaultLocation: newPreferences.defaultLocation
@@ -292,6 +304,26 @@ const General = () => {
               disabled={!autoSaveEnabled}
             />
           </SettingsField>
+        </SettingsGroup>
+
+        <SettingsGroup
+          title="History"
+          description="Keeps the last 1,000 requests from the past 30 days on this computer only. Credentials in headers and query strings are masked."
+        >
+          <CheckboxSetting
+            id="historyEnabled"
+            name="history.enabled"
+            label="Save request history"
+            checked={formik.values.history.enabled}
+            onChange={formik.handleChange}
+          />
+          <CheckboxSetting
+            id="historySaveBodies"
+            name="history.saveBodies"
+            label="Include request and response bodies"
+            checked={formik.values.history.saveBodies}
+            onChange={formik.handleChange}
+          />
         </SettingsGroup>
 
         <SettingsGroup title="Requests">

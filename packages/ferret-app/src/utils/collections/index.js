@@ -17,7 +17,7 @@ import {
   doesFolderHaveItemsMatchSearchText,
   doesCollectionHaveItemsMatchingSearchText
 } from 'utils/collections/search';
-import { resolveEnvironmentInheritance, toVariablesMap } from '@useferret/common/utils';
+import { resolveEnvironmentInheritance, toVariablesMap, isOptionsVariable } from '@useferret/common/utils';
 
 const replaceTabsWithSpaces = (str, numSpaces = 2) => {
   if (!str || !str.length || !isString(str)) {
@@ -1259,6 +1259,28 @@ export const getEnvironmentVariables = (collection) => {
   });
 
   return toVariablesMap(environment?.variables);
+};
+
+/**
+ * name → options of the active environment's options variables, so a request variable of the
+ * same name can be picked from that list.
+ */
+export const getEnvironmentOptionVariables = (collection) => {
+  if (!collection?.activeEnvironmentUid) {
+    return {};
+  }
+
+  const environment = resolveEnvironmentInheritance({
+    environments: collection.environments,
+    targetEnvironment: findEnvironmentInCollection(collection, collection.activeEnvironmentUid),
+    merge: true
+  });
+
+  return Object.fromEntries(
+    (environment?.variables || [])
+      .filter((variable) => variable.enabled && variable.name && isOptionsVariable(variable))
+      .map((variable) => [variable.name, variable.options])
+  );
 };
 
 export const getEnvironmentVariablesMasked = (collection) => {

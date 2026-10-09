@@ -17,11 +17,12 @@ import MultiLineEditor from 'components/MultiLineEditor/index';
 import SecretEyeButton from 'components/MultiLineEditor/SecretEyeButton';
 import DataTypeSelector from 'components/DataTypeSelector';
 import VarValueCell from 'components/VarValueCell';
+import OptionsValueEditor from './OptionsValueEditor';
 import StyledWrapper, { CHECKBOX_COLUMN_WIDTH, ACTIONS_COLUMN_WIDTH } from './StyledWrapper';
 import { uuid } from 'utils/common';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { FERRET_VARIABLE_DATATYPES, valueToString } from '@useferret/common/utils';
+import { FERRET_VARIABLE_DATATYPES, OPTIONS_DATATYPE, valueToString } from '@useferret/common/utils';
 import { variableNameRegex } from 'utils/common/regex';
 import toast from 'react-hot-toast';
 import { Tooltip } from 'react-tooltip';
@@ -158,6 +159,14 @@ const EnvVarValueCell = ({
     setMasked(showAsSecret);
   }, [showAsSecret]);
 
+  const setFields = (fields) => {
+    Object.entries(fields).forEach(([key, val]) => {
+      formik.setFieldValue(`${actualIndex}.${key}`, val, true);
+    });
+  };
+
+  const isOptions = variable.dataType === 'options' && !isLastEmptyRow;
+
   return (
     <VarValueCell
       onCompactChange={setCompact}
@@ -174,38 +183,42 @@ const EnvVarValueCell = ({
           onFocus={() => handleRowFocus(variable.uid)}
         >
           {renderExtraValueContent && renderExtraValueContent(variable)}
-          <MultiLineEditor
-            ref={editorRef}
-            theme={storedTheme}
-            collection={collection}
-            name={`${actualIndex}.value`}
-            value={valueToString(variable.value, 2)}
-            placeholder={variable.value == null || (typeof variable.value === 'string' && variable.value.trim() === '') ? 'Value' : ''}
-            isSecret={showAsSecret}
-            hideSecretEye={showAsSecret}
-            onMaskChange={setMasked}
-            onChange={(newValue) => {
-              formik.setFieldValue(`${actualIndex}.value`, newValue, false);
-              if (variable.ephemeral) {
-                formik.setFieldValue(`${actualIndex}.ephemeral`, undefined, false);
-                formik.setFieldValue(`${actualIndex}.persistedValue`, undefined, false);
-              }
-              if (isLastRow) {
-                setTimeout(() => {
-                  formik.setFieldValue(formik.values.length, {
-                    uid: uuid(),
-                    name: '',
-                    value: '',
-                    description: '',
-                    type: 'text',
-                    secret: false,
-                    enabled: true
-                  }, false);
-                }, 0);
-              }
-            }}
-            onSave={handleSave}
-          />
+          {isOptions ? (
+            <OptionsValueEditor variable={variable} onChange={setFields} />
+          ) : (
+            <MultiLineEditor
+              ref={editorRef}
+              theme={storedTheme}
+              collection={collection}
+              name={`${actualIndex}.value`}
+              value={valueToString(variable.value, 2)}
+              placeholder={variable.value == null || (typeof variable.value === 'string' && variable.value.trim() === '') ? 'Value' : ''}
+              isSecret={showAsSecret}
+              hideSecretEye={showAsSecret}
+              onMaskChange={setMasked}
+              onChange={(newValue) => {
+                formik.setFieldValue(`${actualIndex}.value`, newValue, false);
+                if (variable.ephemeral) {
+                  formik.setFieldValue(`${actualIndex}.ephemeral`, undefined, false);
+                  formik.setFieldValue(`${actualIndex}.persistedValue`, undefined, false);
+                }
+                if (isLastRow) {
+                  setTimeout(() => {
+                    formik.setFieldValue(formik.values.length, {
+                      uid: uuid(),
+                      name: '',
+                      value: '',
+                      description: '',
+                      type: 'text',
+                      secret: false,
+                      enabled: true
+                    }, false);
+                  }, 0);
+                }
+              }}
+              onSave={handleSave}
+            />
+          )}
         </div>
       )}
       renderTypeSelector={!isLastEmptyRow
@@ -214,11 +227,8 @@ const EnvVarValueCell = ({
               compact={isCompact}
               variable={variable}
               resolvableVariables={resolvableVariables}
-              onChange={(fields) => {
-                Object.entries(fields).forEach(([key, val]) => {
-                  formik.setFieldValue(`${actualIndex}.${key}`, val, true);
-                });
-              }}
+              allowOptions={!variable.secret}
+              onChange={setFields}
             />
           )
         : null}
@@ -438,7 +448,8 @@ const EnvironmentVariablesTable = ({
         uid: Yup.string(),
         value: Yup.mixed().nullable(),
         description: Yup.string().nullable(),
-        dataType: Yup.string().oneOf(FERRET_VARIABLE_DATATYPES).nullable(),
+        dataType: Yup.string().oneOf([...FERRET_VARIABLE_DATATYPES, OPTIONS_DATATYPE]).nullable(),
+        options: Yup.array().nullable(),
         annotations: Yup.array().nullable()
       })
     ),

@@ -20,6 +20,8 @@ Environments hold the values that change between targets, such as base URLs and 
 
 Variables can be defined at the request, folder, collection, environment and global-environment level. Environment values marked as secret are encrypted on this machine and never written into collection files.
 
+An environment variable can also hold a list of named **options**, such as `Company1 → 12345` and `Company2 → 43214`. Set its type to *options*, add the choices with **Edit**, and pick the default. Requests then receive the default option's value. To use a different option for one request, add a request variable with the same name in its **Vars** tab and pick from the dropdown. On the command line, `fer run --env-var company=Company2` selects an option by name.
+
 ### Scripting and tests
 
 Each request, folder and collection can run JavaScript before the request is sent and after the response arrives. Scripts get:
@@ -51,6 +53,10 @@ fer run --env Local
 # Run one folder and write a self-contained HTML report
 fer run users --env Local --reporter-html results.html
 ```
+
+### Request history
+
+Every request you send is recorded on your computer, with credentials masked. Open the **History** section in the sidebar to search past requests, inspect what was sent and received, and delete entries. How many entries are kept, and for how long, is set under **Preferences → General → History**. Nothing is ever uploaded.
 
 ### Importing
 

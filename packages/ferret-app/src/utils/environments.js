@@ -17,6 +17,10 @@ export const buildEnvVariable = ({ envVariable: obj, withUuid = false }) => {
     envVariable.dataType = obj.dataType;
   }
 
+  if (obj.dataType === 'options' && Array.isArray(obj.options)) {
+    envVariable.options = obj.options.map((option) => ({ key: String(option?.key ?? ''), value: String(option?.value ?? '') }));
+  }
+
   if (obj.description !== undefined && obj.description !== '') {
     envVariable.description = obj.description;
   }

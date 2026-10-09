@@ -12,6 +12,10 @@ const swaggerUiDir = path.dirname(require.resolve('swagger-ui-react'));
 const swaggerImmutable = require.resolve('immutable', { paths: [swaggerUiDir] });
 
 export default defineConfig({
+  server: {
+    // FERRET_DEV_PORT moves the dev server when another project already serves on 3000.
+    port: Number(process.env.FERRET_DEV_PORT) || 3000
+  },
   plugins: [
     pluginNodePolyfill(),
     pluginReact(),

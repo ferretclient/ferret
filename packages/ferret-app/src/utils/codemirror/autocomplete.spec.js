@@ -131,7 +131,7 @@ describe('Ferret Autocomplete', () => {
         mockedCodemirror.getRange.mockReturnValue('{{config.api.');
 
         const allVariables = {
-          'config.api.url': 'https://echo.ferret.io',
+          'config.api.url': 'http://localhost:8081/echo',
           'config.api.client_id': 'client_id',
           'config.api.client_secret': 'client_secret',
           'config.app.name': 'ferret'

@@ -8,13 +8,14 @@ import MultiLineEditor from 'components/MultiLineEditor';
 import InfoTip from 'components/InfoTip';
 import DataTypeSelector from 'components/DataTypeSelector';
 import VarValueCell from 'components/VarValueCell';
+import OptionsVarPicker from 'components/RequestPane/Vars/OptionsVarPicker';
 import { valueToString } from '@useferret/common/utils';
 import EditableTable from 'components/EditableTable';
 import { createDescriptionColumn } from 'components/EditableTable/descriptionColumn';
 import StyledWrapper from './StyledWrapper';
 import toast from 'react-hot-toast';
 import { variableNameRegex } from 'utils/common/regex';
-import { getAllVariables } from 'utils/collections';
+import { getAllVariables, getEnvironmentOptionVariables } from 'utils/collections';
 
 const VarsTable = ({ item, collection, vars, varType, initialScroll = 0, isDraft }) => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const VarsTable = ({ item, collection, vars, varType, initialScroll = 0, isDraft
   const handleRun = () => dispatch(sendRequest(item, collection.uid));
 
   const resolvableVariables = useMemo(() => getAllVariables(collection, item), [collection, item]);
+  const environmentOptions = useMemo(() => getEnvironmentOptionVariables(collection), [collection]);
 
   const handleVarsChange = useCallback((updatedVars) => {
     dispatch(setRequestVars({
@@ -89,37 +91,44 @@ const VarsTable = ({ item, collection, vars, varType, initialScroll = 0, isDraft
         </div>
       ),
       placeholder: varType === 'request' ? 'Value' : 'Expr',
-      render: ({ row, value, onChange, isLastEmptyRow, rowIndex }) => (
-        <VarValueCell
-          editor={(
-            <MultiLineEditor
-              value={valueToString(value)}
-              name={`${rowIndex}.value`}
-              theme={storedTheme}
-              onSave={onSave}
-              onChange={onChange}
-              onRun={handleRun}
-              collection={collection}
-              item={item}
-              placeholder={value == null || (typeof value === 'string' && value.trim() === '') ? (varType === 'request' ? 'Value' : 'Expr') : ''}
-            />
-          )}
-          renderTypeSelector={!isLastEmptyRow && varType === 'request'
-            ? ({ compact }) => (
-                <DataTypeSelector
-                  compact={compact}
-                  variable={row}
-                  theme={storedTheme}
-                  resolvableVariables={resolvableVariables}
-                  onChange={(fields) => {
-                    const updated = (vars || []).map((v) => v.uid === row.uid ? { ...v, ...fields } : v);
-                    handleVarsChange(updated);
-                  }}
-                />
-              )
-            : null}
-        />
-      )
+      render: ({ row, value, onChange, isLastEmptyRow, rowIndex }) => {
+        // A request variable named like an options environment variable picks one of its options.
+        const options = varType === 'request' && !isLastEmptyRow ? environmentOptions[row.name] : null;
+
+        return (
+          <VarValueCell
+            editor={options ? (
+              <OptionsVarPicker options={options} value={value} onChange={onChange} />
+            ) : (
+              <MultiLineEditor
+                value={valueToString(value)}
+                name={`${rowIndex}.value`}
+                theme={storedTheme}
+                onSave={onSave}
+                onChange={onChange}
+                onRun={handleRun}
+                collection={collection}
+                item={item}
+                placeholder={value == null || (typeof value === 'string' && value.trim() === '') ? (varType === 'request' ? 'Value' : 'Expr') : ''}
+              />
+            )}
+            renderTypeSelector={!isLastEmptyRow && varType === 'request' && !options
+              ? ({ compact }) => (
+                  <DataTypeSelector
+                    compact={compact}
+                    variable={row}
+                    theme={storedTheme}
+                    resolvableVariables={resolvableVariables}
+                    onChange={(fields) => {
+                      const updated = (vars || []).map((v) => v.uid === row.uid ? { ...v, ...fields } : v);
+                      handleVarsChange(updated);
+                    }}
+                  />
+                )
+              : null}
+          />
+        );
+      }
     },
     descriptionColumn
   ];

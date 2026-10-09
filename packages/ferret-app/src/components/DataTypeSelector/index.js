@@ -3,12 +3,19 @@ import {
   IconAlertCircle,
   IconBraces,
   IconCaretDown,
+  IconList,
   IconNumbers,
   IconLetterT,
   IconToggleRight
 } from '@tabler/icons';
 import { Tooltip } from 'react-tooltip';
-import { FERRET_VARIABLE_DATATYPES, validateVariableType } from '@useferret/common/utils';
+import {
+  FERRET_VARIABLE_DATATYPES,
+  OPTIONS_DATATYPE,
+  isOptionsVariable,
+  resolveOptionsVariableValue,
+  validateVariableType
+} from '@useferret/common/utils';
 import MenuDropdown from 'ui/MenuDropdown';
 import StyledWrapper from './StyledWrapper';
 
@@ -16,25 +23,52 @@ const TYPE_ICONS = {
   string: IconLetterT,
   number: IconNumbers,
   boolean: IconToggleRight,
-  object: IconBraces
+  object: IconBraces,
+  options: IconList
 };
 
 const TYPE_ICONS_SIZES = {
   string: 16,
   number: 18,
   boolean: 18,
-  object: 18
+  object: 18,
+  options: 16
 };
 
-const DataTypeSelector = ({ variable, resolvableVariables, onChange, compact = false }) => {
+/**
+ * Fields to write when a variable switches to `type`, or null when nothing changes. Switching to
+ * options seeds the list with the current value, and leaving options keeps the value requests were
+ * receiving, so a type switch never silently loses data.
+ */
+export const getTypeChangeFields = (variable, type) => {
+  const selectedType = variable.dataType || 'string';
+  if (type === selectedType) return null;
+
+  if (type === OPTIONS_DATATYPE) {
+    const currentValue = variable.value === null || variable.value === undefined ? '' : String(variable.value);
+    const options = currentValue ? [{ key: 'Default', value: currentValue }] : [];
+    return { dataType: OPTIONS_DATATYPE, options, value: options[0]?.key ?? '' };
+  }
+
+  const dataType = type === 'string' ? undefined : type;
+  if (isOptionsVariable(variable)) {
+    return { dataType, options: undefined, value: resolveOptionsVariableValue(variable) };
+  }
+  return { dataType };
+};
+
+// `allowOptions` adds the environment-only `options` type (a list of named values to pick from).
+const DataTypeSelector = ({ variable, resolvableVariables, onChange, compact = false, allowOptions = false }) => {
   const selectedType = variable.dataType || 'string';
   const typeError = validateVariableType(variable.value, selectedType, resolvableVariables);
 
   const handleTypeChange = (type) => {
-    onChange({ dataType: type === 'string' ? undefined : type });
+    const fields = getTypeChangeFields(variable, type);
+    if (fields) onChange(fields);
   };
 
-  const items = FERRET_VARIABLE_DATATYPES.map((type) => ({
+  const types = allowOptions ? [...FERRET_VARIABLE_DATATYPES, OPTIONS_DATATYPE] : FERRET_VARIABLE_DATATYPES;
+  const items = types.map((type) => ({
     id: type,
     label: type,
     onClick: () => handleTypeChange(type)

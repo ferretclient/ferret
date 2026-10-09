@@ -68,6 +68,10 @@ const initialState = {
       sslSession: {
         enabled: false
       }
+    },
+    history: {
+      enabled: true,
+      saveBodies: true
     }
   },
   generateCode: {
