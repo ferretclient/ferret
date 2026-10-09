@@ -1,5 +1,6 @@
 export const SIDEBAR_WIDTH_KEY = 'ferret.leftSidebarWidth';
 export const SIDEBAR_COLLAPSED_KEY = 'ferret.sidebarCollapsed';
+export const SIDEBAR_SECTION_ORDER_KEY = 'ferret.sidebarSectionOrder';
 
 /**
  * Read a value from localStorage with a fallback and optional parsing function.

@@ -22,6 +22,14 @@ const StyledWrapper = styled.div`
       flex: 1 1 0%;
       margin-bottom: 0;
     }
+
+    &.reorder-dragging {
+      opacity: 0.5;
+    }
+
+    &.reorder-drop-target {
+      box-shadow: inset 0 2px 0 ${(props) => props.theme.primary.solid};
+    }
   }
 
   .section-header {

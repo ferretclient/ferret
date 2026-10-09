@@ -54,6 +54,10 @@ fer run --env Local
 fer run users --env Local --reporter-html results.html
 ```
 
+### Arranging the sidebar
+
+Drag a section header (Collections, API Specs, Mock Servers, History) onto another one to reorder them. With the keyboard, focus a section's icon and press Alt+Up or Alt+Down. The order is remembered on this computer.
+
 ### Request history
 
 Every request you send is recorded on your computer, with credentials masked. Open the **History** section in the sidebar to search past requests, inspect what was sent and received, and delete entries. How many entries are kept, and for how long, is set under **Preferences → General → History**. Nothing is ever uploaded.

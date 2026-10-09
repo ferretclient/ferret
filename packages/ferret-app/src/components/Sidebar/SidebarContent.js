@@ -1,4 +1,6 @@
+import { useMemo } from 'react';
 import { useSidebarAccordion } from './SidebarAccordionContext';
+import { SidebarSectionOrderProvider } from './SidebarSectionOrderContext';
 
 /**
  * Sections configuration
@@ -18,8 +20,12 @@ import { useSidebarAccordion } from './SidebarAccordionContext';
  * }
  */
 
-const SidebarContent = ({ sections }) => {
+const SidebarContent = ({ sections, onMoveSection, onMoveSectionBy }) => {
   const { isExpanded, getExpandedCount } = useSidebarAccordion();
+  const sectionOrder = useMemo(
+    () => ({ moveTo: onMoveSection, moveBy: onMoveSectionBy }),
+    [onMoveSection, onMoveSectionBy]
+  );
 
   const expandedCount = getExpandedCount();
 
@@ -51,7 +57,7 @@ const SidebarContent = ({ sections }) => {
   };
 
   return (
-    <>
+    <SidebarSectionOrderProvider value={sectionOrder}>
       {sections.map((section, index) => {
         const SectionComponent = section.component;
         const wrapperClassName = getWrapperClassName(section, index);
@@ -62,7 +68,7 @@ const SidebarContent = ({ sections }) => {
           </div>
         );
       })}
-    </>
+    </SidebarSectionOrderProvider>
   );
 };
 

@@ -2,10 +2,11 @@ import { SidebarAccordionProvider } from './SidebarAccordionContext';
 import SidebarContent from './SidebarContent';
 import StyledWrapper from './StyledWrapper';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateLeftSidebarWidth, updateIsDragging, toggleSidebarSearch } from 'providers/ReduxStore/slices/app';
-import { setLocalStorageValue, SIDEBAR_WIDTH_KEY } from 'utils/common/localStorage';
+import { getLocalStorageValue, setLocalStorageValue, SIDEBAR_WIDTH_KEY, SIDEBAR_SECTION_ORDER_KEY } from 'utils/common/localStorage';
+import { applySectionOrder, moveSectionTo, moveSectionBy, parseSectionOrder } from 'utils/sidebar/section-order';
 import CollectionsSection from './Sections/CollectionsSection/index';
 import ApiSpecsSection from './Sections/ApiSpecsSection/index';
 import MockServersSection from './Sections/MockServersSection/index';
@@ -19,7 +20,8 @@ const MAX_LEFT_SIDEBAR_WIDTH = 600;
 
 const Sidebar = () => {
   const isMockServerEnabled = useBetaFeature(BETA_FEATURES.MOCK_SERVER);
-  const sidebarSections = useMemo(() => {
+  const [savedSectionOrder, setSavedSectionOrder] = useState(() => getLocalStorageValue(SIDEBAR_SECTION_ORDER_KEY, [], parseSectionOrder));
+  const defaultSections = useMemo(() => {
     const sections = [
       {
         id: 'collections',
@@ -45,6 +47,18 @@ const Sidebar = () => {
 
     return sections;
   }, [isMockServerEnabled]);
+  const sidebarSections = useMemo(() => applySectionOrder(defaultSections, savedSectionOrder), [defaultSections, savedSectionOrder]);
+
+  const saveSectionOrder = useCallback((ids) => {
+    setSavedSectionOrder(ids);
+    setLocalStorageValue(SIDEBAR_SECTION_ORDER_KEY, JSON.stringify(ids));
+  }, []);
+  const handleMoveSection = useCallback((dragId, targetId) => {
+    saveSectionOrder(moveSectionTo(sidebarSections.map((section) => section.id), dragId, targetId));
+  }, [sidebarSections, saveSectionOrder]);
+  const handleMoveSectionBy = useCallback((id, offset) => {
+    saveSectionOrder(moveSectionBy(sidebarSections.map((section) => section.id), id, offset));
+  }, [sidebarSections, saveSectionOrder]);
   const leftSidebarWidth = useSelector((state) => state.app.leftSidebarWidth);
   const sidebarCollapsed = useSelector((state) => state.app.sidebarCollapsed);
   const [asideWidth, setAsideWidth] = useState(leftSidebarWidth);
@@ -134,6 +148,8 @@ const Sidebar = () => {
                 <div className="sidebar-sections flex flex-col flex-1">
                   <SidebarContent
                     sections={sidebarSections}
+                    onMoveSection={handleMoveSection}
+                    onMoveSectionBy={handleMoveSectionBy}
                   />
                 </div>
               </div>
