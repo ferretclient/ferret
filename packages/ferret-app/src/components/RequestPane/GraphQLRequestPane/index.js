@@ -29,6 +29,7 @@ import { resolveEnvironmentInheritance } from '@useferret/common/utils';
 import { findEnvironmentInCollection } from 'utils/collections';
 import { hasEffectiveAuth } from 'utils/auth';
 import HeightBoundContainer from 'ui/HeightBoundContainer';
+import EnvironmentOptions from 'components/RequestPane/Vars/EnvironmentOptions';
 import ResponsiveTabs from 'ui/ResponsiveTabs';
 import StatusDot from 'components/StatusDot';
 
@@ -352,6 +353,13 @@ const GraphQLRequestPane = ({ item, collection, onSchemaLoad, toggleDocs, handle
 
   return (
     <StyledWrapper className="flex flex-col h-full relative">
+      <EnvironmentOptions
+        item={item}
+        collection={collection}
+        requestVars={item.draft ? get(item, 'draft.request.vars.req') : get(item, 'request.vars.req')}
+        compact
+        onlyReferenced
+      />
       <ResponsiveTabs
         tabs={allTabs}
         activeTab={requestPaneTab}

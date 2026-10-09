@@ -1286,6 +1286,28 @@ export const getEnvironmentOptionSelections = (collection) => {
 };
 
 /**
+ * Names of options variables the active environment has only in its unsaved draft. The request side reads
+ * the saved environment, so these cannot be chosen there until the environment is saved.
+ */
+export const getUnsavedEnvironmentOptionNames = (collection) => {
+  const draft = collection?.environmentsDraft;
+  if (!draft || draft.environmentUid !== collection.activeEnvironmentUid) {
+    return [];
+  }
+
+  const saved = new Set(getEnvironmentOptionSelections(collection).map((selection) => selection.name));
+  return (draft.variables || [])
+    .filter((variable) => variable.enabled && variable.name && isOptionsVariable(variable) && !saved.has(variable.name))
+    .map((variable) => variable.name);
+};
+
+/** Whether the request (with its unsaved edits) mentions `{{name}}` anywhere: URL, params, headers or body. */
+export const requestReferencesVariable = (item, name) => {
+  const request = item?.draft?.request ?? item?.request;
+  return Boolean(request) && JSON.stringify(request).includes(`{{${name}}}`);
+};
+
+/**
  * name → options of the active environment's options variables, so a request variable of the
  * same name can be picked from that list.
  */

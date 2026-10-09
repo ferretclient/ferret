@@ -9,6 +9,7 @@ import RequestBody from 'components/RequestPane/RequestBody';
 import RequestBodyMode from 'components/RequestPane/RequestBody/RequestBodyMode';
 import Auth from 'components/RequestPane/Auth';
 import Vars from 'components/RequestPane/Vars';
+import EnvironmentOptions from 'components/RequestPane/Vars/EnvironmentOptions';
 import Assertions from 'components/RequestPane/Assertions';
 import Script from 'components/RequestPane/Script';
 import Tests from 'components/RequestPane/Tests';
@@ -156,6 +157,7 @@ const HttpRequestPane = ({ item, collection }) => {
 
   return (
     <div className="flex flex-col h-full relative">
+      <EnvironmentOptions item={item} collection={collection} requestVars={requestVars} compact onlyReferenced />
       <ResponsiveTabs
         tabs={allTabs}
         activeTab={effectiveTab}
