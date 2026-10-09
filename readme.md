@@ -29,7 +29,7 @@ Ferret is a desktop app and command-line tool for sending requests, writing test
 - **Request history:** every request you send, searchable and stored only on your computer, with credentials masked
 - **Import:** Postman, Insomnia, OpenAPI, WSDL, OpenCollection and Bruno collections
 - **Git integration**, a local **mock server**, response examples, cookies, proxies, client certificates and OAuth 2.0
-- Light and dark themes (teal and azure) plus 20 more to choose from, and a sidebar whose sections you can drag into your own order
+- Light and dark themes (teal and azure) plus 20 more to choose from, and a sidebar whose sections you can reorder or hide
 - Windows, macOS and Linux
 
 ## Download

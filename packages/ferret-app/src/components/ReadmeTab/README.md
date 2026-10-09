@@ -56,7 +56,7 @@ fer run users --env Local --reporter-html results.html
 
 ### Arranging the sidebar
 
-Drag a section header (Collections, API Specs, Mock Servers, History) onto another one to reorder them. With the keyboard, focus a section's icon and press Alt+Up or Alt+Down. The order is remembered on this computer.
+Drag a section header (Collections, API Specs, Mock Servers, History) onto another one to reorder them. With the keyboard, focus a section's icon and press Alt+Up or Alt+Down. The order is remembered on this computer. To hide sections you don't use, go to **Preferences → Display → Sidebar sections** and turn off API Specs, Mock Servers or History. Hiding only removes a section from the sidebar; its features keep working.
 
 ### Request history
 

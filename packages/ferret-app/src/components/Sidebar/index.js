@@ -14,6 +14,7 @@ import HistorySection from './Sections/HistorySection/index';
 import useKeybinding from 'hooks/useKeybinding';
 import useClearSidebarSelectionOnEscape from 'hooks/useClearSidebarSelectionOnEscape';
 import { useBetaFeature, BETA_FEATURES } from 'utils/beta-features';
+import { isSidebarSectionVisible } from 'utils/sidebar/section-visibility';
 
 const MIN_LEFT_SIDEBAR_WIDTH = 220;
 const MAX_LEFT_SIDEBAR_WIDTH = 600;
@@ -47,7 +48,12 @@ const Sidebar = () => {
 
     return sections;
   }, [isMockServerEnabled]);
-  const sidebarSections = useMemo(() => applySectionOrder(defaultSections, savedSectionOrder), [defaultSections, savedSectionOrder]);
+  const preferences = useSelector((state) => state.app.preferences);
+  const sidebarSections = useMemo(
+    () => applySectionOrder(defaultSections, savedSectionOrder).filter((section) => isSidebarSectionVisible(preferences, section.id)),
+    [defaultSections, savedSectionOrder, preferences]
+  );
+  const visibleSectionIds = useMemo(() => sidebarSections.map((section) => section.id), [sidebarSections]);
 
   const saveSectionOrder = useCallback((ids) => {
     setSavedSectionOrder(ids);
@@ -139,7 +145,7 @@ const Sidebar = () => {
   }
 
   return (
-    <SidebarAccordionProvider defaultExpanded={['collections']}>
+    <SidebarAccordionProvider defaultExpanded={['collections']} visibleSectionIds={visibleSectionIds}>
       <StyledWrapper className="flex relative h-full">
         <aside className="sidebar" data-testid="sidebar" style={{ width: currentWidth, transition: dragging ? 'none' : 'width 0.2s ease-in-out' }}>
           <div className="flex flex-row h-full w-full">

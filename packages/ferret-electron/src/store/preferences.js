@@ -67,7 +67,13 @@ const defaultPreferences = {
     interval: 1000
   },
   display: {
-    zoomPercentage: 100
+    zoomPercentage: 100,
+    // Only hides a section in the left sidebar; the feature behind it keeps working.
+    sidebarSections: {
+      apiSpecs: true,
+      mockServers: true,
+      history: true
+    }
   },
   cache: {
     sslSession: {
@@ -166,7 +172,12 @@ const preferencesSchema = Yup.object().shape({
     interval: Yup.number().min(100)
   }),
   display: Yup.object({
-    zoomPercentage: Yup.number().min(50).max(150)
+    zoomPercentage: Yup.number().min(50).max(150),
+    sidebarSections: Yup.object({
+      apiSpecs: Yup.boolean(),
+      mockServers: Yup.boolean(),
+      history: Yup.boolean()
+    }).optional()
   }),
   cache: Yup.object({
     sslSession: Yup.object({

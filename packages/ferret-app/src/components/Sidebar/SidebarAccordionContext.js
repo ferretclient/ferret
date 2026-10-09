@@ -10,7 +10,8 @@ export const useSidebarAccordion = () => {
   return context;
 };
 
-export const SidebarAccordionProvider = ({ children, defaultExpanded = ['collections'] }) => {
+// `visibleSectionIds` keeps a hidden section that was left expanded from counting towards the layout.
+export const SidebarAccordionProvider = ({ children, defaultExpanded = ['collections'], visibleSectionIds }) => {
   const [expandedSections, setExpandedSections] = useState(new Set(defaultExpanded));
   const dropdownContainerRef = useRef(null);
 
@@ -43,8 +44,11 @@ export const SidebarAccordionProvider = ({ children, defaultExpanded = ['collect
   }, [expandedSections]);
 
   const getExpandedCount = useCallback(() => {
-    return expandedSections.size;
-  }, [expandedSections]);
+    if (!visibleSectionIds) {
+      return expandedSections.size;
+    }
+    return visibleSectionIds.filter((id) => expandedSections.has(id)).length;
+  }, [expandedSections, visibleSectionIds]);
 
   return (
     <SidebarAccordionContext.Provider
