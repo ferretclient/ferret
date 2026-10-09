@@ -5,6 +5,7 @@ import {
   IconBook,
   IconExternalLink
 } from '@tabler/icons';
+import CheckForUpdates from 'components/CheckForUpdates';
 import StyledWrapper from './StyledWrapper';
 import { useTranslation } from 'react-i18next';
 
@@ -85,6 +86,15 @@ const Support = () => {
           </div>
         </section>
       ))}
+
+      <section className="support-group" aria-labelledby="support-updates-label">
+        <h3 className="support-group-label select-none" id="support-updates-label">
+          Updates
+        </h3>
+        <div className="support-card">
+          <CheckForUpdates />
+        </div>
+      </section>
     </StyledWrapper>
   );
 };

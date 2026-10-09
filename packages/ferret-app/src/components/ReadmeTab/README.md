@@ -71,3 +71,4 @@ Ferret only connects to:
 * the hosts in the requests you send,
 * proxies you configure,
 * Git remotes you configure, when you use Git features.
+* GitHub, once, when you press **Preferences → Support → Check for updates** and confirm the dialog. Nothing is downloaded or installed.

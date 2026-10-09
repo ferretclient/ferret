@@ -52,6 +52,7 @@ const registerOpenAPISyncIpc = require('./ipc/openapi-sync');
 const registerMockServerIpc = require('./ipc/mock-server');
 const { registerMountIpc } = require('./ipc/mount');
 const { registerSqliteIpc } = require('./ipc/sqlite');
+const registerUpdatesIpc = require('./ipc/updates');
 const sqliteService = require('./services/sqlite');
 const { clearAllRunnerResponses } = require('./services/runner-exchange');
 const { pruneHistory } = require('./services/request-history');
@@ -456,6 +457,7 @@ app.on('ready', async () => {
   clearAllRunnerResponses().catch((err) => console.warn('[runner] failed to clear stored responses', err));
   pruneHistory().catch((err) => console.warn('[history] failed to prune on startup', err));
   registerSqliteIpc(mainWindow);
+  registerUpdatesIpc();
   appDocuments.handleProtocol();
   registerAppDocumentIpc(appDocuments, mainWindow);
   registerWsdlIpc();

@@ -53,6 +53,15 @@ const StyledWrapper = styled.div`
     }
   }
 
+  button.support-link {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
   .support-link + .support-link {
     border-top: 1px solid ${(props) => props.theme.border.border1};
   }

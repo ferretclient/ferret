@@ -5,7 +5,7 @@
 
 Ferret is a desktop app and command-line tool for sending requests, writing tests and organising API collections. Your collections are ordinary files in a folder, so you can version them with Git like any other code.
 
-**Local by design.** No account, no cloud sync, no telemetry, no background calls to any server. Ferret only connects to the addresses in the requests you send, to proxies you configure, and to Git remotes you use.
+**Local by design.** No account, no cloud sync, no telemetry, no background calls to any server. Ferret only connects to the addresses in the requests you send, to proxies you configure, and to Git remotes you use. The one exception is **Check for updates**, which contacts GitHub only after you press it and confirm a dialog that says so.
 
 ## Contents
 
@@ -39,6 +39,8 @@ Installers for Windows, macOS and Linux are published on the repository's **Rele
 - **Windows:** SmartScreen shows "Windows protected your PC". Choose **More info → Run anyway**.
 - **macOS:** right-click the app and choose **Open**, then confirm.
 - **Linux:** make the AppImage executable (`chmod +x`) and run it, or install the `.deb` / `.rpm`.
+
+**Updating:** Ferret never updates itself. Open **Preferences → Support → Check for updates**, confirm the dialog, and Ferret asks GitHub once for the latest release and tells you whether a newer version exists. You then download it from the release page yourself. While the repository is private, the check reports that no releases can be read.
 
 No release yet, or you prefer to build it yourself? Follow the next section.
 
