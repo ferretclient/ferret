@@ -18,7 +18,7 @@ import NetworkError from 'components/ResponsePane/NetworkError';
 import RunnerResults from 'components/RunnerResults';
 import VariablesEditor from 'components/VariablesEditor';
 import CollectionSettings from 'components/CollectionSettings';
-import { DocExplorer } from '@useferret/graphql-docs';
+import { DocExplorer } from '@ferret-app/graphql-docs';
 
 import FileEditor from 'components/FileEditor';
 import StyledWrapper from './StyledWrapper';

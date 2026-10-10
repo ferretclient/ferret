@@ -13,7 +13,7 @@ import Settings from './Settings';
 import StatusDot from 'components/StatusDot';
 import DocsAction from 'components/Documentation/DocsAction';
 import { hasEffectiveAuth } from 'utils/auth';
-import { getFolderTags } from '@useferret/common';
+import { getFolderTags } from '@ferret-app/common';
 
 const FolderSettings = ({ collection, folder }) => {
   const dispatch = useDispatch();

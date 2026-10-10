@@ -7,8 +7,8 @@ jest.mock('nanoid', () => ({
   ...jest.requireActual('nanoid')
 }));
 
-// Mock @useferret/common to provide a working interpolate function
-jest.mock('@useferret/common', () => ({
+// Mock @ferret-app/common to provide a working interpolate function
+jest.mock('@ferret-app/common', () => ({
   interpolate: (str, vars) => {
     if (!str || typeof str !== 'string') return str;
     let result = str;

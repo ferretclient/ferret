@@ -1,4 +1,4 @@
-import { interpolate } from '@useferret/common';
+import { interpolate } from '@ferret-app/common';
 import RealCodeMirror from 'codemirror';
 import store from 'providers/ReduxStore';
 import {
@@ -14,7 +14,7 @@ import { updateVariableInScope, addEnvironment, selectEnvironment } from 'provid
 import { COPY_SUCCESS_TIMEOUT, extractVariableInfo, renderVarInfo } from './ferretVarInfo';
 
 // Mock the dependencies
-jest.mock('@useferret/common', () => ({
+jest.mock('@ferret-app/common', () => ({
   interpolate: jest.fn(),
   mockDataFunctions: {
     randomFirstName: jest.fn(() => 'John'),

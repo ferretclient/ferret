@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { IconArrowsDiagonal, IconCheck, IconCopy, IconEye, IconEyeOff } from '@tabler/icons';
-import { toDisplayString } from '@useferret/common/utils';
+import { toDisplayString } from '@ferret-app/common/utils';
 import { useTheme } from 'providers/Theme';
 import useCopyToClipboard from 'hooks/useCopyToClipboard';
 import { usePersistenceScope } from 'hooks/usePersistedState/PersistedScopeProvider';

@@ -22,7 +22,7 @@ import StyledWrapper, { CHECKBOX_COLUMN_WIDTH, ACTIONS_COLUMN_WIDTH } from './St
 import { uuid } from 'utils/common';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { FERRET_VARIABLE_DATATYPES, OPTIONS_DATATYPE, valueToString } from '@useferret/common/utils';
+import { FERRET_VARIABLE_DATATYPES, OPTIONS_DATATYPE, valueToString } from '@ferret-app/common/utils';
 import { variableNameRegex } from 'utils/common/regex';
 import toast from 'react-hot-toast';
 import { Tooltip } from 'react-tooltip';

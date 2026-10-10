@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { IconX, IconChevronDown, IconChevronRight, IconExternalLink } from '@tabler/icons';
-import { SCRIPT_TYPES } from '@useferret/common';
+import { SCRIPT_TYPES } from '@ferret-app/common';
 import ErrorBanner from 'ui/ErrorBanner';
 import CodeSnippet from 'components/CodeSnippet';
 import { getTreePathFromCollectionToItem } from 'utils/collections';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IconArrowUpRight } from '@tabler/icons';
-import { valueToString } from '@useferret/common/utils';
+import { valueToString } from '@ferret-app/common/utils';
 import SecretEyeButton from 'components/MultiLineEditor/SecretEyeButton';
 import { useEnvironmentSelection } from 'hooks/useEnvironmentSelection';
 import { EnabledCell, NameCell, ValueCell, DescriptionCell, SourceCell } from './StyledWrapper';

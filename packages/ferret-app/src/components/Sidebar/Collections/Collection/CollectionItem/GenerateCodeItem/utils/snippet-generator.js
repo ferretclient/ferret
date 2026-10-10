@@ -1,5 +1,5 @@
-import { buildHar } from '@useferret/common';
-import { stripOrigin } from '@useferret/common/utils';
+import { buildHar } from '@ferret-app/common';
+import { stripOrigin } from '@ferret-app/common/utils';
 import { getAllVariables, getTreePathFromCollectionToItem, mergeHeaders } from 'utils/collections/index';
 import { resolveInheritedAuth } from 'utils/auth';
 import { get } from 'lodash';

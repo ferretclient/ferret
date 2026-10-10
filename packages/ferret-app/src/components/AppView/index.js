@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useCallback, useMemo } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import { useDispatch } from 'react-redux';
-import { resolveEnvironmentInheritance } from '@useferret/common/utils';
+import { resolveEnvironmentInheritance } from '@ferret-app/common/utils';
 import { sendNetworkRequest } from 'utils/network/index';
 import { findEnvironmentInCollection } from 'utils/collections';
 import {

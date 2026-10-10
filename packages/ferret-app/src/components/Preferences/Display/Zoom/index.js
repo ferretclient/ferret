@@ -6,7 +6,7 @@ import StyledWrapper from './StyledWrapper';
 import { IconReload } from '@tabler/icons';
 import { IconChevronDown, IconCheck } from '@tabler/icons';
 import Button from 'ui/Button/index';
-const { percentageToZoomLevel } = require('@useferret/common');
+const { percentageToZoomLevel } = require('@ferret-app/common');
 
 // Zoom options for dropdown (50% to 150%)
 const ZOOM_OPTIONS = [

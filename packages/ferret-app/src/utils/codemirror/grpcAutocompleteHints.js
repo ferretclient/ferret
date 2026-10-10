@@ -5,7 +5,7 @@
  * parts of them exist depends on the hook. So the exported groups are keyed by hook rather than
  * by root global, and every entry below hangs off `fer`.
  *
- * Mirrors GrpcScriptRuntime in @useferret/js; keep the two in step.
+ * Mirrors GrpcScriptRuntime in @ferret-app/js; keep the two in step.
  */
 
 const GRPC_REQUEST = 'fer.grpc.request';

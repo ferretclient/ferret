@@ -1,5 +1,5 @@
 import path from 'utils/common/path';
-import { getFolderTags } from '@useferret/common';
+import { getFolderTags } from '@ferret-app/common';
 import reducer, {
   addFolderTag,
   deleteFolderTag,

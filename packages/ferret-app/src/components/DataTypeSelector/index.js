@@ -15,7 +15,7 @@ import {
   isOptionsVariable,
   resolveOptionsVariableValue,
   validateVariableType
-} from '@useferret/common/utils';
+} from '@ferret-app/common/utils';
 import MenuDropdown from 'ui/MenuDropdown';
 import StyledWrapper from './StyledWrapper';
 

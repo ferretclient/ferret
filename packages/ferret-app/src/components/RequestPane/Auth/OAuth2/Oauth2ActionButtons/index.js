@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import { cloneDeep, find } from 'lodash';
 import { IconLoader2 } from '@tabler/icons';
-import { interpolate } from '@useferret/common';
+import { interpolate } from '@ferret-app/common';
 import { fetchOauth2Credentials, clearOauth2Cache, refreshOauth2Credentials } from 'providers/ReduxStore/slices/collections/actions';
 import { responseReceived } from 'providers/ReduxStore/slices/collections';
 import { updateResponsePaneTab } from 'providers/ReduxStore/slices/tabs';
