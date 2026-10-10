@@ -134,17 +134,19 @@ If you cannot use the workflow, build on each operating system with `npm run dis
 
 ## Changing the GitHub owner
 
-The owner of the repository (`jakahann` today) appears in links, Docker image paths, the Homebrew tap, the winget identifier, the macOS bundle ID, copyright lines and `CODEOWNERS`. `project.json` is the single place that says who it is:
+The owner of the repository (`jakahann` today) appears in links, Docker image paths, the Homebrew tap, the winget identifier, copyright lines and `CODEOWNERS`. `project.json` is the single place that says who it is:
 
 ```json
-{ "owner": "jakahann", "githubId": 36445378 }
+{ "owner": "jakahann", "githubId": 36445378, "appId": "io.github.ferret-app.ferret" }
 ```
+
+`appId` is the app's identity on macOS, Windows and Linux. Auto-update, user data and notarization all key off it, and no domain is involved. It is **never changed once a release exists** (installed copies would stop updating and lose their settings), so `npm run set-owner` leaves it alone and `npm test` checks that every file spelling it out agrees with `project.json`.
 
 To move the project to another GitHub username, or to an organization:
 
 1. Rename the account (or transfer the repository) on GitHub first.
 2. Edit `owner` in `project.json`. `githubId` is the numeric id shown in **Settings → Emails** in the no-reply address (`<id>+name@users.noreply.github.com`); for an organization, use your own account's id, since the address is for commit authorship.
-3. Run `npm run set-owner`. It rewrites every file that mentions the old owner (it reads the old one from `homepage` in `package.json`), using lower-case where Docker, Homebrew and bundle IDs require it.
+3. Run `npm run set-owner`. It rewrites every file that mentions the old owner (it reads the old one from `homepage` in `package.json`), using lower-case where Docker and Homebrew require it.
 4. Run the three commands it prints: update the git remote, set `user.email`, and, only if older commits should show the new address, rewrite their author (see below).
 5. `npm test` fails if any tracked file still names a different owner, so a missed reference shows up before a release.
 

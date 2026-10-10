@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Makes `owner` in project.json the GitHub owner everywhere it appears: repository, release and issue
-// links, Docker image paths, the Homebrew tap, the winget identifier, the macOS bundle ID, copyright
-// lines and CODEOWNERS.
+// links, Docker image paths, the Homebrew tap, the winget identifier, copyright lines and CODEOWNERS.
+// The app ID ("appId" in project.json) is never touched, so installed copies keep updating.
 //
 //   1. edit "owner" in project.json
 //   2. node scripts/set-project-owner.js           (rewrites the files)
@@ -36,8 +36,10 @@ const rewriteOwner = (text, { from, to, githubId }) => {
   return withManifestPath.replace(ownerPattern, (match, idPrefix, noreply, offset, whole) => {
     const before = whole.slice(Math.max(0, offset - 10), offset);
     const after = whole.slice(offset + match.length, offset + match.length + 14);
-    // These places are lower-case by rule: Docker registry paths, reverse-DNS bundle IDs and Homebrew tap names.
-    const lowerCase = /ghcr\.io\/$|io\.github\.$/.test(before) || /^\/(homebrew-)?tap/.test(after);
+    // The app ID is fixed in project.json and deliberately survives an owner change.
+    if (/io\.github\.$/.test(before)) return match;
+    // These places are lower-case by rule: Docker registry paths and Homebrew tap names.
+    const lowerCase = /ghcr\.io\/$/.test(before) || /^\/(homebrew-)?tap/.test(after);
     const name = lowerCase ? toLower : to;
     if (noreply) return `${idPrefix || `${githubId}+`}${name}${noreply}`;
     return `${idPrefix || ''}${name}`;

@@ -21,8 +21,8 @@ cask "ferret-app" do
 
   zap trash: [
     "~/Library/Application Support/ferret",
-    "~/Library/Preferences/io.github.jakahann.ferret.plist",
-    "~/Library/Saved Application State/io.github.jakahann.ferret.savedState",
+    "~/Library/Preferences/io.github.ferret-app.ferret.plist",
+    "~/Library/Saved Application State/io.github.ferret-app.ferret.savedState",
   ]
 
   caveats <<~EOS

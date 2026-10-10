@@ -17,11 +17,14 @@ test('links, mentions and copyright lines take the owner as written', () => {
   assert.equal(move('winget: alice.FerretApp'), 'winget: Bob.FerretApp');
 });
 
-test('Docker paths, bundle IDs and Homebrew taps are lower-case', () => {
+test('Docker paths and Homebrew taps are lower-case', () => {
   assert.equal(move('ghcr.io/alice/ferret-app:latest'), 'ghcr.io/bob/ferret-app:latest');
-  assert.equal(move('io.github.alice.ferret'), 'io.github.bob.ferret');
   assert.equal(move('brew install --cask alice/tap/ferret-app'), 'brew install --cask bob/tap/ferret-app');
   assert.equal(move('repository alice/homebrew-tap'), 'repository bob/homebrew-tap');
+});
+
+test('the app ID is left alone, so installed copies keep updating', () => {
+  assert.equal(move('io.github.alice.ferret'), 'io.github.alice.ferret');
 });
 
 test('winget files its manifests under the first letter of the publisher', () => {
@@ -50,7 +53,6 @@ test('every tracked file agrees with the owner in project.json', () => {
   const references = [
     /github\.com\/([A-Za-z0-9-]+)\/ferret-app/g,
     /ghcr\.io\/([A-Za-z0-9-]+)\/ferret-app/g,
-    /io\.github\.([A-Za-z0-9-]+)\.ferret/g,
     /(?:^|[^\w.-])([A-Za-z0-9-]+)\.FerretApp\b/g
   ];
   const files = execFileSync('git', ['ls-files', '-z'], { cwd: ROOT, maxBuffer: 64 * 1024 * 1024 }).toString('utf8').split('\0');
@@ -71,4 +73,26 @@ test('every tracked file agrees with the owner in project.json', () => {
     }
   }
   assert.deepEqual(stale, [], `Run "node scripts/set-project-owner.js" after editing project.json.\n${stale.join('\n')}`);
+});
+
+test('every file that spells out the app ID uses the one in project.json', () => {
+  const { appId } = JSON.parse(fs.readFileSync(path.join(ROOT, 'project.json'), 'utf8'));
+  assert.match(appId, /^[A-Za-z0-9-]+(\.[A-Za-z0-9-]+){2,}$/, 'appId needs at least three dot-separated parts');
+
+  const mismatched = [];
+  const files = execFileSync('git', ['ls-files', '-z'], { cwd: ROOT, maxBuffer: 64 * 1024 * 1024 }).toString('utf8').split('\0');
+  for (const file of files) {
+    if (!file || /^(project\.json|package-lock\.json|scripts\/set-project-owner)/.test(file)) continue;
+    let content;
+    try {
+      content = fs.readFileSync(path.join(ROOT, file));
+    } catch {
+      continue;
+    }
+    if (content.subarray(0, 8000).includes(0)) continue;
+    for (const match of content.toString('utf8').matchAll(/io\.github\.[A-Za-z0-9-]+\.ferret\b/g)) {
+      if (match[0] !== appId) mismatched.push(`${file}: ${match[0]}`);
+    }
+  }
+  assert.deepEqual(mismatched, [], `These disagree with appId "${appId}" in project.json.`);
 });

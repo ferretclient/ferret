@@ -11,6 +11,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
+const { appId: APP_ID } = require('../project.json');
+
 const REPOSITORY = 'jakahann/ferret-app';
 const RELEASE_URL = (version, file) => `https://github.com/${REPOSITORY}/releases/download/v${version}/${file}`;
 const WINGET_MANIFEST_VERSION = '1.6.0';
@@ -65,8 +67,8 @@ const renderCask = ({ version, sums }) => {
 
   zap trash: [
     "~/Library/Application Support/ferret",
-    "~/Library/Preferences/io.github.jakahann.ferret.plist",
-    "~/Library/Saved Application State/io.github.jakahann.ferret.savedState",
+    "~/Library/Preferences/${APP_ID}.plist",
+    "~/Library/Saved Application State/${APP_ID}.savedState",
   ]
 
   caveats <<~EOS

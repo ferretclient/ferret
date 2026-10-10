@@ -1,10 +1,13 @@
 require('dotenv').config({ path: process.env.DOTENV_PATH });
 
+const { appId } = require('../../project.json');
+
 const isBenchmark = process.env.FERRET_BENCHMARK === 'true';
 
 const config = {
-  // Reverse-DNS of the GitHub Pages host for the project owner, so it needs no domain of its own.
-  appId: 'io.github.jakahann.ferret',
+  // Fixed once users have installed the app: auto-update, app data and notarization all key off it, so it
+  // does not follow the GitHub owner (see "Changing the GitHub owner" in docs/releasing.md).
+  appId,
   productName: isBenchmark ? 'Ferret Benchmark' : 'Ferret',
   copyright: 'Copyright © 2026 @jakahann. Based on Bruno (MIT).',
   extraMetadata: {
