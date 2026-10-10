@@ -1,13 +1,25 @@
 import { test, expect } from '../../../playwright';
 import { closeAllCollections } from '../../utils/page';
+import { startLocalGitRemote, LocalGitRemote } from '../../utils/git-remote';
+
+// The dialog lists the repository's branches, so it is given a real git repository served from this machine.
+let remote: LocalGitRemote;
 
 test.describe('GitHub Repository URL Import', () => {
+  test.beforeAll(async () => {
+    remote = await startLocalGitRemote({ repositoryName: 'sample-collection', branches: ['feat/example'] });
+  });
+
+  test.afterAll(async () => {
+    await remote?.close();
+  });
+
   test.afterEach(async ({ page }) => {
     await closeAllCollections(page);
   });
 
   test('GitHub repository URL import', async ({ page }) => {
-    const githubUrl = 'https://github.com/useferret/github-rest-api-collection';
+    const githubUrl = remote.repositoryUrl;
 
     // Test GitHub repository import
     await page.getByTestId('collections-header-add-menu').click();

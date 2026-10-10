@@ -12,7 +12,7 @@ collections:
     path: "collections/empty-coll"
   - name: "Ghost Coll"
     path: "collections/ghost-coll"
-    remote: "https://github.com/useferret/sample-collection.git"
+    remote: "http://127.0.0.1:9/ferret-sample/sample-collection.git"
 
 specs:
 

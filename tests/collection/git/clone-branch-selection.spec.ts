@@ -1,28 +1,20 @@
 import path from 'path';
 import fs from 'fs';
-import os from 'os';
 import { test, expect, closeElectronApp } from '../../../playwright';
 import { switchWorkspace, waitForReadyPage, buildCommonLocators, openCloneDialogFromImport } from '../../utils/page';
-import { currentGitBranch, hasGitInstalled, runGit } from './helpers';
+import { startLocalGitRemote, LocalGitRemote } from '../../utils/git-remote';
+import { currentGitBranch, hasGitInstalled } from './helpers';
 
 const initUserDataPath = path.join(__dirname, 'init-user-data');
 const fixturesPath = path.join(__dirname, 'fixtures');
 
 const WORKSPACE_NAME = 'Clone WS';
-const REPOSITORY_URL = 'https://github.com/useferret/github-rest-api-collection';
-const UNREACHABLE_REPOSITORY_URL = 'https://github.com/useferret/this-repo-does-not-exist';
 const DEFAULT_BRANCH = 'main';
 const CLONED_COLLECTION_DIR = 'github-rest-api-collection';
 const BRANCH_SEARCH_TERM = 'feat/';
 
-const remoteIsReachable = () => {
-  try {
-    runGit(os.tmpdir(), ['ls-remote', '--heads', REPOSITORY_URL]);
-    return true;
-  } catch {
-    return false;
-  }
-};
+// The repository the dialog clones: a real git repository served from this machine, so the test needs no network.
+let remote: LocalGitRemote;
 
 const createWorkspace = async (createTmpDir: (tag?: string) => Promise<string>, tag: string): Promise<string> => {
   const workspacePath = await createTmpDir(tag);
@@ -36,7 +28,17 @@ const clonedCollectionPath = (workspacePath: string) =>
 
 test.describe('Clone Git Repository branch selection', () => {
   test.skip(!hasGitInstalled(), 'requires git installed');
-  test.skip(!remoteIsReachable(), `Could not reach ${REPOSITORY_URL}.`);
+
+  test.beforeAll(async () => {
+    remote = await startLocalGitRemote({
+      repositoryName: CLONED_COLLECTION_DIR,
+      branches: ['feat/alpha', 'feat/beta', 'fix/typo']
+    });
+  });
+
+  test.afterAll(async () => {
+    await remote?.close();
+  });
 
   test('clones the branch picked from the branch list', async ({ launchElectronApp, createTmpDir }) => {
     const workspacePath = await createWorkspace(createTmpDir, 'clone-branch-picked');
@@ -49,7 +51,7 @@ test.describe('Clone Git Repository branch selection', () => {
       await switchWorkspace(page, WORKSPACE_NAME);
 
       await test.step('Import a git repository to open the clone dialog', async () => {
-        await openCloneDialogFromImport(page, REPOSITORY_URL);
+        await openCloneDialogFromImport(page, remote.repositoryUrl);
       });
 
       await test.step('Branch field is prefilled with the repository default', async () => {
@@ -92,7 +94,7 @@ test.describe('Clone Git Repository branch selection', () => {
       await switchWorkspace(page, WORKSPACE_NAME);
 
       await test.step('Import a git repository to open the clone dialog', async () => {
-        await openCloneDialogFromImport(page, REPOSITORY_URL);
+        await openCloneDialogFromImport(page, remote.repositoryUrl);
       });
 
       await test.step('The remote default arrives prefilled and stays selected', async () => {
@@ -123,7 +125,7 @@ test.describe('Clone Git Repository branch selection', () => {
       await switchWorkspace(page, WORKSPACE_NAME);
 
       await test.step('Import a git repository to open the clone dialog', async () => {
-        await openCloneDialogFromImport(page, REPOSITORY_URL);
+        await openCloneDialogFromImport(page, remote.repositoryUrl);
       });
 
       await test.step('Searching keeps only the matching branches', async () => {
@@ -160,7 +162,7 @@ test.describe('Clone Git Repository branch selection', () => {
       await switchWorkspace(page, WORKSPACE_NAME);
 
       await test.step('Import a repository the remote listing cannot resolve', async () => {
-        await openCloneDialogFromImport(page, UNREACHABLE_REPOSITORY_URL);
+        await openCloneDialogFromImport(page, remote.missingRepositoryUrl);
       });
 
       await test.step('The dialog says branches are unavailable and falls back to the default', async () => {

@@ -10,7 +10,8 @@ type WorkspaceConfig = { collections?: CollectionEntry[] };
 const initUserDataPath = path.join(__dirname, 'init-user-data');
 const fixturesPath = path.join(__dirname, 'fixtures');
 
-const REMOTE_URL = 'https://github.com/useferret/sample-collection.git';
+// Only recorded and displayed. Nothing listens on this port, so no test can reach the network.
+const REMOTE_URL = 'http://127.0.0.1:9/ferret-sample/sample-collection.git';
 
 const FIXTURE_WS_NAME = 'Fixture WS';
 const GHOST_WS_NAME = 'Ghost WS';

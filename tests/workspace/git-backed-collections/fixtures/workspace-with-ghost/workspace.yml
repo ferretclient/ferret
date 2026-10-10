@@ -6,7 +6,7 @@ info:
 collections:
   - name: "Missing Coll"
     path: "collections/missing-coll"
-    remote: "https://github.com/useferret/sample-collection.git"
+    remote: "http://127.0.0.1:9/ferret-sample/sample-collection.git"
 
 specs:
 
