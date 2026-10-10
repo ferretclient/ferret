@@ -38,6 +38,7 @@ Installers for Windows, macOS and Linux are published on the repository's **Rele
 
 - **Windows:** SmartScreen shows "Windows protected your PC". Choose **More info → Run anyway**.
 - **macOS:** right-click the app and choose **Open**, then confirm.
+  With Homebrew: `brew install --cask jakahann/tap/ferret-app` (available once the first release is published).
 - **Linux:** make the AppImage executable (`chmod +x`) and run it, or install the `.deb` / `.rpm`.
 
 **Updating:** Ferret never updates itself. Open **Preferences → Support → Check for updates**, confirm the dialog, and Ferret asks GitHub once for the latest release and tells you whether a newer version exists. You then download it from the release page yourself. While the repository is private, the check reports that no releases can be read.

@@ -23,9 +23,9 @@ in depth.
    list it in your reply to the user (and in the PR description) with the path and why it was left
    — never leave a one-sided change unmentioned.
 4. **Prefer unifying over copying.** If the logic has no Electron- or CLI-only dependency, move it
-   into `@useferret/requests` / `@useferret/common` (respecting `.claude/rules/architecture.md`)
+   into `@ferret-app/requests` / `@ferret-app/common` (respecting `.claude/rules/architecture.md`)
    instead of patching twice. Precedent: `utils/cookies.js` is one line in each runtime —
-   `module.exports = require('@useferret/requests').cookies;`. Where both copies must stay, note the
+   `module.exports = require('@ferret-app/requests').cookies;`. Where both copies must stay, note the
    pairing in a comment at both sites.
 
 ## 1. App ↔ CLI — highest priority
@@ -50,12 +50,12 @@ bugs to the shared logic, not the reporting surface.
 - Import: the app imports Postman, Insomnia, OpenAPI, WSDL, OpenCollection and Bruno (JSON
   exports, zips and collection folders); `fer import` (`commands/import.js`) only OpenAPI and WSDL.
   Changes to a shared converter affect both. Bruno conversion is split by layer: script text in
-  `@useferret/common` (`convertBrunoScript`), single files in `@useferret/filestore`
-  (`convertBrunoFile`), JSON exports in `@useferret/converters` (`brunoToFerret`), and folders
+  `@ferret-app/common` (`convertBrunoScript`), single files in `@ferret-app/filestore`
+  (`convertBrunoFile`), JSON exports in `@ferret-app/converters` (`brunoToFerret`), and folders
   and zips in `ferret-electron/src/utils/bruno-import.js`, and whole workspaces (`workspace.yml`) in
   `ferret-electron/src/utils/bruno-workspace-import.js`, which reuses the folder converter per collection.
 - **Known-divergent by design.** The CLI has no preferences store (so no `resolveInheritedSettings`),
-  no Electron window, no system-browser OAuth, and no `@useferret/schema` validation. Its runner
+  no Electron window, no system-browser OAuth, and no `@ferret-app/schema` validation. Its runner
   handles only `REQUEST_ITEM_TYPES = ['http-request', 'graphql-request']`
   (`ferret-cli/src/utils/collection.js`).
 

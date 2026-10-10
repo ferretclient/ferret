@@ -1,5 +1,5 @@
 {
-  "name": "@useferret/graphql-docs",
+  "name": "@ferret-app/graphql-docs",
   "version": "0.2.0",
   "license" : "MIT",
   "main": "dist/cjs/index.js",

@@ -1,5 +1,5 @@
 {
-  "name": "@useferret/js",
+  "name": "@ferret-app/js",
   "version": "0.2.0",
   "license": "MIT",
   "main": "src/index.js",
@@ -13,9 +13,9 @@
     "sandbox:bundle-libraries": "node ./src/sandbox/bundle-libraries.js"
   },
   "dependencies": {
-    "@useferret/common": "0.2.0",
-    "@useferret/query": "0.2.0",
-    "@useferret/requests": "0.2.0",
+    "@ferret-app/common": "0.2.0",
+    "@ferret-app/query": "0.2.0",
+    "@ferret-app/requests": "0.2.0",
     "ajv": "^8.18.0",
     "ajv-formats": "^2.1.1",
     "atob": "^2.1.2",

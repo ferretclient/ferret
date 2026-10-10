@@ -23,7 +23,7 @@ const {
   parseEnvironment,
   stringifyEnvironment,
   parseDotEnv
-} = require('@useferret/filestore');
+} = require('@ferret-app/filestore');
 
 // Parse a .fer request file
 const requestData = parseRequest(ferContent);

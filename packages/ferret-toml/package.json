@@ -1,5 +1,5 @@
 {
-  "name": "@useferret/toml",
+  "name": "@ferret-app/toml",
   "version": "0.2.0",
   "license": "MIT",
   "main": "src/index.js",

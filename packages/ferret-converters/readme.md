@@ -6,7 +6,7 @@ It can be used as a standalone package or as a part of the Ferret framework.
 ## Installation
 
 ```bash
-npm install @useferret/converters
+npm install @ferret-app/converters
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ npm install @useferret/converters
 ### Convert Postman collection to Ferret collection
 
 ```javascript
-const { postmanToFerret } = require('@useferret/converters');
+const { postmanToFerret } = require('@ferret-app/converters');
 
 // Convert Postman collection to Ferret collection
 const ferretCollection = postmanToFerret(postmanCollection);
@@ -23,7 +23,7 @@ const ferretCollection = postmanToFerret(postmanCollection);
 ### Convert Postman Environment to Ferret Environment
 
 ```javascript
-const { postmanToFerretEnvironment } = require('@useferret/converters');
+const { postmanToFerretEnvironment } = require('@ferret-app/converters');
 
 const ferretEnvironment = postmanToFerretEnvironment(postmanEnvironment);
 ```
@@ -31,7 +31,7 @@ const ferretEnvironment = postmanToFerretEnvironment(postmanEnvironment);
 ### Convert Insomnia collection to Ferret collection
 
 ```javascript
-const { insomniaToFerret } = require('@useferret/converters');
+const { insomniaToFerret } = require('@ferret-app/converters');
 
 const ferretCollection = insomniaToFerret(insomniaCollection);
 ```
@@ -39,7 +39,7 @@ const ferretCollection = insomniaToFerret(insomniaCollection);
 ### Convert OpenAPI specification to Ferret collection
 
 ```javascript
-const { openApiToFerret } = require('@useferret/converters');
+const { openApiToFerret } = require('@ferret-app/converters');
 
 const ferretCollection = openApiToFerret(openApiSpecification);
 ```
@@ -47,7 +47,7 @@ const ferretCollection = openApiToFerret(openApiSpecification);
 ### Convert WSDL file to Ferret collection
 
 ```javascript
-import { wsdlToFerret } from '@useferret/converters';
+import { wsdlToFerret } from '@ferret-app/converters';
 
 const ferretCollection = await wsdlToFerret(wsdlContent);
 ```
@@ -56,7 +56,7 @@ const ferretCollection = await wsdlToFerret(wsdlContent);
 
 ```javascript
 
-const { postmanToFerret } = require('@useferret/converters');
+const { postmanToFerret } = require('@ferret-app/converters');
 const fs = require('fs/promises');
 const path = require('path');
 
@@ -99,7 +99,7 @@ The WSDL importer supports the following features:
 ### WSDL Import Example
 
 ```javascript
-import { wsdlToFerret } from '@useferret/converters';
+import { wsdlToFerret } from '@ferret-app/converters';
 import fs from 'fs/promises';
 
 async function importWSDL() {
@@ -150,4 +150,4 @@ ferret import wsdl --source service.wsdl --output-file ~/Desktop/soap-collection
 - `nanoid` - UUID generation
 - `js-yaml` - YAML parsing
 - `xml2js` - XML parsing for WSDL
-- `@useferret/schema` - Schema validation
+- `@ferret-app/schema` - Schema validation

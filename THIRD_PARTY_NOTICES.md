@@ -22031,7 +22031,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org>
 ```
 
-### 4.490 Packages that declare a license but ship no license file — 150 packages
+### 4.490 Packages that declare a license but ship no license file — 149 packages
 
 Each is used under the license it declares in its `package.json`; the copyright holder is the package author.
 
@@ -22041,7 +22041,6 @@ Each is used under the license it declares in its `package.json`; the copyright 
 - @css-render/plugin-bem@0.15.14 — MIT — 07akioni — https://github.com/07akioni/css-render
 - @css-render/vue3-ssr@0.15.14 — MIT
 - @headlessui/react@1.7.19 — MIT — https://github.com/tailwindlabs/headlessui
-- @lydell/node-pty-win32-arm64@1.1.0 — MIT — git://github.com/lydell/node-pty
 - @lydell/node-pty-win32-x64@1.1.0 — MIT — git://github.com/lydell/node-pty
 - @radix-ui/primitive@1.1.1 — MIT — https://github.com/radix-ui/primitives
 - @radix-ui/react-arrow@1.1.1 — MIT — https://github.com/radix-ui/primitives
@@ -25498,6 +25497,7 @@ SPDX-License-Identifier: Apache-2.0
 - @lydell/node-pty-darwin-x64@1.1.0 — MIT
 - @lydell/node-pty-linux-arm64@1.1.0 — MIT
 - @lydell/node-pty-linux-x64@1.1.0 — MIT
+- @lydell/node-pty-win32-arm64@1.1.0 — MIT
 - @parcel/watcher-android-arm64@2.5.0 — MIT
 - @parcel/watcher-darwin-arm64@2.5.0 — MIT
 - @parcel/watcher-darwin-x64@2.5.0 — MIT
