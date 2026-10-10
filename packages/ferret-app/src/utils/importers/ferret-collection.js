@@ -1,7 +1,7 @@
 import { FerretError } from 'utils/common/error';
 import { validateSchema, transformItemsInCollection, updateUidsInCollection, hydrateSeqInCollection } from './common';
-import { transformExampleStatusInCollection } from '@useferret/common';
-import { brunoToFerret, isBrunoCollectionExport } from '@useferret/converters';
+import { transformExampleStatusInCollection } from '@ferret-app/common';
+import { brunoToFerret, isBrunoCollectionExport } from '@ferret-app/converters';
 
 const stripExportMetadata = (collection) => {
   delete collection.exportedAt;

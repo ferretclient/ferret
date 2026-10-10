@@ -9,7 +9,7 @@ const {
   getOrCreateHttpAgent,
   resolveAgentsFromPac,
   PatchedHttpsProxyAgent
-} = require('@useferret/requests');
+} = require('@ferret-app/requests');
 const { interpolateString } = require('../runner/interpolate-string');
 
 const DEFAULT_PORTS = {

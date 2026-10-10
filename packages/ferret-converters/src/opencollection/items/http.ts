@@ -18,7 +18,7 @@ import {
   toOpenCollectionAssertions,
   resolveTimeoutSetting
 } from '../common';
-import { utils, HTTP_SCRIPT_KEYS } from '@useferret/common';
+import { utils, HTTP_SCRIPT_KEYS } from '@ferret-app/common';
 import type {
   HttpRequest,
   HttpRequestSettings,
@@ -35,7 +35,7 @@ import type {
   FerretExample,
   FerretHttpRequest
 } from '../types';
-import type { HttpItemSettings as FerretHttpItemSettings } from '@useferret/schema-types/collection/item';
+import type { HttpItemSettings as FerretHttpItemSettings } from '@ferret-app/schema-types/collection/item';
 
 
 const { toBool, toMaxRedirects } = utils;

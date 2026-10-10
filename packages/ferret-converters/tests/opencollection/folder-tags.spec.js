@@ -1,5 +1,5 @@
 import { describe, it, expect } from '@jest/globals';
-import { getFolderTags } from '@useferret/common';
+import { getFolderTags } from '@ferret-app/common';
 import { fromOpenCollectionFolder, toOpenCollectionFolder } from '../../src/opencollection/folder';
 import { ferretToOpenCollection } from '../../src/opencollection/ferret-to-opencollection';
 import { openCollectionToFerret } from '../../src/opencollection/opencollection-to-ferret';

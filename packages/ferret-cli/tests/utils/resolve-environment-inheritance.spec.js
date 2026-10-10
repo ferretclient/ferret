@@ -2,10 +2,10 @@ const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const { describe, it, expect, beforeEach, afterEach } = require('@jest/globals');
-const { stringifyEnvironment } = require('@useferret/filestore');
+const { stringifyEnvironment } = require('@ferret-app/filestore');
 const { resolveEnvironmentInheritance } = require('../../src/utils/environment');
 
-// The resolution algorithm itself is owned by @useferret/common's environment-inheritance.spec.ts.
+// The resolution algorithm itself is owned by @ferret-app/common's environment-inheritance.spec.ts.
 // This spec covers what the CLI adds on top: the chain is walked across sibling *files*, so the
 // ancestor is looked up by file name, is confined to one directory and one extension, and `extends`
 // only survives in the formats that persist it.

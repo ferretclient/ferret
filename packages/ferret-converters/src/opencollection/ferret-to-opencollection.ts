@@ -1,10 +1,10 @@
-import { normalizeOpenApiSyncConfigs } from "@useferret/common";
+import { normalizeOpenApiSyncConfigs } from "@ferret-app/common";
 import { toOpenCollectionActions, toOpenCollectionAuth, toOpenCollectionHeaders, toOpenCollectionScripts, toOpenCollectionVariables } from "./common";
 import { toOpenCollectionEnvironments } from "./environment";
 import { toOpenCollectionFolder } from "./folder";
 import { toOpenCollectionItems } from "./items";
 import { FerretCollection, FerretCollectionRoot, FerretConfig, FerretPresets, ClientCertificate, CollectionConfig, OpenCollection, PemCertificate, Pkcs12Certificate, Protobuf } from "./types";
-import { HTTP_SCRIPT_KEYS } from '@useferret/common';
+import { HTTP_SCRIPT_KEYS } from '@ferret-app/common';
 
 const toOpenCollectionConfig = (ferretConfig: FerretConfig | undefined): CollectionConfig | undefined => {
   if (!ferretConfig) {

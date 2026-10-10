@@ -1,7 +1,7 @@
 import map from 'lodash/map';
 import { deleteSecretsInEnvs, deleteUidsInEnvs, deleteUidsInItems, isItemARequest } from '../common';
 import translateFerToPostman from '../utils/ferret-to-postman-translator';
-import { toDisplayString as ensureString } from '@useferret/common/utils';
+import { toDisplayString as ensureString } from '@ferret-app/common/utils';
 
 const isItemAFolder = (item) => item.type === 'folder';
 

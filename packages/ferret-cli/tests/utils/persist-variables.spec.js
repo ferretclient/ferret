@@ -2,7 +2,7 @@ const { describe, it, expect, beforeEach, afterEach, jest: jestObj } = require('
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { parseEnvironment } = require('@useferret/filestore');
+const { parseEnvironment } = require('@ferret-app/filestore');
 const {
   applyVariableUpdates,
   persistVariableUpdates,
@@ -419,7 +419,7 @@ describe('typed-value inference', () => {
       { envVariables: { count: 42, flag: true, cfg: { port: 3000 } } },
       { envFile: { path: filePath, format: 'yml' } }
     );
-    const { parseEnvironment } = require('@useferret/filestore');
+    const { parseEnvironment } = require('@ferret-app/filestore');
     const reparsed = parseEnvironment(fs.readFileSync(filePath, 'utf8'), { format: 'yml' });
     const byName = Object.fromEntries(reparsed.variables.map((v) => [v.name, v]));
     expect(byName.count).toMatchObject({ value: 42, dataType: 'number' });
@@ -435,7 +435,7 @@ describe('typed-value inference', () => {
       { envVariables: { count: 5 } },
       { envFile: { path: filePath, format: 'yml' } }
     );
-    const { parseEnvironment } = require('@useferret/filestore');
+    const { parseEnvironment } = require('@ferret-app/filestore');
     const reparsed = parseEnvironment(fs.readFileSync(filePath, 'utf8'), { format: 'yml' });
     expect(reparsed.variables[0]).toMatchObject({ name: 'count', value: 5, dataType: 'number' });
   });
@@ -471,7 +471,7 @@ describe('typed-value inference', () => {
   });
 });
 
-// The inference rule (getDataTypeFromValue in @useferret/common/utils) is purely:
+// The inference rule (getDataTypeFromValue in @ferret-app/common/utils) is purely:
 //   string → drop dataType (string is the implicit default)
 //   number → 'number'
 //   boolean → 'boolean'
@@ -479,7 +479,7 @@ describe('typed-value inference', () => {
 //   null / undefined → 'string' (treated as no-type-info → drop)
 // Existing dataType on disk does NOT influence the inference — only the new JS value's type.
 describe('typed-value inference matrix — dataType derived from the new JS value type', () => {
-  const { parseEnvironment } = require('@useferret/filestore');
+  const { parseEnvironment } = require('@ferret-app/filestore');
 
   // Tuple shape: [ label, scriptValue, expectedDataType, expectedValue ]
   //  - label             : human-readable name interpolated into the test title
@@ -520,7 +520,7 @@ describe('typed-value inference matrix — dataType derived from the new JS valu
 // user-written `dataType: number` annotation can be silently dropped (or flipped to another
 // type) the first time a script writes a different-typed value to that key.
 describe('typed-value inference: cross-type transitions ignore the existing on-disk dataType', () => {
-  const { parseEnvironment, stringifyEnvironment } = require('@useferret/filestore');
+  const { parseEnvironment, stringifyEnvironment } = require('@ferret-app/filestore');
 
   const seedYmlEnv = (seedVar) => stringifyEnvironment(
     {

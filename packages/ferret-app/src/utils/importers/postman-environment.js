@@ -1,5 +1,5 @@
 import { FerretError } from 'utils/common/error';
-import { postmanToFerretEnvironment } from '@useferret/converters';
+import { postmanToFerretEnvironment } from '@ferret-app/converters';
 import { coerceEnvName, dedupeImportedSecrets } from 'utils/environments';
 
 const importEnvironment = async (parsedFiles) => {

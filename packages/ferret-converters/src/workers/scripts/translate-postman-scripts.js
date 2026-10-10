@@ -1,5 +1,5 @@
 const { parentPort } = require('node:worker_threads');
-const { postmanTranslation } = require('@useferret/converters');
+const { postmanTranslation } = require('@ferret-app/converters');
 
 parentPort.on('message', (workerData) => {
   try {

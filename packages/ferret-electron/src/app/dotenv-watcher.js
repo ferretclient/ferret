@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const chokidar = require('chokidar');
-const { parseDotEnv } = require('@useferret/filestore');
+const { parseDotEnv } = require('@ferret-app/filestore');
 const { setDotEnvVars, clearDotEnvVars, setWorkspaceDotEnvVars, clearWorkspaceDotEnvVars } = require('../store/process-env');
 
 const isDotEnvFile = (filename) => {

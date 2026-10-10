@@ -3,7 +3,7 @@ const path = require('path');
 const isDev = require('electron-is-dev');
 const os = require('os');
 const { initializeShellEnv, waitForShellEnv } = require('./store/shell-env-state');
-const { percentageToZoomLevel } = require('@useferret/common');
+const { percentageToZoomLevel } = require('@ferret-app/common');
 const { isBenchmarkEnabled } = require('./utils/benchmark');
 
 if (isDev) {

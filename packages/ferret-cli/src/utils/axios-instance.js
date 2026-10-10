@@ -3,15 +3,15 @@ const { CLI_VERSION } = require('../constants');
 const { addCookieToJar, getCookieStringForUrl } = require('./cookies');
 const { createFormData } = require('./form-data');
 const { setupProxyAgents } = require('./proxy-util');
-const { isSameOrigin, DEFAULT_MAX_REDIRECTS } = require('@useferret/common').utils;
-const { applyOmitHeaders, shouldOmitConnection } = require('@useferret/common');
+const { isSameOrigin, DEFAULT_MAX_REDIRECTS } = require('@ferret-app/common').utils;
+const { applyOmitHeaders, shouldOmitConnection } = require('@ferret-app/common');
 const {
   getSentHeaders,
   applyOmitConnectionToAxiosConfig,
   handleNtlmRedirect,
   startHop,
   completeHop
-} = require('@useferret/requests');
+} = require('@ferret-app/requests');
 
 const redirectResponseCodes = [301, 302, 303, 307, 308];
 const METHOD_CHANGING_REDIRECTS = [301, 302, 303];

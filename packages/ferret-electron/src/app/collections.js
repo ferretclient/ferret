@@ -5,7 +5,7 @@ const Yup = require('yup');
 const { isDirectory, getCollectionStats, normalizeAndResolvePath } = require('../utils/filesystem');
 const { generateUidBasedOnHash } = require('../utils/common');
 const { transformFerretConfigAfterRead } = require('../utils/transformFerretConfig');
-const { parseCollection } = require('@useferret/filestore');
+const { parseCollection } = require('@ferret-app/filestore');
 
 // Track scratch collection paths (temp directories for workspace scratch requests)
 const scratchCollectionPaths = new Set();

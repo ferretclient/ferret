@@ -7,7 +7,7 @@ jest.mock('../../src/runner/interpolate-string', () => ({
   interpolateString: jest.fn((s) => s),
   interpolateObject: jest.fn((o) => o)
 }));
-jest.mock('@useferret/js', () => ({
+jest.mock('@ferret-app/js', () => ({
   ScriptRuntime: jest.fn(),
   TestRuntime: jest.fn(),
   VarsRuntime: jest.fn(),
@@ -47,7 +47,7 @@ jest.mock('../../src/utils/cookies', () => ({
 jest.mock('../../src/utils/form-data', () => ({
   createFormData: jest.fn()
 }));
-jest.mock('@useferret/requests', () => ({
+jest.mock('@ferret-app/requests', () => ({
   addDigestInterceptor: jest.fn(),
   applySentHeadersToRequest: jest.fn(),
   getHttpHttpsAgents: jest.fn(() => ({})),
@@ -56,7 +56,7 @@ jest.mock('@useferret/requests', () => ({
   transformProxyConfig: jest.fn(() => ({})),
   getOrCreateHttpsAgent: jest.fn(() => ({})),
   getOrCreateHttpAgent: jest.fn(() => ({})),
-  measureResponseTime: jest.requireActual('@useferret/requests').measureResponseTime
+  measureResponseTime: jest.requireActual('@ferret-app/requests').measureResponseTime
 }));
 jest.mock('../../src/utils/oauth2', () => ({
   getOAuth2Token: jest.fn(),
@@ -70,8 +70,8 @@ jest.mock('../../src/store/tokenStore', () => ({
 
 // Default: no prompt variables detected
 const mockExtractPromptVariables = jest.fn(() => []);
-jest.mock('@useferret/common', () => {
-  const ogCommon = jest.requireActual('@useferret/common');
+jest.mock('@ferret-app/common', () => {
+  const ogCommon = jest.requireActual('@ferret-app/common');
   const ogUtils = ogCommon.utils;
   return {
     shouldOmitConnection: ogCommon.shouldOmitConnection,
@@ -87,7 +87,7 @@ jest.mock('@useferret/common', () => {
   };
 });
 
-const { ScriptRuntime } = require('@useferret/js');
+const { ScriptRuntime } = require('@ferret-app/js');
 const { makeAxiosInstance } = require('../../src/utils/axios-instance');
 const prepareRequest = require('../../src/runner/prepare-request');
 const { runSingleRequest } = require('../../src/runner/run-single-request');

@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { generateHtmlReport } = require('@useferret/common/runner');
+const { generateHtmlReport } = require('@ferret-app/common/runner');
 const { CLI_VERSION } = require('../constants');
 
 const REPORT_SCRIPT_MODULES = ['vue/dist/vue.global.prod.js', 'naive-ui/dist/index.prod.js'];
@@ -29,7 +29,7 @@ const makeHtmlOutput = async (results, outputPath, runCompletionTime, environmen
 
   const htmlString = generateHtmlReport({
     runnerResults: runnerResults,
-    version: `useferret v${CLI_VERSION}`,
+    version: `ferret v${CLI_VERSION}`,
     environment: environment,
     runCompletionTime: runCompletionTime,
     inlineScripts: getInlineReportScripts()

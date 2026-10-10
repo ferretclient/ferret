@@ -1,4 +1,4 @@
-import { validatedEnvironmentName } from '@useferret/common/utils';
+import { validatedEnvironmentName } from '@ferret-app/common/utils';
 import { uuid } from '../common/index.js';
 import {
   isTypedValue,

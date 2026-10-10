@@ -1,5 +1,5 @@
 import { FerretError } from 'utils/common/error';
-import { openApiToFerret } from '@useferret/converters';
+import { openApiToFerret } from '@ferret-app/converters';
 
 export const convertOpenapiToFerret = (data, options = {}) => {
   try {
