@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { outdentString } from '@ferret-app/lang';
+import { outdentString } from '@useferret/lang';
 
 export interface RedactedBlock {
   token: string;

@@ -10,7 +10,7 @@ const {
   getOrCreateHttpAgent,
   resolveAgentsFromPac,
   PatchedHttpsProxyAgent
-} = require('@ferret-app/requests');
+} = require('@useferret/requests');
 const { preferencesUtil } = require('../store/preferences');
 
 const DEFAULT_PORTS = {

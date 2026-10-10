@@ -1,5 +1,5 @@
 const { describe, it, expect } = require('@jest/globals');
-const FerretRequest = require('@ferret-app/js/src/ferret-request');
+const FerretRequest = require('@useferret/js/src/ferret-request');
 const interpolateVars = require('../../src/ipc/network/interpolate-vars');
 
 const runFlow = (url, { pathParams = [], envVars = {} } = {}) => {

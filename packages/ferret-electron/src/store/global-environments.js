@@ -1,8 +1,8 @@
 const _ = require('lodash');
 const Store = require('electron-store');
-const { parseValueByDataType, valueToString } = require('@ferret-app/common/utils');
+const { parseValueByDataType, valueToString } = require('@useferret/common/utils');
 const { encryptStringSafe, decryptStringSafe } = require('../utils/encryption');
-const { environmentSchema } = require('@ferret-app/schema');
+const { environmentSchema } = require('@useferret/schema');
 const { posixifyPath } = require('../utils/filesystem');
 
 class GlobalEnvironmentsStore {

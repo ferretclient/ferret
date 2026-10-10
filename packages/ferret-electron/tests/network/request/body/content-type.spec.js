@@ -4,7 +4,7 @@ const os = require('os');
 const path = require('path');
 const { Readable } = require('stream');
 const { describe, it, expect, beforeAll, beforeEach, afterAll } = require('@jest/globals');
-const { isFormData } = require('@ferret-app/common').utils;
+const { isFormData } = require('@useferret/common').utils;
 
 // The app's settings stores write their files under userData while the network module loads.
 const mockUserDataPath = fs.mkdtempSync(path.join(os.tmpdir(), 'ferret-userdata-'));

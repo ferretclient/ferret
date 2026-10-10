@@ -9,7 +9,7 @@ import type {
   AuthOAuth1,
   AuthWsse
 } from '@opencollection/types/common/auth';
-import type { Auth as FerretAuth, AuthOauth1 as FerretAuthOauth1 } from '@ferret-app/schema-types/common/auth';
+import type { Auth as FerretAuth, AuthOauth1 as FerretAuthOauth1 } from '@useferret/schema-types/common/auth';
 import { isString } from '../../../utils';
 import { toOpenCollectionOAuth2, toFerretOAuth2 } from './auth-oauth2';
 

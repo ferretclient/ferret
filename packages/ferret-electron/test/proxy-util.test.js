@@ -12,8 +12,8 @@ const setupMocks = ({ pacDirectives = ['PROXY p.example:8080'] } = {}) => {
     }
   }));
 
-  // @ferret-app/requests — agent factories + pac resolver + shared resolveAgentsFromPac
-  jest.doMock('@ferret-app/requests', () => {
+  // @useferret/requests — agent factories + pac resolver + shared resolveAgentsFromPac
+  jest.doMock('@useferret/requests', () => {
     const getOrCreateHttpsAgent = jest.fn(() => ({ type: 'https-agent' }));
     const getOrCreateHttpAgent = jest.fn(() => ({ type: 'http-agent' }));
     const getPacResolver = jest.fn(async () => ({
@@ -71,7 +71,7 @@ describe('proxy-util', () => {
   test('setupProxyAgents: PAC PROXY directive sets http and https agents', async () => {
     setupMocks({ pacDirectives: ['PROXY p.example:8080', 'DIRECT'] });
     const { setupProxyAgents } = require('../src/utils/proxy-util');
-    const { getOrCreateHttpAgent, getOrCreateHttpsAgent } = require('@ferret-app/requests');
+    const { getOrCreateHttpAgent, getOrCreateHttpsAgent } = require('@useferret/requests');
 
     const requestConfig = { url: 'http://example.com/resource' };
     const timeline = [];
@@ -97,7 +97,7 @@ describe('proxy-util', () => {
   test('setupProxyAgents: PAC DIRECT directive bypasses proxy and uses fallback agent', async () => {
     setupMocks({ pacDirectives: ['DIRECT'] });
     const { setupProxyAgents } = require('../src/utils/proxy-util');
-    const { getOrCreateHttpAgent, getOrCreateHttpsAgent } = require('@ferret-app/requests');
+    const { getOrCreateHttpAgent, getOrCreateHttpsAgent } = require('@useferret/requests');
 
     const requestConfig = { url: 'http://example.com/resource' };
     const timeline = [];
@@ -123,7 +123,7 @@ describe('proxy-util', () => {
   test('setupProxyAgents: PAC SOCKS directive sets socks agents', async () => {
     setupMocks({ pacDirectives: ['SOCKS5 socks.example:1080'] });
     const { setupProxyAgents } = require('../src/utils/proxy-util');
-    const { getOrCreateHttpAgent, getOrCreateHttpsAgent } = require('@ferret-app/requests');
+    const { getOrCreateHttpAgent, getOrCreateHttpsAgent } = require('@useferret/requests');
 
     const requestConfig = { url: 'http://example.com/resource' };
     const timeline = [];
@@ -151,7 +151,7 @@ describe('proxy-util', () => {
     jest.doMock('../src/store/preferences', () => ({
       preferencesUtil: { isSslSessionCachingEnabled: () => false }
     }));
-    jest.doMock('@ferret-app/requests', () => ({
+    jest.doMock('@useferret/requests', () => ({
       getOrCreateHttpsAgent: jest.fn(() => ({ type: 'https-agent' })),
       getOrCreateHttpAgent: jest.fn(() => ({ type: 'http-agent' })),
       getPacResolver: jest.fn(async () => { throw new Error('PAC fetch timeout'); }),
@@ -161,7 +161,7 @@ describe('proxy-util', () => {
     }));
 
     const { setupProxyAgents } = require('../src/utils/proxy-util');
-    const { getOrCreateHttpAgent } = require('@ferret-app/requests');
+    const { getOrCreateHttpAgent } = require('@useferret/requests');
 
     const requestConfig = { url: 'http://example.com/resource' };
     const timeline = [];

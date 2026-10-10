@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const Store = require('electron-store');
-const { valueToString } = require('@ferret-app/common/utils');
+const { valueToString } = require('@useferret/common/utils');
 const { encryptStringSafe } = require('../utils/encryption');
 
 const posixifyPath = (p) => (p ? p.replace(/\\/g, '/') : p);

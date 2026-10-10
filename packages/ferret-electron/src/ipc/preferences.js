@@ -8,7 +8,7 @@ const { resolveDefaultLocation } = require('../utils/default-location');
 const onboardUser = require('../app/onboarding');
 const LastOpenedCollections = require('../store/last-opened-collections');
 const WindowStateStore = require('../store/window-state');
-const { clearAgentCache, clearPacCache } = require('@ferret-app/requests');
+const { clearAgentCache, clearPacCache } = require('@useferret/requests');
 
 const registerPreferencesIpc = (mainWindow) => {
   const lastOpenedCollections = new LastOpenedCollections();

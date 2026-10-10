@@ -1,4 +1,4 @@
-const REPOSITORY = 'jakahann/ferret-app';
+const REPOSITORY = 'useferret/ferret';
 const RELEASES_API_URL = `https://api.github.com/repos/${REPOSITORY}/releases?per_page=30`;
 const RELEASES_PAGE_URL = `https://github.com/${REPOSITORY}/releases`;
 const REQUEST_TIMEOUT_MS = 10000;

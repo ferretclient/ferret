@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
-const { runScriptInNodeVm } = require('@ferret-app/js');
+const { runScriptInNodeVm } = require('@useferret/js');
 const { parseFerFileMeta, wrapAndJoinScripts, mergeScripts, getEffectiveTagsByUid } = require('../../src/utils/collection');
 
 describe('parseFerFileMeta', () => {

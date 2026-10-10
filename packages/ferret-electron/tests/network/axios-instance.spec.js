@@ -32,7 +32,7 @@ jest.mock('../../src/utils/form-data', () => ({
 
 const http = require('http');
 const { AxiosHeaders } = require('axios');
-const { measureResponseTime, addDigestInterceptor } = require('@ferret-app/requests');
+const { measureResponseTime, addDigestInterceptor } = require('@useferret/requests');
 const { setupProxyAgents } = require('../../src/utils/proxy-util');
 const { makeAxiosInstance, completeOpenHop } = require('../../src/ipc/network/axios-instance');
 

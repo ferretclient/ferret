@@ -1,6 +1,6 @@
 const path = require('path');
 const { isFile, isDirectory } = require('./filesystem');
-const { transformProxyConfig } = require('@ferret-app/requests');
+const { transformProxyConfig } = require('@useferret/requests');
 
 function transformFerretConfigBeforeSave(ferretConfig) {
   if (ferretConfig && !ferretConfig.opencollection) {

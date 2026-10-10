@@ -11,8 +11,8 @@ const {
   stringifyFolderViaWorker,
   parseEnvironmentViaWorker,
   stringifyEnvironmentViaWorker
-} = require('@ferret-app/filestore');
-const { transformProxyConfig } = require('@ferret-app/requests');
+} = require('@useferret/filestore');
+const { transformProxyConfig } = require('@useferret/requests');
 const { getCollectionFormat, getCollectionStats, writeFile } = require('../utils/filesystem');
 const { openCollection } = require('../app/collections');
 const snapshotManager = require('../services/snapshot');

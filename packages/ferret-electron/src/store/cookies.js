@@ -1,5 +1,5 @@
 const Store = require('electron-store');
-const { cookies: cookiesModule } = require('@ferret-app/requests');
+const { cookies: cookiesModule } = require('@useferret/requests');
 const { cookieJar } = cookiesModule;
 const { Cookie } = require('tough-cookie');
 const { createCookieString } = cookiesModule;

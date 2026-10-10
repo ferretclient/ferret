@@ -1,7 +1,7 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { parseEnvironment } = require('@ferret-app/filestore');
+const { parseEnvironment } = require('@useferret/filestore');
 
 let mockGlobalEnvironments;
 let mockUserDataPath;

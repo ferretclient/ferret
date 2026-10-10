@@ -1,4 +1,4 @@
-const { parseRequestAndRedactBody, parseRequestViaWorker, DEFAULT_COLLECTION_FORMAT } = require('@ferret-app/filestore');
+const { parseRequestAndRedactBody, parseRequestViaWorker, DEFAULT_COLLECTION_FORMAT } = require('@useferret/filestore');
 
 /**
  * Parses a large FER request string by redacting body blocks, parsing the remainder,

@@ -1,5 +1,5 @@
 import * as YAML from 'yaml';
-import { convertBrunoScript, convertBrunoAppCode } from '@ferret-app/common';
+import { convertBrunoScript, convertBrunoAppCode } from '@useferret/common';
 
 /**
  * Bruno → Ferret conversion of individual collection files.

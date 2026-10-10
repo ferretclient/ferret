@@ -1,9 +1,9 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { walk, defaultClassify, resolveDenylist } = require('./mount');
-const { parseRequest, parseEnvironment, parseCollection } = require('@ferret-app/filestore');
-const { dotenvToJson } = require('@ferret-app/lang');
-const { parseValueByDataType } = require('@ferret-app/common/utils');
+const { parseRequest, parseEnvironment, parseCollection } = require('@useferret/filestore');
+const { dotenvToJson } = require('@useferret/lang');
+const { parseValueByDataType } = require('@useferret/common/utils');
 const EnvironmentSecretsStore = require('../store/env-secrets');
 const { decryptStringSafe } = require('./encryption');
 

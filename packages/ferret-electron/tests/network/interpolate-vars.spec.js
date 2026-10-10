@@ -1,5 +1,5 @@
 const interpolateVars = require('../../src/ipc/network/interpolate-vars');
-const { trackUnresolvedVariables } = require('@ferret-app/js');
+const { trackUnresolvedVariables } = require('@useferret/js');
 
 const FORM_URL_ENCODED_CONTENT_TYPES = [
   'application/x-www-form-urlencoded',

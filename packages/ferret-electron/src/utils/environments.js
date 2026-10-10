@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { parseEnvironment, stringifyEnvironment } = require('@ferret-app/filestore');
+const { parseEnvironment, stringifyEnvironment } = require('@useferret/filestore');
 const { writeFile, withFileLock } = require('./filesystem');
 
 /**
