@@ -16,6 +16,7 @@ Ferret started as a fork of [Bruno](https://github.com/usebruno/bruno) and is a 
 - **Check for updates** in Preferences → Support. It is off by default and asks permission before contacting GitHub.
 - **Third-party notices** in Preferences → Support → Legal, shipped with every installer.
 - Teal and azure default themes.
+- The Windows uninstaller asks whether to delete Ferret's data (default workspace, collections, settings). Silent uninstalls and updates keep it.
 
 ### Changed
 
