@@ -1,4 +1,4 @@
-import type { FolderRoot } from '@useferret/schema-types/collection/folder';
+import type { FolderRoot } from '@ferret-app/schema-types/collection/folder';
 import type { Folder, FolderInfo } from '@opencollection/types/collection/item';
 import type { Variable } from '@opencollection/types/common/variables';
 import type { Action } from '@opencollection/types/common/actions';
@@ -12,7 +12,7 @@ import { toOpenCollectionVariables } from './common/variables';
 import { toOpenCollectionActions } from './common/actions';
 import { toOpenCollectionScripts } from './common/scripts';
 import { stringifyYml } from './utils';
-import { HTTP_SCRIPT_KEYS, normalizeTags } from '@useferret/common';
+import { HTTP_SCRIPT_KEYS, normalizeTags } from '@ferret-app/common';
 
 const hasRequestDefaults = (folderRoot: FolderRoot): boolean => {
   const requestDefaults = folderRoot?.request;

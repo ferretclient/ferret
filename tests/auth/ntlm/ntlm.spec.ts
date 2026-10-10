@@ -8,7 +8,7 @@ import {
   waitForReadyPage
 } from '../../utils/page';
 import { buildTimelineHeaderLocators } from '../../utils/page/timeline-headers';
-import { startNtlmServer, type NtlmEndpoint } from '@useferret/tests/ntlm';
+import { startNtlmServer, type NtlmEndpoint } from '@ferret-app/tests/ntlm';
 
 const PASSWORD = 'Br!unoNtlm';
 

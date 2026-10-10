@@ -1,5 +1,5 @@
-import type { Item as FerretItem, HttpItemSettings as FerretHttpItemSettings } from '@useferret/schema-types/collection/item';
-import type { HttpRequest as FerretHttpRequest } from '@useferret/schema-types/requests/http';
+import type { Item as FerretItem, HttpItemSettings as FerretHttpItemSettings } from '@ferret-app/schema-types/collection/item';
+import type { HttpRequest as FerretHttpRequest } from '@ferret-app/schema-types/requests/http';
 import type { GraphQLRequest, GraphQLRequestSettings, GraphQLBody, GraphQLRequestInfo, GraphQLRequestDetails, GraphQLRequestRuntime } from '@opencollection/types/requests/graphql';
 import type { Auth } from '@opencollection/types/common/auth';
 import type { Scripts } from '@opencollection/types/common/scripts';
@@ -16,8 +16,8 @@ import { toOpenCollectionVariables } from '../common/variables';
 import { toOpenCollectionActions } from '../common/actions';
 import { toOpenCollectionScripts } from '../common/scripts';
 import { toOpenCollectionAssertions } from '../common/assertions';
-import { resolveTimeoutSetting, toMaxRedirects } from '@useferret/common/utils';
-import { HTTP_SCRIPT_KEYS } from '@useferret/common';
+import { resolveTimeoutSetting, toMaxRedirects } from '@ferret-app/common/utils';
+import { HTTP_SCRIPT_KEYS } from '@ferret-app/common';
 
 const stringifyGraphQLRequest = (item: FerretItem): string => {
   try {

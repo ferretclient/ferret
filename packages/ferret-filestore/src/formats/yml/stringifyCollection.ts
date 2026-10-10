@@ -5,7 +5,7 @@ import type { ClientCertificate, PemCertificate, Pkcs12Certificate } from '@open
 import type { Variable } from '@opencollection/types/common/variables';
 import type { Action } from '@opencollection/types/common/actions';
 import type { Scripts } from '@opencollection/types/common/scripts';
-import { normalizeOpenApiSyncConfigs } from '@useferret/common';
+import { normalizeOpenApiSyncConfigs } from '@ferret-app/common';
 import { stringifyYml } from './utils';
 import { toOpenCollectionAuth } from './common/auth';
 import { toOpenCollectionHttpHeaders } from './common/headers';
@@ -13,7 +13,7 @@ import { toOpenCollectionVariables } from './common/variables';
 import { toOpenCollectionActions } from './common/actions';
 import { toOpenCollectionScripts } from './common/scripts';
 import type { Auth } from '@opencollection/types/common/auth';
-import { HTTP_SCRIPT_KEYS } from '@useferret/common';
+import { HTTP_SCRIPT_KEYS } from '@ferret-app/common';
 
 const hasCollectionConfig = (ferretConfig: any): boolean => {
   // protobuf

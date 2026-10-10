@@ -1,4 +1,4 @@
-const { interpolate } = require('@useferret/common');
+const { interpolate } = require('@ferret-app/common');
 
 const interpolateString = (
   str,

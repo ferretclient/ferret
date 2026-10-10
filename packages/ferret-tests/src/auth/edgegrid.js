@@ -14,7 +14,7 @@
  * For base_url overrides, point the collection's base_url at this server's host so the signed
  * host matches the received host.
  *
- * This is an INDEPENDENT implementation of the spec (it does not import @useferret/requests),
+ * This is an INDEPENDENT implementation of the spec (it does not import @ferret-app/requests),
  * so it also guards against regressions in the shared signing helper.
  */
 

@@ -1,9 +1,9 @@
-import type { Environment as FerretEnvironment, EnvironmentVariable as FerretEnvironmentVariable } from '@useferret/schema-types/collection/environment';
+import type { Environment as FerretEnvironment, EnvironmentVariable as FerretEnvironmentVariable } from '@ferret-app/schema-types/collection/environment';
 import type { Environment } from '@opencollection/types/config/environments';
 import type { Variable, SecretVariable } from '@opencollection/types/common/variables';
 import { stringifyYml } from './utils';
 import { hasTypedMetadata, toOpenCollectionTypedValue, serializeVariableValue, type TypedVariableFields } from './common/datatype';
-import { validatedEnvironmentExtendsFrom } from '@useferret/common/utils';
+import { validatedEnvironmentExtendsFrom } from '@ferret-app/common/utils';
 
 export const toOpenCollectionEnvironmentVariables = (variables: FerretEnvironmentVariable[]): (Variable | SecretVariable)[] | undefined => {
   if (!variables?.length) {

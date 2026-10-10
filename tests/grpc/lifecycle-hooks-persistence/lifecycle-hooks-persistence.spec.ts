@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import yaml from 'js-yaml';
-import { ferToJsonV2 } from '@useferret/lang';
+import { ferToJsonV2 } from '@ferret-app/lang';
 import { expect, test } from '../../../playwright';
 import {
   closeAllTabs,

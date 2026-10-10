@@ -1,10 +1,10 @@
-import type { Environment as FerretEnvironment, EnvironmentVariable as FerretEnvironmentVariable } from '@useferret/schema-types/collection/environment';
+import type { Environment as FerretEnvironment, EnvironmentVariable as FerretEnvironmentVariable } from '@ferret-app/schema-types/collection/environment';
 import type { Environment } from '@opencollection/types/config/environments';
 import type { Variable, SecretVariable } from '@opencollection/types/common/variables';
 import { parseYml } from './utils';
 import { uuid, ensureString } from '../../utils';
 import { isTypedValue, fromOpenCollectionTypedValue } from './common/datatype';
-import { validatedEnvironmentExtendsFrom } from '@useferret/common/utils';
+import { validatedEnvironmentExtendsFrom } from '@ferret-app/common/utils';
 
 const isSecretVariable = (v: Variable | SecretVariable): v is SecretVariable => {
   return 'secret' in v && v.secret === true;

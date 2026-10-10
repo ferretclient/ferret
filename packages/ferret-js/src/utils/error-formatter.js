@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const YAML = require('yaml');
-const { SCRIPT_TYPES } = require('@useferret/common');
+const { SCRIPT_TYPES } = require('@ferret-app/common');
 const { NODEVM_SCRIPT_WRAPPER_OFFSET, QUICKJS_SCRIPT_WRAPPER_OFFSET } = require('./sandbox');
 
 const posixifyPath = (p) => (p ? p.replace(/\\/g, '/') : p);

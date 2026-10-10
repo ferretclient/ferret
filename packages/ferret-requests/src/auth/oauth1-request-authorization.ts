@@ -4,7 +4,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import nodePath from 'node:path';
-import { getMediaType } from '@useferret/common/utils';
+import { getMediaType } from '@ferret-app/common/utils';
 
 // Private key file cache: avoids re-reading the same file on every request.
 // Keyed by absolute path; invalidated when the file's mtime changes.

@@ -1,5 +1,5 @@
 import { parseRequest, stringifyRequest } from './index';
-import { DEFAULT_MAX_REDIRECTS } from '@useferret/common/utils';
+import { DEFAULT_MAX_REDIRECTS } from '@ferret-app/common/utils';
 import type { CollectionFormat } from './types';
 
 const FORMATS: CollectionFormat[] = ['fer', 'yml'];
