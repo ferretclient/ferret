@@ -4,7 +4,7 @@ const os = require('os');
 const path = require('path');
 const http = require('http');
 const yaml = require('js-yaml');
-const { ferToEnvJsonV2 } = require('@ferret-app/lang');
+const { ferToEnvJsonV2 } = require('@useferret/lang');
 const { runCli } = require('./helpers/run-cli');
 
 const writeFixtureFile = (filePath, content) => {

@@ -4,7 +4,7 @@ const { pathToFileURL, fileURLToPath } = require('url');
 const chalk = require('chalk');
 const jsyaml = require('js-yaml');
 const axios = require('axios');
-const { openApiToFerret, wsdlToFerret } = require('@ferret-app/converters');
+const { openApiToFerret, wsdlToFerret } = require('@useferret/converters');
 const { exists, isDirectory, sanitizeName, canonicalPath } = require('../utils/filesystem');
 const { createCollectionFromFerretObject } = require('../utils/collection');
 

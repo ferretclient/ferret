@@ -2,7 +2,7 @@ import cookie from 'cookie';
 import URL from 'url';
 import { parse } from 'shell-quote';
 import { isEmpty } from 'lodash';
-import { parseQueryParams } from '@ferret-app/common/utils';
+import { parseQueryParams } from '@useferret/common/utils';
 
 /**
  * Flag definitions - maps flag names to their states and actions

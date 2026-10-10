@@ -6,7 +6,7 @@ import {
 } from 'utils/collections';
 import { resolveMockServerWorkspacePath } from 'utils/mock-server/mock-server-instances';
 import { validateName, validateNameError } from 'utils/common/regex';
-import { extractMockRoutePath, getMockResponseRouteKey } from '@ferret-app/common/utils';
+import { extractMockRoutePath, getMockResponseRouteKey } from '@useferret/common/utils';
 
 export { extractMockRoutePath as extractMockResponseRoutePath, getMockResponseRouteKey };
 

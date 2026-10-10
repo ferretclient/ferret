@@ -2,8 +2,8 @@ const _ = require('lodash');
 const {
   parseRequest: _parseRequest,
   parseCollection: _parseCollection
-} = require('@ferret-app/filestore');
-const { toVariablesMap } = require('@ferret-app/common').utils;
+} = require('@useferret/filestore');
+const { toVariablesMap } = require('@useferret/common').utils;
 
 const collectionFerToJson = (fer) => {
   try {

@@ -1,6 +1,6 @@
-// Name/filename helpers are the single shared implementation in @ferret-app/common.
+// Name/filename helpers are the single shared implementation in @useferret/common.
 // Re-exported here so existing `utils/common/regex` import paths keep working.
-export { sanitizeName, validateName, validateNameError } from '@ferret-app/common/utils';
+export { sanitizeName, validateName, validateNameError } from '@useferret/common/utils';
 
 export const variableNameRegex = /^[\w-.]*$/;
 

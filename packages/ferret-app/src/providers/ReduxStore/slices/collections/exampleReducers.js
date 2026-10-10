@@ -1,5 +1,5 @@
 import { find, map, filter, cloneDeep, each, concat } from 'lodash';
-import { parseQueryParams, buildQueryString as stringifyQueryParams } from '@ferret-app/common/utils';
+import { parseQueryParams, buildQueryString as stringifyQueryParams } from '@useferret/common/utils';
 import { uuid } from 'utils/common';
 import { findItemForExampleEditor,
   getMockResponseUidFromItemUid,

@@ -1,5 +1,5 @@
 import jsyaml from 'js-yaml';
-import { interpolate } from '@ferret-app/common';
+import { interpolate } from '@useferret/common';
 import { isValidUrl } from 'utils/url/index';
 const xml2js = require('xml2js');
 

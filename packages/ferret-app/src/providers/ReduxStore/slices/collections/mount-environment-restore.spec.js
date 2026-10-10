@@ -3,7 +3,7 @@ const os = require('os');
 const { describe, it, expect } = require('@jest/globals');
 const { configureStore } = require('@reduxjs/toolkit');
 
-jest.mock('@ferret-app/schema', () => ({
+jest.mock('@useferret/schema', () => ({
   collectionSchema: { validate: () => Promise.resolve() },
   environmentSchema: { validate: () => Promise.resolve() },
   itemSchema: { validate: () => Promise.resolve() }

@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
-const { parseEnvironment } = require('@ferret-app/filestore');
+const { parseEnvironment } = require('@useferret/filestore');
 const { getEnvVars } = require('../utils/fer');
-const { resolveEnvironmentInheritance: resolveEnvironmentInheritanceCommon, isOptionsVariable } = require('@ferret-app/common').utils;
+const { resolveEnvironmentInheritance: resolveEnvironmentInheritanceCommon, isOptionsVariable } = require('@useferret/common').utils;
 
 /**
  * Parse a Ferret JSON environment object and normalize variables

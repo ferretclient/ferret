@@ -1,6 +1,6 @@
 const { version } = require('../package.json');
 
-const CLI_EPILOGUE = `Documentation: https://github.com/jakahann/ferret-app/blob/main/docs/cli.md (v${version})`;
+const CLI_EPILOGUE = `Documentation: https://github.com/useferret/ferret/blob/main/docs/cli.md (v${version})`;
 const CLI_VERSION = version;
 const COLORS = {
   ORANGE: '#FFA500'

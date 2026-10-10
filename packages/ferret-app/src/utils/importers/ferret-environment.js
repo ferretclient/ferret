@@ -1,6 +1,6 @@
 import { FerretError } from 'utils/common/error';
 import { buildEnvVariable, coerceEnvColor, coerceEnvName, dedupeImportedSecrets } from 'utils/environments';
-import { validatedEnvironmentExtendsFrom } from '@ferret-app/common/utils';
+import { validatedEnvironmentExtendsFrom } from '@useferret/common/utils';
 
 const validateFerretEnvironment = (env, filePath, fileName) => {
   if (!env || typeof env !== 'object') {

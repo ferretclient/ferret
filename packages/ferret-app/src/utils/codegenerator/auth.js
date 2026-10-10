@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 import { find } from 'lodash';
-import { interpolate } from '@ferret-app/common';
+import { interpolate } from '@useferret/common';
 import { getAllVariables } from 'utils/collections/index';
 
 export const getAuthHeaders = (requestAuth, collection = null, item = null) => {

@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const mockGenerateHtmlReport = jest.fn(() => '<html>Mock HTML</html>');
 
-jest.mock('@ferret-app/common/runner', () => ({
+jest.mock('@useferret/common/runner', () => ({
   generateHtmlReport: mockGenerateHtmlReport
 }));
 

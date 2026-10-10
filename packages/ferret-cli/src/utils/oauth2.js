@@ -1,4 +1,4 @@
-const { getOAuth2Token: _getOAuth2Token } = require('@ferret-app/requests');
+const { getOAuth2Token: _getOAuth2Token } = require('@useferret/requests');
 const tokenStore = require('../store/tokenStore');
 const { getOptions } = require('./fer');
 

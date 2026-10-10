@@ -1,6 +1,6 @@
 import * as FileSaver from 'file-saver';
 import jsyaml from 'js-yaml';
-import { ferretToOpenCollection } from '@ferret-app/converters';
+import { ferretToOpenCollection } from '@useferret/converters';
 import { sanitizeName } from 'utils/common/regex';
 import { filterTransientItems } from 'utils/collections';
 

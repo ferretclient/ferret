@@ -1,4 +1,4 @@
-import { mockDataFunctions } from '@ferret-app/common';
+import { mockDataFunctions } from '@useferret/common';
 
 const MOCK_FUNCTION_SUGGESTIONS = Object.keys(mockDataFunctions).map((key) => `$${key}`);
 

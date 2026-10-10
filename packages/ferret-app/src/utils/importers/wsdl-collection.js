@@ -1,5 +1,5 @@
 import { FerretError } from 'utils/common/error';
-import { wsdlToFerret } from '@ferret-app/converters';
+import { wsdlToFerret } from '@useferret/converters';
 
 const isWSDLCollection = (data) => {
   // Check if data is a string (WSDL content)

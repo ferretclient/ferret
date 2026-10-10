@@ -1,6 +1,6 @@
 const yargs = require('yargs');
 const chalk = require('chalk');
-const { initializeShellEnv } = require('@ferret-app/requests');
+const { initializeShellEnv } = require('@useferret/requests');
 
 const { CLI_EPILOGUE, CLI_VERSION } = require('./constants');
 

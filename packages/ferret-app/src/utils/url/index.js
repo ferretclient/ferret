@@ -1,5 +1,5 @@
-import { interpolate } from '@ferret-app/common';
-import { DEFAULT_SCHEME, hasExplicitScheme } from '@ferret-app/common/utils';
+import { interpolate } from '@useferret/common';
+import { DEFAULT_SCHEME, hasExplicitScheme } from '@useferret/common/utils';
 
 const hasLength = (str) => {
   if (!str || !str.length) {

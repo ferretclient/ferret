@@ -1,4 +1,4 @@
-import { mockDataFunctions } from '@ferret-app/common';
+import { mockDataFunctions } from '@useferret/common';
 import { GRPC_API_HINTS } from 'utils/codemirror/grpcAutocompleteHints';
 
 const CodeMirror = require('codemirror');

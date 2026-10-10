@@ -1,5 +1,5 @@
 import { FerretError } from 'utils/common/error';
-import { insomniaToFerret } from '@ferret-app/converters';
+import { insomniaToFerret } from '@useferret/converters';
 
 export const convertInsomniaToFerret = (data) => {
   try {

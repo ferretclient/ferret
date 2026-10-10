@@ -6,12 +6,12 @@ import filter from 'lodash/filter';
 import cloneDeep from 'lodash/cloneDeep';
 import { uuid } from 'utils/common';
 import { isItemARequest } from 'utils/collections';
-import { collectionSchema } from '@ferret-app/schema';
+import { collectionSchema } from '@useferret/schema';
 import { FerretError } from 'utils/common/error';
 import { isOpenApiSpec } from './openapi-collection';
 import { isPostmanCollection } from './postman-collection';
 import { isInsomniaCollection } from './insomnia-collection';
-import { valueToString } from '@ferret-app/common/utils';
+import { valueToString } from '@useferret/common/utils';
 
 export const validateSchema = async (collections = []) => {
   collections = Array.isArray(collections) ? collections : [collections];

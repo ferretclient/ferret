@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { uuid } from 'utils/common/index';
-import { environmentSchema } from '@ferret-app/schema';
-import { getDataTypeFromValue, parseValueByDataType, resolveEnvironmentInheritance } from '@ferret-app/common/utils';
+import { environmentSchema } from '@useferret/schema';
+import { getDataTypeFromValue, parseValueByDataType, resolveEnvironmentInheritance } from '@useferret/common/utils';
 import { cloneDeep, isEqual } from 'lodash';
 import { applyScriptEnvVars, getScriptModifiedKeys, writesCollidingSecrets, DUPLICATE_SECRET_NAMES_ERROR } from 'utils/environments';
 import { getInvalidVariableNames, invalidVariableNamesError } from 'utils/common/variables';

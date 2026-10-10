@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { generateHtmlReport } = require('@ferret-app/common/runner');
+const { generateHtmlReport } = require('@useferret/common/runner');
 const { CLI_VERSION } = require('../constants');
 
 const REPORT_SCRIPT_MODULES = ['vue/dist/vue.global.prod.js', 'naive-ui/dist/index.prod.js'];
