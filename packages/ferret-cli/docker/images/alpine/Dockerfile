@@ -1,17 +1,17 @@
 FROM node:22-alpine
 
-LABEL maintainer="Ferret (https://github.com/jakahann/ferret-app)"
+LABEL maintainer="Ferret (https://github.com/useferret/ferret)"
 
 ARG FERRET_VERSION
 ENV FERRET_VERSION=${FERRET_VERSION}
 
-LABEL org.opencontainers.image.source="https://github.com/jakahann/ferret-app"
+LABEL org.opencontainers.image.source="https://github.com/useferret/ferret"
 LABEL org.opencontainers.image.description="Ferret CLI - Open source IDE for exploring and testing APIs"
 LABEL org.opencontainers.image.licenses="MIT"
 LABEL org.opencontainers.image.title="Ferret CLI"
 LABEL org.opencontainers.image.version="${FERRET_VERSION}"
-LABEL org.opencontainers.image.url="https://github.com/jakahann/ferret-app"
-LABEL org.opencontainers.image.documentation="https://github.com/jakahann/ferret-app/blob/main/docs/cli.md"
+LABEL org.opencontainers.image.url="https://github.com/useferret/ferret"
+LABEL org.opencontainers.image.documentation="https://github.com/useferret/ferret/blob/main/docs/cli.md"
 
 ENV LC_ALL="en_US.UTF-8" \
     LANG="en_US.UTF-8" \

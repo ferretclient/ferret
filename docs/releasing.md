@@ -17,7 +17,7 @@ npm run version:set 0.2.0
 npm install --legacy-peer-deps
 ```
 
-`version:set` updates all `packages/*/package.json` files and the `@ferret-app/*` dependencies that point at them.
+`version:set` updates all `packages/*/package.json` files and the `@useferret/*` dependencies that point at them.
 
 ## The 1.0 checklist
 
@@ -27,7 +27,7 @@ Tag `1.0.0` only when all of these are true:
 - [ ] The end-to-end suite passes, apart from tests that need proxy host names (see below).
 - [ ] A packaged installer (not just `npm run dev`) was installed and used on **each** of Windows, macOS and Linux.
 - [ ] Installers are **signed** (Windows code-signing certificate; Apple Developer ID with notarization), so users do not get security warnings.
-- [ ] The repository is public, so the documentation links, issue tracker and private vulnerability reporting (**Settings → Code security → Private vulnerability reporting**) work for everyone. If you later buy a domain, update the links listed in `git grep "jakahann/ferret-app"`.
+- [ ] The repository is public, so the documentation links, issue tracker and private vulnerability reporting (**Settings → Code security → Private vulnerability reporting**) work for everyone. If you later buy a domain, update the links listed in `git grep "useferret/ferret"`.
 - [ ] You have decided what is part of the stable promise: the `.fer` and `.yml` file formats, the `fer.*` script API, and the CLI options.
 - [ ] Anything you do not want to support is removed or clearly marked experimental.
 
@@ -56,10 +56,10 @@ The steps for the first public release (`0.2.0`, a pre-release). Steps marked *y
 **Package managers** (after the release exists)
 
 - [ ] Download `SHA256SUMS.txt` from the release and run `node scripts/render-package-manifests.js 0.2.0 SHA256SUMS.txt`. It writes a Homebrew cask and winget manifests to `dist/packaging/`.
-- [ ] *you* Homebrew: create a repository `jakahann/homebrew-tap` from `packaging/homebrew-tap/` (its README is the install guide), copy `dist/packaging/homebrew/ferret-app.rb` over `Casks/ferret-app.rb` (the committed one has placeholder checksums), then test with `brew install --cask jakahann/tap/ferret-app`.
-- [ ] *you* winget: check the three files in `dist/packaging/winget/` with `winget validate`, and submit them as a pull request to `microsoft/winget-pkgs` under `manifests/j/jakahann/FerretApp/0.2.0/`.
+- [ ] *you* Homebrew: create a repository `useferret/homebrew-tap` from `packaging/homebrew-tap/` (its README is the install guide), copy `dist/packaging/homebrew/ferret.rb` over `Casks/ferret.rb` (the committed one has placeholder checksums), then test with `brew install --cask useferret/tap/ferret`.
+- [ ] *you* winget: check the three files in `dist/packaging/winget/` with `winget validate`, and submit them as a pull request to `microsoft/winget-pkgs` under `manifests/u/useferret/Ferret/0.2.0/`.
 - [ ] *you* Linux: the AppImage, `.deb` and `.rpm` come with the release. An AUR package (`ferret-app-bin`), Flathub and Snap can follow later.
-- [ ] *you* npm: claim `ferret-app` by publishing the self-contained tarball from `node scripts/bundle-cli.js`, then publish the Docker image to `ghcr.io/jakahann/ferret-app`.
+- [ ] *you* npm: claim `ferret-app` by publishing the self-contained tarball from `node scripts/bundle-cli.js`, then publish the Docker image to `ghcr.io/useferret/ferret`.
 
 **Later**
 
@@ -122,33 +122,35 @@ If you cannot use the workflow, build on each operating system with `npm run dis
 
 ## Names in package registries
 
-**Ferret** is the brand name; the repository and every registry name use `ferret-app`. None of these exist yet; they are the planned names.
+**Ferret** is the brand name; the repository is `useferret/ferret` and the command-line package is `ferret-app` (the bare `ferret` is taken on npm). None of these exist yet; they are the planned names.
 
 | Where | Name | Notes |
 | --- | --- | --- |
-| GitHub | `jakahann/ferret-app` | the repository |
+| GitHub | `useferret/ferret` | the repository |
 | npm | `ferret-app` | the command-line tool; installs the `fer` command. `node scripts/bundle-cli.js` packs it with the internal packages into one self-contained tarball |
-| Docker | `ghcr.io/jakahann/ferret-app` | the CLI image; Docker Hub is not planned |
-| Homebrew | cask `ferret-app` | in a personal tap first, for example `jakahann/tap` |
-| winget | `jakahann.FerretApp` | needs a public release and the installer's sha256 |
+| Docker | `ghcr.io/useferret/ferret` | the CLI image; Docker Hub is not planned |
+| Homebrew | cask `ferret` | in the organization's own tap, `useferret/tap` |
+| winget | `useferret.Ferret` | needs a public release and the installer's sha256 |
 
-## Changing the GitHub owner
+## Changing the GitHub owner or repository name
 
-The owner of the repository (`jakahann` today) appears in links, Docker image paths, the Homebrew tap, the winget identifier, copyright lines and `CODEOWNERS`. `project.json` is the single place that says who it is:
+Where the project lives on GitHub (`useferret/ferret` today) appears in links, Docker image paths, the Homebrew tap and the winget identifier. `project.json` is the single place that says where it is:
 
 ```json
-{ "owner": "jakahann", "githubId": 36445378, "appId": "io.github.ferret-app.ferret" }
+{ "owner": "useferret", "repository": "ferret", "appId": "io.github.useferret.ferret" }
 ```
 
 `appId` is the app's identity on macOS, Windows and Linux. Auto-update, user data and notarization all key off it, and no domain is involved. It is **never changed once a release exists** (installed copies would stop updating and lose their settings), so `npm run set-owner` leaves it alone and `npm test` checks that every file spelling it out agrees with `project.json`.
 
-To move the project to another GitHub username, or to an organization:
+The maintainer's own handle (`@jakahann` in `CODEOWNERS` and the license lines, and the no-reply commit address) is a person, not a place, so it is not part of this and is never rewritten.
 
-1. Rename the account (or transfer the repository) on GitHub first.
-2. Edit `owner` in `project.json`. `githubId` is the numeric id shown in **Settings → Emails** in the no-reply address (`<id>+name@users.noreply.github.com`); for an organization, use your own account's id, since the address is for commit authorship.
-3. Run `npm run set-owner`. It rewrites every file that mentions the old owner (it reads the old one from `homepage` in `package.json`), using lower-case where Docker and Homebrew require it.
-4. Run the three commands it prints: update the git remote, set `user.email`, and, only if older commits should show the new address, rewrite their author (see below).
-5. `npm test` fails if any tracked file still names a different owner, so a missed reference shows up before a release.
+To move the project to another GitHub user or organization, or to rename the repository:
+
+1. Transfer or rename the repository on GitHub first.
+2. Edit `owner` and `repository` in `project.json`.
+3. Run `npm run set-owner`. It rewrites every file that mentions the old location (it reads the old one from `homepage` in `package.json`), using lower-case where Docker and Homebrew require it.
+4. Run the command it prints to update the git remote.
+5. `npm test` fails if any tracked file still names a different location, so a missed reference shows up before a release.
 
 Do this **before** the first release. Anything already shipped (an installer's update check, a published Docker image or Homebrew cask) keeps pointing at the old name.
 

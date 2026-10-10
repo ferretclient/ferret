@@ -15,7 +15,7 @@ const SHIPPED = ['packages/ferret-electron', 'packages/ferret-app', 'packages/fe
 const MAX_TEXT_BYTES = 200 * 1024;
 
 const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
-const isWorkspacePackage = (name) => name.startsWith('@ferret-app/') || name === 'ferret';
+const isWorkspacePackage = (name) => name.startsWith('@useferret/') || name === 'ferret';
 
 const findPackageDir = (fromDir, name) => {
   for (let dir = fromDir; ; dir = path.dirname(dir)) {

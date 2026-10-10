@@ -2,8 +2,8 @@
 # Smoke tests for Ferret CLI Docker image
 # Usage: ./smoke-test.sh <image> [collection-abs-path] [run-target] [env-name]
 # Examples:
-#   ./smoke-test.sh ferret-app:alpine
-#   ./smoke-test.sh ferret-app:alpine /abs/path/to/collection echo Prod
+#   ./smoke-test.sh ferret:alpine
+#   ./smoke-test.sh ferret:alpine /abs/path/to/collection echo Prod
 
 set -e
 

@@ -3,6 +3,10 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { parseChecksums, renderCask, renderWinget, renderAll, assetName } = require('./render-package-manifests');
+const { pascalCase } = require('./set-project-owner');
+
+const { owner, repository } = require('../project.json');
+const PACKAGE = `${owner}.${pascalCase(repository)}`;
 
 const HASH = (character) => character.repeat(64);
 
@@ -26,7 +30,7 @@ test('parseChecksums reads text and binary mode lines and ignores everything els
 test('the Homebrew cask carries the version and a checksum per architecture', () => {
   const cask = renderCask({ version: '0.2.0', sums: parseChecksums(CHECKSUMS) });
 
-  assert.match(cask, /^cask "ferret-app" do/);
+  assert.match(cask, /^cask "ferret" do/);
   assert.match(cask, /version "0\.2\.0"/);
   assert.ok(cask.includes(`sha256 arm:   "${HASH('a')}"`));
   assert.ok(cask.includes(`intel: "${HASH('b')}"`));
@@ -39,16 +43,16 @@ test('winget gets three manifests with upper-case checksums and the release URLs
   const files = renderWinget({ version: '0.2.0', sums: parseChecksums(CHECKSUMS), releaseDate: '2026-10-11' });
 
   assert.deepEqual(Object.keys(files), [
-    'jakahann.FerretApp.yaml',
-    'jakahann.FerretApp.installer.yaml',
-    'jakahann.FerretApp.locale.en-US.yaml'
+    `${PACKAGE}.yaml`,
+    `${PACKAGE}.installer.yaml`,
+    `${PACKAGE}.locale.en-US.yaml`
   ]);
-  const installer = files['jakahann.FerretApp.installer.yaml'];
+  const installer = files[`${PACKAGE}.installer.yaml`];
   assert.ok(installer.includes(`InstallerSha256: ${HASH('c').toUpperCase()}`));
-  assert.ok(installer.includes('https://github.com/jakahann/ferret-app/releases/download/v0.2.0/ferret_0.2.0_x64_win.exe'));
+  assert.ok(installer.includes(`https://github.com/${owner}/${repository}/releases/download/v0.2.0/ferret_0.2.0_x64_win.exe`));
   assert.match(installer, /InstallerType: nullsoft/);
   assert.match(installer, /ReleaseDate: 2026-10-11/);
-  assert.match(files['jakahann.FerretApp.locale.en-US.yaml'], /License: MIT/);
+  assert.match(files[`${PACKAGE}.locale.en-US.yaml`], /License: MIT/);
 });
 
 test('rendering stops with a clear message when a release file is missing from the checksums', () => {

@@ -11,12 +11,13 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const { appId: APP_ID } = require('../project.json');
+const { owner: OWNER, repository: REPO_NAME, appId: APP_ID } = require('../project.json');
+const { pascalCase } = require('./set-project-owner');
 
-const REPOSITORY = 'jakahann/ferret-app';
+const REPOSITORY = `${OWNER}/${REPO_NAME}`;
 const RELEASE_URL = (version, file) => `https://github.com/${REPOSITORY}/releases/download/v${version}/${file}`;
 const WINGET_MANIFEST_VERSION = '1.6.0';
-const WINGET_IDENTIFIER = 'jakahann.FerretApp';
+const WINGET_IDENTIFIER = `${OWNER}.${pascalCase(REPO_NAME)}`;
 const DESCRIPTION = 'Offline API client for exploring and testing APIs';
 
 // `sha256sum` writes "<hash>  <file>" (or "<hash> *<file>" in binary mode).
@@ -44,7 +45,7 @@ const renderCask = ({ version, sums }) => {
   const arm = requireChecksum(sums, assetName(version, 'arm64', 'mac', 'dmg'));
   const intel = requireChecksum(sums, assetName(version, 'x64', 'mac', 'dmg'));
 
-  return `cask "ferret-app" do
+  return `cask "ferret" do
   arch arm: "arm64", intel: "x64"
 
   version "${version}"
@@ -101,8 +102,8 @@ Installers:
 ${footer('installer')}`,
     [`${WINGET_IDENTIFIER}.locale.en-US.yaml`]: `${header}
 PackageLocale: en-US
-Publisher: jakahann
-PublisherUrl: https://github.com/jakahann
+Publisher: ${OWNER}
+PublisherUrl: https://github.com/${OWNER}
 PackageName: Ferret
 PackageUrl: https://github.com/${REPOSITORY}
 License: MIT
@@ -125,7 +126,7 @@ const renderAll = ({ version, checksumsText, releaseDate }) => {
   }
   const sums = parseChecksums(checksumsText);
   return {
-    'homebrew/ferret-app.rb': renderCask({ version, sums }),
+    'homebrew/ferret.rb': renderCask({ version, sums }),
     ...Object.fromEntries(Object.entries(renderWinget({ version, sums, releaseDate })).map(([name, content]) => [`winget/${name}`, content]))
   };
 };

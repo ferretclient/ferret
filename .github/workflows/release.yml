@@ -2,7 +2,8 @@
 #
 # Runs ONLY when a version tag (v1.2.3) is pushed, or when started by hand from the Actions tab.
 # It never runs on ordinary pushes or pull requests, because macOS minutes cost ten times as much
-# as Linux minutes. Tests are run locally before tagging (see docs/releasing.md).
+# as Linux minutes. Tests are run locally before tagging (see docs/releasing.md). Every job has a
+# timeout so a hung build cannot use up the monthly minutes.
 name: Release
 
 on:
@@ -33,6 +34,7 @@ jobs:
   check-version:
     name: Tag matches package version
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -49,6 +51,7 @@ jobs:
     name: Build ${{ matrix.label }}
     needs: check-version
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
@@ -106,6 +109,7 @@ jobs:
     name: Publish release
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/download-artifact@v4
         with:

@@ -44,6 +44,10 @@ Notes on how it behaves:
 - Actions permissions: **Allow actions created by GitHub** (the release workflow only uses `actions/*`).
 - Fork pull request workflows: **Require approval for all outside collaborators**. No workflow runs on pull requests today, but this keeps it safe if one is added.
 - Workflow permissions: **Read repository contents permission**. The release workflow asks for `contents: write` itself.
+- **Spending limit**: **Settings → Billing and licensing → Budgets and alerts**, set the Actions budget to **$0** and stop usage when it is reached. A public repository's standard runners are free; this makes sure nothing can ever be billed to you.
+- **What can start a workflow**: only a `v*` tag push or a manual run from the Actions tab, both of which need write access, and the tag ruleset limits who can create those tags. Pull requests, forks, issues, comments and schedules start nothing.
+- **Dependabot**: leave version updates off (there is no `dependabot.yml`) and **Dependabot security updates** off, so no bot opens pull requests on its own. Alerts stay on and only notify you.
+- Every job in the release workflow has a `timeout-minutes`, so a hung build stops instead of running for hours.
 - **Secrets**: signing keys (`CSC_LINK`, `APPLE_*`; see [Releasing](releasing.md#code-signing)) go in repository secrets, never in files. Workflows started from a fork cannot read them.
 
 ## 5. People and accounts

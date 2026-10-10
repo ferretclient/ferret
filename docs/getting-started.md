@@ -22,8 +22,8 @@ Check it with `node -v` (it should print `v22.x`).
 ## 2. Clone and set up
 
 ```bash
-git clone https://github.com/jakahann/ferret-app.git
-cd ferret-app
+git clone https://github.com/useferret/ferret.git
+cd ferret
 
 # macOS / Linux with nvm: use the version from .nvmrc
 nvm use
@@ -40,7 +40,7 @@ npm run setup
 4. builds the shared packages that the app and CLI consume (`graphql-docs`, `ferret-query`, `ferret-common`, `ferret-converters`, `ferret-requests`, `schema-types`, `ferret-filestore`, `ferret-sqlite`),
 5. bundles the JavaScript sandbox libraries used by scripts.
 
-> The repository root is named `ferret-app` when cloned from GitHub; the commands are the same wherever you put it.
+> The repository root is named `ferret` when cloned from GitHub; the commands are the same wherever you put it.
 
 ## 3. Run the app
 
