@@ -116,6 +116,8 @@ See [security.md](security.md) for how to report a vulnerability.
 
 ## License
 
-[MIT](license.md)
+[MIT](license.md). The code is free to use, modify and redistribute under that license.
 
 Ferret started as a fork of [Bruno](https://github.com/usebruno/bruno) by Anoop M D, Anusree P S and contributors, which is also MIT-licensed. Their copyright notice is kept in the license file next to ours.
+
+**Branding is not part of the license.** The Ferret name and logo are not covered by the MIT license. Please use your own name and logo for forks, and don't suggest your version is the official Ferret. Saying that a project is "based on Ferret" is welcome. More in [assets/README.md](assets/README.md).
