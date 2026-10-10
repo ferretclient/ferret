@@ -109,6 +109,8 @@ Ferret imports Bruno collections: a collection folder (`.bru` or YAML), a folder
 
 Contributions are welcome. Start with the [contributing guide](contributing.md), which explains the project layout, how to run and test your changes, and how to open a pull request. Bugs and feature requests go in [GitHub issues](https://github.com/jakahann/ferret-app/issues).
 
+The `main` branch is protected, so every change, including the maintainer's, goes through a pull request from a branch or fork. See [Repository settings](docs/repository-settings.md).
+
 There is no hosted CI. Checks run locally: linting on commit, the unit tests on push, and `npm run check` any time.
 
 ## Security

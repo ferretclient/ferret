@@ -39,7 +39,7 @@ The steps for the first public release (`0.2.0`, a pre-release). Steps marked *y
 
 - [ ] *you* Search for the name "Ferret" in trademark registers (WIPO Global Brand Database, USPTO, EUIPO) for software in your region. EUIPO (digital products) found no match for "ferret" or "ferret-app"; WIPO and USPTO are still to do. The MIT license covers the code, not the name or the logo.
 - [ ] `npm run check` passes and `THIRD_PARTY_NOTICES.md` is current (`npm run licenses`).
-- [ ] *you* Make the repository public, then enable **Settings → Code security → Private vulnerability reporting**.
+- [ ] *you* Import the two rulesets in `.github/rulesets/` and apply the settings in [Repository settings](repository-settings.md), then make the repository public and enable **Settings → Code security → Private vulnerability reporting**.
 
 **Dry run**
 

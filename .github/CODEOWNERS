@@ -1,0 +1,12 @@
+# Every change needs a review from the maintainer before it can be merged into main.
+# The paths below are listed on their own because they decide what gets built, signed and published.
+*                        @jakahann
+/.github/                @jakahann
+/.husky/                 @jakahann
+/scripts/                @jakahann
+/packaging/              @jakahann
+/packages/ferret-electron/electron-builder-config.js @jakahann
+/packages/ferret-electron/notarize.js                @jakahann
+/license.md              @jakahann
+/security.md             @jakahann
+/THIRD_PARTY_NOTICES.md  @jakahann

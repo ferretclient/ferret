@@ -179,6 +179,18 @@ npx playwright test tests/history --project=default
 
 The suite launches the real Electron app and needs the UI dev server (port `3000`, or `FERRET_DEV_PORT`) and the test server (port `8081`); Playwright starts both for you. The tests only talk to `localhost`, apart from the proxy specs under `tests/proxy`, which need proxy host names that exist only on a hosted test network and are expected to fail locally.
 
+### Opening a pull request
+
+The `main` branch is protected: nobody pushes to it directly, including the maintainer. Every change comes in through a pull request.
+
+1. Fork the repository and create a branch from `main` (`git switch -c fix-short-description`).
+2. Make one focused change. Run `npm run check`.
+3. Push the branch to your fork and open a pull request against `main`. Fill in the template and link the issue it solves.
+4. The maintainer reviews it. Pushing new commits dismisses earlier approvals, and every review comment must be resolved before it can be merged.
+5. It is merged by squash or rebase, so `main` keeps a linear history.
+
+Security problems are the exception: do not open a pull request or issue, follow [security.md](security.md).
+
 ### Linting and local checks
 
 ```bash
