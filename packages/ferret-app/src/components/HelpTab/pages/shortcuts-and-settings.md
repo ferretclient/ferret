@@ -38,7 +38,7 @@ Open them with the gear in the status bar or **Ctrl+,**.
 | **Client Certificates** | Certificates for servers that require mutual TLS. |
 | **Keybindings** | Change or reset the shortcuts above. |
 | **Cache** | Local caches that speed up opening large collections. |
-| **Support** | Links to the documentation and issue tracker, and **Check for updates**. |
+| **Support** | Links to the documentation and issue tracker, **Check for updates**, and the **Third-party notices** (the licenses of the open-source software Ferret includes). |
 | **Beta** | Features that are still being tested, such as the mock server. |
 
 ### Updates

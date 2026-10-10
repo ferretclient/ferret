@@ -6,6 +6,7 @@ import {
   IconExternalLink
 } from '@tabler/icons';
 import CheckForUpdates from 'components/CheckForUpdates';
+import ThirdPartyNotices from './ThirdPartyNotices';
 import StyledWrapper from './StyledWrapper';
 import { useTranslation } from 'react-i18next';
 
@@ -93,6 +94,15 @@ const Support = () => {
         </h3>
         <div className="support-card">
           <CheckForUpdates />
+        </div>
+      </section>
+
+      <section className="support-group" aria-labelledby="support-legal-label">
+        <h3 className="support-group-label select-none" id="support-legal-label">
+          Legal
+        </h3>
+        <div className="support-card">
+          <ThirdPartyNotices />
         </div>
       </section>
     </StyledWrapper>

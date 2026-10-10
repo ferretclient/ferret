@@ -1,6 +1,7 @@
 {
   "name": "useferret",
   "private": true,
+  "license": "MIT",
   "workspaces": [
     "packages/ferret-app",
     "packages/ferret-electron",
@@ -74,6 +75,7 @@
     "build:schema-types": "npm run build --workspace=packages/ferret-schema-types",
     "build:electron": "node ./scripts/build-electron.js",
     "dist": "npm run build:web && npm run build:electron",
+    "licenses": "node scripts/generate-third-party-notices.js",
     "version:set": "node ./scripts/set-version.js",
     "build:electron:benchmark": "cross-env FERRET_BENCHMARK=true npm run build:benchmark --workspace=packages/ferret-app && cross-env FERRET_BENCHMARK=true node scripts/build-electron.js",
     "build:electron:mac": "./scripts/build-electron.sh mac",

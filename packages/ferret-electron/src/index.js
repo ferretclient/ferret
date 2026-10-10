@@ -53,6 +53,7 @@ const registerMockServerIpc = require('./ipc/mock-server');
 const { registerMountIpc } = require('./ipc/mount');
 const { registerSqliteIpc } = require('./ipc/sqlite');
 const registerUpdatesIpc = require('./ipc/updates');
+const registerNoticesIpc = require('./ipc/notices');
 const sqliteService = require('./services/sqlite');
 const { clearAllRunnerResponses } = require('./services/runner-exchange');
 const { pruneHistory } = require('./services/request-history');
@@ -458,6 +459,7 @@ app.on('ready', async () => {
   pruneHistory().catch((err) => console.warn('[history] failed to prune on startup', err));
   registerSqliteIpc(mainWindow);
   registerUpdatesIpc();
+  registerNoticesIpc();
   appDocuments.handleProtocol();
   registerAppDocumentIpc(appDocuments, mainWindow);
   registerWsdlIpc();

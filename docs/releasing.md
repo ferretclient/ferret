@@ -35,6 +35,7 @@ Tag `1.0.0` only when all of these are true:
 
 ```bash
 npm run check                         # lint + unit tests
+npm run licenses                      # refresh THIRD_PARTY_NOTICES.md after dependency changes, and commit it
 npm run dist                          # build an installer on your own OS and try it
 ```
 
@@ -83,6 +84,18 @@ Cost: Linux, Windows and macOS minutes are billed at 1×, 2× and 10×, so one r
 ### Publishing by hand
 
 If you cannot use the workflow, build on each operating system with `npm run dist`, collect the files from `packages/ferret-electron/out/`, and upload them to a release (Releases → *Draft a new release*, or `gh release create v0.2.0 files... --prerelease`).
+
+## Names in package registries
+
+**Ferret** is the brand name; the repository and every registry name use `ferret-app`. None of these exist yet; they are the planned names.
+
+| Where | Name | Notes |
+| --- | --- | --- |
+| GitHub | `jakahann/ferret-app` | the repository |
+| npm | `ferret-app` | the command-line tool; installs the `fer` command. `node scripts/bundle-cli.js` packs it with the internal packages into one self-contained tarball |
+| Docker | `ghcr.io/jakahann/ferret-app` | the CLI image; Docker Hub is not planned |
+| Homebrew | cask `ferret-app` | in a personal tap first, for example `jakahann/tap` |
+| winget | `jakahann.FerretApp` | needs a public release and the installer's sha256 |
 
 ## Code signing
 

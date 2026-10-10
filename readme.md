@@ -118,6 +118,8 @@ See [security.md](security.md) for how to report a vulnerability.
 
 [MIT](license.md). The code is free to use, modify and redistribute under that license.
 
-Ferret started as a fork of [Bruno](https://github.com/usebruno/bruno) by Anoop M D, Anusree P S and contributors, which is also MIT-licensed. Their copyright notice is kept in the license file next to ours.
+Ferret started as a fork of [Bruno](https://github.com/usebruno/bruno) by Anoop M D, Anusree P S, Bruno Software Inc. and contributors, which is also MIT-licensed. The fork was taken from Bruno's `main` branch at commit `efba9c2f1` on 2026-10-08. Their copyright notices are kept in the license files next to ours.
 
 **Branding is not part of the license.** The Ferret name and logo are not covered by the MIT license. Please use your own name and logo for forks, and don't suggest your version is the official Ferret. Saying that a project is "based on Ferret" is welcome. More in [assets/README.md](assets/README.md).
+
+The licenses of the third-party software and assets Ferret includes are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The app opens the same file from **Preferences → Support → Third-party notices**.
