@@ -3,7 +3,7 @@ const path = require('path');
 const isDev = require('electron-is-dev');
 const os = require('os');
 const { initializeShellEnv, waitForShellEnv } = require('./store/shell-env-state');
-const { percentageToZoomLevel } = require('@ferret-app/common');
+const { percentageToZoomLevel } = require('@useferret/common');
 const { isBenchmarkEnabled } = require('./utils/benchmark');
 
 if (isDev) {
@@ -350,7 +350,7 @@ app.on('ready', async () => {
     } else {
       console.error(
         'If you are using an official production build: the above error is most likely a bug! '
-        + ' Please report this under: https://github.com/jakahann/ferret-app/issues'
+        + ' Please report this under: https://github.com/useferret/ferret/issues'
       );
     }
   });

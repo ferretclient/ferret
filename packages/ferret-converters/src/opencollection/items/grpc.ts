@@ -11,7 +11,7 @@ import {
   fromOpenCollectionAssertions,
   toOpenCollectionAssertions
 } from '../common';
-import { GRPC_SCRIPT_KEYS } from '@ferret-app/common';
+import { GRPC_SCRIPT_KEYS } from '@useferret/common';
 import type {
   GrpcRequest,
   GrpcRequestInfo,

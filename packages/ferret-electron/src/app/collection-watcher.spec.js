@@ -23,7 +23,7 @@ jest.mock('../utils/filesystem', () => ({
   getCollectionFormat: jest.fn(() => 'fer')
 }));
 
-jest.mock('@ferret-app/filestore', () => ({
+jest.mock('@useferret/filestore', () => ({
   parseEnvironment: jest.fn(),
   parseRequest: jest.fn(),
   parseRequestViaWorker: jest.fn(),
@@ -31,7 +31,7 @@ jest.mock('@ferret-app/filestore', () => ({
   parseFolder: jest.fn()
 }), { virtual: true });
 
-jest.mock('@ferret-app/common/utils', () => ({
+jest.mock('@useferret/common/utils', () => ({
   parseValueByDataType: jest.fn()
 }), { virtual: true });
 

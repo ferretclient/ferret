@@ -1,5 +1,5 @@
 const { describe, it, expect } = require('@jest/globals');
-const { generateHtmlReport } = require('@ferret-app/common/runner');
+const { generateHtmlReport } = require('@useferret/common/runner');
 
 describe('HTML Report Generation', () => {
   it('should include all metadata in the HTML report', async () => {

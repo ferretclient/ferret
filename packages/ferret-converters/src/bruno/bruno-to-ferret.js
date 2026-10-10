@@ -1,4 +1,4 @@
-import { convertBrunoScript, convertBrunoAppCode } from '@ferret-app/common';
+import { convertBrunoScript, convertBrunoAppCode } from '@useferret/common';
 
 /**
  * Converts a Bruno collection JSON export into a Ferret collection JSON export.

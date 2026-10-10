@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const { describe, it, expect } = require('@jest/globals');
 const constants = require('../../src/constants');
 const { createCollectionJsonFromPathname, getCollectionFormat, FORMAT_CONFIG } = require('../../src/utils/collection');
-const { parseEnvironment } = require('@ferret-app/filestore');
+const { parseEnvironment } = require('@useferret/filestore');
 
 describe('create collection json from pathname', () => {
   it('should throw an error when the pathname is not a valid ferret collection root', () => {

@@ -109,28 +109,28 @@ export type {
 export type { AuthOAuth2 } from '@opencollection/types/common/auth-oauth2';
 
 // Ferret types - collection
-export type { Item as FerretItem } from '@ferret-app/schema-types/collection/item';
+export type { Item as FerretItem } from '@useferret/schema-types/collection/item';
 export type {
   FolderRoot as FerretFolderRoot,
   FolderRequest as FerretFolderRequest,
   FolderMeta as FerretFolderMeta
-} from '@ferret-app/schema-types/collection/folder';
-export type { Collection as FerretCollection } from '@ferret-app/schema-types/collection/collection';
+} from '@useferret/schema-types/collection/folder';
+export type { Collection as FerretCollection } from '@useferret/schema-types/collection/collection';
 export type {
   Environment as FerretEnvironment,
   EnvironmentVariable as FerretEnvironmentVariable
-} from '@ferret-app/schema-types/collection/environment';
+} from '@useferret/schema-types/collection/environment';
 export type {
   Example as FerretExample,
   ExampleRequest as FerretExampleRequest,
   ExampleResponse as FerretExampleResponse,
   ExampleResponseBody as FerretExampleResponseBody
-} from '@ferret-app/schema-types/collection/examples';
+} from '@useferret/schema-types/collection/examples';
 
 // Ferret types - common
-export type { KeyValue as FerretKeyValue } from '@ferret-app/schema-types/common/key-value';
-export type { Variable as FerretVariable, Variables as FerretVariables } from '@ferret-app/schema-types/common/variables';
-export type { Script as FerretScript } from '@ferret-app/schema-types/common/scripts';
+export type { KeyValue as FerretKeyValue } from '@useferret/schema-types/common/key-value';
+export type { Variable as FerretVariable, Variables as FerretVariables } from '@useferret/schema-types/common/variables';
+export type { Script as FerretScript } from '@useferret/schema-types/common/scripts';
 export type {
   Auth as FerretAuth,
   AuthMode as FerretAuthMode,
@@ -143,10 +143,10 @@ export type {
   AuthApiKey as FerretAuthApiKey,
   AuthOauth1 as FerretAuthOauth1,
   OAuth2 as FerretOAuth2
-} from '@ferret-app/schema-types/common/auth';
-export type { MultipartFormEntry as FerretMultipartFormEntry, MultipartForm as FerretMultipartForm } from '@ferret-app/schema-types/common/multipart-form';
-export type { FileEntry as FerretFileEntry, FileList as FerretFileList } from '@ferret-app/schema-types/common/file';
-export type { GraphqlBody as FerretGraphqlBody } from '@ferret-app/schema-types/common/graphql';
+} from '@useferret/schema-types/common/auth';
+export type { MultipartFormEntry as FerretMultipartFormEntry, MultipartForm as FerretMultipartForm } from '@useferret/schema-types/common/multipart-form';
+export type { FileEntry as FerretFileEntry, FileList as FerretFileList } from '@useferret/schema-types/common/file';
+export type { GraphqlBody as FerretGraphqlBody } from '@useferret/schema-types/common/graphql';
 
 // Ferret types - requests
 export type {
@@ -155,18 +155,18 @@ export type {
   HttpRequestBodyMode as FerretHttpRequestBodyMode,
   HttpRequestParam as FerretHttpRequestParam,
   HttpRequestParamType as FerretHttpRequestParamType
-} from '@ferret-app/schema-types/requests/http';
+} from '@useferret/schema-types/requests/http';
 export type {
   GrpcRequest as FerretGrpcRequest,
   GrpcRequestBody as FerretGrpcRequestBody,
   GrpcMessage as FerretGrpcMessage,
   GrpcMethodType as FerretGrpcMethodType
-} from '@ferret-app/schema-types/requests/grpc';
+} from '@useferret/schema-types/requests/grpc';
 export type {
   WebSocketRequest as FerretWebSocketRequest,
   WebSocketRequestBody as FerretWebSocketRequestBody,
   WebSocketMessage as FerretWsMessage
-} from '@ferret-app/schema-types/requests/websocket';
+} from '@useferret/schema-types/requests/websocket';
 
 export interface FerretPresets {
   requestType?: string;

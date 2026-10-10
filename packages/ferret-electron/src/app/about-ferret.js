@@ -56,7 +56,7 @@ module.exports = function aboutFerret({ version }) {
         <img src="data:image/png;base64,${logoBase64}" width="100" height="100" alt="Ferret" />
       </div>
       <h2 class="title">Ferret ${version}</h2>
-      <p class="project">github.com/jakahann/ferret-app</p>
+      <p class="project">github.com/useferret/ferret</p>
       <footer class="footer">
           ©${currentYear} Ferret
       </footer>

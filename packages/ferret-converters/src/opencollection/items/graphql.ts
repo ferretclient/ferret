@@ -18,7 +18,7 @@ import {
   toOpenCollectionAssertions,
   resolveTimeoutSetting
 } from '../common';
-import { utils, HTTP_SCRIPT_KEYS } from '@ferret-app/common';
+import { utils, HTTP_SCRIPT_KEYS } from '@useferret/common';
 import type {
   GraphQLRequest,
   GraphQLRequestInfo,

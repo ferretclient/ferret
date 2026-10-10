@@ -2,7 +2,7 @@ require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const { ipcMain } = require('electron');
-const { utils: { jsonToDotenv } } = require('@ferret-app/common');
+const { utils: { jsonToDotenv } } = require('@useferret/common');
 const { globalEnvironmentsStore } = require('../store/global-environments');
 const { generateUniqueName, sanitizeName, writeFile, isValidDotEnvFilename } = require('../utils/filesystem');
 const { readWorkspaceConfig, writeWorkspaceConfig } = require('../utils/workspace-config');

@@ -4,7 +4,7 @@ import {
   FerretVariableDataType,
   isFerretVariableDataType,
   valueToString
-} from '@ferret-app/common/utils';
+} from '@useferret/common/utils';
 
 export { FerretVariableDataType, isFerretVariableDataType };
 

@@ -2,7 +2,7 @@ const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const { describe, it, expect, beforeEach, afterEach } = require('@jest/globals');
-const { stringifyEnvironment } = require('@ferret-app/filestore');
+const { stringifyEnvironment } = require('@useferret/filestore');
 const { loadEnvironmentFromFile } = require('../../src/utils/environment');
 const { getEnvVars } = require('../../src/utils/fer');
 

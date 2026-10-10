@@ -1,5 +1,5 @@
 const { describe, it, expect, beforeEach, afterEach } = require('@jest/globals');
-const { measureResponseTime, addDigestInterceptor } = require('@ferret-app/requests');
+const { measureResponseTime, addDigestInterceptor } = require('@useferret/requests');
 const { makeAxiosInstance } = require('../../src/utils/axios-instance');
 
 function createStubAdapter() {

@@ -8,7 +8,7 @@ import {
 } from './datatype';
 
 /*
- * Canonical coercion test matrix. `@ferret-app/lang` and `@ferret-app/filestore`
+ * Canonical coercion test matrix. `@useferret/lang` and `@useferret/filestore`
  * both delegate to `parseValueByDataType` from this package, so this is the
  * only place the contract is exercised in detail.
  */

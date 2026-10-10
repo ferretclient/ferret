@@ -2,7 +2,7 @@ import each from 'lodash/each';
 import get from 'lodash/get';
 import { customAlphabet } from 'nanoid';
 import cloneDeep from 'lodash/cloneDeep';
-import { collectionSchema } from '@ferret-app/schema';
+import { collectionSchema } from '@useferret/schema';
 
 export const safeParseJSON = (str) => {
   if (!str || !str.length || typeof str !== 'string') {

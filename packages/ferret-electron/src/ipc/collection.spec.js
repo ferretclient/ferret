@@ -54,7 +54,7 @@ jest.mock('../app/collection-watcher', () => {
   };
 });
 
-jest.mock('@ferret-app/filestore', () => ({
+jest.mock('@useferret/filestore', () => ({
   parseRequest: jest.fn(() => ({})),
   stringifyRequest: jest.fn(() => 'mock-content-stringified')
 }));

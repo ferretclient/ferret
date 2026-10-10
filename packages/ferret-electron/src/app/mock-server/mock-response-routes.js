@@ -1,4 +1,4 @@
-const { extractMockRoutePath } = require('@ferret-app/common').utils;
+const { extractMockRoutePath } = require('@useferret/common').utils;
 const { listMockResponses } = require('./mock-server-store');
 
 const extractRoutePath = extractMockRoutePath;

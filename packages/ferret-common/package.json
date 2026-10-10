@@ -1,5 +1,5 @@
 {
-  "name": "@ferret-app/common",
+  "name": "@useferret/common",
   "version": "0.2.0",
   "license": "MIT",
   "main": "dist/cjs/index.js",

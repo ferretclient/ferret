@@ -3,7 +3,7 @@ const os = require('os');
 const path = require('path');
 const { Readable } = require('stream');
 const { describe, it, expect, beforeAll, afterAll, beforeEach } = require('@jest/globals');
-const { isFormData } = require('@ferret-app/common').utils;
+const { isFormData } = require('@useferret/common').utils;
 
 jest.mock('../../../../src/runner/prepare-request', () => jest.fn());
 jest.mock('../../../../src/utils/axios-instance', () => ({
