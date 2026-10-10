@@ -3,7 +3,7 @@ const { createPropertyListBridge } = require('../utils/property-list-bridge');
 
 // Marshal a QuickJS query argument to a host-compatible value.
 // Function handles are wrapped as native callbacks; other values are dumped as-is.
-// Safe because @ferret-app/query's get() invokes filters synchronously,
+// Safe because @useferret/query's get() invokes filters synchronously,
 // so the borrowed arg handle is still valid.
 const toHostQueryArg = (vm, arg) => {
   if (vm.typeof(arg) === 'function') {

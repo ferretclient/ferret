@@ -1,10 +1,10 @@
-# @ferret-app/sqlite
+# @useferret/sqlite
 
 SQLite storage for the Ferret API client. You author migrations as `.ts` and statements as `.sql`; the package compiles them into a typed data layer for the Electron main process.
 
 ## Entry point
 
-`@ferret-app/sqlite` (or `/node`) — main process only. Owns the DB and runs statements, using the built-in `node:sqlite`.
+`@useferret/sqlite` (or `/node`) — main process only. Owns the DB and runs statements, using the built-in `node:sqlite`.
 
 ## Add a migration
 
@@ -66,7 +66,7 @@ Run `npm run generate` (or `build`) to compile statements into the typed registr
 ## Use it — main process
 
 ```js
-const { createDatabase } = require('@ferret-app/sqlite');
+const { createDatabase } = require('@useferret/sqlite');
 
 const { db, statements } = createDatabase('/path/to/ferret.db');
 

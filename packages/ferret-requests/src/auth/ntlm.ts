@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from 'axios';
-import { isSameOrigin } from '@ferret-app/common/utils';
+import { isSameOrigin } from '@useferret/common/utils';
 
 // The scheme is not in IANA's http registry; it is specified by [MS-NTHT] NTLM Over HTTP Protocol,
 // https://learn.microsoft.com/openspecs/windows_protocols/ms-ntht/f09cf6e1-529e-403b-a8a5-7368ee096a6a

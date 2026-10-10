@@ -44,7 +44,7 @@ module.exports = [
     ],
     external: (id) =>
       isBuiltin(id)
-      || id.startsWith('@ferret-app/')
+      || id.startsWith('@useferret/')
       || ['axios', 'qs', 'ws', 'debug', 'shell-env', 'pac-resolver', 'quickjs-emscripten'].includes(id)
   }
 ];

@@ -1,5 +1,5 @@
 const jsonQuery = require('json-query');
-const { get } = require('@ferret-app/query');
+const { get } = require('@useferret/query');
 
 const JS_KEYWORDS = `
   break case catch class const continue debugger default delete do

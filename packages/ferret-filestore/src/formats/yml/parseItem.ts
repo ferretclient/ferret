@@ -1,4 +1,4 @@
-import type { Item as FerretItem } from '@ferret-app/schema-types/collection/item';
+import type { Item as FerretItem } from '@useferret/schema-types/collection/item';
 import type { Item, ScriptFile } from '@opencollection/types/collection/item';
 import type { HttpRequest } from '@opencollection/types/requests/http';
 import type { GraphQLRequest } from '@opencollection/types/requests/graphql';

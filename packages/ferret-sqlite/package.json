@@ -1,5 +1,5 @@
 {
-  "name": "@ferret-app/sqlite",
+  "name": "@useferret/sqlite",
   "version": "0.2.0",
   "license": "MIT",
   "main": "dist/node/cjs/index.js",

@@ -1,4 +1,4 @@
-const { get } = require('@ferret-app/query');
+const { get } = require('@useferret/query');
 const _ = require('lodash');
 const HeaderList = require('./header-list');
 

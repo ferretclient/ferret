@@ -6,7 +6,7 @@ import {
   base64HmacSha256,
   makeContentHash,
   isStrPresent
-} from '@ferret-app/common/utils';
+} from '@useferret/common/utils';
 
 const { URL } = require('node:url');
 
@@ -15,7 +15,7 @@ const { URL } = require('node:url');
  * Implements the EG1-HMAC-SHA256 scheme exactly as Akamai's official client library
  * (https://github.com/akamai/AkamaiOPEN-edgegrid-node) so signatures validate against
  * the real Akamai gateway. The signing/crypto primitives are shared with the Generate Code
- * signer via @ferret-app/common/utils; they use Web Crypto and are async.
+ * signer via @useferret/common/utils; they use Web Crypto and are async.
  * Spec: https://techdocs.akamai.com/developer/docs/authenticate-with-edgegrid
  */
 

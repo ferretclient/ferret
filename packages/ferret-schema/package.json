@@ -1,5 +1,5 @@
 {
-  "name": "@ferret-app/schema",
+  "name": "@useferret/schema",
   "version": "0.2.0",
   "license": "MIT",
   "main": "src/index.js",

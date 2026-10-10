@@ -1,5 +1,5 @@
-import type { Item as FerretItem } from '@ferret-app/schema-types/collection/item';
-import type { WebSocketRequest as FerretWebSocketRequest } from '@ferret-app/schema-types/requests/websocket';
+import type { Item as FerretItem } from '@useferret/schema-types/collection/item';
+import type { WebSocketRequest as FerretWebSocketRequest } from '@useferret/schema-types/requests/websocket';
 import type { WebSocketRequest, WebSocketMessage, WebSocketMessageVariant } from '@opencollection/types/requests/websocket';
 import { toFerretAuth } from '../common/auth';
 import { toFerretHttpHeaders } from '../common/headers';

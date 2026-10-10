@@ -1,4 +1,4 @@
-import type { Item as FerretItem } from '@ferret-app/schema-types/collection/item';
+import type { Item as FerretItem } from '@useferret/schema-types/collection/item';
 import type { ScriptFile } from '@opencollection/types/collection/item';
 import { stringifyYml } from '../utils';
 

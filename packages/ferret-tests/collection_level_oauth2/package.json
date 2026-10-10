@@ -1,5 +1,5 @@
 {
-  "name": "@ferret-app/test-collection",
+  "name": "@useferret/test-collection",
   "version": "0.0.1",
   "dependencies": {
     "@faker-js/faker": "^8.4.1"

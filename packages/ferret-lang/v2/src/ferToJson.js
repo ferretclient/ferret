@@ -574,7 +574,7 @@ const sem = grammar.createSemantics().addAttribute('ast', {
 
     // Number, not parseInt: parseInt stops at the exponent, so 1e+21 reads back as 1. The truthy
     // check skips a blank, which Number reads as 0, meaning "no redirects" rather than "unset"; a
-    // real 0 survives as '0'. Mirrors toMaxRedirects in @ferret-app/common (unimportable: ferret-lang
+    // real 0 survives as '0'. Mirrors toMaxRedirects in @useferret/common (unimportable: ferret-lang
     // is a leaf), but leaves the key unset instead of defaulting, since jsonToFer writes back only
     // the keys it is given.
     if (settings.maxRedirects) {

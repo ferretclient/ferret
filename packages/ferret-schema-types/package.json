@@ -1,5 +1,5 @@
 {
-  "name": "@ferret-app/schema-types",
+  "name": "@useferret/schema-types",
   "version": "0.2.0",
   "description": "TypeScript types for Ferret schema",
   "author": "Ferret",

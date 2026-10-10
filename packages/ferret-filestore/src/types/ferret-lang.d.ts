@@ -1,4 +1,4 @@
-declare module '@ferret-app/lang' {
+declare module '@useferret/lang' {
   export function ferToJsonV2(ferContent: string): any;
   export function jsonToFerV2(jsonData: any): string;
   export function ferToEnvJsonV2(ferContent: string): any;

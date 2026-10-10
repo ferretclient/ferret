@@ -1,6 +1,6 @@
-import type { Item as FerretItem } from '@ferret-app/schema-types/collection/item';
-import type { KeyValue as FerretKeyValue } from '@ferret-app/schema-types/common/key-value';
-import type { GrpcRequest as FerretGrpcRequest } from '@ferret-app/schema-types/requests/grpc';
+import type { Item as FerretItem } from '@useferret/schema-types/collection/item';
+import type { KeyValue as FerretKeyValue } from '@useferret/schema-types/common/key-value';
+import type { GrpcRequest as FerretGrpcRequest } from '@useferret/schema-types/requests/grpc';
 import type { GrpcRequest, GrpcMetadata, GrpcMessageVariant, GrpcMessage, GrpcRequestInfo, GrpcRequestDetails, GrpcRequestRuntime } from '@opencollection/types/requests/grpc';
 import type { Auth } from '@opencollection/types/common/auth';
 import type { Scripts } from '@opencollection/types/common/scripts';
@@ -12,7 +12,7 @@ import { toOpenCollectionAuth } from '../common/auth';
 import { toOpenCollectionVariables } from '../common/variables';
 import { toOpenCollectionScripts } from '../common/scripts';
 import { toOpenCollectionAssertions } from '../common/assertions';
-import { GRPC_SCRIPT_KEYS } from '@ferret-app/common';
+import { GRPC_SCRIPT_KEYS } from '@useferret/common';
 
 const stringifyGrpcRequest = (item: FerretItem): string => {
   try {

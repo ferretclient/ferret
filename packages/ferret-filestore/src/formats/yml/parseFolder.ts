@@ -1,4 +1,4 @@
-import type { FolderRoot } from '@ferret-app/schema-types/collection/folder';
+import type { FolderRoot } from '@useferret/schema-types/collection/folder';
 import type { Folder } from '@opencollection/types/collection/item';
 import { parseYml } from './utils';
 import { toFerretAuth } from './common/auth';
@@ -6,7 +6,7 @@ import { toFerretHttpHeaders } from './common/headers';
 import { toFerretVariables } from './common/variables';
 import { toFerretPostResponseVariables } from './common/actions';
 import { toFerretScripts } from './common/scripts';
-import { normalizeTags } from '@ferret-app/common';
+import { normalizeTags } from '@useferret/common';
 import { ensureString } from '../../utils';
 
 const parseFolder = (ymlString: string): FolderRoot => {
