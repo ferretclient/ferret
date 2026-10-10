@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { IconX } from '@tabler/icons';
 import { useTheme } from 'providers/Theme';
 import CodeEditor from 'components/CodeEditor';
-import { toDisplayString } from '@ferret-app/common/utils';
+import { toDisplayString } from '@useferret/common/utils';
 import { JSON_MODE } from '../constants';
 import StyledWrapper from './StyledWrapper';
 

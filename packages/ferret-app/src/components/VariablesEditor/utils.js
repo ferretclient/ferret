@@ -1,4 +1,4 @@
-import { getDataTypeFromValue, toDisplayString } from '@ferret-app/common/utils';
+import { getDataTypeFromValue, toDisplayString } from '@useferret/common/utils';
 import { getScopedStorageKey } from 'components/CodeEditor/state-persistence';
 import { VARIABLE_REFERENCE_PATTERN } from './constants';
 

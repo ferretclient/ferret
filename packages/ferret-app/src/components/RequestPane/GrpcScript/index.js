@@ -2,7 +2,7 @@ import React from 'react';
 import get from 'lodash/get';
 import find from 'lodash/find';
 import { useDispatch, useSelector } from 'react-redux';
-import { GRPC_SCRIPT_KEYS, SCRIPT_TYPES } from '@ferret-app/common';
+import { GRPC_SCRIPT_KEYS, SCRIPT_TYPES } from '@useferret/common';
 import { updateGrpcScript } from 'providers/ReduxStore/slices/collections';
 import { saveRequest } from 'providers/ReduxStore/slices/collections/actions';
 import { updateScriptPaneTab } from 'providers/ReduxStore/slices/tabs';

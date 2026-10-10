@@ -8,7 +8,7 @@ import InfoTip from 'components/InfoTip';
 import DataTypeSelector from 'components/DataTypeSelector';
 import OptionsValueEditor from 'components/OptionsValueEditor';
 import VarValueCell from 'components/VarValueCell';
-import { valueToString } from '@ferret-app/common/utils';
+import { valueToString } from '@useferret/common/utils';
 import EditableTable from 'components/EditableTable';
 import { createDescriptionColumn } from 'components/EditableTable/descriptionColumn';
 import StyledWrapper from './StyledWrapper';

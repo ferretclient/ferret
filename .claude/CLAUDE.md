@@ -70,9 +70,9 @@ Non-obvious project rules worth holding:
 ## Detailed rules & references
 
 Path-scoped rules in `.claude/rules/` auto-attach when you touch matching files:
-`architecture.md` (`@ferret-app/*` dependency boundaries, manifests), `ferret-app-layout.md` (ferret-app
+`architecture.md` (`@useferret/*` dependency boundaries, manifests), `ferret-app-layout.md` (ferret-app
 module layout), `electron-ipc.md` (IPC handlers + startup), `redux-store.md` (slices/middleware),
-`sqlite.md` (`@ferret-app/sqlite` — migrations, statements, per-statement IPC), `testing.md` (e2e
+`sqlite.md` (`@useferret/sqlite` — migrations, statements, per-statement IPC), `testing.md` (e2e
 patterns & gotchas), `cross-platform.md` (Windows file/process/path pitfalls), `dsl-changes.md`
 (on-disk `.fer`/`.yml` format & backward compat), `feature-parity.md` (co-related features —
 app↔CLI twins, converter/shim/level/protocol pairs), `conventions.md` (readability, reuse,

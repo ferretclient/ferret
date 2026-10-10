@@ -5,7 +5,7 @@ import Modal from 'components/Modal';
 import { describeUpdateResult } from 'utils/updates';
 import { version as appVersion } from '../../../package.json';
 
-const REPOSITORY = 'jakahann/ferret-app';
+const REPOSITORY = 'useferret/ferret';
 
 const UpdateResultModal = ({ result, onClose }) => {
   const description = describeUpdateResult(result);

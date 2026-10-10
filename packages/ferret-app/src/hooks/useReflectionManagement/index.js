@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { debounce } from 'lodash';
-import { interpolate } from '@ferret-app/common';
+import { interpolate } from '@useferret/common';
 import { loadGrpcMethodsFromReflection } from 'providers/ReduxStore/slices/collections/actions';
 import useLocalStorage from 'hooks/useLocalStorage/index';
 import { getAllVariables } from 'utils/collections';

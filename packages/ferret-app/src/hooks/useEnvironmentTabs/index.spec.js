@@ -1,6 +1,6 @@
 const { describe, it, expect } = require('@jest/globals');
 import { render, renderHook, within } from '@testing-library/react';
-import { resolveEnvironmentInheritance } from '@ferret-app/common/utils';
+import { resolveEnvironmentInheritance } from '@useferret/common/utils';
 import useEnvironmentTabs from './index';
 
 const variable = (name, overrides = {}) => ({ uid: name, name, value: '', enabled: true, secret: false, ...overrides });

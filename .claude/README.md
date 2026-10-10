@@ -1,7 +1,7 @@
 # Claude Config
 
 The [Claude Code](https://docs.claude.com/en/docs/claude-code) configuration for
-[Ferret](https://github.com/jakahann/ferret-app) — the project context, architecture notes, coding
+[Ferret](https://github.com/useferret/ferret) — the project context, architecture notes, coding
 rules, and review/test skills the team has tuned while working on Ferret. Claude picks it up
 automatically when you launch from the project root.
 
@@ -13,7 +13,7 @@ automatically when you launch from the project root.
 | Path | What it is | Loads |
 |------|------------|-------|
 | `CLAUDE.md` | Project overview — commands, key architecture, coding standards, index of rules/references. | Every session (auto). |
-| `rules/*.md` | Path-scoped engineering guidance: `architecture` (`@ferret-app/*` dependency boundaries + manifests), `ferret-app-layout` (component directories, `src/ui` vs `src/components`), `redux-store`, `electron-ipc`, `sqlite` (`@ferret-app/sqlite` — migrations, statements, per-statement IPC), `dsl-changes` (on-disk `.fer`/`.yml` format), `cross-platform`, `testing`, `conventions` (readability, reuse, replacement hygiene, comment/diff hygiene). | When Claude touches files matching each rule's `paths:`. |
+| `rules/*.md` | Path-scoped engineering guidance: `architecture` (`@useferret/*` dependency boundaries + manifests), `ferret-app-layout` (component directories, `src/ui` vs `src/components`), `redux-store`, `electron-ipc`, `sqlite` (`@useferret/sqlite` — migrations, statements, per-statement IPC), `dsl-changes` (on-disk `.fer`/`.yml` format), `cross-platform`, `testing`, `conventions` (readability, reuse, replacement hygiene, comment/diff hygiene). | When Claude touches files matching each rule's `paths:`. |
 | `reference/architecture.md` | The monorepo map — request pipeline, sandbox, file formats, core types, dependency versions. Too big to auto-load. | On demand only (Claude reads it when a task needs it). |
 | `skills/code-review/` | `/code-review` — reviews the current branch/PR via focused lenses in parallel. | On invocation / when relevant. |
 | `skills/write-e2e-test/` | `/write-e2e-test` — writes a Playwright E2E test following Ferret's fixtures and conventions. | On invocation / when relevant. |

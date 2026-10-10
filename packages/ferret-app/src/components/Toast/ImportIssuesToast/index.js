@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { IconAlertCircle, IconBrandGithub, IconCopy, IconX } from '@tabler/icons';
 import StyledWrapper from './StyledWrapper';
 
-const GITHUB_ISSUES_URL = 'https://github.com/jakahann/ferret-app/issues/new';
+const GITHUB_ISSUES_URL = 'https://github.com/useferret/ferret/issues/new';
 const MAX_URL_LENGTH = 8000;
 
 const ImportIssuesToastContent = ({ t, issues, summary }) => {

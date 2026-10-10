@@ -4,7 +4,7 @@ import { addFolderTag, deleteFolderTag } from 'providers/ReduxStore/slices/colle
 import { saveFolderRoot } from 'providers/ReduxStore/slices/collections/actions';
 import { getInheritedTagSourcesForItem, getUniqueTagsFromItems } from 'utils/collections/index';
 import TagList from 'components/TagList/index';
-import { getFolderTags } from '@ferret-app/common';
+import { getFolderTags } from '@useferret/common';
 
 const Tags = ({ folder, collection }) => {
   const dispatch = useDispatch();

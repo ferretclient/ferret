@@ -7,12 +7,12 @@ Adopt the reviewer persona and return findings in the output contract defined in
 
 Review the diff against **`.claude/rules/architecture.md`** — read its "Dependency direction &
 ownership boundaries" section, plus "Declared dependencies must match real imports" when the diff
-touches a `package.json`. The `@ferret-app/*` packages form a strict dependency DAG and some carry hard
+touches a `package.json`. The `@useferret/*` packages form a strict dependency DAG and some carry hard
 platform constraints. Report violations with `file:line`, severity:
 
-- **blocker** — a new internal `@ferret-app/*` dependency that points *upward* or forms a cycle (a
-  shared lib importing `@ferret-app/app` or `@ferret-app/electron`); `ferret-common` importing a Node
-  built-in (`fs`/`path`/`os`/`crypto`/`child_process`/`node:*`) or any other `@ferret-app/*` package
+- **blocker** — a new internal `@useferret/*` dependency that points *upward* or forms a cycle (a
+  shared lib importing `@useferret/app` or `@useferret/electron`); `ferret-common` importing a Node
+  built-in (`fs`/`path`/`os`/`crypto`/`child_process`/`node:*`) or any other `@useferret/*` package
   (it must stay browser-safe and dependency-free); `ferret-js` importing `electron`/IPC (it also runs
   in the CLI); a runtime import of `ferret-schema-types` (types-only).
 - **suggestion** — code placed in the wrong package/layer: renderer-only logic in a shared lib,

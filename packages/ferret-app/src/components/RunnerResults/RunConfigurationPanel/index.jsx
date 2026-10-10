@@ -10,7 +10,7 @@ import { sortByNameThenSequence } from 'utils/common/index';
 import path from 'utils/common/path';
 import { cloneDeep, get } from 'lodash';
 import Button from 'ui/Button/index';
-import { isRequestTagsIncluded, getEffectiveTags, getOwnTags, getFolderTags } from '@ferret-app/common';
+import { isRequestTagsIncluded, getEffectiveTags, getOwnTags, getFolderTags } from '@useferret/common';
 
 const isRequestDisabled = (item, tags) => {
   // WS and gRPC are not supported by the collection runner

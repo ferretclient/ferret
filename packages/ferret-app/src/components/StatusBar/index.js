@@ -98,7 +98,7 @@ const StatusBar = () => {
               <button
                 className="status-bar-button"
                 onClick={() => {
-                  window?.ipcRenderer?.openExternal('https://github.com/jakahann/ferret-app');
+                  window?.ipcRenderer?.openExternal('https://github.com/useferret/ferret');
                 }}
                 tabIndex={0}
                 aria-label="Open GitHub Repository"

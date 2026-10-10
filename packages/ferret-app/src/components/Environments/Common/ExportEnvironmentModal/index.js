@@ -6,7 +6,7 @@ import { browseDirectory } from 'providers/ReduxStore/slices/collections/actions
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import { IconAlertTriangle } from '@tabler/icons';
-import { getInheritedEnvironments } from '@ferret-app/common/utils';
+import { getInheritedEnvironments } from '@useferret/common/utils';
 import StyledWrapper from './StyledWrapper';
 import Button from 'ui/Button';
 

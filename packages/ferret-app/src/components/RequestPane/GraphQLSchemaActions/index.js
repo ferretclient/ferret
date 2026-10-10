@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, forwardRef } from 'react';
 import useGraphqlSchema from './useGraphqlSchema';
 import { IconBook, IconDownload, IconLoader2, IconRefresh } from '@tabler/icons';
 import get from 'lodash/get';
-import { resolveEnvironmentInheritance } from '@ferret-app/common/utils';
+import { resolveEnvironmentInheritance } from '@useferret/common/utils';
 import { findEnvironmentInCollection } from 'utils/collections';
 import Dropdown from '../../Dropdown';
 
