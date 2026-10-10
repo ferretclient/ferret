@@ -31,6 +31,42 @@ Tag `1.0.0` only when all of these are true:
 - [ ] You have decided what is part of the stable promise: the `.fer` and `.yml` file formats, the `fer.*` script API, and the CLI options.
 - [ ] Anything you do not want to support is removed or clearly marked experimental.
 
+## First release checklist
+
+The steps for the first public release (`0.2.0`, a pre-release). Steps marked *you* need an account or a decision that only the maintainer can make.
+
+**Before the repository goes public**
+
+- [ ] *you* Search for the name "Ferret" in trademark registers (WIPO Global Brand Database, USPTO, EUIPO) for software in your region. The MIT license covers the code, not the name or the logo.
+- [ ] `npm run check` passes and `THIRD_PARTY_NOTICES.md` is current (`npm run licenses`).
+- [ ] *you* Make the repository public, then enable **Settings → Code security → Private vulnerability reporting**.
+
+**Dry run**
+
+- [ ] Push a throwaway tag, for example `v0.2.0-rc.1`. The workflow builds Windows, macOS and Linux and creates a pre-release. Expect packaging problems on the first run, especially `.deb`/`.rpm` and macOS, which have never been built.
+- [ ] Install the Windows build on a clean machine and walk through Help → first request. Ask someone to try macOS and Linux. On a Mac, confirm the environment option picker works.
+- [ ] Delete the rc release and its tag.
+
+**Release**
+
+- [ ] Set the date in `CHANGELOG.md`, commit, then tag `v0.2.0` and push the tag. Keep it a pre-release.
+- [ ] Edit the release notes: copy the changelog entry and add the first-start instructions for unsigned apps (Windows: *More info → Run anyway*; macOS: right-click → *Open*, or `xattr -dr com.apple.quarantine /Applications/Ferret.app`).
+- [ ] Open the installed app and check that **Preferences → Support → Check for updates** finds the release.
+
+**Package managers** (after the release exists)
+
+- [ ] Download `SHA256SUMS.txt` from the release and run `node scripts/render-package-manifests.js 0.2.0 SHA256SUMS.txt`. It writes a Homebrew cask and winget manifests to `dist/packaging/`.
+- [ ] *you* Homebrew: create a repository `jakahann/homebrew-tap`, copy `dist/packaging/homebrew/ferret-app.rb` to `Casks/ferret-app.rb`, then test with `brew install --cask jakahann/tap/ferret-app`.
+- [ ] *you* winget: check the three files in `dist/packaging/winget/` with `winget validate`, and submit them as a pull request to `microsoft/winget-pkgs` under `manifests/j/jakahann/FerretApp/0.2.0/`.
+- [ ] *you* Linux: the AppImage, `.deb` and `.rpm` come with the release. An AUR package (`ferret-app-bin`), Flathub and Snap can follow later.
+- [ ] *you* npm: claim `ferret-app` by publishing the self-contained tarball from `node scripts/bundle-cli.js`, then publish the Docker image to `ghcr.io/jakahann/ferret-app`.
+
+**Later**
+
+- [ ] *you* Apply for free Windows signing for open-source projects (SignPath), and decide on an Apple Developer account ($99 a year) for macOS signing and notarization.
+- [ ] Decide whether to rename the internal `@useferret/*` workspace scope. It is only visible to contributors, because the bundled CLI contains those packages.
+- [ ] Delete the local backup branch `backup-before-trailer-removal` and `refs/original` once you no longer need them.
+
 ## Before every release
 
 ```bash
@@ -119,4 +155,5 @@ Certificates cost money: an Apple Developer account is $99 a year, and a Windows
 | Build script | `scripts/build-electron.js` (`npm run dist`) |
 | macOS notarization | `packages/ferret-electron/notarize.js` |
 | Version script | `scripts/set-version.js` (`npm run version:set`) |
+| Package manager manifests | `scripts/render-package-manifests.js` (Homebrew cask, winget) |
 | Release workflow | `.github/workflows/release.yml` |
