@@ -16,9 +16,9 @@ const {
   measureTimeSince,
   startHop,
   completeHop
-} = require('@useferret/requests');
-const { isSameOrigin, DEFAULT_MAX_REDIRECTS } = require('@useferret/common').utils;
-const { applyOmitHeaders } = require('@useferret/common');
+} = require('@ferret-app/requests');
+const { isSameOrigin, DEFAULT_MAX_REDIRECTS } = require('@ferret-app/common').utils;
+const { applyOmitHeaders } = require('@ferret-app/common');
 
 const LOCAL_IPV6 = '::1';
 const LOCAL_IPV4 = '127.0.0.1';

@@ -1,8 +1,8 @@
 const https = require('https');
 const axios = require('axios');
 const path = require('path');
-const { applyOAuth1ToRequest } = require('@useferret/requests');
-const { buildScriptedEntry } = require('@useferret/requests').scripting;
+const { applyOAuth1ToRequest } = require('@ferret-app/requests');
+const { buildScriptedEntry } = require('@ferret-app/requests').scripting;
 const qs = require('qs');
 const decomment = require('decomment');
 const contentDispositionParser = require('content-disposition');
@@ -10,9 +10,9 @@ const mime = require('mime-types');
 const { ipcMain } = require('electron');
 const { each, get, extend, cloneDeep, merge } = require('lodash');
 const { NtlmClient } = require('axios-ntlm');
-const { VarsRuntime, AssertRuntime, ScriptRuntime, TestRuntime, formatErrorWithContextV2, trackUnresolvedVariables, getUnresolvedVariableCollector } = require('@useferret/js');
-const { encodeUrl, hasExplicitScheme, DEFAULT_MAX_REDIRECTS } = require('@useferret/common').utils;
-const { extractPromptVariables } = require('@useferret/common').utils;
+const { VarsRuntime, AssertRuntime, ScriptRuntime, TestRuntime, formatErrorWithContextV2, trackUnresolvedVariables, getUnresolvedVariableCollector } = require('@ferret-app/js');
+const { encodeUrl, hasExplicitScheme, DEFAULT_MAX_REDIRECTS } = require('@ferret-app/common').utils;
+const { extractPromptVariables } = require('@ferret-app/common').utils;
 const { interpolateString } = require('./interpolate-string');
 const { resolveAwsV4Credentials, addAwsV4Interceptor } = require('./awsv4auth-helper');
 const {
@@ -20,13 +20,13 @@ const {
   addEdgeGridInterceptor,
   applySentHeadersToRequest,
   measureResponseTime
-} = require('@useferret/requests');
+} = require('@ferret-app/requests');
 const prepareGqlIntrospectionRequest = require('./prepare-gql-introspection-request');
 const { prepareRequest } = require('./prepare-request');
 const interpolateVars = require('./interpolate-vars');
 const { applyCollectionVarsToCollectionRoot } = require('./apply-collection-vars');
 const { makeAxiosInstance, completeOpenHop } = require('./axios-instance');
-const { refreshExplicitHeaderNames } = require('@useferret/common');
+const { refreshExplicitHeaderNames } = require('@ferret-app/common');
 const { resolveInheritedSettings } = require('../../utils/collection');
 const { cancelTokens, saveCancelToken, deleteCancelToken } = require('../../utils/cancel-token');
 const { uuid, safeStringifyJSON, safeParseJSON, parseDataFromResponse, parseDataFromRequest, isBinaryRequestBody } = require('../../utils/common');
@@ -39,7 +39,7 @@ const { preferencesUtil } = require('../../store/preferences');
 const { getProcessEnvVars } = require('../../store/process-env');
 const { getFerretConfig } = require('../../store/ferret-config');
 const Oauth2Store = require('../../store/oauth2');
-const { isRequestTagsIncluded } = require('@useferret/common');
+const { isRequestTagsIncluded } = require('@ferret-app/common');
 const { cookiesStore } = require('../../store/cookies');
 const registerGrpcEventHandlers = require('./grpc-event-handlers');
 const { registerWsEventHandlers } = require('./ws-event-handlers');
@@ -48,7 +48,7 @@ const { easterEggResponse } = require('../../utils/woof');
 const { createRunnerExchangeEmitters } = require('./runner-exchange');
 const { saveRunnerResponseBody } = require('../../services/runner-exchange');
 const { recordHistory } = require('../../services/request-history');
-const { buildFormUrlEncodedPayload, isFormData, getMediaType, extractBoundaryFromContentType } = require('@useferret/common').utils;
+const { buildFormUrlEncodedPayload, isFormData, getMediaType, extractBoundaryFromContentType } = require('@ferret-app/common').utils;
 
 const ERROR_OCCURRED_WHILE_EXECUTING_REQUEST = 'Error occurred while executing the request!';
 

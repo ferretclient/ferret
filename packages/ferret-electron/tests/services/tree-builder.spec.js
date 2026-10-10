@@ -1,6 +1,6 @@
 const path = require('node:path');
 const { describe, it, expect } = require('@jest/globals');
-const { getFolderTags } = require('@useferret/common');
+const { getFolderTags } = require('@ferret-app/common');
 const { buildTree } = require('../../src/services/mount/tree-builder');
 
 const COLLECTION_PATH = path.join(path.sep, 'collection');

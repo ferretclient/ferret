@@ -1,7 +1,7 @@
 let mockFetchShellEnv;
 let mockGetSystemProxy;
 
-jest.mock('@useferret/requests', () => ({
+jest.mock('@ferret-app/requests', () => ({
   fetchShellEnv: (...args) => mockFetchShellEnv(...args),
   getSystemProxy: (...args) => mockGetSystemProxy(...args)
 }));

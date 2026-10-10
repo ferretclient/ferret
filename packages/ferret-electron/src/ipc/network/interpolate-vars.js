@@ -1,7 +1,7 @@
-const { interpolate } = require('@useferret/common');
+const { interpolate } = require('@ferret-app/common');
 const { each, forOwn, cloneDeep } = require('lodash');
-const { isFormData, getMediaType } = require('@useferret/common').utils;
-const { getUnresolvedVariableCollector } = require('@useferret/js');
+const { isFormData, getMediaType } = require('@ferret-app/common').utils;
+const { getUnresolvedVariableCollector } = require('@ferret-app/js');
 const { isBinaryRequestBody } = require('../../utils/common');
 
 const hasResolvablePathParamValue = (pathParam) => {

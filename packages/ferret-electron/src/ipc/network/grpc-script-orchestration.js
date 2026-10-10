@@ -1,8 +1,8 @@
 const decomment = require('decomment');
 const { get } = require('lodash');
 const { safeParseJSON } = require('../../utils/common');
-const { GrpcScriptRuntime, formatErrorWithContextV2 } = require('@useferret/js');
-const { SCRIPT_TYPES } = require('@useferret/common');
+const { GrpcScriptRuntime, formatErrorWithContextV2 } = require('@ferret-app/js');
+const { SCRIPT_TYPES } = require('@ferret-app/common');
 const { clearOauth2CredentialsByCredentialsId } = require('../../utils/oauth2');
 const { applyCollectionVarsToCollectionRoot } = require('./apply-collection-vars');
 

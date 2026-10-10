@@ -1,6 +1,6 @@
 let mockInitialize;
 
-jest.mock('@useferret/requests', () => ({
+jest.mock('@ferret-app/requests', () => ({
   initializeShellEnv: (...args) => mockInitialize(...args)
 }));
 

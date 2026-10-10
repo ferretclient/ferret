@@ -1,4 +1,4 @@
-import type { HttpRequestParam as FerretHttpRequestParam } from '@useferret/schema-types/requests/http';
+import type { HttpRequestParam as FerretHttpRequestParam } from '@ferret-app/schema-types/requests/http';
 import type { HttpRequestParam } from '@opencollection/types/requests/http';
 import { uuid, ensureString } from '../../../utils';
 

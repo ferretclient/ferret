@@ -1,5 +1,5 @@
 const { get, each } = require('lodash');
-const { interpolate } = require('@useferret/common');
+const { interpolate } = require('@ferret-app/common');
 const { getIntrospectionQuery } = require('graphql');
 const interpolateVars = require('./interpolate-vars');
 const { setAuthHeaders } = require('./prepare-request');

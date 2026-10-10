@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require('path');
 const { get } = require('lodash');
-const { getCACertificates } = require('@useferret/requests');
+const { getCACertificates } = require('@ferret-app/requests');
 const { preferencesUtil } = require('../../store/preferences');
 const { getFerretConfig } = require('../../store/ferret-config');
 const { getCachedSystemProxy } = require('../../store/system-proxy');

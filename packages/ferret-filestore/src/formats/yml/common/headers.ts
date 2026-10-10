@@ -1,5 +1,5 @@
-import type { FolderRequest as FerretFolderRequest } from '@useferret/schema-types/collection/folder';
-import type { KeyValue as FerretKeyValue } from '@useferret/schema-types/common/key-value';
+import type { FolderRequest as FerretFolderRequest } from '@ferret-app/schema-types/collection/folder';
+import type { KeyValue as FerretKeyValue } from '@ferret-app/schema-types/common/key-value';
 import type { HttpRequestHeader, HttpResponseHeader } from '@opencollection/types/requests/http';
 import { uuid, ensureString } from '../../../utils';
 

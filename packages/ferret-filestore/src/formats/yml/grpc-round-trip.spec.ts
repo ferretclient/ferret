@@ -1,4 +1,4 @@
-import type { GrpcRequest as FerretGrpcRequest } from '@useferret/schema-types/requests/grpc';
+import type { GrpcRequest as FerretGrpcRequest } from '@ferret-app/schema-types/requests/grpc';
 import stringifyItem from './stringifyItem';
 import parseItem from './parseItem';
 

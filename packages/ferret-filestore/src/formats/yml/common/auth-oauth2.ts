@@ -14,7 +14,7 @@ import type {
 import type {
   OAuth2 as FerretOAuth2,
   OAuthAdditionalParameter as FerretOAuthAdditionalParameter
-} from '@useferret/schema-types/common/auth';
+} from '@ferret-app/schema-types/common/auth';
 import { isString, isNonEmptyString } from '../../../utils';
 
 const normalizeBoolean = (value?: boolean | null): boolean | undefined =>

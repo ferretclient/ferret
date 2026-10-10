@@ -1,5 +1,5 @@
 import { toOpenCollectionScripts, toFerretScripts } from './scripts';
-import { HTTP_SCRIPT_KEYS, GRPC_SCRIPT_KEYS } from '@useferret/common';
+import { HTTP_SCRIPT_KEYS, GRPC_SCRIPT_KEYS } from '@ferret-app/common';
 
 describe('toOpenCollectionScripts', () => {
   it('returns undefined when there is nothing to write', () => {

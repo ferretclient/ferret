@@ -1,4 +1,4 @@
-import type { HttpRequestBody as FerretHttpRequestBody } from '@useferret/schema-types/requests/http';
+import type { HttpRequestBody as FerretHttpRequestBody } from '@ferret-app/schema-types/requests/http';
 import type {
   HttpRequestBody,
   RawBody,
@@ -9,9 +9,9 @@ import type {
   FileBody,
   FileBodyVariant
 } from '@opencollection/types/requests/http';
-import type { FileEntry as FerretFileEntry } from '@useferret/schema-types/common/file';
+import type { FileEntry as FerretFileEntry } from '@ferret-app/schema-types/common/file';
 
-import type { KeyValue as FerretKeyValue } from '@useferret/schema-types/common/key-value';
+import type { KeyValue as FerretKeyValue } from '@ferret-app/schema-types/common/key-value';
 import { uuid, ensureString } from '../../../utils';
 
 export const toOpenCollectionBody = (body: FerretHttpRequestBody | null | undefined): HttpRequestBody | undefined => {
