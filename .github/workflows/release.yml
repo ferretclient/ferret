@@ -106,7 +106,6 @@ jobs:
           path: |
             packages/ferret-electron/out/*.exe
             packages/ferret-electron/out/*.dmg
-            packages/ferret-electron/out/*.pkg
             packages/ferret-electron/out/*.zip
             packages/ferret-electron/out/*.AppImage
             packages/ferret-electron/out/*.deb

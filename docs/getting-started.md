@@ -132,7 +132,7 @@ This builds the UI for production (`npm run build:web`), copies it into the Elec
 | Built on | Produces |
 | --- | --- |
 | Windows | NSIS installer `.exe` for x64 and arm64 |
-| macOS | `.pkg`, `.dmg` and `.zip` for x64 and arm64 |
+| macOS | `.dmg` and `.zip` for x64 and arm64 |
 | Linux | AppImage for x64 and arm64. For packages run `npm run dist:deb --workspace=packages/ferret-electron` or `dist:rpm` |
 
 Installers must be built on their own operating system; one machine cannot produce all three. The [release workflow](releasing.md) builds all of them on GitHub. Builds are **unsigned** unless you provide signing credentials, so Windows SmartScreen and macOS Gatekeeper warn on first launch.
