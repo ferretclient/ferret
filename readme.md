@@ -117,3 +117,5 @@ See [security.md](security.md) for how to report a vulnerability.
 ## License
 
 [MIT](license.md)
+
+Ferret started as a fork of [Bruno](https://github.com/usebruno/bruno) by Anoop M D, Anusree P S and contributors, which is also MIT-licensed. Their copyright notice is kept in the license file next to ours.
