@@ -782,9 +782,9 @@ describe('interpolate-vars: interpolateVars', () => {
       const request = { method: 'GET', url: '{{baseUrl}}', headers: {} };
       const unresolvedVariables = trackUnresolvedVariables(request);
 
-      interpolateVars(request, { baseUrl: '{{process.env.BASE_URL}}' }, {}, { BASE_URL: 'https://ferret.io' });
+      interpolateVars(request, { baseUrl: '{{process.env.BASE_URL}}' }, {}, { BASE_URL: 'https://example.com' });
 
-      expect(request.url).toBe('https://ferret.io');
+      expect(request.url).toBe('https://example.com');
       expect(unresolvedVariables.size).toBe(0);
     });
   });

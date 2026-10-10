@@ -47,7 +47,7 @@ describe('prepare-request: prepareRequest', () => {
           method: 'GET',
           headers: [],
           params: [],
-          url: 'https://ferret.io',
+          url: 'https://example.com',
           auth: {
             mode: 'inherit'
           },
@@ -333,7 +333,7 @@ describe('prepare-request: prepareRequest', () => {
           method: 'GET',
           headers: [],
           params: [],
-          url: 'https://ferret.io',
+          url: 'https://example.com',
           auth: {
             mode: 'basic' // Will be overridden in each test
           },

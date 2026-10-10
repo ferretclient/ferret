@@ -40,9 +40,9 @@ describe('LinuxProxyResolver', () => {
   describe('gsettings proxy detection', () => {
     it('should detect manual proxy configuration', async () => {
       const modeOutput = '\'manual\'';
-      const httpHostOutput = '\'proxy.ferret.io\'';
+      const httpHostOutput = '\'proxy.example.com\'';
       const httpPortOutput = '8080';
-      const httpsHostOutput = '\'secure-proxy.ferret.io\'';
+      const httpsHostOutput = '\'secure-proxy.example.com\'';
       const httpsPortOutput = '8443';
       const ignoreHostsOutput = '[\'localhost\', \'127.0.0.1\']';
 
@@ -57,8 +57,8 @@ describe('LinuxProxyResolver', () => {
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://secure-proxy.ferret.io:8443',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://secure-proxy.example.com:8443',
         no_proxy: 'localhost,127.0.0.1',
         source: 'linux-system'
       });
@@ -66,9 +66,9 @@ describe('LinuxProxyResolver', () => {
 
     it('should detect identical HTTP and HTTPS proxies', async () => {
       const modeOutput = '\'manual\'';
-      const httpHostOutput = '\'proxy.ferret.io\'';
+      const httpHostOutput = '\'proxy.example.com\'';
       const httpPortOutput = '8080';
-      const httpsHostOutput = '\'proxy.ferret.io\'';
+      const httpsHostOutput = '\'proxy.example.com\'';
       const httpsPortOutput = '8080';
       const ignoreHostsOutput = '[]';
 
@@ -83,8 +83,8 @@ describe('LinuxProxyResolver', () => {
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: null,
         source: 'linux-system'
       });
@@ -93,7 +93,7 @@ describe('LinuxProxyResolver', () => {
     it('should detect PAC URL when gsettings is in auto mode', async () => {
       mockExecFile
         .mockResolvedValueOnce({ stdout: '\'auto\'', stderr: '' })
-        .mockResolvedValueOnce({ stdout: '\'http://wpad.ferret.io/proxy.pac\'', stderr: '' });
+        .mockResolvedValueOnce({ stdout: '\'http://wpad.example.com/proxy.pac\'', stderr: '' });
 
       const result = await detector.detect();
 
@@ -101,7 +101,7 @@ describe('LinuxProxyResolver', () => {
         http_proxy: null,
         https_proxy: null,
         no_proxy: null,
-        pac_url: 'http://wpad.ferret.io/proxy.pac',
+        pac_url: 'http://wpad.example.com/proxy.pac',
         source: 'linux-system'
       });
     });
@@ -126,7 +126,7 @@ describe('LinuxProxyResolver', () => {
 
     it('should handle empty ignore hosts list', async () => {
       const modeOutput = '\'manual\'';
-      const httpHostOutput = '\'proxy.ferret.io\'';
+      const httpHostOutput = '\'proxy.example.com\'';
       const httpPortOutput = '8080';
       const httpsHostOutput = '\'\'';
       const httpsPortOutput = '';
@@ -143,7 +143,7 @@ describe('LinuxProxyResolver', () => {
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
         https_proxy: null,
         no_proxy: null,
         source: 'linux-system'
@@ -161,16 +161,16 @@ describe('LinuxProxyResolver', () => {
       // Mock /etc/environment file
       mockExistsSync.mockReturnValueOnce(true);
       mockReadFile.mockResolvedValueOnce(`
-http_proxy=http://proxy.ferret.io:8080
-https_proxy=http://proxy.ferret.io:8080
+http_proxy=http://proxy.example.com:8080
+https_proxy=http://proxy.example.com:8080
 no_proxy=localhost,127.0.0.1
 `);
 
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: 'localhost,127.0.0.1',
         source: 'linux-system'
       });
@@ -192,16 +192,16 @@ no_proxy=localhost,127.0.0.1
       // Mock systemd proxy file to exist
       mockExistsSync.mockReturnValueOnce(true);
       mockReadFile.mockResolvedValueOnce(`
-http_proxy=http://proxy.ferret.io:8080
-https_proxy=http://proxy.ferret.io:8080
+http_proxy=http://proxy.example.com:8080
+https_proxy=http://proxy.example.com:8080
 no_proxy=localhost,127.0.0.1
 `);
 
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: 'localhost,127.0.0.1',
         source: 'linux-system'
       });

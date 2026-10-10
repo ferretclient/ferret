@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: https://ferret.io/favicon.ico
+  url: https://example.com/favicon.ico
   body: none
   auth: none
 }

@@ -10,15 +10,15 @@ meta {
 }
 
 get {
-  url: https://api.ferret.io/protected
+  url: https://api.example.com/protected
 }
 
 auth:oauth2 {
   grant_type: authorization_code
   client_id: ferret-client-id
   client_secret: ferret-client-secret
-  authorization_url: https://auth.ferret.io/oauth/authorize
-  access_token_url: https://auth.ferret.io/oauth/token
+  authorization_url: https://auth.example.com/oauth/authorize
+  access_token_url: https://auth.example.com/oauth/token
 }
 
 auth:oauth2:additional_params:auth_req:headers {
@@ -178,8 +178,8 @@ auth:oauth2 {
   grant_type: authorization_code
   client_id: ferret-client-id
   client_secret: ferret-client-secret
-  authorization_url: https://auth.ferret.io/oauth/authorize
-  access_token_url: https://auth.ferret.io/oauth/token
+  authorization_url: https://auth.example.com/oauth/authorize
+  access_token_url: https://auth.example.com/oauth/token
 }
 
 auth:oauth2:additional_params:auth_req:headers {

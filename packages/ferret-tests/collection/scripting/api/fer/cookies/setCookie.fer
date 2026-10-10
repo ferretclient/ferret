@@ -43,7 +43,7 @@ tests {
       expect(cookieData.key).to.equal("auth");
       expect(cookieData.value).to.equal("1234");
       expect(cookieData.path).to.equal("/path");
-      expect(cookieData.domain).to.include('ferret.io');
+      expect(cookieData.domain).to.include('example.com');
       console.log("Retrieved and verified cookie:", cookieData);
   });
   

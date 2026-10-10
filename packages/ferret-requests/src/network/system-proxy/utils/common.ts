@@ -23,9 +23,9 @@ export async function safeExec(bin: string, args: string[], opts: ExecFileOption
 
 /**
  * Normalizes a proxy URL by ensuring it includes a protocol.
- * @param proxy - The proxy URL to normalize (e.g., "proxy.ferret.io:8080").
+ * @param proxy - The proxy URL to normalize (e.g., "proxy.example.com:8080").
  * @param defaultProtocol - The protocol to prepend if missing (default: "http").
- * @returns The normalized proxy URL (e.g., "http://proxy.ferret.io:8080").
+ * @returns The normalized proxy URL (e.g., "http://proxy.example.com:8080").
  *
  * Notes:
  * - If the URL already includes a protocol (e.g., "https://..."), it is returned unchanged.

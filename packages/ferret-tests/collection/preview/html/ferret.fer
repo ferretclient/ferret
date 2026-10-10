@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: https://ferret.io
+  url: https://example.com
   body: none
   auth: none
 }

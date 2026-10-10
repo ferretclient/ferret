@@ -5,7 +5,7 @@ describe('Send Request Translation', () => {
     it('should transform raw JSON string body', () => {
       const code = `
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             header: {
                 'Accept': 'application/json',
@@ -32,7 +32,7 @@ describe('Send Request Translation', () => {
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         await fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -58,7 +58,7 @@ describe('Send Request Translation', () => {
     it('should transform raw JSON object body', () => {
       const code = `
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             header: {
                 'Accept': 'application/json',
@@ -85,7 +85,7 @@ describe('Send Request Translation', () => {
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         await fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -111,7 +111,7 @@ describe('Send Request Translation', () => {
     it('should transform raw text body', () => {
       const code = `
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             header: {
                 'Content-Type': 'text/plain',
@@ -127,7 +127,7 @@ describe('Send Request Translation', () => {
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         await fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain',
@@ -144,7 +144,7 @@ describe('Send Request Translation', () => {
     it('should transform urlencoded body with single key-value pair', () => {
       const code = `
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             header: {
                 'Accept': 'application/json',
@@ -171,7 +171,7 @@ describe('Send Request Translation', () => {
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         await fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -197,7 +197,7 @@ describe('Send Request Translation', () => {
     it('should transform urlencoded body with multiple key-value pairs', () => {
       const code = `
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             header: {},
             body: {
@@ -215,7 +215,7 @@ describe('Send Request Translation', () => {
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         await fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -234,7 +234,7 @@ describe('Send Request Translation', () => {
     it('should transform urlencoded body when no Content-Type header exists', () => {
       const code = `
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             body: {
                 mode: 'urlencoded',
@@ -248,7 +248,7 @@ describe('Send Request Translation', () => {
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         await fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
 
             data: {
@@ -266,7 +266,7 @@ describe('Send Request Translation', () => {
     it('should transform urlencoded body with incorrect Content-Type header', () => {
       const code = `
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             headers: {
                 "Content-Type": "text/plain"
@@ -283,7 +283,7 @@ describe('Send Request Translation', () => {
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         await fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -301,7 +301,7 @@ describe('Send Request Translation', () => {
     it('should transform formdata body with single key-value pair', () => {
       const code = `
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             header: {
                 'Content-Type': 'multipart/form-data',
@@ -327,7 +327,7 @@ describe('Send Request Translation', () => {
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         await fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             headers: {
                 "Content-Type": "multipart/form-data",
@@ -352,7 +352,7 @@ describe('Send Request Translation', () => {
     it('should transform formdata body with multiple key-value pair', () => {
       const code = `
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             header: {
                 'Content-Type': 'multipart/form-data',
@@ -380,7 +380,7 @@ describe('Send Request Translation', () => {
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         await fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             headers: {
                 "Content-Type": "multipart/form-data",
@@ -407,7 +407,7 @@ describe('Send Request Translation', () => {
     it('should transform formdata body when no Content-Type header exists', () => {
       const code = `
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             body: {
                 mode: 'formdata',
@@ -432,7 +432,7 @@ describe('Send Request Translation', () => {
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         await fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
 
             data: {
@@ -461,7 +461,7 @@ describe('Send Request Translation', () => {
     it('should transform formdata body with incorrect Content-Type header', () => {
       const code = `
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             headers: {
                 "Content-Type": "text/plain"
@@ -489,7 +489,7 @@ describe('Send Request Translation', () => {
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         await fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             headers: {
                 "Content-Type": "multipart/form-data"
@@ -518,7 +518,7 @@ describe('Send Request Translation', () => {
     it('should rename header property to headers', () => {
       const code = `
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'GET',
             header: {
                 'X-Custom-Header': 'custom-value',
@@ -529,7 +529,7 @@ describe('Send Request Translation', () => {
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         await fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'GET',
             headers: {
                 'X-Custom-Header': 'custom-value',
@@ -542,7 +542,7 @@ describe('Send Request Translation', () => {
     it('should handle header array format', () => {
       const code = `
         pm.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'GET',
             header: [
                 { key: 'X-Custom-Header', value: 'custom-value' },
@@ -553,7 +553,7 @@ describe('Send Request Translation', () => {
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         await fer.sendRequest({
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'GET',
             headers: {
                 "X-Custom-Header": 'custom-value',
@@ -567,7 +567,7 @@ describe('Send Request Translation', () => {
   describe('Response Handling', () => {
     it('should transform response property access', () => {
       const code = `
-        pm.sendRequest('https://echo.ferret.io', function (error, response) {
+        pm.sendRequest('https://echo.example.com', function (error, response) {
             const status = response.code;
             const statusText = response.status;
             const headers = response.headers;
@@ -595,7 +595,7 @@ describe('Send Request Translation', () => {
       const code = `
         try {
             const response = await pm.sendRequest({
-                url: "https://echo.ferret.io",
+                url: "https://echo.example.com",
                 method: "GET"
             });
 
@@ -608,7 +608,7 @@ describe('Send Request Translation', () => {
       expect(translatedCode).toBe(`
         try {
             const response = await fer.sendRequest({
-                url: "https://echo.ferret.io",
+                url: "https://echo.example.com",
                 method: "GET"
             });
 
@@ -623,7 +623,7 @@ describe('Send Request Translation', () => {
       const code = `
         try {
             pm.sendRequest({
-                url: "https://echo.ferret.io",
+                url: "https://echo.example.com",
                 method: "GET"
             }, (error, response) => {
                 console.log(response.json());
@@ -636,7 +636,7 @@ describe('Send Request Translation', () => {
       expect(translatedCode).toBe(`
         try {
             await fer.sendRequest({
-                url: "https://echo.ferret.io",
+                url: "https://echo.example.com",
                 method: "GET"
             }, async (error, response) => {
                 console.log(response.data);
@@ -651,7 +651,7 @@ describe('Send Request Translation', () => {
       const code = `
         try {
             pm.sendRequest({
-                url: "https://echo.ferret.io",
+                url: "https://echo.example.com",
                 method: "GET"
             }, async (error, response) => {
                 await new Promise(resolve => {
@@ -669,7 +669,7 @@ describe('Send Request Translation', () => {
       expect(translatedCode).toBe(`
         try {
             await fer.sendRequest({
-                url: "https://echo.ferret.io",
+                url: "https://echo.example.com",
                 method: "GET"
             }, async (error, response) => {
                 await new Promise(resolve => {
@@ -690,7 +690,7 @@ describe('Send Request Translation', () => {
     it('requestConfig passed as a variable', () => {
       const code = `
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             header: {
                 'Accept': 'application/json',
@@ -718,7 +718,7 @@ describe('Send Request Translation', () => {
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -745,7 +745,7 @@ describe('Send Request Translation', () => {
     it('requestConfig passed as a variable with multi-level references', () => {
       const code = `
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             header: {
                 'Accept': 'application/json',
@@ -776,7 +776,7 @@ describe('Send Request Translation', () => {
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         const requestConfig = {
-            url: 'https://echo.ferret.io',
+            url: 'https://echo.example.com',
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -808,7 +808,7 @@ describe('Send Request Translation', () => {
     it('should keep the chain intact and await the outermost call', () => {
       const code = `
 pm.sendRequest({
-  url: 'https://echo.ferret.io',
+  url: 'https://echo.example.com',
   method: 'POST',
   header: {
     'Content-Type': 'application/json'
@@ -830,7 +830,7 @@ pm.sendRequest({
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
 await fer.sendRequest({
-  url: 'https://echo.ferret.io',
+  url: 'https://echo.example.com',
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -850,7 +850,7 @@ await fer.sendRequest({
 
     it('should transform only the fulfilled handler of then(onFulfilled, onRejected)', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }).then((res) => {
+        pm.sendRequest({ url: 'https://echo.example.com' }).then((res) => {
             console.log(res.json());
         }, (res) => {
             console.log(res.json());
@@ -858,7 +858,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }).then((res) => {
+        await fer.sendRequest({ url: 'https://echo.example.com' }).then((res) => {
             console.log(res.data);
         }, (res) => {
             console.log(res.json());
@@ -868,7 +868,7 @@ await fer.sendRequest({
 
     it('should map code and status inside a then handler', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }).then((res) => {
+        pm.sendRequest({ url: 'https://echo.example.com' }).then((res) => {
             console.log(res.code);
             console.log(res.status);
             console.log(res.headers);
@@ -876,7 +876,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }).then((res) => {
+        await fer.sendRequest({ url: 'https://echo.example.com' }).then((res) => {
             console.log(res.status);
             console.log(res.statusText);
             console.log(res.headers);
@@ -887,7 +887,7 @@ await fer.sendRequest({
     it('should not await a chain inside a non-async function', () => {
       const code = `
         function fetchData() {
-            pm.sendRequest({ url: 'https://echo.ferret.io' }).then((res) => {
+            pm.sendRequest({ url: 'https://echo.example.com' }).then((res) => {
                 console.log(res.json());
             });
         }
@@ -895,7 +895,7 @@ await fer.sendRequest({
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         function fetchData() {
-            fer.sendRequest({ url: 'https://echo.ferret.io' }).then((res) => {
+            fer.sendRequest({ url: 'https://echo.example.com' }).then((res) => {
                 console.log(res.data);
             });
         }
@@ -905,20 +905,20 @@ await fer.sendRequest({
     it('should keep a callback passed to a non-promise method synchronous', () => {
       const code = `
         setTimeout(function () {
-            pm.sendRequest({ url: 'https://echo.ferret.io' }).then((res) => res.json());
+            pm.sendRequest({ url: 'https://echo.example.com' }).then((res) => res.json());
         }, 0);
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         setTimeout(function () {
-            fer.sendRequest({ url: 'https://echo.ferret.io' }).then((res) => res.data);
+            fer.sendRequest({ url: 'https://echo.example.com' }).then((res) => res.data);
         }, 0);
       `);
     });
 
     it('should rewrite only the first then, since later handlers receive the previous return value', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' })
+        pm.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => res.json())
           .then((data) => {
               console.log(data.text);
@@ -927,7 +927,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' })
+        await fer.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => res.data)
           .then((data) => {
               console.log(data.text);
@@ -938,7 +938,7 @@ await fer.sendRequest({
 
     it('should not rewrite references shadowed by a nested function re-declaring the name', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }).then((res) => {
+        pm.sendRequest({ url: 'https://echo.example.com' }).then((res) => {
             console.log(res.json());
             items.forEach((res) => {
                 console.log(res.json());
@@ -947,7 +947,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }).then((res) => {
+        await fer.sendRequest({ url: 'https://echo.example.com' }).then((res) => {
             console.log(res.data);
             items.forEach((res) => {
                 console.log(res.json());
@@ -958,7 +958,7 @@ await fer.sendRequest({
 
     it('should handle a chain ending in finally', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' })
+        pm.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               console.log(res.json());
           })
@@ -971,7 +971,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' })
+        await fer.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               console.log(res.data);
           })
@@ -987,32 +987,32 @@ await fer.sendRequest({
     it('should await a chain returned from an async function', () => {
       const code = `
         async function fetchData() {
-            return pm.sendRequest({ url: 'https://echo.ferret.io' }).then((res) => res.json());
+            return pm.sendRequest({ url: 'https://echo.example.com' }).then((res) => res.json());
         }
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         async function fetchData() {
-            return await fer.sendRequest({ url: 'https://echo.ferret.io' }).then((res) => res.data);
+            return await fer.sendRequest({ url: 'https://echo.example.com' }).then((res) => res.data);
         }
       `);
     });
 
     it('should translate each of several chains in the same script', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io/one' }).then((res) => {
+        pm.sendRequest({ url: 'https://echo.example.com/one' }).then((res) => {
             console.log(res.json());
         });
-        pm.sendRequest({ url: 'https://echo.ferret.io/two' }).then((res) => {
+        pm.sendRequest({ url: 'https://echo.example.com/two' }).then((res) => {
             console.log(res.code);
         });
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io/one' }).then((res) => {
+        await fer.sendRequest({ url: 'https://echo.example.com/one' }).then((res) => {
             console.log(res.data);
         });
-        await fer.sendRequest({ url: 'https://echo.ferret.io/two' }).then((res) => {
+        await fer.sendRequest({ url: 'https://echo.example.com/two' }).then((res) => {
             console.log(res.status);
         });
       `);
@@ -1020,7 +1020,7 @@ await fer.sendRequest({
 
     it('should not rewrite past a handler referenced by a variable', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' })
+        pm.sendRequest({ url: 'https://echo.example.com' })
           .then(maybeHandler)
           .then((res) => {
               console.log(res.json());
@@ -1028,7 +1028,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' })
+        await fer.sendRequest({ url: 'https://echo.example.com' })
           .then(maybeHandler)
           .then((res) => {
               console.log(res.json());
@@ -1037,43 +1037,43 @@ await fer.sendRequest({
     });
 
     it('should treat a bracket-notation then as a chain', () => {
-      const code = `pm.sendRequest({ url: 'https://echo.ferret.io' })['then']((res) => res.json());`;
+      const code = `pm.sendRequest({ url: 'https://echo.example.com' })['then']((res) => res.json());`;
       const translatedCode = translateCode(code);
-      expect(translatedCode).toBe(`await fer.sendRequest({ url: 'https://echo.ferret.io' })['then']((res) => res.data);`);
+      expect(translatedCode).toBe(`await fer.sendRequest({ url: 'https://echo.example.com' })['then']((res) => res.data);`);
     });
 
     it('should rewrite bracket-notation response access with a literal key', () => {
-      const code = `pm.sendRequest({ url: 'https://echo.ferret.io' }).then((res) => res['json']());`;
+      const code = `pm.sendRequest({ url: 'https://echo.example.com' }).then((res) => res['json']());`;
       const translatedCode = translateCode(code);
-      expect(translatedCode).toBe(`await fer.sendRequest({ url: 'https://echo.ferret.io' }).then((res) => res.data);`);
+      expect(translatedCode).toBe(`await fer.sendRequest({ url: 'https://echo.example.com' }).then((res) => res.data);`);
     });
 
     it('should not treat a chain method passed as a value as a chain call', () => {
-      const code = `register(pm.sendRequest({ url: 'https://echo.ferret.io' }).then);`;
+      const code = `register(pm.sendRequest({ url: 'https://echo.example.com' }).then);`;
       const translatedCode = translateCode(code);
-      expect(translatedCode).toBe(`register((await fer.sendRequest({ url: 'https://echo.ferret.io' })).then);`);
+      expect(translatedCode).toBe(`register((await fer.sendRequest({ url: 'https://echo.example.com' })).then);`);
     });
 
     it('should leave a destructured handler param alone', () => {
-      const code = `pm.sendRequest({ url: 'https://echo.ferret.io' }).then(({ code }) => console.log(code));`;
+      const code = `pm.sendRequest({ url: 'https://echo.example.com' }).then(({ code }) => console.log(code));`;
       const translatedCode = translateCode(code);
-      expect(translatedCode).toBe(`await fer.sendRequest({ url: 'https://echo.ferret.io' }).then(({ code }) => console.log(code));`);
+      expect(translatedCode).toBe(`await fer.sendRequest({ url: 'https://echo.example.com' }).then(({ code }) => console.log(code));`);
     });
 
     it('should translate a nested sendRequest chain inside an async then handler', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io/users/1' }).then(async (userRes) => {
+        pm.sendRequest({ url: 'https://echo.example.com/users/1' }).then(async (userRes) => {
             const userId = userRes.json().id;
-            return pm.sendRequest({ url: 'https://echo.ferret.io/posts' }).then((postsRes) => {
+            return pm.sendRequest({ url: 'https://echo.example.com/posts' }).then((postsRes) => {
                 console.log(postsRes.json());
             });
         });
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io/users/1' }).then(async (userRes) => {
+        await fer.sendRequest({ url: 'https://echo.example.com/users/1' }).then(async (userRes) => {
             const userId = userRes.data.id;
-            return await fer.sendRequest({ url: 'https://echo.ferret.io/posts' }).then((postsRes) => {
+            return await fer.sendRequest({ url: 'https://echo.example.com/posts' }).then((postsRes) => {
                 console.log(postsRes.data);
             });
         });
@@ -1082,16 +1082,16 @@ await fer.sendRequest({
 
     it('should make a non-async then handler async to await a nested sendRequest', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io/one' }).then((res) => {
-            pm.sendRequest({ url: 'https://echo.ferret.io/two' }).then((inner) => {
+        pm.sendRequest({ url: 'https://echo.example.com/one' }).then((res) => {
+            pm.sendRequest({ url: 'https://echo.example.com/two' }).then((inner) => {
                 console.log(inner.json());
             });
         });
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io/one' }).then(async res => {
-            await fer.sendRequest({ url: 'https://echo.ferret.io/two' }).then((inner) => {
+        await fer.sendRequest({ url: 'https://echo.example.com/one' }).then(async res => {
+            await fer.sendRequest({ url: 'https://echo.example.com/two' }).then((inner) => {
                 console.log(inner.data);
             });
         });
@@ -1100,16 +1100,16 @@ await fer.sendRequest({
 
     it('should translate a sendRequest chain nested inside a catch handler', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io/one' }).catch((err) => {
-            pm.sendRequest({ url: 'https://echo.ferret.io/retry' }).then((res) => {
+        pm.sendRequest({ url: 'https://echo.example.com/one' }).catch((err) => {
+            pm.sendRequest({ url: 'https://echo.example.com/retry' }).then((res) => {
                 console.log(res.code);
             });
         });
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io/one' }).catch(async err => {
-            await fer.sendRequest({ url: 'https://echo.ferret.io/retry' }).then((res) => {
+        await fer.sendRequest({ url: 'https://echo.example.com/one' }).catch(async err => {
+            await fer.sendRequest({ url: 'https://echo.example.com/retry' }).then((res) => {
                 console.log(res.status);
             });
         });
@@ -1118,32 +1118,32 @@ await fer.sendRequest({
 
     it('should await a nested sendRequest that has no chain of its own', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io/one' }).then((res) => {
-            pm.sendRequest({ url: 'https://echo.ferret.io/two' });
+        pm.sendRequest({ url: 'https://echo.example.com/one' }).then((res) => {
+            pm.sendRequest({ url: 'https://echo.example.com/two' });
         });
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io/one' }).then(async res => {
-            await fer.sendRequest({ url: 'https://echo.ferret.io/two' });
+        await fer.sendRequest({ url: 'https://echo.example.com/one' }).then(async res => {
+            await fer.sendRequest({ url: 'https://echo.example.com/two' });
         });
       `);
     });
 
     it('should not await a nested sendRequest inside a plain function declared in a then handler', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io/one' }).then((res) => {
+        pm.sendRequest({ url: 'https://echo.example.com/one' }).then((res) => {
             function retry() {
-                pm.sendRequest({ url: 'https://echo.ferret.io/two' }).then((r) => console.log(r.code));
+                pm.sendRequest({ url: 'https://echo.example.com/two' }).then((r) => console.log(r.code));
             }
             retry();
         });
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io/one' }).then((res) => {
+        await fer.sendRequest({ url: 'https://echo.example.com/one' }).then((res) => {
             function retry() {
-                fer.sendRequest({ url: 'https://echo.ferret.io/two' }).then((r) => console.log(r.status));
+                fer.sendRequest({ url: 'https://echo.example.com/two' }).then((r) => console.log(r.status));
             }
             retry();
         });
@@ -1152,13 +1152,13 @@ await fer.sendRequest({
 
     it('should rewrite past a then that returns its response parameter unchanged', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' })
+        pm.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => res)
           .then((res) => res.json());
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' })
+        await fer.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => res)
           .then((res) => res.data);
       `);
@@ -1166,7 +1166,7 @@ await fer.sendRequest({
 
     it('should rewrite past a block-bodied then that returns its response parameter', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' })
+        pm.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               console.log(res.code);
               return res;
@@ -1175,7 +1175,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' })
+        await fer.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               console.log(res.status);
               return res;
@@ -1186,7 +1186,7 @@ await fer.sendRequest({
 
     it('should rewrite across several consecutive pass-through handlers', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' })
+        pm.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => res)
           .then((res) => res)
           .then((res) => {
@@ -1195,7 +1195,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' })
+        await fer.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => res)
           .then((res) => res)
           .then((res) => {
@@ -1206,7 +1206,7 @@ await fer.sendRequest({
 
     it('should rewrite a handler that reassigns its parameter but stop after it', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' })
+        pm.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               res = res.json();
               return res;
@@ -1217,7 +1217,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' })
+        await fer.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               res = res.data;
               return res;
@@ -1230,7 +1230,7 @@ await fer.sendRequest({
 
     it('should rewrite response access on both sides of a reassignment in the same handler', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' })
+        pm.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               console.log(res.code);
               res = 5;
@@ -1239,7 +1239,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' })
+        await fer.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               console.log(res.status);
               res = 5;
@@ -1250,7 +1250,7 @@ await fer.sendRequest({
 
     it('should not rewrite past a handler that returns its parameter through an alias', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' })
+        pm.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               const r = res;
               return r;
@@ -1261,7 +1261,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' })
+        await fer.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               const r = res;
               return r;
@@ -1274,7 +1274,7 @@ await fer.sendRequest({
 
     it('should rewrite past a function-expression pass-through handler', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' })
+        pm.sendRequest({ url: 'https://echo.example.com' })
           .then(function (res) {
               return res;
           })
@@ -1284,7 +1284,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' })
+        await fer.sendRequest({ url: 'https://echo.example.com' })
           .then(function (res) {
               return res;
           })
@@ -1296,7 +1296,7 @@ await fer.sendRequest({
 
     it('should not rewrite past a handler that returns nothing', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' })
+        pm.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               console.log(res.json());
           })
@@ -1306,7 +1306,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' })
+        await fer.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               console.log(res.data);
           })
@@ -1318,7 +1318,7 @@ await fer.sendRequest({
 
     it('should not rewrite past a handler that returns its parameter on only some paths', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' })
+        pm.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               if (!ok) {
                   return null;
@@ -1331,7 +1331,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' })
+        await fer.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               if (!ok) {
                   return null;
@@ -1346,7 +1346,7 @@ await fer.sendRequest({
 
     it('should not count a nested function\'s return as the handler\'s own', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' })
+        pm.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               const extract = () => { return res.json(); };
               console.log(extract());
@@ -1356,7 +1356,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' })
+        await fer.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               const extract = () => { return res.data; };
               console.log(extract());
@@ -1368,7 +1368,7 @@ await fer.sendRequest({
 
     it('should rewrite past a handler whose nested function shadows and returns the parameter name', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' })
+        pm.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               const pick = (res) => { return res; };
               console.log(pick(items));
@@ -1378,7 +1378,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' })
+        await fer.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => {
               const pick = (res) => { return res; };
               console.log(pick(items));
@@ -1390,7 +1390,7 @@ await fer.sendRequest({
 
     it('should stop at a catch, whose handler can replace the response for the rest of the chain', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' })
+        pm.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => res)
           .catch(() => null)
           .then((data) => {
@@ -1399,7 +1399,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' })
+        await fer.sendRequest({ url: 'https://echo.example.com' })
           .then((res) => res)
           .catch(() => null)
           .then((data) => {
@@ -1410,7 +1410,7 @@ await fer.sendRequest({
 
     it('should continue past a finally, which always forwards the response', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }).finally(() => {
+        pm.sendRequest({ url: 'https://echo.example.com' }).finally(() => {
             console.log('done');
         }).then((res) => {
             console.log(res.json());
@@ -1418,7 +1418,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }).finally(() => {
+        await fer.sendRequest({ url: 'https://echo.example.com' }).finally(() => {
             console.log('done');
         }).then((res) => {
             console.log(res.data);
@@ -1428,7 +1428,7 @@ await fer.sendRequest({
 
     it('should stop at a catch placed directly after the request', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }).catch((err) => {
+        pm.sendRequest({ url: 'https://echo.example.com' }).catch((err) => {
             console.log(err);
         }).then((res) => {
             console.log(res.code);
@@ -1436,7 +1436,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }).catch((err) => {
+        await fer.sendRequest({ url: 'https://echo.example.com' }).catch((err) => {
             console.log(err);
         }).then((res) => {
             console.log(res.code);
@@ -1446,7 +1446,7 @@ await fer.sendRequest({
 
     it('should continue past a rejection-only then(null, onRejected)', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }).then(null, (err) => {
+        pm.sendRequest({ url: 'https://echo.example.com' }).then(null, (err) => {
             console.log(err);
         }).then((res) => {
             console.log(res.json());
@@ -1454,7 +1454,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }).then(null, (err) => {
+        await fer.sendRequest({ url: 'https://echo.example.com' }).then(null, (err) => {
             console.log(err);
         }).then((res) => {
             console.log(res.data);
@@ -1464,7 +1464,7 @@ await fer.sendRequest({
 
     it('should continue past a rejection-only then(undefined, onRejected)', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }).then(undefined, (err) => {
+        pm.sendRequest({ url: 'https://echo.example.com' }).then(undefined, (err) => {
             console.log(err);
         }).then((res) => {
             console.log(res.json());
@@ -1472,7 +1472,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }).then(undefined, (err) => {
+        await fer.sendRequest({ url: 'https://echo.example.com' }).then(undefined, (err) => {
             console.log(err);
         }).then((res) => {
             console.log(res.data);
@@ -1482,13 +1482,13 @@ await fer.sendRequest({
 
     it('should continue past an empty then()', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }).then().then((res) => {
+        pm.sendRequest({ url: 'https://echo.example.com' }).then().then((res) => {
             console.log(res.json());
         });
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }).then().then((res) => {
+        await fer.sendRequest({ url: 'https://echo.example.com' }).then().then((res) => {
             console.log(res.data);
         });
       `);
@@ -1496,13 +1496,13 @@ await fer.sendRequest({
 
     it('should stop at a zero-arity first handler rather than rewriting a later one', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' })
+        pm.sendRequest({ url: 'https://echo.example.com' })
           .then(() => 'done')
           .then((res) => res.json());
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' })
+        await fer.sendRequest({ url: 'https://echo.example.com' })
           .then(() => 'done')
           .then((res) => res.json());
       `);
@@ -1512,7 +1512,7 @@ await fer.sendRequest({
   describe('response members wrapped in other expressions', () => {
     it('should keep the call wrapping a response property', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }, function (err, response) {
+        pm.sendRequest({ url: 'https://echo.example.com' }, function (err, response) {
           const json = response.json();
           const text = response.text();
           const code = response.code;
@@ -1526,7 +1526,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }, async function(err, response) {
+        await fer.sendRequest({ url: 'https://echo.example.com' }, async function(err, response) {
           const json = response.data;
           const text = response.data;
           const code = response.status;
@@ -1542,14 +1542,14 @@ await fer.sendRequest({
 
     it('should rewrite response properties and methods passed together as call arguments', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }, function (err, response) {
+        pm.sendRequest({ url: 'https://echo.example.com' }, function (err, response) {
           console.log(response.code, response.json());
           pm.environment.set('statusText', response.status);
         });
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }, async function(err, response) {
+        await fer.sendRequest({ url: 'https://echo.example.com' }, async function(err, response) {
           console.log(response.status, response.data);
           fer.setEnvVar('statusText', response.statusText);
         });
@@ -1558,13 +1558,13 @@ await fer.sendRequest({
 
     it('should rewrite a response member nested inside a call argument', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }, function (err, response) {
+        pm.sendRequest({ url: 'https://echo.example.com' }, function (err, response) {
           console.log(response.json().data.id, response.text().length);
         });
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }, async function(err, response) {
+        await fer.sendRequest({ url: 'https://echo.example.com' }, async function(err, response) {
           console.log(response.data.data.id, response.data.length);
         });
       `);
@@ -1572,13 +1572,13 @@ await fer.sendRequest({
 
     it('should rewrite response members inside a template literal', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }, function (err, response) {
+        pm.sendRequest({ url: 'https://echo.example.com' }, function (err, response) {
           console.log(\`\${response.code} \${response.status}\`);
         });
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }, async function(err, response) {
+        await fer.sendRequest({ url: 'https://echo.example.com' }, async function(err, response) {
           console.log(\`\${response.status} \${response.statusText}\`);
         });
       `);
@@ -1586,7 +1586,7 @@ await fer.sendRequest({
 
     it('should rewrite response members used in comparisons', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }, function (err, response) {
+        pm.sendRequest({ url: 'https://echo.example.com' }, function (err, response) {
           if (response.code === 200 && response.status === 'OK') {
             console.log(response.json());
           }
@@ -1594,7 +1594,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }, async function(err, response) {
+        await fer.sendRequest({ url: 'https://echo.example.com' }, async function(err, response) {
           if (response.status === 200 && response.statusText === 'OK') {
             console.log(response.data);
           }
@@ -1604,13 +1604,13 @@ await fer.sendRequest({
 
     it('should rewrite response members used as an object key and value', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }, function (err, response) {
+        pm.sendRequest({ url: 'https://echo.example.com' }, function (err, response) {
           const result = { [response.code]: response.json() };
         });
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }, async function(err, response) {
+        await fer.sendRequest({ url: 'https://echo.example.com' }, async function(err, response) {
           const result = { [response.status]: response.data };
         });
       `);
@@ -1618,13 +1618,13 @@ await fer.sendRequest({
 
     it('should rewrite response members accessed with a computed string key', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }, function (err, response) {
+        pm.sendRequest({ url: 'https://echo.example.com' }, function (err, response) {
           console.log(response['code'], response['json']());
         });
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }, async function(err, response) {
+        await fer.sendRequest({ url: 'https://echo.example.com' }, async function(err, response) {
           console.log(response.status, response.data);
         });
       `);
@@ -1632,7 +1632,7 @@ await fer.sendRequest({
 
     it('should rewrite response members inside a nested pm.test and pm.expect', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }, function (err, response) {
+        pm.sendRequest({ url: 'https://echo.example.com' }, function (err, response) {
           pm.test('ok', () => {
             pm.expect(response.code).to.eql(200);
             pm.expect(response.json().id).to.eql(1);
@@ -1641,7 +1641,7 @@ await fer.sendRequest({
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }, async function(err, response) {
+        await fer.sendRequest({ url: 'https://echo.example.com' }, async function(err, response) {
           test('ok', () => {
             expect(response.status).to.eql(200);
             expect(response.data.id).to.eql(1);
@@ -1668,31 +1668,31 @@ await fer.sendRequest({
 
     it('should rewrite a concise body that is itself a response method call', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }, (err, res) => res.json());
+        pm.sendRequest({ url: 'https://echo.example.com' }, (err, res) => res.json());
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }, async (err, res) => res.data);
+        await fer.sendRequest({ url: 'https://echo.example.com' }, async (err, res) => res.data);
       `);
     });
 
     it('should only add await and async when the concise body does not touch the response', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }, (err, res) => console.log(err));
+        pm.sendRequest({ url: 'https://echo.example.com' }, (err, res) => console.log(err));
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }, async (err, res) => console.log(err));
+        await fer.sendRequest({ url: 'https://echo.example.com' }, async (err, res) => console.log(err));
       `);
     });
 
     it('should rewrite response members inside a concise object body', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }, (err, res) => ({ status: res.code, body: res.json(), statusText: res.status, text: res.text() }));
+        pm.sendRequest({ url: 'https://echo.example.com' }, (err, res) => ({ status: res.code, body: res.json(), statusText: res.status, text: res.text() }));
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }, async (err, res) => ({
+        await fer.sendRequest({ url: 'https://echo.example.com' }, async (err, res) => ({
                 status: res.status,
                 body: res.data,
                 statusText: res.statusText,
@@ -1703,22 +1703,22 @@ await fer.sendRequest({
 
     it('should handle a concise arrow with only the error parameter', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }, (err) => console.log(err));
+        pm.sendRequest({ url: 'https://echo.example.com' }, (err) => console.log(err));
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
-        await fer.sendRequest({ url: 'https://echo.ferret.io' }, async err => console.log(err));
+        await fer.sendRequest({ url: 'https://echo.example.com' }, async err => console.log(err));
       `);
     });
 
     it('should keep block-body arrow callbacks as arrows', () => {
       const code = `
-        pm.sendRequest({ url: 'https://echo.ferret.io' }, (err, res) => { console.log(res.code); });
+        pm.sendRequest({ url: 'https://echo.example.com' }, (err, res) => { console.log(res.code); });
       `;
       const translatedCode = translateCode(code);
       expect(translatedCode).toBe(`
         await fer.sendRequest(
-                { url: 'https://echo.ferret.io' },
+                { url: 'https://echo.example.com' },
                 async (err, res) => { console.log(res.status); }
         );
       `);

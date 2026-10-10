@@ -16,15 +16,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/useferret/ferret-testbench.git"
+    "url": "git+https://github.com/jakahann/ferret-app.git",
+    "directory": "packages/ferret-tests"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/useferret/ferret-testbench/issues"
+    "url": "https://github.com/jakahann/ferret-app/issues"
   },
-  "homepage": "https://github.com/useferret/ferret-testbench#readme",
+  "homepage": "https://github.com/jakahann/ferret-app/tree/main/packages/ferret-tests#readme",
   "dependencies": {
     "@grpc/grpc-js": "^1.14.4",
     "@grpc/proto-loader": "^0.7.15",

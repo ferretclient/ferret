@@ -32,7 +32,7 @@ tests {
       expect(data.key).to.equal("name");
       expect(data.value).to.be.a('string');
       expect(data.value).to.not.be.empty;
-      expect(data.domain).to.include('ferret.io');
+      expect(data.domain).to.include('example.com');
       console.log("Retrieved cookie:", data);
     });
   })

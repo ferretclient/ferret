@@ -6,7 +6,7 @@ const getFerJsonWithAdditionalParams = (grantType) => ({
   },
   "http": {
     "method": "get",
-    "url": "https://api.ferret.io/protected"
+    "url": "https://api.example.com/protected"
   },
   "auth": {
     "oauth2": {

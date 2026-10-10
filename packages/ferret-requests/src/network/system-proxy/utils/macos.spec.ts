@@ -26,10 +26,10 @@ describe('MacOSProxyResolver', () => {
       const scutilOutput = `<dictionary> {
   HTTPEnable : 1
   HTTPPort : 8080
-  HTTPProxy : proxy.ferret.io
+  HTTPProxy : proxy.example.com
   HTTPSEnable : 1
   HTTPSPort : 8443
-  HTTPSProxy : secure-proxy.ferret.io
+  HTTPSProxy : secure-proxy.example.com
   ExceptionsList : <array> {
     0 : localhost
     1 : 127.0.0.1
@@ -42,8 +42,8 @@ describe('MacOSProxyResolver', () => {
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://secure-proxy.ferret.io:8443',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://secure-proxy.example.com:8443',
         no_proxy: 'localhost,127.0.0.1,<local>',
         pac_url: null,
         source: 'macos-system'
@@ -53,9 +53,9 @@ describe('MacOSProxyResolver', () => {
     it('should handle disabled proxy settings', async () => {
       const scutilOutput = `<dictionary> {
   HTTPEnable : 0
-  HTTPProxy : proxy.ferret.io
+  HTTPProxy : proxy.example.com
   HTTPSEnable : 0
-  HTTPSProxy : proxy.ferret.io
+  HTTPSProxy : proxy.example.com
 }`;
 
       mockExecFile.mockResolvedValueOnce({ stdout: scutilOutput, stderr: '' });
@@ -74,26 +74,26 @@ describe('MacOSProxyResolver', () => {
     it('should use default ports when not specified', async () => {
       const scutilOutput = `<dictionary> {
   HTTPEnable : 1
-  HTTPProxy : proxy.ferret.io
+  HTTPProxy : proxy.example.com
   HTTPSEnable : 1
-  HTTPSProxy : secure-proxy.ferret.io
+  HTTPSProxy : secure-proxy.example.com
 }`;
 
       mockExecFile.mockResolvedValueOnce({ stdout: scutilOutput, stderr: '' });
 
       const result = await detector.detect();
 
-      expect(result.http_proxy).toBe('http://proxy.ferret.io:80');
-      expect(result.https_proxy).toBe('http://secure-proxy.ferret.io:443');
+      expect(result.http_proxy).toBe('http://proxy.example.com:80');
+      expect(result.https_proxy).toBe('http://secure-proxy.example.com:443');
     });
 
     it('should handle only HTTP proxy enabled', async () => {
       const scutilOutput = `<dictionary> {
   HTTPEnable : 1
   HTTPPort : 8080
-  HTTPProxy : proxy.ferret.io
+  HTTPProxy : proxy.example.com
   HTTPSEnable : 0
-  HTTPSProxy : secure-proxy.ferret.io
+  HTTPSProxy : secure-proxy.example.com
 }`;
 
       mockExecFile.mockResolvedValueOnce({ stdout: scutilOutput, stderr: '' });
@@ -101,7 +101,7 @@ describe('MacOSProxyResolver', () => {
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
         https_proxy: null,
         no_proxy: null,
         pac_url: null,
@@ -112,10 +112,10 @@ describe('MacOSProxyResolver', () => {
     it('should handle only HTTPS proxy enabled', async () => {
       const scutilOutput = `<dictionary> {
   HTTPEnable : 0
-  HTTPProxy : proxy.ferret.io
+  HTTPProxy : proxy.example.com
   HTTPSEnable : 1
   HTTPSPort : 8443
-  HTTPSProxy : secure-proxy.ferret.io
+  HTTPSProxy : secure-proxy.example.com
 }`;
 
       mockExecFile.mockResolvedValueOnce({ stdout: scutilOutput, stderr: '' });
@@ -124,7 +124,7 @@ describe('MacOSProxyResolver', () => {
 
       expect(result).toEqual({
         http_proxy: null,
-        https_proxy: 'http://secure-proxy.ferret.io:8443',
+        https_proxy: 'http://secure-proxy.example.com:8443',
         no_proxy: null,
         pac_url: null,
         source: 'macos-system'
@@ -135,10 +135,10 @@ describe('MacOSProxyResolver', () => {
       const scutilOutput = `<dictionary> {
   HTTPEnable : 1
   HTTPPort : 8080
-  HTTPProxy : proxy.ferret.io
+  HTTPProxy : proxy.example.com
   HTTPSEnable : 1
   HTTPSPort : 8080
-  HTTPSProxy : proxy.ferret.io
+  HTTPSProxy : proxy.example.com
   ExceptionsList : <array> {
   }
   ExcludeSimpleHostnames : 0
@@ -149,8 +149,8 @@ describe('MacOSProxyResolver', () => {
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: null,
         pac_url: null,
         source: 'macos-system'
@@ -161,10 +161,10 @@ describe('MacOSProxyResolver', () => {
       const scutilOutput = `<dictionary> {
   HTTPEnable : 1
   HTTPPort : 8080
-  HTTPProxy : proxy.ferret.io
+  HTTPProxy : proxy.example.com
   HTTPSEnable : 1
   HTTPSPort : 8080
-  HTTPSProxy : proxy.ferret.io
+  HTTPSProxy : proxy.example.com
   ExcludeSimpleHostnames : 1
 }`;
 
@@ -173,8 +173,8 @@ describe('MacOSProxyResolver', () => {
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: '<local>',
         pac_url: null,
         source: 'macos-system'
@@ -185,10 +185,10 @@ describe('MacOSProxyResolver', () => {
       const scutilOutput = `<dictionary> {
   HTTPEnable : 1
   HTTPPort : 8080
-  HTTPProxy : proxy.ferret.io
+  HTTPProxy : proxy.example.com
   HTTPSEnable : 1
   HTTPSPort : 8080
-  HTTPSProxy : proxy.ferret.io
+  HTTPSProxy : proxy.example.com
   ExceptionsList : <array> {
     0 : localhost
     1 : 127.0.0.1
@@ -203,8 +203,8 @@ describe('MacOSProxyResolver', () => {
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: 'localhost,127.0.0.1,*.local,192.168.1.0/24,<local>',
         pac_url: null,
         source: 'macos-system'
@@ -216,7 +216,7 @@ describe('MacOSProxyResolver', () => {
   HTTPEnable : 0
   HTTPSEnable : 0
   ProxyAutoConfigEnable : 1
-  ProxyAutoConfigURLString : http://wpad.ferret.io/proxy.pac
+  ProxyAutoConfigURLString : http://wpad.example.com/proxy.pac
 }`;
 
       mockExecFile.mockResolvedValueOnce({ stdout: scutilOutput, stderr: '' });
@@ -227,7 +227,7 @@ describe('MacOSProxyResolver', () => {
         http_proxy: null,
         https_proxy: null,
         no_proxy: null,
-        pac_url: 'http://wpad.ferret.io/proxy.pac',
+        pac_url: 'http://wpad.example.com/proxy.pac',
         source: 'macos-system'
       });
     });
@@ -236,10 +236,10 @@ describe('MacOSProxyResolver', () => {
       const scutilOutput = `<dictionary> {
   HTTPEnable : 1
   HTTPPort : 8080
-  HTTPProxy : proxy.ferret.io
+  HTTPProxy : proxy.example.com
   HTTPSEnable : 1
   HTTPSPort : 8443
-  HTTPSProxy : secure-proxy.ferret.io
+  HTTPSProxy : secure-proxy.example.com
   ProxyAutoConfigEnable : 1
   ProxyAutoConfigURLString : file:///etc/proxy.pac
 }`;
@@ -249,8 +249,8 @@ describe('MacOSProxyResolver', () => {
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://secure-proxy.ferret.io:8443',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://secure-proxy.example.com:8443',
         no_proxy: null,
         pac_url: 'file:///etc/proxy.pac',
         source: 'macos-system'
@@ -262,7 +262,7 @@ describe('MacOSProxyResolver', () => {
   HTTPEnable : 0
   HTTPSEnable : 0
   ProxyAutoConfigEnable : 0
-  ProxyAutoConfigURLString : http://wpad.ferret.io/proxy.pac
+  ProxyAutoConfigURLString : http://wpad.example.com/proxy.pac
 }`;
 
       mockExecFile.mockResolvedValueOnce({ stdout: scutilOutput, stderr: '' });
@@ -276,10 +276,10 @@ describe('MacOSProxyResolver', () => {
       const scutilOutput = `<dictionary> {
   HTTPEnable : 1
   HTTPPort : 8080
-  HTTPProxy : proxy.ferret.io
+  HTTPProxy : proxy.example.com
   HTTPSEnable : 1
   HTTPSPort : 8080
-  HTTPSProxy proxy.ferret.io
+  HTTPSProxy proxy.example.com
 }`;
 
       mockExecFile.mockResolvedValueOnce({ stdout: scutilOutput, stderr: '' });
@@ -287,7 +287,7 @@ describe('MacOSProxyResolver', () => {
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
         https_proxy: null,
         no_proxy: null,
         pac_url: null,

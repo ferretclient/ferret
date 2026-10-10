@@ -1232,7 +1232,7 @@ const postmanCollection = {
             method: 'GET',
             header: [],
             url: {
-              raw: 'https://ferret.io',
+              raw: 'https://example.com',
               protocol: 'https',
               host: [
                 'useferret',
@@ -1250,7 +1250,7 @@ const postmanCollection = {
         method: 'GET',
         header: [],
         url: {
-          raw: 'https://ferret.io',
+          raw: 'https://example.com',
           protocol: 'https',
           host: [
             'useferret',
@@ -1709,7 +1709,7 @@ const expectedOutput = {
           type: 'http-request',
           seq: 1,
           request: {
-            url: 'https://ferret.io',
+            url: 'https://example.com',
             method: 'GET',
             auth: {
               mode: 'inherit',
@@ -1766,7 +1766,7 @@ const expectedOutput = {
       type: 'http-request',
       seq: 2,
       request: {
-        url: 'https://ferret.io',
+        url: 'https://example.com',
         method: 'GET',
         auth: {
           mode: 'inherit',

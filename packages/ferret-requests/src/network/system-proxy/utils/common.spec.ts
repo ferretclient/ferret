@@ -2,12 +2,12 @@ import { normalizeProxyUrl, normalizeNoProxy } from './common';
 
 describe('normalizeProxyUrl', () => {
   it('should add http protocol when missing', () => {
-    expect(normalizeProxyUrl('proxy.ferret.io:8080')).toBe('http://proxy.ferret.io:8080');
+    expect(normalizeProxyUrl('proxy.example.com:8080')).toBe('http://proxy.example.com:8080');
   });
 
   it('should not modify URL with existing protocol', () => {
-    expect(normalizeProxyUrl('http://proxy.ferret.io:8080')).toBe('http://proxy.ferret.io:8080');
-    expect(normalizeProxyUrl('https://proxy.ferret.io:8443')).toBe('https://proxy.ferret.io:8443');
+    expect(normalizeProxyUrl('http://proxy.example.com:8080')).toBe('http://proxy.example.com:8080');
+    expect(normalizeProxyUrl('https://proxy.example.com:8443')).toBe('https://proxy.example.com:8443');
   });
 
   it('should handle empty string', () => {
@@ -15,12 +15,12 @@ describe('normalizeProxyUrl', () => {
   });
 
   it('should handle various protocols', () => {
-    expect(normalizeProxyUrl('socks5://proxy.ferret.io:1080')).toBe('socks5://proxy.ferret.io:1080');
-    expect(normalizeProxyUrl('socks4://proxy.ferret.io:1080')).toBe('socks4://proxy.ferret.io:1080');
+    expect(normalizeProxyUrl('socks5://proxy.example.com:1080')).toBe('socks5://proxy.example.com:1080');
+    expect(normalizeProxyUrl('socks4://proxy.example.com:1080')).toBe('socks4://proxy.example.com:1080');
   });
 
   it('should handle URLs without port', () => {
-    expect(normalizeProxyUrl('proxy.ferret.io')).toBe('http://proxy.ferret.io');
+    expect(normalizeProxyUrl('proxy.example.com')).toBe('http://proxy.example.com');
   });
 });
 

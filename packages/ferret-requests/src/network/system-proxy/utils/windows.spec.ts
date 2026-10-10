@@ -26,7 +26,7 @@ describe('WindowsProxyResolver', () => {
       const regOutput = `
 HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings
     ProxyEnable    REG_DWORD    0x1
-    ProxyServer    REG_SZ    proxy.ferret.io:8080
+    ProxyServer    REG_SZ    proxy.example.com:8080
     ProxyOverride    REG_SZ    localhost;127.0.0.1
 `;
 
@@ -35,8 +35,8 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: 'localhost,127.0.0.1',
         source: 'windows-system'
       });
@@ -46,7 +46,7 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const regOutput = `
 HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings
     ProxyEnable    REG_DWORD    0x1
-    ProxyServer    REG_SZ    http=proxy.ferret.io:8080;https=proxy.ferret.io:8443
+    ProxyServer    REG_SZ    http=proxy.example.com:8080;https=proxy.example.com:8443
 `;
 
       mockExecFile.mockResolvedValueOnce({ stdout: regOutput, stderr: '' });
@@ -54,8 +54,8 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8443',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8443',
         no_proxy: null,
         source: 'windows-system'
       });
@@ -64,7 +64,7 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
     it('should fallback to WinHTTP when registry fails', async () => {
       const winhttpOutput = `
 Current WinHTTP proxy settings:
-    Proxy Server(s) :  proxy.ferret.io:8080
+    Proxy Server(s) :  proxy.example.com:8080
     Bypass List     :  localhost
 `;
 
@@ -75,8 +75,8 @@ Current WinHTTP proxy settings:
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: 'localhost',
         source: 'windows-system'
       });
@@ -88,7 +88,7 @@ Current WinHTTP proxy settings:
       const regOutput = `
 HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings
     ProxyEnable    REG_DWORD    0x0
-    AutoConfigURL    REG_SZ    http://wpad.ferret.io/proxy.pac
+    AutoConfigURL    REG_SZ    http://wpad.example.com/proxy.pac
 `;
 
       mockExecFile.mockResolvedValueOnce({ stdout: regOutput, stderr: '' });
@@ -99,7 +99,7 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
         http_proxy: null,
         https_proxy: null,
         no_proxy: null,
-        pac_url: 'http://wpad.ferret.io/proxy.pac',
+        pac_url: 'http://wpad.example.com/proxy.pac',
         source: 'windows-system'
       });
     });
@@ -108,9 +108,9 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const regOutput = `
 HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings
     ProxyEnable    REG_DWORD    0x1
-    ProxyServer    REG_SZ    proxy.ferret.io:8080
+    ProxyServer    REG_SZ    proxy.example.com:8080
     ProxyOverride    REG_SZ    localhost;127.0.0.1
-    AutoConfigURL    REG_SZ    http://wpad.ferret.io/proxy.pac
+    AutoConfigURL    REG_SZ    http://wpad.example.com/proxy.pac
 `;
 
       mockExecFile.mockResolvedValueOnce({ stdout: regOutput, stderr: '' });
@@ -118,10 +118,10 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: 'localhost,127.0.0.1',
-        pac_url: 'http://wpad.ferret.io/proxy.pac',
+        pac_url: 'http://wpad.example.com/proxy.pac',
         source: 'windows-system'
       });
     });
@@ -130,8 +130,8 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const regOutput = `
 HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings
     ProxyEnable    REG_DWORD    0x0
-    ProxyServer    REG_SZ    proxy.ferret.io:8080
-    AutoConfigURL    REG_SZ    http://wpad.ferret.io/proxy.pac
+    ProxyServer    REG_SZ    proxy.example.com:8080
+    AutoConfigURL    REG_SZ    http://wpad.example.com/proxy.pac
 `;
 
       mockExecFile.mockResolvedValueOnce({ stdout: regOutput, stderr: '' });
@@ -142,7 +142,7 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
         http_proxy: null,
         https_proxy: null,
         no_proxy: null,
-        pac_url: 'http://wpad.ferret.io/proxy.pac',
+        pac_url: 'http://wpad.example.com/proxy.pac',
         source: 'windows-system'
       });
     });
@@ -160,7 +160,7 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
     it('should detect single proxy from WinHTTP', async () => {
       const winhttpOutput = `
 Current WinHTTP proxy settings:
-    Proxy Server(s) :  proxy.ferret.io:8080
+    Proxy Server(s) :  proxy.example.com:8080
     Bypass List     :  localhost;127.0.0.1
 `;
 
@@ -171,8 +171,8 @@ Current WinHTTP proxy settings:
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: 'localhost,127.0.0.1',
         source: 'windows-system'
       });
@@ -181,7 +181,7 @@ Current WinHTTP proxy settings:
     it('should detect protocol-specific proxy from WinHTTP', async () => {
       const winhttpOutput = `
 Current WinHTTP proxy settings:
-    Proxy Server(s) :  http=proxy.ferret.io:8080;https=proxy.ferret.io:8443
+    Proxy Server(s) :  http=proxy.example.com:8080;https=proxy.example.com:8443
     Bypass List     :  localhost
 `;
 
@@ -192,8 +192,8 @@ Current WinHTTP proxy settings:
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8443',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8443',
         no_proxy: 'localhost',
         source: 'windows-system'
       });
@@ -202,7 +202,7 @@ Current WinHTTP proxy settings:
     it('should handle WinHTTP with no bypass list', async () => {
       const winhttpOutput = `
 Current WinHTTP proxy settings:
-    Proxy Server(s) :  proxy.ferret.io:8080
+    Proxy Server(s) :  proxy.example.com:8080
     Bypass List     :  (none)
 `;
 
@@ -213,8 +213,8 @@ Current WinHTTP proxy settings:
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: null,
         source: 'windows-system'
       });
@@ -225,8 +225,8 @@ Current WinHTTP proxy settings:
     it('should detect system-wide proxy environment variables', async () => {
       const regOutput = `
 HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment
-    HTTP_PROXY    REG_SZ    http://proxy.ferret.io:8080
-    HTTPS_PROXY    REG_SZ    http://proxy.ferret.io:8080
+    HTTP_PROXY    REG_SZ    http://proxy.example.com:8080
+    HTTPS_PROXY    REG_SZ    http://proxy.example.com:8080
     NO_PROXY    REG_SZ    localhost,127.0.0.1
 `;
 
@@ -238,8 +238,8 @@ HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environ
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: 'localhost,127.0.0.1',
         source: 'windows-system'
       });
@@ -248,7 +248,7 @@ HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environ
     it('should handle only HTTP_PROXY in system environment', async () => {
       const regOutput = `
 HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment
-    HTTP_PROXY    REG_SZ    http://proxy.ferret.io:8080
+    HTTP_PROXY    REG_SZ    http://proxy.example.com:8080
 `;
 
       mockExecFile
@@ -259,7 +259,7 @@ HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environ
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
         https_proxy: null,
         no_proxy: null,
         source: 'windows-system'
@@ -271,8 +271,8 @@ HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environ
     it('should detect proxy from HKCU\\Environment', async () => {
       const regOutput = `
 HKEY_CURRENT_USER\\Environment
-    HTTP_PROXY    REG_SZ    http://proxy.ferret.io:8080
-    HTTPS_PROXY    REG_SZ    http://proxy.ferret.io:8080
+    HTTP_PROXY    REG_SZ    http://proxy.example.com:8080
+    HTTPS_PROXY    REG_SZ    http://proxy.example.com:8080
     NO_PROXY    REG_SZ    localhost,127.0.0.1
 `;
 
@@ -285,8 +285,8 @@ HKEY_CURRENT_USER\\Environment
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: 'localhost,127.0.0.1',
         source: 'windows-system'
       });
@@ -298,7 +298,7 @@ HKEY_CURRENT_USER\\Environment
       const regOutput = `
 HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings
     ProxyEnable    REG_DWORD    0x1
-    ProxyServer    REG_SZ    http://proxy.ferret.io:8080
+    ProxyServer    REG_SZ    http://proxy.example.com:8080
     ProxyOverride    REG_SZ    localhost;127.0.0.1
 `;
 
@@ -307,8 +307,8 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: 'localhost,127.0.0.1',
         source: 'windows-system'
       });
@@ -318,7 +318,7 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const regOutput = `
 HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings
     ProxyEnable    REG_DWORD    0x1
-    ProxyServer    REG_SZ    http=http://proxy.ferret.io:8080;https=https://secure-proxy.ferret.io:8443
+    ProxyServer    REG_SZ    http=http://proxy.example.com:8080;https=https://secure-proxy.example.com:8443
 `;
 
       mockExecFile.mockResolvedValueOnce({ stdout: regOutput, stderr: '' });
@@ -326,8 +326,8 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'https://secure-proxy.ferret.io:8443',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'https://secure-proxy.example.com:8443',
         no_proxy: null,
         source: 'windows-system'
       });
@@ -337,7 +337,7 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const regOutput = `
 HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings
     ProxyEnable    REG_DWORD    0x1
-    ProxyServer    REG_SZ    proxy.ferret.io:8080
+    ProxyServer    REG_SZ    proxy.example.com:8080
     ProxyOverride    REG_SZ    
 `;
 
@@ -346,8 +346,8 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: null,
         source: 'windows-system'
       });
@@ -357,7 +357,7 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const regOutput = `
 HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings
     ProxyEnable    REG_DWORD    0x0
-    ProxyServer    REG_SZ    proxy.ferret.io:8080
+    ProxyServer    REG_SZ    proxy.example.com:8080
     ProxyOverride    REG_SZ    localhost;127.0.0.1
 `;
 
@@ -370,7 +370,7 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const regOutput = `
 HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings
     ProxyEnable    REG_DWORD    1
-    ProxyServer    REG_SZ    proxy.ferret.io:8080
+    ProxyServer    REG_SZ    proxy.example.com:8080
     ProxyOverride    REG_SZ    localhost;127.0.0.1
 `;
 
@@ -379,8 +379,8 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: 'localhost,127.0.0.1',
         source: 'windows-system'
       });
@@ -390,7 +390,7 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const regOutput = `
 HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings
     ProxyEnable    REG_DWORD    0
-    ProxyServer    REG_SZ    proxy.ferret.io:8080
+    ProxyServer    REG_SZ    proxy.example.com:8080
     ProxyOverride    REG_SZ    localhost;127.0.0.1
 `;
 
@@ -403,7 +403,7 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const regOutput = `
 HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings
     ProxyEnable    REG_DWORD    0x1
-    ProxyServer    REG_SZ    proxy.ferret.io:8080
+    ProxyServer    REG_SZ    proxy.example.com:8080
     ProxyOverride    REG_SZ    localhost;127.0.0.1
     SomeOtherValue    REG_SZ    ignored
 `;
@@ -413,8 +413,8 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: 'localhost,127.0.0.1',
         source: 'windows-system'
       });
@@ -424,7 +424,7 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const regOutput = `
 HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings
     ProxyEnable    REG_DWORD    0x1
-    ProxyServer    REG_SZ    proxy.ferret.io:8080
+    ProxyServer    REG_SZ    proxy.example.com:8080
     ProxyOverride    REG_SZ    localhost;127.0.0.1;*.local;192.168.1.0/24
 `;
 
@@ -433,8 +433,8 @@ HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settin
       const result = await detector.detect();
 
       expect(result).toEqual({
-        http_proxy: 'http://proxy.ferret.io:8080',
-        https_proxy: 'http://proxy.ferret.io:8080',
+        http_proxy: 'http://proxy.example.com:8080',
+        https_proxy: 'http://proxy.example.com:8080',
         no_proxy: 'localhost,127.0.0.1,*.local,192.168.1.0/24',
         source: 'windows-system'
       });

@@ -565,13 +565,13 @@ describe('parseCurlCommand', () => {
   describe('handling URLs without protocols', () => {
     it('should parse URL without protocol and default to https', () => {
       const result = parseCurlCommand(`
-        curl echo.ferret.io
+        curl echo.example.com
       `);
 
       expect(result).toEqual({
         method: 'get',
-        url: 'https://echo.ferret.io',
-        urlWithoutQuery: 'https://echo.ferret.io'
+        url: 'https://echo.example.com',
+        urlWithoutQuery: 'https://echo.example.com'
       });
     });
 

@@ -38,6 +38,11 @@ module.exports = function aboutFerret({ version }) {
             .buttons {
                 margin-top: 5px;
             }
+            .project {
+                margin: 0;
+                font-size: 14px;
+                color: #555;
+            }
             .footer {
                 margin-top: 5px;
                 padding: 5px;
@@ -51,6 +56,7 @@ module.exports = function aboutFerret({ version }) {
         <img src="data:image/png;base64,${logoBase64}" width="100" height="100" alt="Ferret" />
       </div>
       <h2 class="title">Ferret ${version}</h2>
+      <p class="project">github.com/jakahann/ferret-app</p>
       <footer class="footer">
           ©${currentYear} Ferret
       </footer>

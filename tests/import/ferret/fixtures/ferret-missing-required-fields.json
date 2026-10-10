@@ -1020,7 +1020,7 @@
               "name": "ferret",
               "seq": 1,
               "request": {
-                "url": "https://ferret.io/images/landing-2.png",
+                "url": "https://example.com/images/landing-2.png",
                 "method": "GET",
                 "headers": [],
                 "params": [],

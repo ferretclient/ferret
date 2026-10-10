@@ -42,7 +42,7 @@ tests {
           expect(cookie).to.have.property('value');
           expect(cookie.key).to.be.a('string');
           expect(cookie.value).to.be.a('string');
-          expect(cookie.domain).to.include('ferret.io');
+          expect(cookie.domain).to.include('example.com');
           console.log(`Cookie ${index + 1}:`, cookie);
         });
       });
