@@ -1,6 +1,6 @@
 services:
   ferret-cli:
-    image: useferret/cli:latest
+    image: ghcr.io/jakahann/ferret-app:latest
     container_name: ferret-cli-runner
     volumes:
       - ./collection:/ferret

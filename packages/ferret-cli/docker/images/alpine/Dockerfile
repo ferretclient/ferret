@@ -24,7 +24,7 @@ RUN if [ -n "$FERRET_VERSION" ]; then \
             exit 1; \
         fi; \
     fi && \
-    npm install -g @useferret/cli${FERRET_VERSION:+@${FERRET_VERSION}}
+    npm install -g ferret-app${FERRET_VERSION:+@${FERRET_VERSION}}
 
 WORKDIR /ferret
 

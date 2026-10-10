@@ -11,7 +11,7 @@ For detailed documentation, visit [Ferret CLI Documentation](https://github.com/
 To install the Ferret CLI, use the node package manager of your choice, such as NPM:
 
 ```bash
-npm install -g @useferret/cli
+npm install -g ferret-app
 ```
 
 ## Getting started

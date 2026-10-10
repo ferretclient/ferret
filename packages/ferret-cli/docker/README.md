@@ -1,14 +1,15 @@
 # Ferret CLI Docker Images
 
-> **Not published yet.** The images below are the intended release layout. The Dockerfiles install `@useferret/cli` from npm, so they can be built only after the CLI package is published, and the `useferret/cli` registries do not exist yet.
+> **Not published yet.** The images below are the intended release layout. The Dockerfiles install the CLI from npm as `ferret-app`, so they can be built only after that package is published, and the image `ghcr.io/jakahann/ferret-app` does not exist yet. The names here are the planned ones.
 
-Official Docker images for [Ferret CLI](https://github.com/jakahann/ferret-app), enabling container-native API collection runs in CI/CD pipelines and local environments without requiring Node.js or npm on the host. See the [Ferret CLI docs](https://github.com/jakahann/ferret-app/blob/main/docs/cli.md) for CLI usage.
+Docker images for the [Ferret CLI](https://github.com/jakahann/ferret-app), enabling container-native API collection runs in CI/CD pipelines and local environments without requiring Node.js or npm on the host. See the [Ferret CLI docs](https://github.com/jakahann/ferret-app/blob/main/docs/cli.md) for CLI usage.
 
-## Registries
+## Registry
+
+The planned image is on the GitHub Container Registry. Docker Hub is not planned.
 
 ```bash
-docker pull useferret/cli:latest
-docker pull ghcr.io/useferret/cli:latest
+docker pull ghcr.io/jakahann/ferret-app:latest
 ```
 
 ---
@@ -29,33 +30,30 @@ docker pull ghcr.io/useferret/cli:latest
 
 ## Tags
 
-Every release publishes the following tags to **both** Docker Hub (`useferret/cli`) and GHCR (`ghcr.io/useferret/cli`).
+Every release is planned to publish the following tags to `ghcr.io/jakahann/ferret-app`.
 
 ### Alpine variant (default)
 
 | Tag pattern | Example | Notes |
 |-------------|---------|-------|
-| `latest` | `useferret/cli:latest` | Newest release marked as latest. Only moves when the publish workflow is run with "Tag this version as latest" checked. |
-| `latest-alpine` | `useferret/cli:latest-alpine` | Alias of `latest` — also alpine. |
-| `alpine` | `useferret/cli:alpine` | Newest alpine, moves on every alpine publish. |
-| `<version>` | `useferret/cli:3.3.0` | Exact version, immutable. |
-| `<version>-alpine` | `useferret/cli:3.3.0-alpine` | Exact version, explicitly alpine. |
-| `<major.minor>` | `useferret/cli:3.3` | Floats with patch releases (3.3.x). |
-| `<major.minor>-alpine` | `useferret/cli:3.3-alpine` | Same, explicitly alpine. |
-| `<major>` | `useferret/cli:3` | Floats with any 3.x.x release. |
-| `<major>-alpine` | `useferret/cli:3-alpine` | Same, explicitly alpine. |
+| `latest` | `ghcr.io/jakahann/ferret-app:latest` | Newest release marked as latest. |
+| `latest-alpine` | `ghcr.io/jakahann/ferret-app:latest-alpine` | Alias of `latest` — also alpine. |
+| `alpine` | `ghcr.io/jakahann/ferret-app:alpine` | Newest alpine, moves on every alpine publish. |
+| `<version>` | `ghcr.io/jakahann/ferret-app:0.2.0` | Exact version, immutable. |
+| `<version>-alpine` | `ghcr.io/jakahann/ferret-app:0.2.0-alpine` | Exact version, explicitly alpine. |
+| `<major.minor>` | `ghcr.io/jakahann/ferret-app:0.2` | Floats with patch releases (0.2.x). |
+| `<major.minor>-alpine` | `ghcr.io/jakahann/ferret-app:0.2-alpine` | Same, explicitly alpine. |
 
 ### Debian variant
 
 | Tag pattern | Example | Notes |
 |-------------|---------|-------|
-| `latest-debian` | `useferret/cli:latest-debian` | Newest debian release marked as latest (gated by the same checkbox). |
-| `debian` | `useferret/cli:debian` | Newest debian, moves on every debian publish. |
-| `<version>-debian` | `useferret/cli:3.3.0-debian` | Exact version, debian. |
-| `<major.minor>-debian` | `useferret/cli:3.3-debian` | Floats with debian patch releases. |
-| `<major>-debian` | `useferret/cli:3-debian` | Floats with any 3.x.x debian release. |
+| `latest-debian` | `ghcr.io/jakahann/ferret-app:latest-debian` | Newest debian release marked as latest. |
+| `debian` | `ghcr.io/jakahann/ferret-app:debian` | Newest debian, moves on every debian publish. |
+| `<version>-debian` | `ghcr.io/jakahann/ferret-app:0.2.0-debian` | Exact version, debian. |
+| `<major.minor>-debian` | `ghcr.io/jakahann/ferret-app:0.2-debian` | Floats with debian patch releases. |
 
-The unsuffixed tags (`:latest`, `:3.3.0`, `:3.3`, `:3`, `:alpine`) always resolve to the alpine variant by convention.
+The unsuffixed tags (`:latest`, `:0.2.0`, `:0.2`, `:alpine`) always resolve to the alpine variant by convention.
 
 ---
 
@@ -65,17 +63,17 @@ The unsuffixed tags (`:latest`, `:3.3.0`, `:3.3`, `:3`, `:alpine`) always resolv
 
 ```bash
 # latest (alpine by default — smallest, fastest to pull)
-docker pull useferret/cli:latest
+docker pull ghcr.io/jakahann/ferret-app:latest
 
 # specific version (recommended for production CI)
-docker pull useferret/cli:3.3.0
+docker pull ghcr.io/jakahann/ferret-app:0.2.0
 
 # major.minor — gets patch updates automatically
-docker pull useferret/cli:3.3
+docker pull ghcr.io/jakahann/ferret-app:0.2
 
 # debian variant
-docker pull useferret/cli:debian
-docker pull useferret/cli:3.3.0-debian
+docker pull ghcr.io/jakahann/ferret-app:debian
+docker pull ghcr.io/jakahann/ferret-app:0.2.0-debian
 ```
 
 ---
@@ -83,7 +81,7 @@ docker pull useferret/cli:3.3.0-debian
 #### Check it works
 
 ```bash
-docker run --rm useferret/cli --version
+docker run --rm ghcr.io/jakahann/ferret-app --version
 ```
 
 ---
@@ -98,22 +96,22 @@ docker run --rm useferret/cli --version
 
 ```bash
 # run every request in the Ferret collection (current dir)
-docker run -v $(pwd):/ferret useferret/cli run 
+docker run -v $(pwd):/ferret ghcr.io/jakahann/ferret-app run 
 
 # run a specific subfolder (group of requests) within that collection
-docker run -v $(pwd):/ferret useferret/cli run ./api-tests
+docker run -v $(pwd):/ferret ghcr.io/jakahann/ferret-app run ./api-tests
 
 # run a single .fer request file from that collection
-docker run -v $(pwd):/ferret useferret/cli run ./api-tests/login.fer
+docker run -v $(pwd):/ferret ghcr.io/jakahann/ferret-app run ./api-tests/login.fer
 
 # write a JUnit XML report (lands in the current directory because of the bind mount)
-docker run -v $(pwd):/ferret useferret/cli run --reporter-junit results.xml
+docker run -v $(pwd):/ferret ghcr.io/jakahann/ferret-app run --reporter-junit results.xml
 ```
 
 For Windows CMD users, swap `$(pwd)` with `%cd%`:
 
 ```cmd
-docker run -v %cd%:/ferret useferret/cli run 
+docker run -v %cd%:/ferret ghcr.io/jakahann/ferret-app run 
 ```
 
 #### Running a collection that lives at a different path
@@ -122,16 +120,16 @@ If your collection is not in your current directory, point `docker` at its path 
 
 ```bash
 # run every request in a collection at an arbitrary path
-docker run -v /path/to/your/collection:/ferret useferret/cli run
+docker run -v /path/to/your/collection:/ferret ghcr.io/jakahann/ferret-app run
 
 # run a single .fer file from a collection at an arbitrary path
-docker run -v /path/to/your/collection:/ferret useferret/cli run ./auth/login.fer
+docker run -v /path/to/your/collection:/ferret ghcr.io/jakahann/ferret-app run ./auth/login.fer
 ```
 
 > **Note on `--rm`:** Examples below include `--rm`. Docker keeps stopped containers around after they exit, which lets you `docker logs` or `docker inspect` them later for debugging. If you'd rather have Docker auto-delete the container as soon as `fer` finishes — useful for CI runs or to avoid `docker ps -a` filling up with stale entries — append `--rm` to any `docker run` (or `docker compose run`) command:
 
 ```bash
-docker run --rm -v $(pwd):/ferret useferret/cli run
+docker run --rm -v $(pwd):/ferret ghcr.io/jakahann/ferret-app run
 ```
 
 > It's purely a cleanup convenience; it doesn't affect the image, mounts, stdout output, or exit code.
@@ -152,7 +150,7 @@ jobs:
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/ferret \
-            useferret/cli:latest run --output results.xml --format junit
+            ghcr.io/jakahann/ferret-app:latest run --output results.xml --format junit
 
       - name: Publish Test Report
         uses: dorny/test-reporter@v3
@@ -167,7 +165,7 @@ jobs:
 
 ```yaml
 api-tests:
-  image: useferret/cli:latest
+  image: ghcr.io/jakahann/ferret-app:latest
   script:
     - fer run --output results.xml --format junit
   artifacts:
@@ -186,7 +184,7 @@ A minimal `docker-compose.yml` for running a Ferret collection alongside your pr
 ```yaml
 services:
   ferret-cli:
-    image: useferret/cli:latest
+    image: ghcr.io/jakahann/ferret-app:latest
     container_name: ferret-cli-runner
     volumes:
       - /path/to/collection:/ferret
@@ -218,10 +216,6 @@ docker compose run ferret-cli
 ```
 
 This fires a small set of requests against public endpoints that demonstrate the CLI executing requests and assertions inside a container.
-
-### Standalone demo
-
-For a clone-and-run demo with a curated collection, see [`ferret-collections/ferret-cli-docker`](https://github.com/ferret-collections/ferret-cli-docker).
 
 ---
 
