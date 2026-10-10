@@ -132,6 +132,26 @@ If you cannot use the workflow, build on each operating system with `npm run dis
 | Homebrew | cask `ferret-app` | in a personal tap first, for example `jakahann/tap` |
 | winget | `jakahann.FerretApp` | needs a public release and the installer's sha256 |
 
+## Changing the GitHub owner
+
+The owner of the repository (`jakahann` today) appears in links, Docker image paths, the Homebrew tap, the winget identifier, the macOS bundle ID, copyright lines and `CODEOWNERS`. `project.json` is the single place that says who it is:
+
+```json
+{ "owner": "jakahann", "githubId": 36445378 }
+```
+
+To move the project to another GitHub username, or to an organization:
+
+1. Rename the account (or transfer the repository) on GitHub first.
+2. Edit `owner` in `project.json`. `githubId` is the numeric id shown in **Settings → Emails** in the no-reply address (`<id>+name@users.noreply.github.com`); for an organization, use your own account's id, since the address is for commit authorship.
+3. Run `npm run set-owner`. It rewrites every file that mentions the old owner (it reads the old one from `homepage` in `package.json`), using lower-case where Docker, Homebrew and bundle IDs require it.
+4. Run the three commands it prints: update the git remote, set `user.email`, and, only if older commits should show the new address, rewrite their author (see below).
+5. `npm test` fails if any tracked file still names a different owner, so a missed reference shows up before a release.
+
+Do this **before** the first release. Anything already shipped (an installer's update check, a published Docker image or Homebrew cask) keeps pointing at the old name.
+
+Rewriting the author of older commits changes every commit hash, so do it only while the repository is private. Use `git filter-branch --env-filter` on `main`, keep a backup branch, and push with `git push --force-with-lease`.
+
 ## Code signing
 
 Without signing, Windows SmartScreen shows "Windows protected your PC" and macOS Gatekeeper refuses to open the app until the user right-clicks → Open. Both warnings are normal for unsigned software, and unsigned builds are fine for testing and early pre-releases.

@@ -48,6 +48,7 @@ Notes on how it behaves:
 
 ## 5. People and accounts
 
+- The repository owner is set once in `project.json`; see [Changing the GitHub owner](releasing.md#changing-the-github-owner).
 - **Settings → Collaborators**: nobody else needs write access. Outside contributors use forks.
 - Turn on two-factor authentication on your GitHub account, ideally with a passkey or hardware key, since the account can publish releases.
 - Use your GitHub no-reply address for commits (**Settings → Emails → Keep my email addresses private**, then `git config user.email <id>+jakahann@users.noreply.github.com`), so your real address is not in new commits.
