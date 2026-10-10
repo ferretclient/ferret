@@ -152,7 +152,7 @@ const varsSchema = Yup.object({
   options: variableOptionsSchema,
 
   // todo
-  // anoop(4 feb 2023) - nobody uses this, and it needs to be removed
+  // nobody uses this, and it needs to be removed
   local: Yup.boolean()
 })
   .noUnknown(true)

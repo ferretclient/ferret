@@ -1,16 +1,14 @@
 ---
 name: code-review
 description: Review a Ferret diff, PR, or branch via focused reviewers run in parallel —
-  correctness, security, DSL, React, cross-platform, tests. Mirrors the CodeRabbit /
-  CODING_STANDARDS review.
+  correctness, security, DSL, React, cross-platform, tests. Follows
+  CODING_STANDARDS.md and the rules in .claude/rules.
 ---
 
 # Reviewing Ferret code
 
-This skill mirrors the automated CodeRabbit review (`.coderabbit.yaml`) so you can run
-the same review locally. Source-of-truth order: coding standards → `CODING_STANDARDS.md`;
-architecture/behavior → `.claude/rules/*`. `.coderabbit.yaml` mirrors these for CI parity —
-read it for a path instruction not summarized here, but the rules win if they ever disagree.
+This skill runs a local code review. Source-of-truth order: coding standards →
+`CODING_STANDARDS.md`; architecture/behavior → `.claude/rules/*`. If two ever disagree, the rules win.
 
 The review is **split into focused lenses that run in parallel**, so a large diff is
 covered faster and each reviewer stays sharply scoped to one concern. Each lens lives in

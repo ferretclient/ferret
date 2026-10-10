@@ -8,7 +8,7 @@ const { encryptStringSafe, decryptStringSafe } = require('../utils/encryption');
  *
  * {
  *   "collections": [{
- *     "path": "/Users/anoop/Code/acme-acpi-collection",
+ *     "path": "/Users/example/Code/acme-api-collection",
  *     "environments" : [{
  *       "name": "Local",
  *       "secrets": [{

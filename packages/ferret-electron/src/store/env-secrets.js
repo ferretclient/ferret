@@ -10,7 +10,7 @@ const posixifyPath = (p) => (p ? p.replace(/\\/g, '/') : p);
  *
  * {
  *   "collections": [{
- *     "path": "/Users/anoop/Code/acme-acpi-collection",
+ *     "path": "/Users/example/Code/acme-api-collection",
  *     "environments" : [{
  *       "name": "Local",
  *       "secrets": [{

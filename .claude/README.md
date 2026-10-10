@@ -15,7 +15,7 @@ automatically when you launch from the project root.
 | `CLAUDE.md` | Project overview — commands, key architecture, coding standards, index of rules/references. | Every session (auto). |
 | `rules/*.md` | Path-scoped engineering guidance: `architecture` (`@useferret/*` dependency boundaries + manifests), `ferret-app-layout` (component directories, `src/ui` vs `src/components`), `redux-store`, `electron-ipc`, `sqlite` (`@useferret/sqlite` — migrations, statements, per-statement IPC), `dsl-changes` (on-disk `.fer`/`.yml` format), `cross-platform`, `testing`, `conventions` (readability, reuse, replacement hygiene, comment/diff hygiene). | When Claude touches files matching each rule's `paths:`. |
 | `reference/architecture.md` | The monorepo map — request pipeline, sandbox, file formats, core types, dependency versions. Too big to auto-load. | On demand only (Claude reads it when a task needs it). |
-| `skills/code-review/` | `/code-review` — reviews the current branch/PR via focused lenses in parallel; takes base pointers from `.coderabbit.yaml`. | On invocation / when relevant. |
+| `skills/code-review/` | `/code-review` — reviews the current branch/PR via focused lenses in parallel. | On invocation / when relevant. |
 | `skills/write-e2e-test/` | `/write-e2e-test` — writes a Playwright E2E test following Ferret's fixtures and conventions. | On invocation / when relevant. |
 | `settings.json` | Shared project settings, checked in for the team. Denies `Read` on `**/dist/**` so Claude works from `src/`, not generated bundles. | At startup, from the launch directory. |
 | `settings.local.json` | Your machine-specific overrides. Gitignored — never committed. | At startup, if present. |
@@ -102,7 +102,7 @@ maintained place under `.claude/` and attach exactly where they're needed (see t
 
 - **Detect duplication/conflicts**: `grep -rn "<claim>" .claude` before writing a fact; if two files
   state the same thing, keep it in one and point to it. Watch for the same fact drifting across
-  `CLAUDE.md`, a rule, a skill, and `CODING_STANDARDS.md` / `.coderabbit.yaml`.
+  `CLAUDE.md`, a rule, a skill, and `CODING_STANDARDS.md`.
 - **Verify against real code.** Every rule/example must reflect the actual repo — grep the source,
   don't assume. Rules are the source of truth; reviewer lenses and CLAUDE.md are thin pointers.
 - **Don't hardcode volatile catalogs** (slice lists, handler names, dep versions that drift).

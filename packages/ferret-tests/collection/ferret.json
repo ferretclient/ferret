@@ -9,7 +9,7 @@
       "hostname": "{{proxyHostname}}",
       "port": 4000,
       "auth": {
-        "username": "anoop",
+        "username": "user",
         "password": "password",
         "disabled": true
       },

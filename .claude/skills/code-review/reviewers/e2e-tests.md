@@ -5,8 +5,8 @@
 Adopt the reviewer persona and return findings in the output contract defined in
 `_contract.md`.
 
-Review the diff against **`.claude/rules/testing.md`** and the e2e checklist in
-**`.coderabbit.yaml`** (read both). Report violations with `file:line`, severity:
+Review the diff against **`.claude/rules/testing.md`** and the e2e checklist below.
+Report violations with `file:line`, severity:
 
 - **blocker** — `test.only`; `page.pause()`.
 - **suggestion** — `page.waitForTimeout()` where an `expect()` locator assertion could wait

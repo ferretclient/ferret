@@ -1,6 +1,7 @@
 {
   "version": "0.2.0",
   "name": "ferret",
+  "license": "MIT",
   "description": "Opensource API Client for Exploring and Testing APIs",
   "homepage": "https://github.com/jakahann/ferret-app",
   "repository": {
