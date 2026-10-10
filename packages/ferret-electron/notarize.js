@@ -8,7 +8,7 @@ const notarize = async function (params) {
     return;
   }
 
-  let appId = 'com.useferret.app';
+  const appId = params.packager.appInfo.id;
 
   let appPath = path.join(params.appOutDir, `${params.packager.appInfo.productFilename}.app`);
   if (!fs.existsSync(appPath)) {
@@ -23,19 +23,17 @@ const notarize = async function (params) {
   }
 
   console.log(`Notarizing ${appId} found at ${appPath} using Apple ID ${process.env.APPLE_ID}`);
-  try {
-    await electron_notarize.notarize({
-      tool: 'notarytool',
-      appBundleId: appId,
-      appPath: appPath,
-      appleId: process.env.APPLE_ID,
-      appleIdPassword: process.env.APPLE_ID_PASSWORD,
-      ascProvider: teamId,
-      teamId: teamId
-    });
-  } catch (error) {
-    console.error(error);
-  }
+  // A failed notarization must fail the build: shipping the app un-notarized by accident would only
+  // show up as a Gatekeeper warning on users' machines.
+  await electron_notarize.notarize({
+    tool: 'notarytool',
+    appBundleId: appId,
+    appPath: appPath,
+    appleId: process.env.APPLE_ID,
+    appleIdPassword: process.env.APPLE_ID_PASSWORD,
+    ascProvider: teamId,
+    teamId: teamId
+  });
 
   console.log(`Done notarizing ${appPath}`);
 };
