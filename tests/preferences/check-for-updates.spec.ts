@@ -13,7 +13,7 @@ const stubReleaseFeed = (electronApp) => electronApp.evaluate(({ net }) => {
       status: 200,
       json: async () => [{
         tag_name: 'v99.0.0',
-        html_url: 'https://github.com/jakahann/ferret-app/releases/tag/v99.0.0',
+        html_url: 'https://github.com/useferret/ferret/releases/tag/v99.0.0',
         draft: false,
         prerelease: true
       }]

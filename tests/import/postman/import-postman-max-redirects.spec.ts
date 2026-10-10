@@ -8,7 +8,7 @@ import {
   importCollection
 } from '../../utils/page';
 import { buildCommonLocators } from '../../utils/page/locators';
-import { DEFAULT_MAX_REDIRECTS } from '@ferret-app/common/utils';
+import { DEFAULT_MAX_REDIRECTS } from '@useferret/common/utils';
 
 const COLLECTION_NAME = 'Max Redirects Collection';
 

@@ -1,5 +1,5 @@
 {
-  "name": "@ferret-app/tests",
+  "name": "@useferret/tests",
   "version": "0.2.0",
   "description": "",
   "main": "src/index.js",
@@ -16,16 +16,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jakahann/ferret-app.git",
+    "url": "git+https://github.com/useferret/ferret.git",
     "directory": "packages/ferret-tests"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jakahann/ferret-app/issues"
+    "url": "https://github.com/useferret/ferret/issues"
   },
-  "homepage": "https://github.com/jakahann/ferret-app/tree/main/packages/ferret-tests#readme",
+  "homepage": "https://github.com/useferret/ferret/tree/main/packages/ferret-tests#readme",
   "dependencies": {
     "@grpc/grpc-js": "^1.14.4",
     "@grpc/proto-loader": "^0.7.15",
