@@ -1,4 +1,8 @@
-const { parseRemoteBranches } = require('./git');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const { execSync } = require('child_process');
+const { parseRemoteBranches, initGit } = require('./git');
 
 describe('parseRemoteBranches', () => {
   it('reads the branch names and the default branch out of ls-remote output', () => {
@@ -42,5 +46,29 @@ describe('parseRemoteBranches', () => {
   it('returns an empty listing for empty output', () => {
     expect(parseRemoteBranches('')).toEqual({ branches: [], defaultBranch: null });
     expect(parseRemoteBranches(undefined)).toEqual({ branches: [], defaultBranch: null });
+  });
+});
+
+// Runs the real simple-git library, which the other tests never load, so a change in how it is imported or called
+// shows up here instead of at runtime.
+const gitAvailable = (() => {
+  try {
+    execSync('git --version', { stdio: 'ignore' });
+    return true;
+  } catch {
+    return false;
+  }
+})();
+
+(gitAvailable ? describe : describe.skip)('initGit with the real simple-git', () => {
+  it('creates a repository whose branch is main', async () => {
+    const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'ferret-git-'));
+    try {
+      await initGit(directory);
+      expect(fs.existsSync(path.join(directory, '.git'))).toBe(true);
+      expect(execSync('git symbolic-ref --short HEAD', { cwd: directory }).toString().trim()).toBe('main');
+    } finally {
+      fs.rmSync(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+    }
   });
 });
