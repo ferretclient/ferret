@@ -2,8 +2,8 @@
 // defer onComplete to a microtask so it fires after the synchronous call site
 // returns (same timing as a real network call, and what the race-condition
 // test below relies on).
-jest.mock('@useferret/requests', () => {
-  const realCookies = jest.requireActual('@useferret/requests').cookies;
+jest.mock('@ferretclient/requests', () => {
+  const realCookies = jest.requireActual('@ferretclient/requests').cookies;
   return {
     cookies: realCookies,
     scripting: {

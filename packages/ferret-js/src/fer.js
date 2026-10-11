@@ -1,8 +1,8 @@
 const { cloneDeep, isEqual } = require('lodash');
 const xmlFormat = require('xml-formatter');
-const { interpolate: _interpolate } = require('@useferret/common');
-const { createSendRequest } = require('@useferret/requests').scripting;
-const { jar: createCookieJar, getCookiesForUrl } = require('@useferret/requests').cookies;
+const { interpolate: _interpolate } = require('@ferretclient/common');
+const { createSendRequest } = require('@ferretclient/requests').scripting;
+const { jar: createCookieJar, getCookiesForUrl } = require('@ferretclient/requests').cookies;
 const CookieList = require('./cookie-list');
 
 const variableNameRegex = /^[\w-.]*$/;

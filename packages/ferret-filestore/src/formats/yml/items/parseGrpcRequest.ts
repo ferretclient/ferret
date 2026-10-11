@@ -1,7 +1,7 @@
-import type { Item as FerretItem } from '@useferret/schema-types/collection/item';
-import type { GrpcRequest as FerretGrpcRequest } from '@useferret/schema-types/requests/grpc';
+import type { Item as FerretItem } from '@ferretclient/schema-types/collection/item';
+import type { GrpcRequest as FerretGrpcRequest } from '@ferretclient/schema-types/requests/grpc';
 import type { GrpcRequest, GrpcMetadata, GrpcMessageVariant } from '@opencollection/types/requests/grpc';
-import type { KeyValue as FerretKeyValue } from '@useferret/schema-types/common/key-value';
+import type { KeyValue as FerretKeyValue } from '@ferretclient/schema-types/common/key-value';
 import { toFerretAuth } from '../common/auth';
 import { toFerretVariables } from '../common/variables';
 import { toFerretScripts } from '../common/scripts';

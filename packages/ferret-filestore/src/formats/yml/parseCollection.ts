@@ -1,6 +1,6 @@
 import type { OpenCollection } from '@opencollection/types';
-import type { FolderRoot } from '@useferret/schema-types/collection/folder';
-import { normalizeOpenApiSyncConfigs } from '@useferret/common';
+import type { FolderRoot } from '@ferretclient/schema-types/collection/folder';
+import { normalizeOpenApiSyncConfigs } from '@ferretclient/common';
 import { parseYml } from './utils';
 import { toFerretAuth } from './common/auth';
 import { toFerretHttpHeaders } from './common/headers';

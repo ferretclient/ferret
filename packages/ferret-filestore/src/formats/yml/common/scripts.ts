@@ -1,9 +1,9 @@
 import type { Script as OpenCollectionScript, Scripts } from '@opencollection/types/common/scripts';
-import type { FolderRequest as FerretFolderRequest } from '@useferret/schema-types/collection/folder';
-import type { HttpRequest as FerretHttpRequest } from '@useferret/schema-types/requests/http';
-import type { WebSocketRequest as FerretWebSocketRequest } from '@useferret/schema-types/requests/websocket';
-import type { GrpcRequest as FerretGrpcRequest } from '@useferret/schema-types/requests/grpc';
-import type { Script as FerretScript } from '@useferret/schema-types/common/scripts';
+import type { FolderRequest as FerretFolderRequest } from '@ferretclient/schema-types/collection/folder';
+import type { HttpRequest as FerretHttpRequest } from '@ferretclient/schema-types/requests/http';
+import type { WebSocketRequest as FerretWebSocketRequest } from '@ferretclient/schema-types/requests/websocket';
+import type { GrpcRequest as FerretGrpcRequest } from '@ferretclient/schema-types/requests/grpc';
+import type { Script as FerretScript } from '@ferretclient/schema-types/common/scripts';
 
 export const toOpenCollectionScripts = (request: FerretFolderRequest | FerretHttpRequest | FerretWebSocketRequest | FerretGrpcRequest | null | undefined, allowedKeys: string[]): Scripts | undefined => {
   const ocScripts: Scripts = [];

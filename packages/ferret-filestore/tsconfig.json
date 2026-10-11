@@ -20,11 +20,11 @@
     "typeRoots": ["../../node_modules/@types", "./node_modules/@types", "./src/types"],
     "baseUrl": "../..",
     "paths": {
-      "@useferret/schema-types": ["packages/ferret-schema-types/dist/index.d.ts"],
-      "@useferret/schema-types/*": ["packages/ferret-schema-types/dist/*"],
-      "@useferret/common": ["packages/ferret-common/dist/index.d.ts"],
-      "@useferret/common/utils": ["packages/ferret-common/dist/utils/index.d.ts"],
-      "@useferret/common/*": ["packages/ferret-common/dist/*"],
+      "@ferretclient/schema-types": ["packages/ferret-schema-types/dist/index.d.ts"],
+      "@ferretclient/schema-types/*": ["packages/ferret-schema-types/dist/*"],
+      "@ferretclient/common": ["packages/ferret-common/dist/index.d.ts"],
+      "@ferretclient/common/utils": ["packages/ferret-common/dist/utils/index.d.ts"],
+      "@ferretclient/common/*": ["packages/ferret-common/dist/*"],
       "@opencollection/types": ["node_modules/@opencollection/types/dist/opencollection.d.ts"],
       "@opencollection/types/*": ["node_modules/@opencollection/types/dist/*"]
     }

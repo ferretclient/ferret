@@ -1,5 +1,5 @@
-import type { Item as FerretItem } from '@useferret/schema-types/collection/item';
-import type { WebSocketRequest as FerretWebSocketRequest } from '@useferret/schema-types/requests/websocket';
+import type { Item as FerretItem } from '@ferretclient/schema-types/collection/item';
+import type { WebSocketRequest as FerretWebSocketRequest } from '@ferretclient/schema-types/requests/websocket';
 import type { WebSocketRequest, WebSocketRequestInfo, WebSocketRequestDetails, WebSocketRequestRuntime, WebSocketMessage, WebSocketMessageVariant } from '@opencollection/types/requests/websocket';
 import type { Auth } from '@opencollection/types/common/auth';
 import type { Scripts } from '@opencollection/types/common/scripts';
@@ -11,7 +11,7 @@ import { toOpenCollectionAuth } from '../common/auth';
 import { toOpenCollectionHttpHeaders } from '../common/headers';
 import { toOpenCollectionVariables } from '../common/variables';
 import { toOpenCollectionScripts } from '../common/scripts';
-import { HTTP_SCRIPT_KEYS } from '@useferret/common';
+import { HTTP_SCRIPT_KEYS } from '@ferretclient/common';
 
 const stringifyWebsocketRequest = (item: FerretItem): string => {
   try {

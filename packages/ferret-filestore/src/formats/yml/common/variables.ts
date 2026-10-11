@@ -1,6 +1,6 @@
 import { Variable, VariableTypedValue } from '@opencollection/types/common/variables';
-import { FolderRequest as FerretFolderRequest } from '@useferret/schema-types/collection/folder';
-import { Variable as FerretVariable, Variables as FerretVariables } from '@useferret/schema-types/common/variables';
+import { FolderRequest as FerretFolderRequest } from '@ferretclient/schema-types/collection/folder';
+import { Variable as FerretVariable, Variables as FerretVariables } from '@ferretclient/schema-types/common/variables';
 import { uuid, ensureString } from '../../../utils';
 import {
   isTypedValue,

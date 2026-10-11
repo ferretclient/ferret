@@ -1,4 +1,4 @@
-import type { Item as FerretItem } from '@useferret/schema-types/collection/item';
+import type { Item as FerretItem } from '@ferretclient/schema-types/collection/item';
 import type { ScriptFile } from '@opencollection/types/collection/item';
 import { uuid } from '../../../utils';
 
