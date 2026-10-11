@@ -21,7 +21,7 @@ Ferret started as a fork of [Bruno](https://github.com/usebruno/bruno) and is a 
 ### Changed
 
 - The command-line tool is `fer`, and collections use the `.fer` file extension.
-- The npm package is named `ferret-app` and the Docker image `ghcr.io/useferret/ferret`.
+- The npm package is named `ferret-app` and the Docker image `ghcr.io/ferretclient/ferret`.
 
 ### Not yet available
 

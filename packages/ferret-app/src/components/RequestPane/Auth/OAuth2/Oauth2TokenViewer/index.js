@@ -3,7 +3,7 @@ import { find } from 'lodash';
 import StyledWrapper from './StyledWrapper';
 import { IconChevronDown, IconChevronRight, IconCopy, IconCheck } from '@tabler/icons';
 import { getAllVariables } from 'utils/collections/index';
-import { interpolate } from '@useferret/common';
+import { interpolate } from '@ferretclient/common';
 
 const TokenSection = ({ title, token }) => {
   if (!token) return null;

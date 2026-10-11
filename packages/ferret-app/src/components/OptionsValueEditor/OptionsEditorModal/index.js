@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IconPlus, IconTrash } from '@tabler/icons';
-import { validateEnvironmentVariableOptions } from '@useferret/common/utils';
+import { validateEnvironmentVariableOptions } from '@ferretclient/common/utils';
 import Portal from 'components/Portal';
 import Modal from 'components/Modal';
 import StyledWrapper from './StyledWrapper';

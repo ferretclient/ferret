@@ -3,7 +3,7 @@ import { IconAppWindow } from '@tabler/icons';
 import Button from 'ui/Button';
 import StyledWrapper from './StyledWrapper';
 
-const APPS_DOCS_URL = 'https://github.com/useferret/ferret/tree/main/docs';
+const APPS_DOCS_URL = 'https://github.com/ferretclient/ferret/tree/main/docs';
 
 const EmptyAppState = ({ title = 'No app yet', hint, onAddCode }) => {
   const openAppsDocs = useCallback(() => {

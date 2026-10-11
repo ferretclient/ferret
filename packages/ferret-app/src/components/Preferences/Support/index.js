@@ -18,14 +18,14 @@ const SUPPORT_GROUPS = [
       {
         key: 'documentation',
         icon: IconBook,
-        url: 'https://github.com/useferret/ferret/tree/main/docs',
+        url: 'https://github.com/ferretclient/ferret/tree/main/docs',
         label: 'COMMON.DOCUMENTATION',
         description: 'SUPPORT.DOCUMENTATION_DESCRIPTION'
       },
       {
         key: 'report-issues',
         icon: IconSpeakerphone,
-        url: 'https://github.com/useferret/ferret/issues',
+        url: 'https://github.com/ferretclient/ferret/issues',
         label: 'COMMON.REPORT_ISSUES',
         description: 'SUPPORT.REPORT_ISSUES_DESCRIPTION'
       }
@@ -38,7 +38,7 @@ const SUPPORT_GROUPS = [
       {
         key: 'github',
         icon: IconBrandGithub,
-        url: 'https://github.com/useferret/ferret',
+        url: 'https://github.com/ferretclient/ferret',
         label: 'COMMON.GITHUB',
         description: 'SUPPORT.GITHUB_DESCRIPTION'
       }

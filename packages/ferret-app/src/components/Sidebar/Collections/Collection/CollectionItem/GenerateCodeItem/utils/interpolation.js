@@ -1,4 +1,4 @@
-import { interpolate, interpolateObject } from '@useferret/common';
+import { interpolate, interpolateObject } from '@ferretclient/common';
 import { cloneDeep } from 'lodash';
 
 export const interpolateAuth = (auth, variables = {}) => {

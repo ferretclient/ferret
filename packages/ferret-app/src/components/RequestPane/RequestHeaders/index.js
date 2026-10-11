@@ -9,7 +9,7 @@ import {
   IconEyeOff,
   IconInfoCircle
 } from '@tabler/icons';
-import { FERRET_DEFAULT_HEADERS, getFerretRuntimeUserAgent } from '@useferret/common';
+import { FERRET_DEFAULT_HEADERS, getFerretRuntimeUserAgent } from '@ferretclient/common';
 import { useTheme } from 'providers/Theme';
 import {
   moveRequestHeader,

@@ -20,7 +20,7 @@ is in the diff. Report with `file:line`, severity:
   import/export (either direction). Flag the missing surface only — the on-disk contract itself
   (compat, escaping, round-trip) belongs to the `dsl-changes` lens; don't duplicate its findings.
 - **suggestion** — identical logic patched in both runtimes that has no Electron- or CLI-only
-  dependency and could move into `@useferret/requests` / `@useferret/common` (`utils/cookies.js` is
+  dependency and could move into `@ferretclient/requests` / `@ferretclient/common` (`utils/cookies.js` is
   the precedent); otherwise, a missing comment naming the pairing at both sites.
 - **suggestion** — a new app runner option with no `fer run` flag; a feature at one scope level
   with no decision for the others or `inherit`; a wire-request change without a

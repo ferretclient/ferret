@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import cloneDeep from 'lodash/cloneDeep';
 import get from 'lodash/get';
 import { useDispatch, useSelector } from 'react-redux';
-import { resolveEnvironmentInheritance } from '@useferret/common/utils';
+import { resolveEnvironmentInheritance } from '@ferretclient/common/utils';
 import { sendNetworkRequest } from 'utils/network/index';
 import {
   findEnvironmentInCollection,

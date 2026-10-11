@@ -5,7 +5,7 @@ paths:
 
 # Dependency Boundaries
 
-Internal `@useferret/*` dependencies (from each `package.json`) form a strict DAG. **New code must
+Internal `@ferretclient/*` dependencies (from each `package.json`) form a strict DAG. **New code must
 respect it** — a cyclic or upward dependency is an architectural bug, not a convenience.
 
 The full monorepo map (build tools, request pipeline, sandbox, file formats, core data-model
@@ -14,7 +14,7 @@ it before non-trivial cross-package or architectural work.
 
 ## Dependency direction & ownership boundaries
 
-- **Leaf libs — zero internal `@useferret/*` deps:** ferret-common, ferret-lang, ferret-query,
+- **Leaf libs — zero internal `@ferretclient/*` deps:** ferret-common, ferret-lang, ferret-query,
   ferret-requests, ferret-graphql-docs, ferret-schema, ferret-schema-types, ferret-toml, ferret-sqlite
   (a leaf, but *not* platform-neutral — see guardrail 6).
 - **Mid consumers:** ferret-js → (common, query); ferret-converters → (common, schema; schema-types
@@ -28,7 +28,7 @@ Guardrails this enforces:
 1. **ferret-common is the browser-safe base leaf.** It runs in the web renderer (`ferret-app`), not
    just Node, so it must stay platform-neutral: no Node built-ins (`fs`, `path`, `os`, `crypto`,
    `child_process`, `node:*`) and no dependency that itself pulls in Node. It currently ships with
-   zero runtime dependencies — keep it that way. It also depends on no other `@useferret/*` package;
+   zero runtime dependencies — keep it that way. It also depends on no other `@ferretclient/*` package;
    a util that needs Node or another ferret package belongs in a different package.
 2. **No shared/library package may import ferret-app or ferret-electron.** Renderer- or
    Electron-specific code must not be pushed down into a lib to make it importable upward.
@@ -38,9 +38,9 @@ Guardrails this enforces:
 4. **ferret-schema-types is types-only** (a *devDependency* of converters/filestore, built with
    plain `tsc`). Import types from it; never add runtime code or a runtime import of it.
 5. **ferret-schema (Yup) and ferret-schema-types (TS types) are distinct and both live.** app +
-   converters use `@useferret/schema` for runtime validation; filestore + converters use
-   `@useferret/schema-types` for compile-time types. A data-model change usually touches both.
-6. **ferret-sqlite is main-process only.** `@useferret/sqlite` (= `/node`) imports `node:sqlite`,
+   converters use `@ferretclient/schema` for runtime validation; filestore + converters use
+   `@ferretclient/schema-types` for compile-time types. A data-model change usually touches both.
+6. **ferret-sqlite is main-process only.** `@ferretclient/sqlite` (= `/node`) imports `node:sqlite`,
    `node:fs` and `node:crypto`; importing it from the renderer breaks the bundle. The renderer
    reaches statements only through the per-statement IPC handlers in ferret-electron. See
    `.claude/rules/sqlite.md`.

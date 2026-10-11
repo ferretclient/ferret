@@ -25,7 +25,7 @@ import StyledWrapper from './StyledWrapper';
 import { updateRequestGraphqlQuery, updateRequestGraphqlVariables } from 'providers/ReduxStore/slices/collections';
 import { sendRequest, saveRequest } from 'providers/ReduxStore/slices/collections/actions';
 import useGraphqlSchema from '../GraphQLSchemaActions/useGraphqlSchema';
-import { resolveEnvironmentInheritance } from '@useferret/common/utils';
+import { resolveEnvironmentInheritance } from '@ferretclient/common/utils';
 import { findEnvironmentInCollection } from 'utils/collections';
 import { hasEffectiveAuth } from 'utils/auth';
 import HeightBoundContainer from 'ui/HeightBoundContainer';

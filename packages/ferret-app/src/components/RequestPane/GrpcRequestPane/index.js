@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateRequestPaneTab } from 'providers/ReduxStore/slices/tabs';
-import { GRPC_SCRIPT_KEYS } from '@useferret/common';
+import { GRPC_SCRIPT_KEYS } from '@ferretclient/common';
 import RequestHeaders from 'components/RequestPane/RequestHeaders';
 import GrpcBody from 'components/RequestPane/GrpcBody';
 import GrpcScript from 'components/RequestPane/GrpcScript';
