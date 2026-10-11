@@ -113,7 +113,7 @@ Cost: Linux, Windows and macOS minutes are billed at 1×, 2× and 10×, so one r
 | Platform | Files |
 | --- | --- |
 | Windows | `ferret_<version>_x64_win.exe`, `ferret_<version>_arm64_win.exe` |
-| macOS | `ferret_<version>_x64_mac.dmg` / `.pkg` / `.zip` and the same for `arm64` |
+| macOS | `ferret_<version>_x64_mac.dmg` / `.zip` and the same for `arm64` |
 | Linux | `ferret_<version>_x64_linux.AppImage`, `.deb`, `.rpm`, and the same for `arm64` |
 
 ### Publishing by hand
