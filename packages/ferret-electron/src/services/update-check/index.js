@@ -58,12 +58,51 @@ const safeReleaseUrl = (url) => (typeof url === 'string' && url.startsWith(`http
 
 const stripVersionPrefix = (tag) => String(tag).replace(/^v/, '');
 
+const DOWNLOAD_URL_PREFIX = `https://github.com/${REPOSITORY}/releases/download/`;
+const CHECKSUMS_ASSET_NAME = 'SHA256SUMS.txt';
+
+// Only files published on this repository's releases are ever downloaded.
+const isTrustedDownloadUrl = (url) => typeof url === 'string' && url.startsWith(DOWNLOAD_URL_PREFIX);
+
+// The installer for this operating system and processor, named the way the release workflow names its files:
+// ferret_<version>_<arch>_<os>.<ext>. Linux gets only the AppImage, built for x64; the .deb and .rpm need a
+// package manager, so those users are sent to the release page.
+const installerFileName = ({ version, platform, arch }) => {
+  const known = arch === 'x64' || arch === 'arm64';
+  if (platform === 'win32' && known) return { name: `ferret_${version}_${arch}_win.exe`, action: 'restart' };
+  if (platform === 'darwin' && known) return { name: `ferret_${version}_${arch}_mac.dmg`, action: 'open' };
+  if (platform === 'linux' && arch === 'x64') return { name: `ferret_${version}_x86_64_linux.AppImage`, action: 'reveal' };
+  return null;
+};
+
+/**
+ * The installer to offer for `release`, or null when this system has none or the release does not publish a
+ * checksum file next to it (an installer is never offered without a way to verify it).
+ * `action` says what installing means here: restart Ferret, open a disk image, or show a file.
+ */
+const pickInstaller = (release, { version, platform, arch }) => {
+  const wanted = installerFileName({ version, platform, arch });
+  if (!wanted) return null;
+  const assets = Array.isArray(release?.assets) ? release.assets : [];
+  const installer = assets.find((asset) => asset?.name === wanted.name);
+  const checksums = assets.find((asset) => asset?.name === CHECKSUMS_ASSET_NAME);
+  if (!installer || !checksums) return null;
+  if (!isTrustedDownloadUrl(installer.browser_download_url) || !isTrustedDownloadUrl(checksums.browser_download_url)) return null;
+  return {
+    name: wanted.name,
+    action: wanted.action,
+    size: Number(installer.size) || 0,
+    url: installer.browser_download_url,
+    checksumsUrl: checksums.browser_download_url
+  };
+};
+
 /**
  * Reads the published releases once and compares the newest to `currentVersion`.
  * Never throws: every failure is reported as a result so the renderer can show it.
- * Nothing is downloaded or installed.
+ * Nothing is downloaded or installed here; the result only names the installer that fits this computer.
  */
-const checkForUpdates = async ({ currentVersion, fetchImpl }) => {
+const checkForUpdates = async ({ currentVersion, fetchImpl, platform = process.platform, arch = process.arch }) => {
   try {
     const response = await fetchImpl(RELEASES_API_URL, {
       headers: { 'Accept': 'application/vnd.github+json', 'User-Agent': `ferret/${currentVersion}` },
@@ -84,12 +123,15 @@ const checkForUpdates = async ({ currentVersion, fetchImpl }) => {
     }
 
     const latestVersion = stripVersionPrefix(latest.tag_name);
+    const newer = compareVersions(latestVersion, currentVersion) > 0;
+    const installer = newer ? pickInstaller(latest, { version: latestVersion, platform, arch }) : null;
     return {
-      status: compareVersions(latestVersion, currentVersion) > 0 ? 'update-available' : 'up-to-date',
+      status: newer ? 'update-available' : 'up-to-date',
       currentVersion,
       latestVersion,
       prerelease: Boolean(latest.prerelease),
-      url: safeReleaseUrl(latest.html_url)
+      url: safeReleaseUrl(latest.html_url),
+      ...(installer ? { installer } : {})
     };
   } catch (error) {
     return { status: 'error', currentVersion, message: error?.message || 'The request failed.' };
@@ -99,6 +141,8 @@ const checkForUpdates = async ({ currentVersion, fetchImpl }) => {
 module.exports = {
   compareVersions,
   findLatestRelease,
+  pickInstaller,
+  isTrustedDownloadUrl,
   checkForUpdates,
   RELEASES_API_URL,
   RELEASES_PAGE_URL

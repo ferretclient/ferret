@@ -13,7 +13,7 @@ Ferret started as a fork of [Bruno](https://github.com/usebruno/bruno) and is a 
 - **Import from Bruno**: single collections, zips, exports, a folder of collections and a whole workspace.
 - **Help pages** inside the app, including a first-request walkthrough.
 - **Sidebar sections** can be reordered by dragging and hidden in Preferences → Display.
-- **Check for updates** in Preferences → Support. It is off by default and asks permission before contacting GitHub.
+- **Check for updates** in Preferences → Support. Nothing happens in the background: you confirm the check, then choose to download, then choose to install. The installer is fetched from this repository's releases and compared with the SHA-256 checksum published with the release before it can be started. Windows runs the installer and closes Ferret, macOS opens the disk image, and Linux shows the AppImage in its folder. The installers are not signed yet, so Windows and macOS still show their usual warning.
 - **Third-party notices** in Preferences → Support → Legal, shipped with every installer.
 - Teal and azure default themes.
 - The Windows uninstaller asks whether to delete Ferret's data (default workspace, collections, settings). Silent uninstalls and updates keep it.

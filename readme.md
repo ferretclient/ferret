@@ -41,7 +41,7 @@ Installers for Windows, macOS and Linux are published on the repository's **Rele
   With Homebrew: `brew install --cask ferretclient/tap/ferret` (available once the first release is published).
 - **Linux:** make the AppImage executable (`chmod +x`) and run it, or install the `.deb` / `.rpm`.
 
-**Updating:** Ferret never updates itself. Open **Preferences → Support → Check for updates**, confirm the dialog, and Ferret asks GitHub once for the latest release and tells you whether a newer version exists. You then download it from the release page yourself. While the repository is private, the check reports that no releases can be read.
+**Updating:** Ferret never updates itself in the background. Open **Preferences → Support → Check for updates** and confirm the dialog: Ferret asks GitHub once for the latest release and tells you whether a newer version exists. If it does, you can choose to download it (Ferret checks the file against the checksum published with the release) and then choose to install it, or open the release page and download it yourself. While the repository is private, the check reports that no releases can be read.
 
 No release yet, or you prefer to build it yourself? Follow the next section.
 
