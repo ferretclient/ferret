@@ -51,7 +51,7 @@ describe('pickInstaller', () => {
     const foreign = { assets: release.assets.map((a) => ({ ...a, browser_download_url: `https://example.com/${a.name}` })) };
     expect(pick('win32', 'x64', foreign)).toBeNull();
     expect(isTrustedDownloadUrl(`${BASE}/x.exe`)).toBe(true);
-    expect(isTrustedDownloadUrl('https://github.com/someone-else/ferret/releases/download/v1/x.exe')).toBe(false);
+    expect(isTrustedDownloadUrl('https://github.com/someone-else/other-project/releases/download/v1/x.exe')).toBe(false);
     expect(isTrustedDownloadUrl(undefined)).toBe(false);
   });
 
