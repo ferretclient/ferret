@@ -184,11 +184,17 @@ for (const { format, collectionName } of FORMATS) {
       await openRequest(page, collectionName, 'companies');
       await selectRequestPaneTab(page, 'Vars');
 
-      const section = page.getByTestId('request-environment-option-company');
+      // The compact bar under the URL bar shows the same variable, so scope to the Vars tab section.
+      const section = page.getByTestId('request-environment-options').getByTestId('request-environment-option-company');
       const picker = section.getByTestId('request-var-options-picker');
 
       await test.step('The picker lists the environment option and shows the environment default', async () => {
         await expect(picker).toContainText('Company2');
+      });
+
+      await test.step('The status says the request follows the environment', async () => {
+        await expect(section.getByTestId('request-environment-option-status-company')).toHaveText('Following the environment');
+        await expect(section.getByTestId('request-environment-option-reset-company')).toHaveCount(0);
       });
 
       await test.step('Choosing Company1 makes this request send its value', async () => {
@@ -197,6 +203,15 @@ for (const { format, collectionName } of FORMATS) {
         await expect(picker).toContainText('Company1');
         await sendRequest(page, 200);
         await expect(page.getByTestId('history-row').first()).toContainText('company=12345');
+      });
+
+      await test.step('The status shows the override and Reset goes back to the environment', async () => {
+        await expect(section.getByTestId('request-environment-option-status-company')).toHaveText('Overridden for this request');
+        await section.getByTestId('request-environment-option-reset-company').click();
+        await expect(section.getByTestId('request-environment-option-status-company')).toHaveText('Following the environment');
+        await expect(picker).toContainText('Company2');
+        await picker.click();
+        await page.getByRole('option', { name: 'Company1' }).click();
       });
 
       await test.step('Choosing the environment default again removes the override', async () => {

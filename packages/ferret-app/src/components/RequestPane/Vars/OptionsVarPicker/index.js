@@ -4,10 +4,13 @@ import Select from 'ui/Select';
 /**
  * Value editor for a request variable named like an `options` environment variable. Lists the
  * option names and stores the chosen option's value, so the request overrides the environment's
- * default with an ordinary request variable.
+ * default with an ordinary request variable. `defaultValue` marks the option the environment uses.
  */
-const OptionsVarPicker = ({ options, value, onChange }) => {
-  const data = options.map((option) => ({ value: option.value, label: option.key }));
+const OptionsVarPicker = ({ options, value, defaultValue, onChange }) => {
+  const data = options.map((option) => ({
+    value: option.value,
+    label: defaultValue !== undefined && option.value === defaultValue ? `${option.key} (environment default)` : option.key
+  }));
   const currentValue = value === null || value === undefined ? '' : String(value);
 
   // A value that no longer matches an option (e.g. the option was edited) stays visible as-is.
