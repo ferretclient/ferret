@@ -18,7 +18,7 @@ npm run check            # Lint + all unit tests
 There is no hosted CI. Checks run locally through git hooks: pre-commit lints staged files,
 pre-push runs `npm test`. Unit tests need the shared packages built (`npm run setup`).
 
-Full script list: root `package.json`. Setup: `nvm use && npm i --legacy-peer-deps && npm run setup` (Node **v22.12.0**, see `.nvmrc`).
+Full script list: root `package.json`. Setup: `nvm use && npm i --legacy-peer-deps && npm run setup` (Node **v24.21.0**, see `.nvmrc`).
 
 ### Running a single test
 

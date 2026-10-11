@@ -47,7 +47,7 @@ No release yet, or you prefer to build it yourself? Follow the next section.
 
 ## Run from source
 
-You need **Git** and **Node.js 22.12.x** (see [`.nvmrc`](.nvmrc); install it with [nvm](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows)).
+You need **Git** and **Node.js 24.21.x** (see [`.nvmrc`](.nvmrc); install it with [nvm](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows)).
 
 ```bash
 git clone https://github.com/ferretclient/ferret.git

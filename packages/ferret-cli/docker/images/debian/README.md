@@ -2,7 +2,7 @@
 
 Debian slim variant of the Ferret CLI Docker image.
 
-**Base image:** `node:22-slim`
+**Base image:** `node:24-slim`
 
 ## Building
 

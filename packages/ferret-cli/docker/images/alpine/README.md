@@ -2,7 +2,7 @@
 
 Alpine Linux variant of the Ferret CLI Docker image.
 
-**Base image:** `node:22-alpine`
+**Base image:** `node:24-alpine`
 
 ## Building
 
