@@ -2,7 +2,7 @@ const { simpleGit } = require('simple-git');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { exec } = require('child_process');
+const { exec, execFile } = require('child_process');
 const { parseRequest } = require('@ferretclient/filestore');
 
 let collectionPathToGitRootPathMap = new Map();
@@ -751,21 +751,31 @@ const parseRemoteBranches = (lsRemoteOutput) => {
   return { branches, defaultBranch };
 };
 
-const listBranchesForRemoteUrl = async ({ url }) => {
-  try {
-    const output = await simpleGit({
-      baseDir: os.tmpdir(),
-      timeout: { block: REMOTE_BRANCH_LISTING_TIMEOUT_MS, stdOut: false, stdErr: false }
-    })
-      .env({ ...process.env, GIT_TERMINAL_PROMPT: '0' })
-      .listRemote(['--symref', url, 'HEAD', 'refs/heads/*']);
-
-    return parseRemoteBranches(output);
-  } catch (error) {
-    console.error('Error listing remote branches:', error);
-    throw error;
-  }
-};
+// Runs `git ls-remote` itself rather than through simple-git: simple-git 4 refuses an environment that holds
+// GIT_EDITOR, GIT_PAGER, GIT_SSH_COMMAND and similar variables a user may have set, and the listing needs the
+// user's whole environment (proxy, SSH and credential settings) with prompting turned off. The `--` keeps a
+// URL from being read as an option, and the `ext::` transport, which runs commands, stays disabled.
+const listBranchesForRemoteUrl = ({ url }) => new Promise((resolve, reject) => {
+  execFile(
+    'git',
+    ['-c', 'protocol.ext.allow=never', 'ls-remote', '--symref', '--', url, 'HEAD', 'refs/heads/*'],
+    {
+      cwd: os.tmpdir(),
+      env: { ...process.env, GIT_TERMINAL_PROMPT: '0' },
+      timeout: REMOTE_BRANCH_LISTING_TIMEOUT_MS,
+      maxBuffer: 10 * 1024 * 1024,
+      windowsHide: true
+    },
+    (error, stdout) => {
+      if (error) {
+        console.error('Error listing remote branches:', error);
+        reject(error);
+        return;
+      }
+      resolve(parseRemoteBranches(stdout));
+    }
+  );
+});
 
 const fetchRemotes = (gitRootPath) => {
   return new Promise((resolve, reject) => {
