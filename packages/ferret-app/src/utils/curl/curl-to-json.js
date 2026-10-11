@@ -9,7 +9,7 @@
 import parseCurlCommand from './parse-curl';
 import * as querystring from 'query-string';
 import * as jsesc from 'jsesc';
-import { buildQueryString } from '@useferret/common/utils';
+import { buildQueryString } from '@ferretclient/common/utils';
 import { isStructuredContentType } from './content-type';
 
 function getContentType(headers = {}) {

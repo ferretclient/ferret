@@ -1,6 +1,6 @@
-import { collectionSchema, environmentSchema, itemSchema } from '@useferret/schema';
-import { parseQueryParams, extractPromptVariables, getDataTypeFromValue, resolveEnvironmentInheritance } from '@useferret/common/utils';
-import { DEFAULT_HTTP_ITEM_SETTINGS } from '@useferret/common';
+import { collectionSchema, environmentSchema, itemSchema } from '@ferretclient/schema';
+import { parseQueryParams, extractPromptVariables, getDataTypeFromValue, resolveEnvironmentInheritance } from '@ferretclient/common/utils';
+import { DEFAULT_HTTP_ITEM_SETTINGS } from '@ferretclient/common';
 import { REQUEST_TYPES, DEFAULT_COLLECTION_FORMAT } from 'utils/common/constants';
 import cloneDeep from 'lodash/cloneDeep';
 import filter from 'lodash/filter';

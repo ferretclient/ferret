@@ -3,10 +3,10 @@ const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const { sanitizeName } = require('./filesystem');
-const { getEffectiveTags, getFolderTags, getOwnTags } = require('@useferret/common');
-const { parseRequest, parseCollection, parseFolder, stringifyCollection, stringifyFolder, stringifyEnvironment, stringifyRequest, DEFAULT_COLLECTION_FORMAT } = require('@useferret/filestore');
-const { sortByNameThenSequence } = require('@useferret/common');
-const { isOptionsVariable, resolveOptionsVariableValue } = require('@useferret/common').utils;
+const { getEffectiveTags, getFolderTags, getOwnTags } = require('@ferretclient/common');
+const { parseRequest, parseCollection, parseFolder, stringifyCollection, stringifyFolder, stringifyEnvironment, stringifyRequest, DEFAULT_COLLECTION_FORMAT } = require('@ferretclient/filestore');
+const { sortByNameThenSequence } = require('@ferretclient/common');
+const { isOptionsVariable, resolveOptionsVariableValue } = require('@ferretclient/common').utils;
 const constants = require('../constants');
 const chalk = require('chalk');
 

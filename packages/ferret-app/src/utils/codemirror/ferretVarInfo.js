@@ -6,8 +6,8 @@
  *  LICENSE file at https://github.com/graphql/codemirror-graphql/tree/v0.8.3
  */
 
-import { interpolate, mockDataFunctions, timeBasedDynamicVars } from '@useferret/common';
-import { toDisplayString } from '@useferret/common/utils';
+import { interpolate, mockDataFunctions, timeBasedDynamicVars } from '@ferretclient/common';
+import { toDisplayString } from '@ferretclient/common/utils';
 import toast from 'react-hot-toast';
 import {
   getVariableScope,

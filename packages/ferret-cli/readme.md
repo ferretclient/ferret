@@ -4,7 +4,7 @@ With Ferret CLI, you can now run your API collections with ease using simple com
 
 This makes it easier to test your APIs in different environments, automate your testing process, and integrate your API tests with your continuous integration and deployment workflows.
 
-For detailed documentation, visit [Ferret CLI Documentation](https://github.com/useferret/ferret/blob/main/docs/cli.md).
+For detailed documentation, visit [Ferret CLI Documentation](https://github.com/ferretclient/ferret/blob/main/docs/cli.md).
 
 ## Installation
 
@@ -138,7 +138,7 @@ Ferret cli returns the following exit status codes:
 
 ## Support
 
-If you encounter any issues or have any feedback or suggestions, please raise them on our [GitHub repository](https://github.com/useferret/ferret)
+If you encounter any issues or have any feedback or suggestions, please raise them on our [GitHub repository](https://github.com/ferretclient/ferret)
 
 Thank you for using Ferret CLI!
 
@@ -146,7 +146,7 @@ Thank you for using Ferret CLI!
 
 <!-- An absolute link is used here because npm treats links differently -->
 
-See [https://github.com/useferret/ferret/releases](https://github.com/useferret/ferret/releases)
+See [https://github.com/ferretclient/ferret/releases](https://github.com/ferretclient/ferret/releases)
 
 ## License
 

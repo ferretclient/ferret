@@ -56,10 +56,10 @@ class ErrorBoundary extends React.Component {
               Please report this under:
               <a
                 className="text-link hover:underline cursor-pointer ml-2"
-                href="https://github.com/useferret/ferret/issues"
+                href="https://github.com/ferretclient/ferret/issues"
                 target="_blank"
               >
-                https://github.com/useferret/ferret/issues
+                https://github.com/ferretclient/ferret/issues
               </a>
             </p>
 
