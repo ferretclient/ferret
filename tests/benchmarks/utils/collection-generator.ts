@@ -1,5 +1,5 @@
-import { stringifyRequest, stringifyCollection, stringifyFolder } from '@useferret/filestore';
-import type { FerretItem } from '@useferret/schema-types';
+import { stringifyRequest, stringifyCollection, stringifyFolder } from '@ferretclient/filestore';
+import type { FerretItem } from '@ferretclient/schema-types';
 import * as path from 'path';
 import * as fs from 'fs';
 

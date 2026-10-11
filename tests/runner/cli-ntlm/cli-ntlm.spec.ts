@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { test, expect } from '../../../playwright';
 import { cliOutput, runCLIAsync } from '../../utils/cli';
-import { startNtlmServer, type NtlmEndpoint } from '@useferret/tests/ntlm';
+import { startNtlmServer, type NtlmEndpoint } from '@ferretclient/tests/ntlm';
 
 const COLLECTION = path.resolve(__dirname, 'collection');
 const PASSWORD = 'Br!unoNtlm';

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Sets one version number on every workspace package and on the `@useferret/*` dependencies that
+// Sets one version number on every workspace package and on the `@ferretclient/*` dependencies that
 // point at them, so the monorepo always releases as a unit.
 //
 //   node scripts/set-version.js 0.2.0
@@ -20,7 +20,7 @@ const manifests = fs.readdirSync(packagesDir)
   .map((name) => path.join(packagesDir, name, 'package.json'))
   .filter((file) => fs.existsSync(file));
 
-const INTERNAL_DEPENDENCY = /"(@useferret\/[a-z0-9-]+)": "([\^~]?)\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?"/g;
+const INTERNAL_DEPENDENCY = /"(@ferretclient\/[a-z0-9-]+)": "([\^~]?)\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?"/g;
 
 let changed = 0;
 for (const file of manifests) {

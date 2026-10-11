@@ -5,10 +5,10 @@ cask "ferret" do
   sha256 arm:   "0000000000000000000000000000000000000000000000000000000000000000",
          intel: "0000000000000000000000000000000000000000000000000000000000000000"
 
-  url "https://github.com/useferret/ferret/releases/download/v#{version}/ferret_#{version}_#{arch}_mac.dmg"
+  url "https://github.com/ferretclient/ferret/releases/download/v#{version}/ferret_#{version}_#{arch}_mac.dmg"
   name "Ferret"
   desc "Offline API client for exploring and testing APIs"
-  homepage "https://github.com/useferret/ferret"
+  homepage "https://github.com/ferretclient/ferret"
 
   livecheck do
     url :url
@@ -21,8 +21,8 @@ cask "ferret" do
 
   zap trash: [
     "~/Library/Application Support/ferret",
-    "~/Library/Preferences/io.github.useferret.ferret.plist",
-    "~/Library/Saved Application State/io.github.useferret.ferret.savedState",
+    "~/Library/Preferences/io.github.ferretclient.ferret.plist",
+    "~/Library/Saved Application State/io.github.ferretclient.ferret.savedState",
   ]
 
   caveats <<~EOS

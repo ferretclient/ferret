@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { test, expect, closeElectronApp, type ElectronApplication } from '../../../playwright';
 import { buildCommonLocators, openRequest, sendRequest, waitForReadyPage } from '../../utils/page';
-import { startNtlmServer, type NtlmEndpoint } from '@useferret/tests/ntlm';
+import { startNtlmServer, type NtlmEndpoint } from '@ferretclient/tests/ntlm';
 import { SELF_SIGNED_CERTIFICATE, TLS_HANDSHAKE_FAILURE } from '../../utils/constants';
 
 const PASSWORD = 'Br!unoNtlm';
