@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { isEqual } = require('lodash');
-const { stringifyEnvironment, stringifyCollection, parseEnvironment } = require('@useferret/filestore');
-const { getDataTypeFromValue } = require('@useferret/common').utils;
+const { stringifyEnvironment, stringifyCollection, parseEnvironment } = require('@ferretclient/filestore');
+const { getDataTypeFromValue } = require('@ferretclient/common').utils;
 const { parseEnvironmentJson } = require('./environment');
 
 /**

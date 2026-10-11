@@ -19,17 +19,17 @@ const {
   stringifyEnvironment,
   parseEnvironment,
   DEFAULT_COLLECTION_FORMAT
-} = require('@useferret/filestore');
-const { utils } = require('@useferret/common');
-const { resolveEnvironmentInheritance } = require('@useferret/common/utils');
-const ferretConverters = require('@useferret/converters');
+} = require('@ferretclient/filestore');
+const { utils } = require('@ferretclient/common');
+const { resolveEnvironmentInheritance } = require('@ferretclient/common/utils');
+const ferretConverters = require('@ferretclient/converters');
 const { postmanToFerret } = ferretConverters;
 const { cookiesStore } = require('../store/cookies');
 const { parseLargeRequestWithRedaction } = require('../utils/parse');
 const { getWsClient } = require('../ipc/network/ws-event-handlers');
 const { hasSubDirectories } = require('../utils/filesystem');
 const { readCollectionForApiSpec } = require('../utils/collection-reader');
-const { transformProxyConfig } = require('@useferret/requests');
+const { transformProxyConfig } = require('@ferretclient/requests');
 
 const {
   DEFAULT_GITIGNORE,
@@ -620,7 +620,7 @@ const registerRendererEventHandlers = (mainWindow, watcher) => {
 
       let finalContent;
       if (needsConversion) {
-        const { parseRequest, stringifyRequest } = require('@useferret/filestore');
+        const { parseRequest, stringifyRequest } = require('@ferretclient/filestore');
         const sourceContent = await fs.promises.readFile(sourcePathname, 'utf8');
         const parsedRequest = parseRequest(sourceContent, { format: actualSourceFormat });
         const mergedRequest = { ...parsedRequest, ...request };

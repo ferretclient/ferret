@@ -10,11 +10,11 @@ const os = require('os');
 const packageJson = require('./package.json');
 
 const externalDeps = [
-  '@useferret/common',
-  '@useferret/common/utils',
-  '@useferret/schema',
-  '@useferret/schema-types',
-  /@useferret\/schema-types\/.*/,
+  '@ferretclient/common',
+  '@ferretclient/common/utils',
+  '@ferretclient/schema',
+  '@ferretclient/schema-types',
+  /@ferretclient\/schema-types\/.*/,
   '@opencollection/types',
   /@opencollection\/types\/.*/,
   // Runtime dependencies

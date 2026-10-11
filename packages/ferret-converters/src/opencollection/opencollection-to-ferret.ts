@@ -1,12 +1,12 @@
 import { OpenCollection } from "@opencollection/types";
-import { normalizeOpenApiSyncConfigs } from "@useferret/common";
+import { normalizeOpenApiSyncConfigs } from "@ferretclient/common";
 import { FerretCollection, FerretCollectionRoot, FerretConfig, FerretPresets, PemCertificate, Pkcs12Certificate } from "./types";
 import { fromOpenCollectionActions, fromOpenCollectionAuth, fromOpenCollectionHeaders, fromOpenCollectionScripts, fromOpenCollectionVariables } from "./common";
 import { uuid } from "../common";
 import { fromOpenCollectionItems } from "./items";
 import { fromOpenCollectionFolder } from "./folder";
 import { fromOpenCollectionEnvironments } from "./environment";
-import { HTTP_SCRIPT_KEYS } from '@useferret/common';
+import { HTTP_SCRIPT_KEYS } from '@ferretclient/common';
 
 const fromOpenCollectionConfig = (oc: OpenCollection): FerretConfig => {
   const ferretExtension = oc.extensions?.ferret as {

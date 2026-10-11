@@ -1,1 +1,1 @@
-module.exports = require('@useferret/requests').cookies;
+module.exports = require('@ferretclient/requests').cookies;

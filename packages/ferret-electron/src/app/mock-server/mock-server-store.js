@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
-const { parseMockServer, stringifyMockServer } = require('@useferret/filestore');
-const { getMockResponseRouteKey } = require('@useferret/common').utils;
+const { parseMockServer, stringifyMockServer } = require('@ferretclient/filestore');
+const { getMockResponseRouteKey } = require('@ferretclient/common').utils;
 const { generateUidBasedOnHash } = require('../../utils/common');
 const { sanitizeName, validateName } = require('../../utils/filesystem');
 

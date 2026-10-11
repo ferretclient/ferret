@@ -24,7 +24,7 @@ import type {
   FerretKeyValue,
   FerretWebSocketRequestBody
 } from '../types';
-import { HTTP_SCRIPT_KEYS } from '@useferret/common';
+import { HTTP_SCRIPT_KEYS } from '@ferretclient/common';
 
 export const fromOpenCollectionWebsocketItem = (item: WebSocketRequest): FerretItem => {
   const info = item.info || {};
