@@ -84,6 +84,14 @@ function forceInstallPlatformDeps() {
   );
 }
 
+// npm 11 only runs a dependency's install script when package.json allows it, and a fresh install can still end
+// up without Electron's binary. Electron's own installer downloads it, so run that when the binary is missing.
+function ensureElectronBinary() {
+  const electronDir = path.join('node_modules', 'electron');
+  if (!fs.existsSync(electronDir) || fs.existsSync(path.join(electronDir, 'path.txt'))) return;
+  execCommand(`node "${path.join(electronDir, 'install.js')}"`, 'Downloading the Electron binary');
+}
+
 async function setup() {
   try {
     // Clean up node_modules (if exists)
@@ -99,6 +107,7 @@ async function setup() {
     // Install dependencies
     execCommand('npm i --legacy-peer-deps', 'Installing dependencies');
     forceInstallPlatformDeps();
+    ensureElectronBinary();
 
     // Build packages
     execCommand('npm run build:graphql-docs', 'Building graphql-docs');

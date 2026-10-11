@@ -24,6 +24,9 @@ const Wrapper = styled.div`
     overflow-y: auto;
     z-index: 20;
     background-color: rgba(0, 0, 0, 0.5);
+    /* A modal opened from the title bar (for example Import workspace) sits inside its draggable region, and
+       Windows then treats every click on the modal as a window drag. */
+    -webkit-app-region: no-drag;
   }
 
   .ferret-modal-card {

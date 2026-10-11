@@ -7,17 +7,17 @@ This guide takes you from a fresh `git clone` to a running Ferret on Windows, ma
 | Tool | Version | Notes |
 | --- | --- | --- |
 | **Git** | any recent | to clone the repository |
-| **Node.js** | **22.12.x** (see [`.nvmrc`](../.nvmrc)) | newer 22.x releases also work. Ferret uses Node's built-in `node:sqlite`, which 22.12 needs a flag for; the scripts below set it for you |
-| **npm** | the one that ships with Node 22 | the repository is an npm-workspaces monorepo |
+| **Node.js** | **24.21.x** (see [`.nvmrc`](../.nvmrc)) | newer 24.x releases also work. Ferret uses Node's built-in `node:sqlite`, which needs no flag on Node 24 |
+| **npm** | the one that ships with Node 24 | the repository is an npm-workspaces monorepo |
 
 The default setup normally needs no compiler or Python: the native dependencies ship prebuilt binaries.
 
 Install Node with a version manager so the right version is picked up automatically:
 
 - **macOS / Linux:** [nvm](https://github.com/nvm-sh/nvm), then `nvm install` inside the repository.
-- **Windows:** [nvm-windows](https://github.com/coreybutler/nvm-windows) (`nvm install 22.12.0` then `nvm use 22.12.0`) or the installer from [nodejs.org](https://nodejs.org).
+- **Windows:** [nvm-windows](https://github.com/coreybutler/nvm-windows) (`nvm install 24.21.0` then `nvm use 24.21.0`) or the installer from [nodejs.org](https://nodejs.org).
 
-Check it with `node -v` (it should print `v22.x`).
+Check it with `node -v` (it should print `v24.x`).
 
 ## 2. Clone and set up
 
@@ -151,7 +151,7 @@ See the [CLI guide](cli.md).
 | Problem | Fix |
 | --- | --- |
 | `Unsupported platform` or other odd install errors | Re-run `npm run setup`; it removes every `node_modules` folder first, so it starts clean |
-| `No such built-in module: node:sqlite` when running a test directly | Run tests through `npm test`; bare `jest` misses the `--experimental-sqlite` flag Node 22.12 needs |
+| `No such built-in module: node:sqlite` when running a test directly | Run tests through `npm test`; bare `jest` misses the environment variables the package scripts set |
 | The app opens but shows a different website or a blank window | Another program is using port `3000`. Use `FERRET_DEV_PORT` (section 3) |
 | UI changes appear but shared-package changes don't | Rebuild the package (section 4) |
 | `npm run setup` fails on `npm i` | Check `node -v` is 22.x and that you are not behind a proxy that blocks the registry |

@@ -2,7 +2,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { execSync } = require('child_process');
-const { parseRemoteBranches, initGit } = require('./git');
+const { parseRemoteBranches, initGit, listBranchesForRemoteUrl } = require('./git');
 
 describe('parseRemoteBranches', () => {
   it('reads the branch names and the default branch out of ls-remote output', () => {
@@ -70,5 +70,46 @@ const gitAvailable = (() => {
     } finally {
       fs.rmSync(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
     }
+  });
+});
+
+(gitAvailable ? describe : describe.skip)('listBranchesForRemoteUrl with real git', () => {
+  const createRemote = () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'ferret-remote-'));
+    const bare = path.join(root, 'remote.git');
+    const work = path.join(root, 'work');
+    execSync(`git init --bare "${bare}"`, { stdio: 'ignore' });
+    execSync(`git clone "${bare}" "${work}"`, { stdio: 'ignore' });
+    const run = (command) => execSync(command, { cwd: work, stdio: 'ignore' });
+    run('git config user.email test@example.com');
+    run('git config user.name test');
+    run('git commit --allow-empty -m first');
+    run('git branch -M main');
+    run('git push origin main');
+    run('git branch develop');
+    run('git push origin develop');
+    return { root, bare };
+  };
+
+  it('lists the branches while the user environment holds variables simple-git refuses', async () => {
+    const { root, bare } = createRemote();
+    const saved = { GIT_EDITOR: process.env.GIT_EDITOR, GIT_PAGER: process.env.GIT_PAGER };
+    process.env.GIT_EDITOR = 'vim';
+    process.env.GIT_PAGER = 'less';
+    try {
+      const result = await listBranchesForRemoteUrl({ url: bare });
+      expect(result.defaultBranch).toBe('main');
+      expect(result.branches.sort()).toEqual(['develop', 'main']);
+    } finally {
+      Object.entries(saved).forEach(([name, value]) => {
+        if (value === undefined) delete process.env[name];
+        else process.env[name] = value;
+      });
+      fs.rmSync(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+    }
+  });
+
+  it('does not read a URL that looks like an option as one', async () => {
+    await expect(listBranchesForRemoteUrl({ url: '--upload-pack=touch /tmp/ferret-should-not-exist' })).rejects.toBeDefined();
   });
 });
