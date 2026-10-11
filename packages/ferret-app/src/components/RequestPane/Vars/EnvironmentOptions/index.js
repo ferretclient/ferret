@@ -4,12 +4,15 @@ import { setRequestVars } from 'providers/ReduxStore/slices/collections';
 import OptionsVarPicker from 'components/RequestPane/Vars/OptionsVarPicker';
 import { getEnvironmentOptionSelections, getUnsavedEnvironmentOptionNames, requestReferencesVariable } from 'utils/collections';
 import { uuid } from 'utils/common';
-import { applyOptionChoice, getChosenOptionValue } from './overrides';
+import { applyOptionChoice, getChosenOptionValue, isOptionOverridden } from './overrides';
 
 /**
  * Lets this request choose which option it uses for the active environment's options variables. The
  * choice is stored as a request variable of the same name; picking the environment's own option
  * removes it again.
+ *
+ * Next to each picker a status says whether the request follows the environment or has its own choice,
+ * with a way back to following it.
  *
  * - Full (Vars tab): every options variable of the environment, with an explanation.
  * - `compact` + `onlyReferenced` (under the URL bar): a single row with just the variables this request
@@ -42,18 +45,35 @@ const EnvironmentOptions = ({ item, collection, requestVars, compact = false, on
     </div>
   ) : null;
 
-  const pickers = selections.map((selection) => (
-    <div className="flex items-center gap-2" key={selection.name} data-testid={`request-environment-option-${selection.name}`}>
-      <span className={compact ? 'text-xs text-muted' : 'w-1/4 truncate'} title={selection.name}>{selection.name}</span>
-      <div className={compact ? 'w-48' : 'w-1/2'}>
-        <OptionsVarPicker
-          options={selection.options}
-          value={getChosenOptionValue({ vars: requestVars, name: selection.name, defaultValue: selection.defaultValue })}
-          onChange={(value) => choose(selection, value)}
-        />
+  const pickers = selections.map((selection) => {
+    const overridden = isOptionOverridden({ vars: requestVars, name: selection.name });
+    return (
+      <div className="flex items-center gap-2" key={selection.name} data-testid={`request-environment-option-${selection.name}`}>
+        <span className={compact ? 'text-xs text-muted' : 'w-1/4 truncate'} title={selection.name}>{selection.name}</span>
+        <div className={compact ? 'w-48' : 'w-1/2'}>
+          <OptionsVarPicker
+            options={selection.options}
+            value={getChosenOptionValue({ vars: requestVars, name: selection.name, defaultValue: selection.defaultValue })}
+            defaultValue={selection.defaultValue}
+            onChange={(value) => choose(selection, value)}
+          />
+        </div>
+        <span className="text-xs text-muted" data-testid={`request-environment-option-status-${selection.name}`}>
+          {overridden ? 'Overridden for this request' : 'Following the environment'}
+        </span>
+        {overridden && (
+          <button
+            type="button"
+            className="text-link text-xs select-none"
+            data-testid={`request-environment-option-reset-${selection.name}`}
+            onClick={() => choose(selection, selection.defaultValue)}
+          >
+            Reset
+          </button>
+        )}
       </div>
-    </div>
-  ));
+    );
+  });
 
   if (compact) {
     return (

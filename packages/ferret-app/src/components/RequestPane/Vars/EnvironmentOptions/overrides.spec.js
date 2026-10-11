@@ -1,4 +1,4 @@
-import { applyOptionChoice, getChosenOptionValue } from './overrides';
+import { applyOptionChoice, getChosenOptionValue, isOptionOverridden } from './overrides';
 
 const createUid = () => 'new-uid';
 
@@ -13,6 +13,15 @@ describe('getChosenOptionValue', () => {
   it('ignores a disabled override', () => {
     const vars = [{ name: 'company', value: '43214', enabled: false }];
     expect(getChosenOptionValue({ vars, name: 'company', defaultValue: '12345' })).toBe('12345');
+  });
+});
+
+describe('isOptionOverridden', () => {
+  it('is true only while the request holds an enabled variable of that name', () => {
+    expect(isOptionOverridden({ vars: [{ name: 'company', value: '1', enabled: true }], name: 'company' })).toBe(true);
+    expect(isOptionOverridden({ vars: [{ name: 'company', value: '1', enabled: false }], name: 'company' })).toBe(false);
+    expect(isOptionOverridden({ vars: [{ name: 'other', value: '1', enabled: true }], name: 'company' })).toBe(false);
+    expect(isOptionOverridden({ vars: undefined, name: 'company' })).toBe(false);
   });
 });
 

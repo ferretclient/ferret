@@ -9,6 +9,9 @@ export const getChosenOptionValue = ({ vars, name, defaultValue }) => {
   return override ? String(override.value ?? '') : defaultValue;
 };
 
+/** Whether this request holds its own choice instead of following the environment's default. */
+export const isOptionOverridden = ({ vars, name }) => (vars || []).some((variable) => variable.name === name && isActive(variable));
+
 /**
  * Request variables after choosing `value` for `name`. Choosing the environment's default removes the
  * override so the request follows the environment again.
