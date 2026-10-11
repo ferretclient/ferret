@@ -867,3 +867,22 @@ describe('orderEnvironmentsByInheritance', () => {
     expect(orderEnvironmentsByInheritance([dev, base])).toEqual([dev, base]);
   });
 });
+
+describe('stripEnvVarUid — options variables', () => {
+  const variable = (options) => ({
+    uid: 'u1', name: 'test', value: 'aa', type: 'text', enabled: true, secret: false, dataType: 'options', options
+  });
+
+  it('keeps the options, so editing only an option value counts as a change', () => {
+    const before = stripEnvVarUid(variable([{ key: 'aa', value: '1' }, { key: 'bb', value: '2' }]));
+    const after = stripEnvVarUid(variable([{ key: 'aa', value: '3' }, { key: 'bb', value: '2' }]));
+
+    expect(JSON.stringify(after)).not.toEqual(JSON.stringify(before));
+    expect(after.options).toEqual([{ key: 'aa', value: '3' }, { key: 'bb', value: '2' }]);
+  });
+
+  it('ignores the uid and leaves other variables without an options field', () => {
+    expect(stripEnvVarUid({ uid: 'x', name: 'n', value: 'v', type: 'text', enabled: true, secret: false })).not.toHaveProperty('options');
+    expect(stripEnvVarUid(variable([{ key: 'aa', value: '1' }]))).not.toHaveProperty('uid');
+  });
+});

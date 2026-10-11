@@ -277,11 +277,15 @@ export const orderEnvironmentsByInheritance = (environments) => {
  * This is useful when comparing variables where UIDs may differ but the actual data is the same.
  */
 export const stripEnvVarUid = (variable) => {
-  const { name, value, type, enabled, secret, description, dataType } = variable;
+  const { name, value, type, enabled, secret, description, dataType, options } = variable;
   const result = { name, value, type, enabled, secret };
   if (description !== undefined && description !== '') result.description = description;
   if (dataType && dataType !== 'string') {
     result.dataType = dataType;
+  }
+  // Editing only an option's name or value must still count as a change, or it is never saved.
+  if (dataType === 'options') {
+    result.options = (options || []).map(({ key, value: optionValue }) => ({ key, value: optionValue }));
   }
   return result;
 };
