@@ -24,6 +24,9 @@ const setupFixture = async (page, createTmpDir, tag) => {
 };
 
 test.describe('Sidebar multi-select and bulk actions', () => {
+  // Building the fixture takes about 20 s, so the default 30 s leaves no room on a slower machine.
+  test.describe.configure({ timeout: 90_000 });
+
   test.afterEach(async ({ page }) => {
     // Clear selection so that closeAllCollections can use the standard collection menu
     await clickEmptySidebarSpace(page);
@@ -382,10 +385,10 @@ test.describe('Sidebar multi-select and bulk actions', () => {
 
     await test.step('Only Folder A (with Req A1 inside it) moved; Req Root stays behind', async () => {
       await expect(locators.sidebar.scopedItem(collectionBName, 'Folder A')).toBeVisible();
+      // Expand only once the move is complete, so the folder is not in two places while its chevron is read.
+      await expect(locators.sidebar.scopedItem(collectionAName, 'Folder A')).toHaveCount(0);
       await expandFolder(page, 'Folder A');
       await expect(locators.sidebar.scopedItem(collectionBName, 'Req A1')).toBeVisible();
-
-      await expect(locators.sidebar.scopedItem(collectionAName, 'Folder A')).toHaveCount(0);
       await expect(locators.sidebar.scopedItem(collectionAName, 'Req Root')).toBeVisible();
     });
   });
@@ -397,6 +400,7 @@ test.describe('Sidebar multi-select and bulk actions', () => {
       await locators.sidebar.folder('Folder A').click({ modifiers: [SELECT_MODIFIER] });
       await locators.sidebar.itemRow('Folder A').dragTo(locators.sidebar.collection(collectionBName));
       await expect(locators.sidebar.scopedItem(collectionBName, 'Folder A')).toBeVisible();
+      await expect(locators.sidebar.scopedItem(collectionAName, 'Folder A')).toHaveCount(0);
     });
 
     await test.step('Immediately select the moved folder and its child, and drag it back to Collection A', async () => {
@@ -406,6 +410,7 @@ test.describe('Sidebar multi-select and bulk actions', () => {
 
       await locators.sidebar.itemRow('Folder A').dragTo(locators.sidebar.collection(collectionAName));
       await expect(locators.sidebar.scopedItem(collectionAName, 'Folder A')).toBeVisible();
+      await expect(locators.sidebar.scopedItem(collectionBName, 'Folder A')).toHaveCount(0);
     });
 
     await test.step('The folder and its child remain fully interactive after both moves', async () => {
@@ -476,6 +481,8 @@ test.describe('Sidebar multi-select and bulk actions', () => {
     await locators.sidebar.itemRow('Req Root').dragTo(locators.sidebar.folder('Folder A'));
 
     await expandFolder(page, 'Folder A');
+    // The move finishes when the file watcher reports it; until then the request shows at both its old and new place.
+    await expect(locators.sidebar.itemRowIn(collectionAName, 'Req Root')).toHaveCount(1);
     await expect(locators.sidebar.itemRowIn(collectionAName, 'Req Root')).not.toHaveAttribute('data-selected', 'true');
   });
 
