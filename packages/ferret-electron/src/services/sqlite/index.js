@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require('path');
 const { app } = require('electron');
-const { createDatabase } = require('@useferret/sqlite');
+const { createDatabase } = require('@ferretclient/sqlite');
 
 let service = null;
 

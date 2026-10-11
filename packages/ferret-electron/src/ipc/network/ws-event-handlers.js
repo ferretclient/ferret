@@ -1,5 +1,5 @@
 const { ipcMain, app } = require('electron');
-const { WsClient } = require('@useferret/requests');
+const { WsClient } = require('@ferretclient/requests');
 const { cloneDeep, each, get } = require('lodash');
 const interpolateVars = require('./interpolate-vars');
 const { preferencesUtil } = require('../../store/preferences');

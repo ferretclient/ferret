@@ -11,7 +11,7 @@ jest.mock('../sqlite', () => ({
   transaction: jest.fn()
 }));
 
-const { createDatabase } = require('@useferret/sqlite');
+const { createDatabase } = require('@ferretclient/sqlite');
 const { getStatements, transaction } = require('../sqlite');
 const { FileIndex } = require('./file-index');
 

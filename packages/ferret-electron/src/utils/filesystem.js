@@ -4,9 +4,9 @@ const fsPromises = require('fs/promises');
 const { dialog } = require('electron');
 const isValidPathname = require('is-valid-path');
 const os = require('os');
-// Single shared implementation lives in @useferret/common; re-exported below so
+// Single shared implementation lives in @ferretclient/common; re-exported below so
 // `require('../utils/filesystem')` consumers keep working unchanged.
-const { sanitizeName, validateName } = require('@useferret/common').utils;
+const { sanitizeName, validateName } = require('@ferretclient/common').utils;
 
 const DEFAULT_GITIGNORE = [
   '# Secrets',

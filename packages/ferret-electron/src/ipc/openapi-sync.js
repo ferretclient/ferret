@@ -10,9 +10,9 @@ const {
   parseCollection,
   stringifyCollection,
   stringifyFolder
-} = require('@useferret/filestore');
-const { openApiToFerret } = require('@useferret/converters');
-const { resolveEnvironmentInheritance } = require('@useferret/common/utils');
+} = require('@ferretclient/filestore');
+const { openApiToFerret } = require('@ferretclient/converters');
+const { resolveEnvironmentInheritance } = require('@ferretclient/common/utils');
 const { writeFile, sanitizeName, getCollectionFormat, posixifyPath } = require('../utils/filesystem');
 
 const RESERVED_FOLDER_NAMES = ['node_modules', '.git', 'environments', 'mocks'];

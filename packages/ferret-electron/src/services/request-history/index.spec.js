@@ -13,7 +13,7 @@ jest.mock('../sqlite', () => ({
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { createDatabase } = require('@useferret/sqlite');
+const { createDatabase } = require('@ferretclient/sqlite');
 const {
   recordHistory,
   listHistory,

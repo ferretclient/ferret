@@ -1,5 +1,5 @@
 const { forOwn, cloneDeep } = require('lodash');
-const { interpolate, interpolateObject: interpolateObjectCommon } = require('@useferret/common');
+const { interpolate, interpolateObject: interpolateObjectCommon } = require('@ferretclient/common');
 
 const buildCombinedVars = ({
   globalEnvironmentVariables,

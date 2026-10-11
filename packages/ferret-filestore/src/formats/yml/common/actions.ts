@@ -1,5 +1,5 @@
 import type { Action, ActionSetVariable, ActionVariableScope } from '@opencollection/types/common/actions';
-import type { Variable as FerretVariable, Variables as FerretVariables } from '@useferret/schema-types/common/variables';
+import type { Variable as FerretVariable, Variables as FerretVariables } from '@ferretclient/schema-types/common/variables';
 import { uuid, ensureString } from '../../../utils';
 
 /**
