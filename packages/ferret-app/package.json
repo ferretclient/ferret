@@ -52,6 +52,7 @@
     "file": "^0.2.2",
     "file-dialog": "^0.0.8",
     "file-saver": "^2.0.5",
+    "form-data": "4.0.6",
     "formik": "^2.2.9",
     "github-markdown-css": "^5.2.0",
     "graphiql": "3.7.1",
@@ -142,10 +143,5 @@
     "storybook": "^10.5.9",
     "storybook-react-rsbuild": "3.4.2",
     "tailwindcss": "^3.4.1"
-  },
-  "overrides": {
-    "httpsnippet": {
-      "form-data": "4.0.4"
-    }
   }
 }
