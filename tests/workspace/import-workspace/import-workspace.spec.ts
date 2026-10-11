@@ -6,7 +6,7 @@ import {
   createWorkspaceZip,
   importWorkspaceFromZip
 } from '../../utils/page/workspace/import-workspace';
-import { buildTitleBarLocators } from '../../utils/page/title-bar';
+import { buildTitleBarLocators, clickImportWorkspace } from '../../utils/page/title-bar';
 
 type WorkspaceConfig = {
   info?: { name: string; type: string };
@@ -15,6 +15,22 @@ type WorkspaceConfig = {
 const initUserDataPath = path.join(__dirname, 'init-user-data');
 
 test.describe('Import Workspace', () => {
+  // The modal is rendered inside the title bar, whose draggable region would otherwise swallow every real mouse
+  // click on it on Windows (the page never sees them), so the app window could be moved but the modal not used.
+  // Input sent through the automation protocol does not go through that path, so the check is on the style.
+  test('The Import Workspace modal is not part of the title bar draggable region', async ({ launchElectronApp, createTmpDir }) => {
+    const wsLocation = await createTmpDir('import-ws-location');
+    const app = await launchElectronApp({ initUserDataPath, templateVars: { wsLocation } });
+    const page = await waitForReadyPage(app);
+
+    await clickImportWorkspace(page);
+
+    const modal = page.getByRole('dialog').filter({ hasText: 'Import Workspace' });
+    await expect(modal).toBeVisible();
+    await expect(modal).toHaveCSS('-webkit-app-region', 'no-drag');
+    await expect(modal.getByRole('button', { name: 'Cancel' })).toHaveCSS('-webkit-app-region', 'no-drag');
+  });
+
   test('TC-969: Verify Import workspace from local directory containing valid workspace.zip file', { tag: '@sanity' }, async ({ launchElectronApp, createTmpDir }) => {
     const wsLocation = await createTmpDir('import-ws-location');
     const zipDir = await createTmpDir('import-ws-zip');
