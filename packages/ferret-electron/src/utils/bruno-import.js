@@ -2,7 +2,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const fsExtra = require('fs-extra');
-const { convertBrunoFile } = require('@useferret/filestore');
+const { convertBrunoFile } = require('@ferretclient/filestore');
 const { openImportedCollectionDir } = require('./collection-import');
 
 const SKIPPED_DIRS = new Set(['.git', 'node_modules']);

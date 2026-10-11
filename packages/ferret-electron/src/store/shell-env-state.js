@@ -1,4 +1,4 @@
-const { initializeShellEnv: _initializeShellEnv } = require('@useferret/requests');
+const { initializeShellEnv: _initializeShellEnv } = require('@ferretclient/requests');
 
 const TIMEOUT_MS = 60_000;
 

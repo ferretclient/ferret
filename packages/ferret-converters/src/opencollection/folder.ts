@@ -21,7 +21,7 @@ import type {
   FerretFolderRoot,
   FerretKeyValue
 } from './types';
-import { HTTP_SCRIPT_KEYS, normalizeTags } from '@useferret/common';
+import { HTTP_SCRIPT_KEYS, normalizeTags } from '@ferretclient/common';
 
 export const fromOpenCollectionFolder = (folder: Folder): FerretItem => {
   const info = folder.info || {};

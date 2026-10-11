@@ -10,14 +10,14 @@ import {
   getOwnTags,
   getInheritedTagsFromTreePath,
   getInheritedTagSourcesFromTreePath
-} from '@useferret/common';
+} from '@ferretclient/common';
 import { VARIABLE_ADD_SCOPES } from 'utils/common/constants';
 import {
   doesRequestMatchSearchText,
   doesFolderHaveItemsMatchSearchText,
   doesCollectionHaveItemsMatchingSearchText
 } from 'utils/collections/search';
-import { resolveEnvironmentInheritance, toVariablesMap, isOptionsVariable, resolveOptionsVariableValue } from '@useferret/common/utils';
+import { resolveEnvironmentInheritance, toVariablesMap, isOptionsVariable, resolveOptionsVariableValue } from '@ferretclient/common/utils';
 
 const replaceTabsWithSpaces = (str, numSpaces = 2) => {
   if (!str || !str.length || !isString(str)) {

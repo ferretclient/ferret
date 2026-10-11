@@ -12,8 +12,8 @@ const {
   stringifyFolder,
   parseCollection,
   DEFAULT_COLLECTION_FORMAT
-} = require('@useferret/filestore');
-const { transformProxyConfig } = require('@useferret/requests/dist/cjs');
+} = require('@ferretclient/filestore');
+const { transformProxyConfig } = require('@ferretclient/requests/dist/cjs');
 
 /**
  * Recursively find a unique folder name by appending incremental numbers

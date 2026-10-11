@@ -1,5 +1,5 @@
 import { IconTrash, IconSend, IconChevronRight, IconChevronDown } from '@tabler/icons';
-import { resolveEnvironmentInheritance } from '@useferret/common/utils';
+import { resolveEnvironmentInheritance } from '@ferretclient/common/utils';
 import CodeEditor from 'components/CodeEditor/index';
 import ToolHint from 'components/ToolHint/index';
 import { get } from 'lodash';

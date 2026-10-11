@@ -1,4 +1,4 @@
-const { getSystemProxy, fetchShellEnv } = require('@useferret/requests');
+const { getSystemProxy, fetchShellEnv } = require('@ferretclient/requests');
 
 const PROXY_ENV_KEYS = ['http_proxy', 'HTTP_PROXY', 'https_proxy', 'HTTPS_PROXY', 'no_proxy', 'NO_PROXY', 'all_proxy', 'ALL_PROXY'];
 const TIMEOUT_MS = 60_000;

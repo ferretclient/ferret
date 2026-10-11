@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
-const { parseEnvironment, stringifyEnvironment } = require('@useferret/filestore');
-const { parseValueByDataType } = require('@useferret/common/utils');
+const { parseEnvironment, stringifyEnvironment } = require('@ferretclient/filestore');
+const { parseValueByDataType } = require('@ferretclient/common/utils');
 const { writeFile, createDirectory, withFileLock } = require('../utils/filesystem');
 const { renameEnvironmentExtendsReferences } = require('../utils/environments');
 const { generateUidBasedOnHash, uuid } = require('../utils/common');

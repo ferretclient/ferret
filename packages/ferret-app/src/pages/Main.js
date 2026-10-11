@@ -11,7 +11,7 @@ import '../styles/globals.css';
 import 'codemirror/lib/codemirror.css';
 import 'graphiql/graphiql.min.css';
 import 'react-tooltip/dist/react-tooltip.css';
-import '@useferret/graphql-docs/dist/esm/index.css';
+import '@ferretclient/graphql-docs/dist/esm/index.css';
 import '@fontsource/inter/100.css';
 import '@fontsource/inter/200.css';
 import '@fontsource/inter/300.css';

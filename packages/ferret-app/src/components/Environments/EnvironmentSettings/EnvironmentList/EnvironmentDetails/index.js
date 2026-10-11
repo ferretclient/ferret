@@ -1,7 +1,7 @@
 import { IconCopy, IconEdit, IconTrash, IconCheck, IconX, IconSearch, IconDeviceFloppy } from '@tabler/icons';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { resolveEnvironmentInheritance } from '@useferret/common/utils';
+import { resolveEnvironmentInheritance } from '@ferretclient/common/utils';
 import { renameEnvironment, saveEnvironmentExtends, updateEnvironmentColor } from 'providers/ReduxStore/slices/collections/actions';
 import { validateName, validateNameError } from 'utils/common/regex';
 import toast from 'react-hot-toast';

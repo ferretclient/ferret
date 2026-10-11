@@ -2,7 +2,7 @@ jest.mock('nanoid', () => ({
   customAlphabet: () => () => 'mock-uid'
 }));
 
-jest.mock('@useferret/schema', () => ({
+jest.mock('@ferretclient/schema', () => ({
   environmentSchema: { validate: () => Promise.resolve() }
 }));
 

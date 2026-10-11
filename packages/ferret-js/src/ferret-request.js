@@ -1,4 +1,4 @@
-const { getMediaType } = require('@useferret/common').utils;
+const { getMediaType } = require('@ferretclient/common').utils;
 const HeaderList = require('./header-list');
 const { parseUrl } = require('./utils/url');
 

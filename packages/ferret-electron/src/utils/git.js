@@ -3,7 +3,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { exec } = require('child_process');
-const { parseRequest } = require('@useferret/filestore');
+const { parseRequest } = require('@ferretclient/filestore');
 
 let collectionPathToGitRootPathMap = new Map();
 

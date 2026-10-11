@@ -17,7 +17,7 @@ npm run version:set 0.2.0
 npm install --legacy-peer-deps
 ```
 
-`version:set` updates all `packages/*/package.json` files and the `@useferret/*` dependencies that point at them.
+`version:set` updates all `packages/*/package.json` files and the `@ferretclient/*` dependencies that point at them.
 
 ## The 1.0 checklist
 
@@ -27,7 +27,7 @@ Tag `1.0.0` only when all of these are true:
 - [ ] The end-to-end suite passes, apart from tests that need proxy host names (see below).
 - [ ] A packaged installer (not just `npm run dev`) was installed and used on **each** of Windows, macOS and Linux.
 - [ ] Installers are **signed** (Windows code-signing certificate; Apple Developer ID with notarization), so users do not get security warnings.
-- [ ] The repository is public, so the documentation links, issue tracker and private vulnerability reporting (**Settings → Code security → Private vulnerability reporting**) work for everyone. If you later buy a domain, update the links listed in `git grep "useferret/ferret"`.
+- [ ] The repository is public, so the documentation links, issue tracker and private vulnerability reporting (**Settings → Code security → Private vulnerability reporting**) work for everyone. If you later buy a domain, update the links listed in `git grep "ferretclient/ferret"`.
 - [ ] You have decided what is part of the stable promise: the `.fer` and `.yml` file formats, the `fer.*` script API, and the CLI options.
 - [ ] Anything you do not want to support is removed or clearly marked experimental.
 
@@ -56,10 +56,10 @@ The steps for the first public release (`0.2.0`, a pre-release). Steps marked *y
 **Package managers** (after the release exists)
 
 - [ ] Download `SHA256SUMS.txt` from the release and run `node scripts/render-package-manifests.js 0.2.0 SHA256SUMS.txt`. It writes a Homebrew cask and winget manifests to `dist/packaging/`.
-- [ ] *you* Homebrew: create a repository `useferret/homebrew-tap` from `packaging/homebrew-tap/` (its README is the install guide), copy `dist/packaging/homebrew/ferret.rb` over `Casks/ferret.rb` (the committed one has placeholder checksums), then test with `brew install --cask useferret/tap/ferret`.
-- [ ] *you* winget: check the three files in `dist/packaging/winget/` with `winget validate`, and submit them as a pull request to `microsoft/winget-pkgs` under `manifests/u/useferret/Ferret/0.2.0/`.
+- [ ] *you* Homebrew: create a repository `ferretclient/homebrew-tap` from `packaging/homebrew-tap/` (its README is the install guide), copy `dist/packaging/homebrew/ferret.rb` over `Casks/ferret.rb` (the committed one has placeholder checksums), then test with `brew install --cask ferretclient/tap/ferret`.
+- [ ] *you* winget: check the three files in `dist/packaging/winget/` with `winget validate`, and submit them as a pull request to `microsoft/winget-pkgs` under `manifests/f/ferretclient/Ferret/0.2.0/`.
 - [ ] *you* Linux: the AppImage, `.deb` and `.rpm` come with the release. An AUR package (`ferret-app-bin`), Flathub and Snap can follow later.
-- [ ] *you* npm: claim `ferret-app` by publishing the self-contained tarball from `node scripts/bundle-cli.js`, then publish the Docker image to `ghcr.io/useferret/ferret`.
+- [ ] *you* npm: claim `ferret-app` by publishing the self-contained tarball from `node scripts/bundle-cli.js`, then publish the Docker image to `ghcr.io/ferretclient/ferret`.
 
 **Later**
 
@@ -122,22 +122,22 @@ If you cannot use the workflow, build on each operating system with `npm run dis
 
 ## Names in package registries
 
-**Ferret** is the brand name; the repository is `useferret/ferret` and the command-line package is `ferret-app` (the bare `ferret` is taken on npm). None of these exist yet; they are the planned names.
+**Ferret** is the brand name; the repository is `ferretclient/ferret` and the command-line package is `ferret-app` (the bare `ferret` is taken on npm). None of these exist yet; they are the planned names.
 
 | Where | Name | Notes |
 | --- | --- | --- |
-| GitHub | `useferret/ferret` | the repository |
+| GitHub | `ferretclient/ferret` | the repository |
 | npm | `ferret-app` | the command-line tool; installs the `fer` command. `node scripts/bundle-cli.js` packs it with the internal packages into one self-contained tarball |
-| Docker | `ghcr.io/useferret/ferret` | the CLI image; Docker Hub is not planned |
-| Homebrew | cask `ferret` | in the organization's own tap, `useferret/tap` |
-| winget | `useferret.Ferret` | needs a public release and the installer's sha256 |
+| Docker | `ghcr.io/ferretclient/ferret` | the CLI image; Docker Hub is not planned |
+| Homebrew | cask `ferret` | in the organization's own tap, `ferretclient/tap` |
+| winget | `ferretclient.Ferret` | needs a public release and the installer's sha256 |
 
 ## Changing the GitHub owner or repository name
 
-Where the project lives on GitHub (`useferret/ferret` today) appears in links, Docker image paths, the Homebrew tap and the winget identifier. `project.json` is the single place that says where it is:
+Where the project lives on GitHub (`ferretclient/ferret` today) appears in links, Docker image paths, the Homebrew tap and the winget identifier. `project.json` is the single place that says where it is:
 
 ```json
-{ "owner": "useferret", "repository": "ferret", "appId": "io.github.useferret.ferret" }
+{ "owner": "ferretclient", "repository": "ferret", "appId": "io.github.ferretclient.ferret" }
 ```
 
 `appId` is the app's identity on macOS, Windows and Linux. Auto-update, user data and notarization all key off it, and no domain is involved. It is **never changed once a release exists** (installed copies would stop updating and lose their settings), so `npm run set-owner` leaves it alone and `npm test` checks that every file spelling it out agrees with `project.json`.

@@ -11,7 +11,7 @@ non-trivial cross-package or architectural work. The dependency DAG and ownershi
 
 ```
 packages/
-  ferret-app/          React renderer (rsbuild, Redux Toolkit, styled-components)   [name @useferret/app]
+  ferret-app/          React renderer (rsbuild, Redux Toolkit, styled-components)   [name @ferretclient/app]
   ferret-electron/     Electron main process (electron-builder)                     [name "ferret" — NOT scoped]
   ferret-js/           JS sandbox for user scripts (QuickJS + node:vm)
   ferret-common/       Shared utilities — the base leaf (rollup → dist/cjs+esm)
@@ -47,19 +47,19 @@ ferret-schema-types. Editing ferret-js / ferret-lang / ferret-schema / ferret-to
 
 ## Dependency direction & ownership boundaries
 
-The internal `@useferret/*` dependency DAG and the guardrails that protect it (ferret-common
+The internal `@ferretclient/*` dependency DAG and the guardrails that protect it (ferret-common
 browser-safe, ferret-js Electron-free, schema vs schema-types, no upward imports) are the
 auto-loaded rule — see `.claude/rules/architecture.md`.
 
 ## Request execution pipeline
 
 1. Renderer invokes `ipcMain.handle('send-http-request', …)` (`ferret-electron/src/ipc/network/index.js`).
-2. Variables are interpolated via `interpolate` from `@useferret/common`
+2. Variables are interpolated via `interpolate` from `@ferretclient/common`
    (`ipc/network/interpolate-vars.js`).
 3. Pre-request scripts run via `ScriptRuntime` (`ferret-js/src/runtime/script-runtime.js`).
 4. The request is built/sent — axios for HTTP, plus gRPC (`@grpc/grpc-js`) and WebSocket clients;
    shared building blocks (auth interceptors like `addDigestInterceptor`/`applyOAuth1ToRequest`,
-   cookies, `scripting.buildScriptedEntry`, grpc/ws helpers) come from `@useferret/requests`.
+   cookies, `scripting.buildScriptedEntry`, grpc/ws helpers) come from `@ferretclient/requests`.
    ferret-requests is a *library of request pieces*, not the orchestrator — orchestration lives in
    `ipc/network`.
 5. Post-response: **var extraction** via `VarsRuntime`, **tests** via `TestRuntime`, and
@@ -96,7 +96,7 @@ Any on-disk shape change → follow `.claude/rules/dsl-changes.md`.
 
 Two distinct mechanisms — pick by what the data is:
 
-- **`@useferret/sqlite`** (`ferret.db` under `userData`) — the SDK for derived/bulky secondary state.
+- **`@ferretclient/sqlite`** (`ferret.db` under `userData`) — the SDK for derived/bulky secondary state.
   Migrations (`migrations/*.ts`) and statements (`statements/*.sql`) are authored and compiled into
   a typed layer for the main process. `services/sqlite` owns the DB, and `ipc/sqlite.js` exposes
   selected statements to the renderer, one hand-written handler per statement on

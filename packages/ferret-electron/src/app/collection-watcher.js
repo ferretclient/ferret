@@ -15,10 +15,10 @@ const {
   parseRequestViaWorker,
   parseCollection,
   parseFolder
-} = require('@useferret/filestore');
+} = require('@ferretclient/filestore');
 
 const { uuid } = require('../utils/common');
-const { parseValueByDataType } = require('@useferret/common/utils');
+const { parseValueByDataType } = require('@ferretclient/common/utils');
 const { getRequestUid } = require('../cache/requestUids');
 const { decryptStringSafe } = require('../utils/encryption');
 const { setFerretConfig, getFerretConfig } = require('../store/ferret-config');

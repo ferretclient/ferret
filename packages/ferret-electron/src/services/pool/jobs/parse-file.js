@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const filestore = require('@useferret/filestore');
+const filestore = require('@ferretclient/filestore');
 
 const sha256 = (buf) => crypto.createHash('sha256').update(buf).digest('hex');
 

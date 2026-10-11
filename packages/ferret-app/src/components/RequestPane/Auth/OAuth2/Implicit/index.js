@@ -11,7 +11,7 @@ import Oauth2TokenViewer from '../Oauth2TokenViewer/index';
 import Oauth2ActionButtons from '../Oauth2ActionButtons/index';
 import AdditionalParams from '../AdditionalParams/index';
 import { getAllVariables } from 'utils/collections/index';
-import { interpolate } from '@useferret/common';
+import { interpolate } from '@ferretclient/common';
 
 const OAuth2Implicit = ({ save, item = {}, request, handleRun, updateAuth, collection, folder, disabled }) => {
   const dispatch = useDispatch();

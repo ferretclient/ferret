@@ -1,5 +1,5 @@
 {
-  "owner": "useferret",
+  "owner": "ferretclient",
   "repository": "ferret",
-  "appId": "io.github.useferret.ferret"
+  "appId": "io.github.ferretclient.ferret"
 }

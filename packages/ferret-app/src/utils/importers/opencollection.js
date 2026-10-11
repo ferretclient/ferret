@@ -2,8 +2,8 @@ import each from 'lodash/each';
 import { uuid } from 'utils/common';
 import { FerretError } from 'utils/common/error';
 import { validateSchema, updateUidsInCollection, hydrateSeqInCollection } from './common';
-import { transformExampleStatusInCollection } from '@useferret/common';
-import { openCollectionToFerret } from '@useferret/converters';
+import { transformExampleStatusInCollection } from '@ferretclient/common';
+import { openCollectionToFerret } from '@ferretclient/converters';
 
 const addUidsToRoot = (collection) => {
   if (collection.root?.request?.headers) {

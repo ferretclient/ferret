@@ -6,13 +6,13 @@ const { posixifyPath } = require('./filesystem');
 const os = require('os');
 const { preferencesUtil } = require('../store/preferences');
 const path = require('path');
-const { DEFAULT_COLLECTION_FORMAT } = require('@useferret/filestore');
-const { parseValueByDataType, isOptionsVariable, resolveOptionsVariableValue } = require('@useferret/common/utils');
-const { GRPC_SCRIPT_KEYS, getEffectiveTags, getFolderTags, getOwnTags } = require('@useferret/common');
+const { DEFAULT_COLLECTION_FORMAT } = require('@ferretclient/filestore');
+const { parseValueByDataType, isOptionsVariable, resolveOptionsVariableValue } = require('@ferretclient/common/utils');
+const { GRPC_SCRIPT_KEYS, getEffectiveTags, getFolderTags, getOwnTags } = require('@ferretclient/common');
 
 /**
  * Returns the variable's runtime value with datatype-driven coercion applied.
- * The shared `parseValueByDataType` from `@useferret/common/utils` honors
+ * The shared `parseValueByDataType` from `@ferretclient/common/utils` honors
  * draft dataType changes — e.g. a user picking `@number` on a "42" string
  * via the UI takes effect at request-execution time without requiring a save.
  */

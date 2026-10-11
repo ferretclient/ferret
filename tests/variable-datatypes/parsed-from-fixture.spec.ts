@@ -535,7 +535,7 @@ const runDataTypeSelectorTests = (
 
   test('form-urlencoded: typed pre-request vars stringify on the wire', async ({ pageWithUserData: page }) => {
     // form-urlencoded uses a separate code path from multipart:
-    // buildFormUrlEncodedPayload in @useferret/common coerces values via String().
+    // buildFormUrlEncodedPayload in @ferretclient/common coerces values via String().
     // Verifies typed (number/boolean/object) vars round-trip into the
     // application/x-www-form-urlencoded body and the echo endpoint echoes the wire form.
     await openRequestInCollection(page, collectionName, 'form_urlencoded');

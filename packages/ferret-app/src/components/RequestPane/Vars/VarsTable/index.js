@@ -10,7 +10,7 @@ import DataTypeSelector from 'components/DataTypeSelector';
 import VarValueCell from 'components/VarValueCell';
 import OptionsVarPicker from 'components/RequestPane/Vars/OptionsVarPicker';
 import OptionsValueEditor from 'components/OptionsValueEditor';
-import { valueToString } from '@useferret/common/utils';
+import { valueToString } from '@ferretclient/common/utils';
 import EditableTable from 'components/EditableTable';
 import { createDescriptionColumn } from 'components/EditableTable/descriptionColumn';
 import StyledWrapper from './StyledWrapper';

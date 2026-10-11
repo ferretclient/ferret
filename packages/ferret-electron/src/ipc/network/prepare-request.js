@@ -3,7 +3,7 @@ const decomment = require('decomment');
 const crypto = require('node:crypto');
 const fs = require('node:fs');
 const { getTreePathFromCollectionToItem, mergeHeaders, mergeScripts, mergeVars, getFormattedCollectionOauth2Credentials, mergeAuth } = require('../../utils/collection');
-const { getEffectiveTags, getOwnTags, getInheritedTagsFromTreePath } = require('@useferret/common');
+const { getEffectiveTags, getOwnTags, getInheritedTagsFromTreePath } = require('@ferretclient/common');
 const path = require('node:path');
 const { isLargeFile } = require('../../utils/filesystem');
 

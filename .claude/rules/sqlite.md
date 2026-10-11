@@ -5,7 +5,7 @@ paths:
   - "packages/ferret-electron/src/services/sqlite/**/*"
 ---
 
-# SQLite SDK (`@useferret/sqlite`)
+# SQLite SDK (`@ferretclient/sqlite`)
 
 Ferret's local database layer. You author **migrations** (`migrations/*.ts`) and **statements**
 (`statements/*.sql`); a codegen step compiles them into a typed data layer for the Electron main
@@ -52,8 +52,8 @@ packages/ferret-sqlite/
   tests/node
 ```
 
-**`@useferret/sqlite` (= `/node`) is main-process only** (it imports `node:sqlite`, `node:fs`,
-`node:crypto`); never import it from the renderer. The package has zero internal `@useferret/*`
+**`@ferretclient/sqlite` (= `/node`) is main-process only** (it imports `node:sqlite`, `node:fs`,
+`node:crypto`); never import it from the renderer. The package has zero internal `@ferretclient/*`
 dependencies and must stay that way.
 
 `src/generated/` is produced from the authored migration and `.sql` files by `npm run generate`

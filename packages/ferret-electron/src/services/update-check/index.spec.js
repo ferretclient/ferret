@@ -2,7 +2,7 @@ const { compareVersions, findLatestRelease, checkForUpdates, RELEASES_API_URL, R
 
 const release = (tag, extra = {}) => ({
   tag_name: tag,
-  html_url: `https://github.com/useferret/ferret/releases/tag/${tag}`,
+  html_url: `https://github.com/ferretclient/ferret/releases/tag/${tag}`,
   draft: false,
   prerelease: false,
   ...extra
@@ -61,7 +61,7 @@ describe('checkForUpdates', () => {
       currentVersion: '0.2.0',
       latestVersion: '0.3.0',
       prerelease: true,
-      url: 'https://github.com/useferret/ferret/releases/tag/v0.3.0'
+      url: 'https://github.com/ferretclient/ferret/releases/tag/v0.3.0'
     });
     expect(fetchImpl).toHaveBeenCalledTimes(1);
     expect(fetchImpl.mock.calls[0][0]).toBe(RELEASES_API_URL);

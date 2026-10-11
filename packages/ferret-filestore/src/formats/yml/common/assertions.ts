@@ -1,4 +1,4 @@
-import type { KeyValue as FerretKeyValue } from '@useferret/schema-types/common/key-value';
+import type { KeyValue as FerretKeyValue } from '@ferretclient/schema-types/common/key-value';
 import type { Assertion } from '@opencollection/types/common/assertions';
 import { uuid, ensureString } from '../../../utils';
 

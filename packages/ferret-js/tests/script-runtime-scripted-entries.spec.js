@@ -1,6 +1,6 @@
 // Mocked so fer.sendRequest doesn't hit the network.
-jest.mock('@useferret/requests', () => {
-  const realCookies = jest.requireActual('@useferret/requests').cookies;
+jest.mock('@ferretclient/requests', () => {
+  const realCookies = jest.requireActual('@ferretclient/requests').cookies;
   return {
     cookies: realCookies,
     scripting: {

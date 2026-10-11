@@ -1,5 +1,5 @@
-import type { Item as FerretItem, HttpItemSettings as FerretHttpItemSettings } from '@useferret/schema-types/collection/item';
-import type { HttpRequest as FerretHttpRequest } from '@useferret/schema-types/requests/http';
+import type { Item as FerretItem, HttpItemSettings as FerretHttpItemSettings } from '@ferretclient/schema-types/collection/item';
+import type { HttpRequest as FerretHttpRequest } from '@ferretclient/schema-types/requests/http';
 import type { HttpRequest, HttpRequestBody } from '@opencollection/types/requests/http';
 import { toFerretAuth } from '../common/auth';
 import { toFerretHttpHeaders } from '../common/headers';
@@ -12,7 +12,7 @@ import { toFerretAssertions } from '../common/assertions';
 import { toFerretApp } from '../common/app';
 import { normalizeOmitHeaders } from '../common/omit-headers';
 import { uuid, ensureString } from '../../../utils';
-import { utils } from '@useferret/common';
+import { utils } from '@ferretclient/common';
 const { toBool, toMaxRedirects } = utils;
 
 const parseHttpRequest = (ocRequest: HttpRequest): FerretItem => {

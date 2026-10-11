@@ -1,4 +1,4 @@
-import type { FerretCollection, FerretItem, FerretEnvironment } from '@useferret/schema-types';
+import type { FerretCollection, FerretItem, FerretEnvironment } from '@ferretclient/schema-types';
 
 import {
   parseFerRequest,
@@ -20,7 +20,7 @@ import {
   stringifyYmlEnvironment,
   stringifyYmlMockServer
 } from './formats/yml';
-import { dotenvToJson } from '@useferret/lang';
+import { dotenvToJson } from '@ferretclient/lang';
 import FerParserWorker from './workers';
 import {
   ParseOptions,

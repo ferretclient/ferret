@@ -38,7 +38,7 @@ Installers for Windows, macOS and Linux are published on the repository's **Rele
 
 - **Windows:** SmartScreen shows "Windows protected your PC". Choose **More info → Run anyway**.
 - **macOS:** right-click the app and choose **Open**, then confirm.
-  With Homebrew: `brew install --cask useferret/tap/ferret` (available once the first release is published).
+  With Homebrew: `brew install --cask ferretclient/tap/ferret` (available once the first release is published).
 - **Linux:** make the AppImage executable (`chmod +x`) and run it, or install the `.deb` / `.rpm`.
 
 **Updating:** Ferret never updates itself. Open **Preferences → Support → Check for updates**, confirm the dialog, and Ferret asks GitHub once for the latest release and tells you whether a newer version exists. You then download it from the release page yourself. While the repository is private, the check reports that no releases can be read.
@@ -50,7 +50,7 @@ No release yet, or you prefer to build it yourself? Follow the next section.
 You need **Git** and **Node.js 22.12.x** (see [`.nvmrc`](.nvmrc); install it with [nvm](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows)).
 
 ```bash
-git clone https://github.com/useferret/ferret.git
+git clone https://github.com/ferretclient/ferret.git
 cd ferret
 
 nvm use              # picks the Node version from .nvmrc (macOS / Linux)
@@ -107,7 +107,7 @@ Ferret imports Bruno collections: a collection folder (`.bru` or YAML), a folder
 
 ## Contributing
 
-Contributions are welcome. Start with the [contributing guide](contributing.md), which explains the project layout, how to run and test your changes, and how to open a pull request. Bugs and feature requests go in [GitHub issues](https://github.com/useferret/ferret/issues).
+Contributions are welcome. Start with the [contributing guide](contributing.md), which explains the project layout, how to run and test your changes, and how to open a pull request. Bugs and feature requests go in [GitHub issues](https://github.com/ferretclient/ferret/issues).
 
 The `main` branch is protected, so every change, including the maintainer's, goes through a pull request from a branch or fork. See [Repository settings](docs/repository-settings.md).
 

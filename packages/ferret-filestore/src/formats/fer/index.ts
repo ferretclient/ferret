@@ -6,8 +6,8 @@ import {
   envJsonToFerV2,
   collectionFerToJson as _collectionFerToJson,
   jsonToCollectionFer as _jsonToCollectionFer
-} from '@useferret/lang';
-import { normalizeTags } from '@useferret/common';
+} from '@ferretclient/lang';
+import { normalizeTags } from '@ferretclient/common';
 import { getOauth2AdditionalParameters } from './utils/oauth2-additional-params';
 
 export const parseFerRequest = (data: string | any, parsed: boolean = false): any => {

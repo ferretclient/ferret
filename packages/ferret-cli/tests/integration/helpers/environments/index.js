@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const http = require('http');
 const { expect } = require('@jest/globals');
-const { parseEnvironment } = require('@useferret/filestore');
+const { parseEnvironment } = require('@ferretclient/filestore');
 const { runCli } = require('../run-cli');
 const { copyFixtureToTmpDir, removeTmpDir } = require('../tmp-dir');
 

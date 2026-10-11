@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { stringifyRequest, stringifyEnvironment, stringifyCollection } = require('@useferret/filestore');
+const { stringifyRequest, stringifyEnvironment, stringifyCollection } = require('@ferretclient/filestore');
 
 const mockGetEnvSecrets = jest.fn(() => []);
 

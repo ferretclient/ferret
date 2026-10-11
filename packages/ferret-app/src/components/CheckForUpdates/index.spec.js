@@ -59,7 +59,7 @@ describe('CheckForUpdates', () => {
       currentVersion: '0.2.0',
       latestVersion: '0.3.0',
       prerelease: false,
-      url: 'https://github.com/useferret/ferret/releases/tag/v0.3.0'
+      url: 'https://github.com/ferretclient/ferret/releases/tag/v0.3.0'
     });
     const user = userEvent.setup();
     await openConfirmDialog(user);
@@ -72,7 +72,7 @@ describe('CheckForUpdates', () => {
     expect(openExternal).not.toHaveBeenCalled();
 
     await user.click(screen.getByRole('button', { name: 'Open release page' }));
-    expect(openExternal).toHaveBeenCalledWith('https://github.com/useferret/ferret/releases/tag/v0.3.0');
+    expect(openExternal).toHaveBeenCalledWith('https://github.com/ferretclient/ferret/releases/tag/v0.3.0');
   });
 
   it('reports being up to date without offering a download', async () => {

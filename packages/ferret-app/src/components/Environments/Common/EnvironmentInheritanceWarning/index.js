@@ -1,6 +1,6 @@
 import { Fragment, memo, useMemo } from 'react';
 import { IconAlertTriangle } from '@tabler/icons';
-import { getInheritedEnvironments } from '@useferret/common/utils';
+import { getInheritedEnvironments } from '@ferretclient/common/utils';
 import StyledWrapper from './StyledWrapper';
 
 const EnvironmentName = ({ name }) => <span className="environment-name">{name}</span>;

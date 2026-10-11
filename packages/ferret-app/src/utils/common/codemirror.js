@@ -1,6 +1,6 @@
 import get from 'lodash/get';
-import { mockDataFunctions } from '@useferret/common';
-import { PROMPT_VARIABLE_TEXT_PATTERN } from '@useferret/common/utils';
+import { mockDataFunctions } from '@ferretclient/common';
+import { PROMPT_VARIABLE_TEXT_PATTERN } from '@ferretclient/common/utils';
 
 const CodeMirror = require('codemirror');
 

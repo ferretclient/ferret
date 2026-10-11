@@ -1,4 +1,4 @@
-jest.mock('@useferret/schema', () => ({
+jest.mock('@ferretclient/schema', () => ({
   collectionSchema: { validate: () => Promise.resolve() },
   environmentSchema: { validate: () => Promise.resolve() },
   itemSchema: { validate: () => Promise.resolve() }

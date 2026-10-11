@@ -1,4 +1,4 @@
-import { ferretToPostman } from '@useferret/converters';
+import { ferretToPostman } from '@ferretclient/converters';
 import { filterTransientItems } from 'utils/collections';
 
 export const exportPostmanCollection = (collection, { preserveScripts = false } = {}) => {

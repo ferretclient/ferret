@@ -20,7 +20,7 @@ import { resolveRequestFilename } from 'utils/common/platform';
 import path, { normalizePath } from 'utils/common/path';
 import { transformRequestToSaveToFilesystem, findCollectionByUid, findItemInCollection, areItemsLoading } from 'utils/collections';
 import { DEFAULT_COLLECTION_FORMAT } from 'utils/common/constants';
-import { itemSchema } from '@useferret/schema';
+import { itemSchema } from '@ferretclient/schema';
 import { uuid } from 'utils/common';
 import { formatIpcError } from 'utils/common/error';
 import get from 'lodash/get';

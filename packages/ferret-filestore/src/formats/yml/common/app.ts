@@ -1,4 +1,4 @@
-import type { App as FerretApp } from '@useferret/schema-types/collection/item';
+import type { App as FerretApp } from '@ferretclient/schema-types/collection/item';
 
 export interface OpenCollectionApp {
   enabled?: boolean;

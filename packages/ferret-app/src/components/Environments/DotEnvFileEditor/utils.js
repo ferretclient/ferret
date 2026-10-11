@@ -1,5 +1,5 @@
 import { uuid } from 'utils/common';
-import { utils } from '@useferret/common';
+import { utils } from '@ferretclient/common';
 
 export const variablesToRaw = (variables) => {
   return utils.jsonToDotenv(variables);

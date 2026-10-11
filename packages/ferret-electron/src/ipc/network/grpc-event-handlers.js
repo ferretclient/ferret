@@ -1,6 +1,6 @@
 // To implement grpc event handlers
 const { ipcMain, app } = require('electron');
-const { GrpcClient } = require('@useferret/requests');
+const { GrpcClient } = require('@ferretclient/requests');
 const { safeParseJSON, safeStringifyJSON } = require('../../utils/common');
 const { cloneDeep, get } = require('lodash');
 const { preferencesUtil } = require('../../store/preferences');
@@ -11,7 +11,7 @@ const prepareGrpcRequest = require('./prepare-grpc-request');
 const { normalizeAndResolvePath } = require('../../utils/filesystem');
 const { configureRequest, buildGrpcRequest, interpolateGrpcRequest } = require('./prepare-grpc-request');
 const { shouldUseProxy } = require('../../utils/proxy-util');
-const { getPacResolver } = require('@useferret/requests');
+const { getPacResolver } = require('@ferretclient/requests');
 const { getFerretConfig } = require('../../store/ferret-config');
 const { getJsSandboxRuntime } = require('../../utils/collection');
 const { createGrpcScriptOrchestration } = require('./grpc-script-orchestration');

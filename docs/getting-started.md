@@ -22,7 +22,7 @@ Check it with `node -v` (it should print `v22.x`).
 ## 2. Clone and set up
 
 ```bash
-git clone https://github.com/useferret/ferret.git
+git clone https://github.com/ferretclient/ferret.git
 cd ferret
 
 # macOS / Linux with nvm: use the version from .nvmrc

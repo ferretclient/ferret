@@ -58,7 +58,7 @@ describe('runner-exchange service', () => {
   };
 
   beforeEach(() => {
-    const { createDatabase } = require('@useferret/sqlite');
+    const { createDatabase } = require('@ferretclient/sqlite');
     filesDir = fs.mkdtempSync(path.join(os.tmpdir(), 'ferret-runner-exchange-'));
     opened = createDatabase(':memory:', { filesDir, inlineMaxBytes: INLINE_MAX });
     getStatements.mockReturnValue(opened.statements);
