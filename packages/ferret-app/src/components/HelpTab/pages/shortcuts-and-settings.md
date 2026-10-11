@@ -43,7 +43,7 @@ Open them with the gear in the status bar or **Ctrl+,**.
 
 ### Updates
 
-Ferret never updates itself or contacts a server in the background. To look for a new version, open **Preferences → Support → Check for updates**. A dialog explains that one request will go to GitHub to read the list of releases, and nothing happens unless you press **Yes, check**. If there is a newer version, you can open its page in your browser and download it yourself.
+Ferret never updates itself or contacts a server in the background. To look for a new version, open **Preferences → Support → Check for updates**. A dialog explains that one request will go to GitHub to read the list of releases, and nothing happens unless you press **Yes, check**. If there is a newer version, you can download it from inside Ferret, check it against the checksum published with the release, and then install it, or open the release page in your browser and download it yourself. Each step waits for you: the check never downloads, and the download never installs. Installing means: on Windows, Ferret closes and starts the installer; on macOS, the disk image opens and you drag Ferret into Applications; on Linux, the AppImage is shown in its folder. Your collections and settings are not touched.
 
 ### Where your data lives
 

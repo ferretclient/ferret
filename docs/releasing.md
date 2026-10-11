@@ -51,7 +51,7 @@ The steps for the first public release (`0.2.0`, a pre-release). Steps marked *y
 
 - [ ] Set the date in `CHANGELOG.md`, commit, then tag `v0.2.0` and push the tag. Keep it a pre-release.
 - [ ] Edit the release notes: copy the changelog entry and add the first-start instructions for unsigned apps (Windows: *More info → Run anyway*; macOS: right-click → *Open*, or `xattr -dr com.apple.quarantine /Applications/Ferret.app`).
-- [ ] Open the installed app and check that **Preferences → Support → Check for updates** finds the release.
+- [ ] Open the installed app and check that **Preferences → Support → Check for updates** finds the release. To try the whole flow, install the previous release candidate first, publish the next one, then check, download and install it from inside the app. The installer comes from `SHA256SUMS.txt`, so every release must publish that file.
 
 **Package managers** (after the release exists)
 
