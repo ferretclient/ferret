@@ -43,3 +43,8 @@
   flex: none;
   flex-direction: column;
 }
+
+/* Flex utility classes set `display`, which would otherwise win over the hidden attribute (inactive sidebar views). */
+.islands-shell [hidden] {
+  display: none !important;
+}

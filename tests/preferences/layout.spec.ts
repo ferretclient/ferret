@@ -71,6 +71,30 @@ test.describe('Interface layout', () => {
     await expect(page.getByTestId('island-console')).toHaveCount(0);
   });
 
+  test('Islands shows an activity rail that switches the sidebar between its views', async ({ page }) => {
+    await choose(page, 'islands');
+    const rail = page.getByTestId('activity-rail');
+    await expect(rail).toBeVisible();
+    await expect(page.getByTestId('sidebar-section-collections')).toBeVisible();
+    await expect(page.getByTestId('sidebar-section-history')).toBeHidden();
+
+    await page.getByTestId('rail-view-history').click();
+    await expect(page.getByTestId('sidebar-section-history')).toBeVisible();
+    await expect(page.getByTestId('sidebar-section-collections')).toBeHidden();
+
+    // Choosing the active view again closes the pane and leaves just the rail; choosing any view reopens it.
+    await page.getByTestId('rail-view-history').click();
+    await expect(page.getByTestId('sidebar-section-history')).toBeHidden();
+    await expect(rail).toBeVisible();
+
+    await page.getByTestId('rail-view-collections').click();
+    await expect(page.getByTestId('sidebar-section-collections')).toBeVisible();
+  });
+
+  test('classic panes have no activity rail', async ({ page }) => {
+    await expect(page.getByTestId('activity-rail')).toHaveCount(0);
+  });
+
   test('switching back to classic panes removes the islands and keeps the app loaded', async ({ page }) => {
     await choose(page, 'islands');
     await expect(page.getByTestId('islands-layout')).toBeVisible();

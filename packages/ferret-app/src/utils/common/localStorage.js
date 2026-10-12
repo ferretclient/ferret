@@ -31,3 +31,5 @@ export const setLocalStorageValue = (key, value) => {
     window.localStorage.setItem(key, value);
   } catch (err) { }
 };
+export const SIDEBAR_VIEW_KEY = 'ferret.sidebarView';
+export const SIDEBAR_PANE_OPEN_KEY = 'ferret.sidebarPaneOpen';

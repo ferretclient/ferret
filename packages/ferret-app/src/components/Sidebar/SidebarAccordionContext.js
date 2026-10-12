@@ -11,11 +11,13 @@ export const useSidebarAccordion = () => {
 };
 
 // `visibleSectionIds` keeps a hidden section that was left expanded from counting towards the layout.
-export const SidebarAccordionProvider = ({ children, defaultExpanded = ['collections'], visibleSectionIds }) => {
+// `alwaysExpanded` is for the activity rail, where the view in the pane is never collapsed by its own header.
+export const SidebarAccordionProvider = ({ children, defaultExpanded = ['collections'], visibleSectionIds, alwaysExpanded = false }) => {
   const [expandedSections, setExpandedSections] = useState(new Set(defaultExpanded));
   const dropdownContainerRef = useRef(null);
 
   const toggleSection = useCallback((sectionId) => {
+    if (alwaysExpanded) return;
     setExpandedSections((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(sectionId)) {
@@ -25,9 +27,10 @@ export const SidebarAccordionProvider = ({ children, defaultExpanded = ['collect
       }
       return newSet;
     });
-  }, []);
+  }, [alwaysExpanded]);
 
   const setSectionExpanded = useCallback((sectionId, expanded) => {
+    if (alwaysExpanded) return;
     setExpandedSections((prev) => {
       const newSet = new Set(prev);
       if (expanded) {
@@ -37,18 +40,18 @@ export const SidebarAccordionProvider = ({ children, defaultExpanded = ['collect
       }
       return newSet;
     });
-  }, []);
+  }, [alwaysExpanded]);
 
   const isExpanded = useCallback((sectionId) => {
-    return expandedSections.has(sectionId);
-  }, [expandedSections]);
+    return alwaysExpanded || expandedSections.has(sectionId);
+  }, [expandedSections, alwaysExpanded]);
 
   const getExpandedCount = useCallback(() => {
     if (!visibleSectionIds) {
-      return expandedSections.size;
+      return alwaysExpanded ? 1 : expandedSections.size;
     }
-    return visibleSectionIds.filter((id) => expandedSections.has(id)).length;
-  }, [expandedSections, visibleSectionIds]);
+    return visibleSectionIds.filter((id) => isExpanded(id)).length;
+  }, [expandedSections, visibleSectionIds, alwaysExpanded, isExpanded]);
 
   return (
     <SidebarAccordionContext.Provider

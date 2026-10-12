@@ -5,7 +5,11 @@ import StyledWrapper from './StyledWrapper';
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateLeftSidebarWidth, updateIsDragging, toggleSidebarSearch } from 'providers/ReduxStore/slices/app';
-import { getLocalStorageValue, setLocalStorageValue, SIDEBAR_WIDTH_KEY, SIDEBAR_SECTION_ORDER_KEY } from 'utils/common/localStorage';
+import { getLocalStorageValue, setLocalStorageValue, SIDEBAR_WIDTH_KEY, SIDEBAR_SECTION_ORDER_KEY, SIDEBAR_VIEW_KEY, SIDEBAR_PANE_OPEN_KEY } from 'utils/common/localStorage';
+import { resolveActiveView, parseSidebarView, parsePaneOpen } from 'utils/sidebar/rail-view';
+import { useTheme } from 'providers/Theme';
+import ActivityRail from './ActivityRail';
+import { RAIL_WIDTH } from './ActivityRail/StyledWrapper';
 import { applySectionOrder, moveSectionTo, moveSectionBy, parseSectionOrder } from 'utils/sidebar/section-order';
 import CollectionsSection from './Sections/CollectionsSection/index';
 import ApiSpecsSection from './Sections/ApiSpecsSection/index';
@@ -65,6 +69,24 @@ const Sidebar = () => {
   const handleMoveSectionBy = useCallback((id, offset) => {
     saveSectionOrder(moveSectionBy(sidebarSections.map((section) => section.id), id, offset));
   }, [sidebarSections, saveSectionOrder]);
+  // The Islands layout swaps the accordion for an activity rail that shows one view at a time.
+  const { layout } = useTheme();
+  const railMode = layout === 'islands';
+  const [savedView, setSavedView] = useState(() => getLocalStorageValue(SIDEBAR_VIEW_KEY, null, parseSidebarView));
+  const [paneOpen, setPaneOpen] = useState(() => getLocalStorageValue(SIDEBAR_PANE_OPEN_KEY, true, parsePaneOpen));
+  const activeViewId = resolveActiveView(visibleSectionIds, savedView);
+  const handleSelectView = (id) => {
+    if (id === activeViewId && paneOpen) {
+      setPaneOpen(false);
+      setLocalStorageValue(SIDEBAR_PANE_OPEN_KEY, 'false');
+      return;
+    }
+    setSavedView(id);
+    setLocalStorageValue(SIDEBAR_VIEW_KEY, id);
+    setPaneOpen(true);
+    setLocalStorageValue(SIDEBAR_PANE_OPEN_KEY, 'true');
+  };
+  const railPaneClosed = railMode && !paneOpen;
   const leftSidebarWidth = useSelector((state) => state.app.leftSidebarWidth);
   const sidebarCollapsed = useSelector((state) => state.app.sidebarCollapsed);
   const [asideWidth, setAsideWidth] = useState(leftSidebarWidth);
@@ -84,7 +106,7 @@ const Sidebar = () => {
   useClearSidebarSelectionOnEscape();
 
   const displayWidth = dragging ? asideWidth : leftSidebarWidth;
-  const currentWidth = sidebarCollapsed ? 0 : displayWidth;
+  const currentWidth = sidebarCollapsed ? 0 : railPaneClosed ? RAIL_WIDTH : displayWidth;
 
   // Clamp helper keeps width in allowed range
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
@@ -145,17 +167,19 @@ const Sidebar = () => {
   }
 
   return (
-    <SidebarAccordionProvider defaultExpanded={['collections']} visibleSectionIds={visibleSectionIds}>
+    <SidebarAccordionProvider defaultExpanded={['collections']} visibleSectionIds={railMode ? [activeViewId] : visibleSectionIds} alwaysExpanded={railMode}>
       <StyledWrapper className="flex relative h-full">
         <aside className="sidebar" data-testid="sidebar" style={{ width: currentWidth, transition: dragging ? 'none' : 'width 0.2s ease-in-out' }}>
           <div className="flex flex-row h-full w-full">
-            <div className="flex flex-col w-full" style={{ width: displayWidth }}>
+            {railMode && <ActivityRail viewIds={visibleSectionIds} activeId={activeViewId} paneOpen={paneOpen} onSelect={handleSelectView} />}
+            <div className="flex flex-col w-full" style={railMode ? { flex: '1 1 0', minWidth: 0 } : { width: displayWidth }} hidden={railPaneClosed}>
               <div className="flex flex-col flex-grow sidebar-sections-container" style={{ minHeight: 0, overflow: 'hidden' }}>
                 <div className="sidebar-sections flex flex-col flex-1">
                   <SidebarContent
                     sections={sidebarSections}
                     onMoveSection={handleMoveSection}
                     onMoveSectionBy={handleMoveSectionBy}
+                    activeId={railMode ? activeViewId : null}
                   />
                 </div>
               </div>
@@ -163,7 +187,7 @@ const Sidebar = () => {
           </div>
         </aside>
 
-        {!sidebarCollapsed && (
+        {!sidebarCollapsed && !railPaneClosed && (
           <div className="absolute sidebar-drag-handle h-full" data-testid="sidebar-drag-handle" onMouseDown={handleDragbarMouseDown}>
             <div className="drag-request-border" />
           </div>

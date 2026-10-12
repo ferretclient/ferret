@@ -20,7 +20,8 @@ import { SidebarSectionOrderProvider } from './SidebarSectionOrderContext';
  * }
  */
 
-const SidebarContent = ({ sections, onMoveSection, onMoveSectionBy }) => {
+// `activeId` (activity rail) shows just that view; the others stay mounted but hidden, so their state survives.
+const SidebarContent = ({ sections, onMoveSection, onMoveSectionBy, activeId = null }) => {
   const { isExpanded, getExpandedCount } = useSidebarAccordion();
   const sectionOrder = useMemo(
     () => ({ moveTo: onMoveSection, moveBy: onMoveSectionBy }),
@@ -63,7 +64,7 @@ const SidebarContent = ({ sections, onMoveSection, onMoveSectionBy }) => {
         const wrapperClassName = getWrapperClassName(section, index);
 
         return (
-          <div key={section.id} className={wrapperClassName}>
+          <div key={section.id} className={wrapperClassName} hidden={activeId !== null && section.id !== activeId}>
             <SectionComponent />
           </div>
         );
