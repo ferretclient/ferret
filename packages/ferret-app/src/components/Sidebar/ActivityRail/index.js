@@ -1,6 +1,8 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { IconBox, IconFileCode, IconServer, IconHistory } from '@tabler/icons';
+import { IconBox, IconFileCode, IconServer, IconHistory, IconDots } from '@tabler/icons';
+import MenuDropdown from 'ui/MenuDropdown';
+import { shownRailViews } from 'utils/sidebar/rail-view';
 import StyledWrapper from './StyledWrapper';
 
 export const RAIL_VIEWS = {
@@ -54,19 +56,58 @@ const RailButton = ({ id, active, paneOpen, onSelect, onMove }) => {
 };
 
 /**
- * The narrow icon column of the Islands sidebar: one button per view, the active one marked.
+ * The narrow icon column of the Islands sidebar: one button per shown view, the active one marked.
  *
- * `viewIds` is every view on offer in the saved order. A button can be dragged onto another one, or moved with
- * Alt+Arrow, to rearrange the rail: `onMove(id, targetId, offset)` moves a view onto `targetId`, or by `offset`
- * places when there is no target. Choosing the active view again is up to the owner (it closes the pane);
- * this component only reports clicks.
+ * `viewIds` is every view on offer in the saved order and `hiddenIds` the ones left off the rail. A button can be
+ * dragged onto another one, or moved with Alt+Arrow, to rearrange the rail: `onMove(id, targetId, offset)` moves a
+ * view onto `targetId`, or by `offset` places when there is no target. The dots button at the bottom opens the
+ * choice of which views are shown. There are no context menus. Choosing the active view again is up to the owner
+ * (it closes the pane); this component only reports clicks.
  */
-const ActivityRail = ({ viewIds, activeId, paneOpen, onSelect, onMove }) => (
-  <StyledWrapper aria-label="Sidebar views" data-testid="activity-rail">
-    {viewIds.filter((id) => RAIL_VIEWS[id]).map((id) => (
-      <RailButton key={id} id={id} active={id === activeId} paneOpen={paneOpen} onSelect={onSelect} onMove={onMove} />
-    ))}
-  </StyledWrapper>
-);
+const ActivityRail = ({ viewIds, hiddenIds = [], activeId, paneOpen, onSelect, onMove, onToggleHidden }) => {
+  const [choosingViews, setChoosingViews] = useState(false);
+  const shownIds = shownRailViews(viewIds, hiddenIds);
+  const isKnown = (id) => Boolean(RAIL_VIEWS[id]);
+
+  const viewsMenuItems = viewIds.filter(isKnown).map((id) => {
+    const shown = shownIds.includes(id);
+    return {
+      id: `toggle-${id}`,
+      label: RAIL_VIEWS[id].title,
+      disabled: shown && shownIds.length <= 1,
+      rightSection: shown ? <span className="ml-auto">✓</span> : null,
+      onClick: () => onToggleHidden(id)
+    };
+  });
+
+  return (
+    <StyledWrapper aria-label="Sidebar views" data-testid="activity-rail">
+      {shownIds.filter(isKnown).map((id) => (
+        <RailButton key={id} id={id} active={id === activeId} paneOpen={paneOpen} onSelect={onSelect} onMove={onMove} />
+      ))}
+      <MenuDropdown
+        items={viewsMenuItems}
+        showTickMark={false}
+        placement="right-end"
+        popperOptions={{ strategy: 'fixed' }}
+        appendTo={() => document.body}
+        opened={choosingViews}
+        onChange={setChoosingViews}
+        data-testid="rail-views-menu"
+      >
+        <button
+          type="button"
+          className="rail-button rail-more"
+          title="Choose views"
+          aria-label="Choose views"
+          data-testid="rail-choose-views"
+          onClick={() => setChoosingViews(!choosingViews)}
+        >
+          <IconDots size={18} stroke={1.5} aria-hidden="true" />
+        </button>
+      </MenuDropdown>
+    </StyledWrapper>
+  );
+};
 
 export default ActivityRail;

@@ -99,12 +99,31 @@ test.describe('Interface layout', () => {
     await expect(railLabels(page)).resolves.toEqual(['Collections', 'History', 'API Specs', 'Mock Servers']);
   });
 
-  test('the rail has no context menu', async ({ page }) => {
+  test('the rail has no context menu, only the dots button opens a menu', async ({ page }) => {
     await choose(page, 'islands');
 
     await page.getByTestId('rail-view-history').click({ button: 'right' });
     await page.getByTestId('activity-rail').click({ button: 'right', position: { x: 20, y: 200 } });
     await expect(page.getByRole('menu')).toHaveCount(0);
+
+    await page.getByTestId('rail-choose-views').click();
+    await expect(page.getByRole('menu')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('menu')).toHaveCount(0);
+  });
+
+  test('views can be hidden and shown again from the dots button', async ({ page }) => {
+    await choose(page, 'islands');
+
+    await page.getByTestId('rail-choose-views').click();
+    await expect(page.getByTestId('rail-views-menu-toggle-collections')).toContainText('✓');
+    await page.getByTestId('rail-views-menu-toggle-history').click();
+    await expect.poll(() => railLabels(page)).toEqual(['Collections', 'API Specs', 'Mock Servers']);
+
+    await page.getByTestId('rail-choose-views').click();
+    await expect(page.getByTestId('rail-views-menu-toggle-history')).not.toContainText('✓');
+    await page.getByTestId('rail-views-menu-toggle-history').click();
+    await expect.poll(() => railLabels(page)).toEqual(['Collections', 'History', 'API Specs', 'Mock Servers']);
   });
 
   test('a view can be dragged to a new place on the rail', async ({ page }) => {
