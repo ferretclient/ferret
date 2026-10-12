@@ -92,6 +92,55 @@ const StyledWrapper = styled.div`
     color: ${(props) => props.theme.text};
   }
 
+  .design-card {
+    min-width: 200px;
+    max-width: 230px;
+    outline: none;
+
+    &:focus-visible {
+      border-color: ${(props) => props.theme.input.focusBorder};
+    }
+  }
+
+  .design-preview {
+    width: 120px;
+    height: 70px;
+    margin-bottom: 10px;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .design-preview-sidebar {
+    width: 26px;
+    height: 100%;
+  }
+
+  .design-preview-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    gap: 6px;
+  }
+
+  .design-preview-row {
+    height: 12px;
+    width: 100%;
+  }
+
+  .design-preview-button {
+    height: 12px;
+    width: 34px;
+    margin-top: auto;
+  }
+
+  .design-description {
+    margin-top: 4px;
+    text-align: center;
+    font-size: ${(props) => props.theme.font.size.xs};
+    color: ${(props) => props.theme.colors.text.muted};
+  }
+
   .section-divider {
     height: 1px;
     background: ${(props) => props.theme.input.border};

@@ -1,0 +1,60 @@
+/*
+ * Modern design: the finishing touches that the theme tokens cannot reach.
+ *
+ * Everything here is scoped to html[data-design='modern'], which the theme provider sets, so the Classic design
+ * is untouched. Only standard Chromium CSS is used, with no effect that depends on the operating system or on
+ * GPU compositing (no backdrop blur, no custom scrollbars), so it renders the same on Windows, macOS and Linux.
+ */
+
+html[data-design='modern'] body {
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  /* Smooths text on macOS; other systems ignore it. */
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * Corners written as Tailwind classes follow the same softer scale as the theme's radius tokens.
+ * `rounded-full` and the one-sided variants are deliberately left alone.
+ */
+html[data-design='modern'] .rounded-sm {
+  border-radius: 6px;
+}
+
+html[data-design='modern'] .rounded {
+  border-radius: 8px;
+}
+
+html[data-design='modern'] .rounded-md {
+  border-radius: 10px;
+}
+
+html[data-design='modern'] .rounded-lg {
+  border-radius: 14px;
+}
+
+html[data-design='modern'] .rounded-xl {
+  border-radius: 18px;
+}
+
+/* Hover, focus and selection changes ease in instead of snapping, unless the system asks for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-design='modern'] :is(button, a, [role='tab'], [role='option'], [role='menuitem'], input, select, textarea) {
+    transition:
+      background-color 120ms ease,
+      border-color 120ms ease,
+      color 120ms ease,
+      box-shadow 120ms ease,
+      opacity 120ms ease;
+  }
+}
+
+/* A visible, theme-colored ring for keyboard focus. Text inputs and editors keep their own focus styling. */
+html[data-design='modern'] :is(button, a, [role='tab'], [role='menuitem']):focus-visible {
+  outline: 2px solid var(--ferret-focus-ring, rgba(13, 148, 136, 0.55));
+  outline-offset: 2px;
+}
+
+html[data-design='modern'] ::selection {
+  background: var(--ferret-selection, rgba(13, 148, 136, 0.25));
+}

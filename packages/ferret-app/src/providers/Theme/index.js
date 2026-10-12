@@ -1,9 +1,10 @@
 import React from 'react';
 import { Validator } from 'jsonschema';
 import toast from 'react-hot-toast';
-import { parseToRgb } from 'polished';
+import { parseToRgb, transparentize } from 'polished';
 import themes from 'themes/index';
 import themeSchema from 'themes/schema';
+import { applyDesign, isKnownDesign, DEFAULT_DESIGN } from 'themes/designs/index';
 import useLocalStorage from 'hooks/useLocalStorage/index';
 
 import { createContext, useContext, useEffect, useState, useMemo } from 'react';
@@ -32,6 +33,9 @@ export const ThemeProvider = (props) => {
   const [displayedTheme, setDisplayedTheme] = useState(() => getEffectiveTheme(storedTheme));
   const [themeVariantLight, setThemeVariantLight] = useLocalStorage('ferret.themeVariantLight', 'light');
   const [themeVariantDark, setThemeVariantDark] = useLocalStorage('ferret.themeVariantDark', 'dark');
+  // The design (Classic or Modern) shapes the interface; the theme above colors it.
+  const [storedDesign, setDesign] = useLocalStorage('ferret.design', DEFAULT_DESIGN);
+  const design = isKnownDesign(storedDesign) ? storedDesign : DEFAULT_DESIGN;
 
   // Listen for system theme changes (only affects 'system' mode)
   useEffect(() => {
@@ -67,7 +71,7 @@ export const ThemeProvider = (props) => {
   // displayedTheme can have 2 values: 'light', 'dark'
 
   // Compute theme object directly from storedTheme to avoid race conditions
-  const theme = useMemo(() => {
+  const baseTheme = useMemo(() => {
     const isLightMode = getEffectiveTheme(storedTheme) === 'light';
     const variantName = isLightMode ? themeVariantLight : themeVariantDark;
     const fallbackTheme = isLightMode ? themes.light : themes.dark;
@@ -101,15 +105,34 @@ export const ThemeProvider = (props) => {
     return selectedTheme;
   }, [storedTheme, themeVariantLight, themeVariantDark]);
 
+  const theme = useMemo(() => applyDesign(baseTheme, design), [baseTheme, design]);
+
+  // Styles that are not written with styled-components read the design from the root element, and the
+  // theme's accent through CSS variables, so they follow both choices.
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.dataset.design = design;
+    try {
+      root.style.setProperty('--ferret-focus-ring', transparentize(0.45, theme.brand));
+      root.style.setProperty('--ferret-selection', transparentize(0.75, theme.brand));
+    } catch {
+      root.style.removeProperty('--ferret-focus-ring');
+      root.style.removeProperty('--ferret-selection');
+    }
+  }, [design, theme.brand]);
+
   const value = {
     theme,
+    baseTheme,
     storedTheme,
     displayedTheme,
     setStoredTheme,
     themeVariantLight,
     setThemeVariantLight,
     themeVariantDark,
-    setThemeVariantDark
+    setThemeVariantDark,
+    design,
+    setDesign
   };
 
   return (
