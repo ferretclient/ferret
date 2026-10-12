@@ -18,7 +18,20 @@ const Probe = () => {
   );
 };
 
+const LayoutProbe = () => {
+  const { layout, setLayout, setDesign } = useTheme();
+  return (
+    <div>
+      <span data-testid="layout">{layout}</span>
+      <button onClick={() => setLayout('islands')}>islands</button>
+      <button onClick={() => setDesign('modern')}>modern</button>
+      <button onClick={() => setDesign('classic')}>classic</button>
+    </div>
+  );
+};
+
 const renderProbe = () => render(<ThemeProvider><Probe /></ThemeProvider>);
+const renderLayoutProbe = () => render(<ThemeProvider><LayoutProbe /></ThemeProvider>);
 
 beforeEach(() => {
   localStorage.clear();
@@ -26,6 +39,7 @@ beforeEach(() => {
   localStorage.setItem('ferret.theme', JSON.stringify('light'));
   localStorage.setItem('ferret.themeVariantLight', JSON.stringify('light'));
   document.documentElement.removeAttribute('data-design');
+  document.documentElement.removeAttribute('data-layout');
 });
 
 describe('ThemeProvider design', () => {
@@ -100,5 +114,53 @@ describe('ThemeProvider design', () => {
 
     expect(variable('--ferret-shadow-sm')).not.toBe(classicShadow);
     expect(variable('--ferret-accent')).toBe(themes.light.brand);
+  });
+
+  it('starts with the Classic layout and remembers a different one', async () => {
+    const user = userEvent.setup();
+    renderLayoutProbe();
+
+    expect(screen.getByTestId('layout')).toHaveTextContent('classic');
+    expect(document.documentElement.dataset.layout).toBe('classic');
+
+    await user.click(screen.getByRole('button', { name: 'islands' }));
+
+    expect(screen.getByTestId('layout')).toHaveTextContent('islands');
+    expect(document.documentElement.dataset.layout).toBe('islands');
+    expect(JSON.parse(localStorage.getItem('ferret.layout'))).toBe('islands');
+  });
+
+  it('falls back to the Classic layout when the saved one is not known', () => {
+    localStorage.setItem('ferret.layout', JSON.stringify('floating-windows'));
+    renderLayoutProbe();
+
+    expect(screen.getByTestId('layout')).toHaveTextContent('classic');
+    expect(document.documentElement.dataset.layout).toBe('classic');
+  });
+
+  it('keeps the layout and the design independent of each other', async () => {
+    const user = userEvent.setup();
+    renderLayoutProbe();
+
+    await user.click(screen.getByRole('button', { name: 'islands' }));
+    await user.click(screen.getByRole('button', { name: 'modern' }));
+
+    expect(document.documentElement.dataset.layout).toBe('islands');
+    expect(document.documentElement.dataset.design).toBe('modern');
+
+    await user.click(screen.getByRole('button', { name: 'classic' }));
+    expect(document.documentElement.dataset.layout).toBe('islands');
+    expect(document.documentElement.dataset.design).toBe('classic');
+  });
+
+  it('publishes what the islands are painted with, taken from the theme', () => {
+    renderLayoutProbe();
+    const variable = (name) => document.documentElement.style.getPropertyValue(name);
+
+    expect(variable('--ferret-island-bg')).toBe(themes.light.background.base);
+    expect(variable('--ferret-island-border')).toBe(themes.light.border.border1);
+    expect(variable('--ferret-island-radius')).toBe(themes.light.border.radius.xl);
+    expect(variable('--ferret-canvas')).not.toBe('');
+    expect(variable('--ferret-island-gap')).toBe('8px');
   });
 });

@@ -1,0 +1,45 @@
+/*
+ * Islands layout: the sidebar, the editor and the console are separate rounded surfaces on a canvas, with
+ * space between them. These rules apply only inside .islands-shell, which is mounted only when the Islands
+ * layout is chosen, so the classic layout is untouched.
+ *
+ * The canvas color, the island background, radius, border and gap come from CSS variables that the theme
+ * provider publishes from the active theme and design, so every theme works. Only standard Chromium CSS is
+ * used (flexbox, border radius, box shadow), so it renders the same on Windows, macOS and Linux.
+ */
+
+.islands-shell {
+  background: var(--ferret-canvas);
+  padding: var(--ferret-island-gap, 8px);
+  gap: var(--ferret-island-gap, 8px);
+}
+
+.islands-row {
+  gap: var(--ferret-island-gap, 8px);
+}
+
+.island {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--ferret-island-bg);
+  border-radius: var(--ferret-island-radius, 12px);
+  box-shadow: var(--ferret-shadow-sm, 0 0 0 0 transparent), 0 0 0 1px var(--ferret-island-border, transparent);
+}
+
+.island-sidebar {
+  display: flex;
+  flex: none;
+}
+
+/* An author `display` would otherwise win over the browser's rule for the hidden attribute. */
+.island-sidebar[hidden] {
+  display: none;
+}
+
+.island-console {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+}

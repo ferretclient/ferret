@@ -134,6 +134,39 @@ const StyledWrapper = styled.div`
     margin-top: auto;
   }
 
+  .layout-preview {
+    width: 120px;
+    height: 70px;
+    margin-bottom: 10px;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .layout-preview-islands {
+    padding: 5px;
+    gap: 4px;
+  }
+
+  .layout-preview-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .layout-preview-block {
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+    gap: 3px;
+  }
+
+  .layout-preview-line {
+    height: 4px;
+    width: 80%;
+    border-radius: 2px;
+  }
+
   .design-description {
     margin-top: 4px;
     text-align: center;
