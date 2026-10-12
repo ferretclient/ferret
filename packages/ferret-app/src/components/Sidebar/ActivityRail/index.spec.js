@@ -8,7 +8,7 @@ import { ThemeProvider } from 'providers/Theme';
 import ActivityRail from './index';
 
 const renderRail = (props = {}) => {
-  const handlers = { onSelect: jest.fn(), onMove: jest.fn(), onToggleHidden: jest.fn() };
+  const handlers = { onSelect: jest.fn(), onMove: jest.fn() };
   render(
     <ThemeProvider>
       <DndProvider backend={HTML5Backend}>
@@ -25,8 +25,6 @@ const renderRail = (props = {}) => {
   return handlers;
 };
 
-const viewButtons = () => screen.getAllByRole('button').filter((button) => button.dataset.testid?.startsWith('rail-view-'));
-
 beforeEach(() => {
   localStorage.clear();
   localStorage.setItem('ferret.theme', JSON.stringify('light'));
@@ -36,14 +34,8 @@ describe('ActivityRail', () => {
   it('shows one labelled button per view, in the order it is given', () => {
     renderRail();
 
-    expect(viewButtons().map((button) => button.getAttribute('aria-label'))).toEqual(['Collections', 'History', 'API Specs']);
+    expect(screen.getAllByRole('button').map((button) => button.getAttribute('aria-label'))).toEqual(['Collections', 'History', 'API Specs']);
     expect(screen.queryByRole('button', { name: 'Mock Servers' })).not.toBeInTheDocument();
-  });
-
-  it('leaves hidden views off the rail', () => {
-    renderRail({ hiddenIds: ['history'] });
-
-    expect(viewButtons().map((button) => button.getAttribute('aria-label'))).toEqual(['Collections', 'API Specs']);
   });
 
   it('marks the active view as pressed while the pane is open', () => {
@@ -83,47 +75,11 @@ describe('ActivityRail', () => {
     expect(onMove).toHaveBeenLastCalledWith('history', null, -1);
   });
 
-  it('offers to move or hide a view when it is right-clicked', async () => {
-    const user = userEvent.setup();
-    const { onToggleHidden, onMove } = renderRail();
-
-    await user.pointer({ keys: '[MouseRight]', target: screen.getByTestId('rail-view-history') });
-    await user.click(await screen.findByTestId('rail-view-menu-history-hide'));
-    expect(onToggleHidden).toHaveBeenCalledWith('history');
-
-    await user.pointer({ keys: '[MouseRight]', target: screen.getByTestId('rail-view-history') });
-    await user.click(await screen.findByTestId('rail-view-menu-history-move-up'));
-    expect(onMove).toHaveBeenCalledWith('history', null, -1);
-  });
-
-  it('cannot hide the last shown view', async () => {
-    const user = userEvent.setup();
-    renderRail({ hiddenIds: ['history', 'api-specs'] });
-
-    await user.pointer({ keys: '[MouseRight]', target: screen.getByTestId('rail-view-collections') });
-
-    expect(await screen.findByTestId('rail-view-menu-collections-hide')).toHaveAttribute('aria-disabled', 'true');
-  });
-
-  it('lets the shown views be chosen from the rail, with a tick on the shown ones', async () => {
-    const user = userEvent.setup();
-    const { onToggleHidden } = renderRail({ hiddenIds: ['api-specs'] });
-
-    await user.pointer({ keys: '[MouseRight]', target: screen.getByTestId('activity-rail') });
-    const apiSpecs = await screen.findByTestId('rail-views-menu-toggle-api-specs');
-    expect(screen.getByTestId('rail-views-menu-toggle-history')).toHaveTextContent('✓');
-    expect(apiSpecs).not.toHaveTextContent('✓');
-
-    await user.click(apiSpecs);
-    expect(onToggleHidden).toHaveBeenCalledWith('api-specs');
-  });
-
-  it('opens no menu on a left click', async () => {
+  it('opens no menu on a right click', async () => {
     const user = userEvent.setup();
     renderRail();
 
-    await user.click(screen.getByTestId('rail-view-history'));
-    await user.click(screen.getByTestId('activity-rail'));
+    await user.pointer({ keys: '[MouseRight]', target: screen.getByTestId('rail-view-history') });
 
     expect(screen.queryByRole('menu')).not.toBeInTheDocument();
   });

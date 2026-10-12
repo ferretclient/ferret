@@ -1,8 +1,6 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { IconBox, IconFileCode, IconServer, IconHistory } from '@tabler/icons';
-import MenuDropdown from 'ui/MenuDropdown';
-import { shownRailViews } from 'utils/sidebar/rail-view';
 import StyledWrapper from './StyledWrapper';
 
 export const RAIL_VIEWS = {
@@ -14,13 +12,7 @@ export const RAIL_VIEWS = {
 
 const RAIL_VIEW_DRAG_TYPE = 'sidebar-rail-view';
 
-const menuProps = {
-  placement: 'right-start',
-  popperOptions: { strategy: 'fixed' },
-  appendTo: () => document.body
-};
-
-const RailButton = ({ id, active, paneOpen, menuOpen, menuItems, onSelect, onMove, onOpenMenu, onCloseMenu }) => {
+const RailButton = ({ id, active, paneOpen, onSelect, onMove }) => {
   const { title, icon: Icon } = RAIL_VIEWS[id];
   const buttonRef = useRef(null);
 
@@ -40,110 +32,41 @@ const RailButton = ({ id, active, paneOpen, menuOpen, menuItems, onSelect, onMov
   const classes = ['rail-button', active && 'active', active && paneOpen && 'pane-open', isDragging && 'dragging', isOver && 'drop-target'];
 
   return (
-    <MenuDropdown
-      {...menuProps}
-      items={menuItems}
-      opened={menuOpen}
-      onChange={(opened) => (opened ? onOpenMenu(id) : onCloseMenu())}
-      data-testid={`rail-view-menu-${id}`}
-    >
-      <button
-        ref={buttonRef}
-        type="button"
-        className={classes.filter(Boolean).join(' ')}
-        title={title}
-        aria-label={title}
-        aria-pressed={active && paneOpen}
-        data-testid={`rail-view-${id}`}
-        onClick={() => onSelect(id)}
-        onContextMenu={(e) => {
+    <button
+      ref={buttonRef}
+      type="button"
+      className={classes.filter(Boolean).join(' ')}
+      title={title}
+      aria-label={title}
+      aria-pressed={active && paneOpen}
+      data-testid={`rail-view-${id}`}
+      onClick={() => onSelect(id)}
+      onKeyDown={(e) => {
+        if (e.altKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
           e.preventDefault();
-          e.stopPropagation();
-          onOpenMenu(id);
-        }}
-        onKeyDown={(e) => {
-          if (e.altKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
-            e.preventDefault();
-            onMove(id, null, e.key === 'ArrowUp' ? -1 : 1);
-          }
-        }}
-      >
-        <Icon size={18} stroke={1.5} aria-hidden="true" />
-      </button>
-    </MenuDropdown>
+          onMove(id, null, e.key === 'ArrowUp' ? -1 : 1);
+        }
+      }}
+    >
+      <Icon size={18} stroke={1.5} aria-hidden="true" />
+    </button>
   );
 };
 
 /**
- * The narrow icon column of the Islands sidebar: one button per shown view, the active one marked.
+ * The narrow icon column of the Islands sidebar: one button per view, the active one marked.
  *
- * `viewIds` is every view on offer in the saved order and `hiddenIds` the ones left off the rail. A button can be
- * dragged (or moved with Alt+Arrow) to rearrange the rail; right-clicking a button offers to move or hide it, and
- * right-clicking the rail itself chooses which views are shown. Nothing opens on a left click.
- * Choosing the active view again is up to the owner (it closes the pane); this component only reports clicks.
- * `onMove(id, targetId, offset)` moves a view onto `targetId`, or by `offset` places when there is no target.
+ * `viewIds` is every view on offer in the saved order. A button can be dragged onto another one, or moved with
+ * Alt+Arrow, to rearrange the rail: `onMove(id, targetId, offset)` moves a view onto `targetId`, or by `offset`
+ * places when there is no target. Choosing the active view again is up to the owner (it closes the pane);
+ * this component only reports clicks.
  */
-const ActivityRail = ({ viewIds, hiddenIds = [], activeId, paneOpen, onSelect, onMove, onToggleHidden }) => {
-  // Which menu is open: a view's id, or 'views' for the choice of shown views.
-  const [menu, setMenu] = useState(null);
-  const shownIds = shownRailViews(viewIds, hiddenIds);
-  const isKnown = (id) => Boolean(RAIL_VIEWS[id]);
-
-  const buttonMenuItems = (id) => {
-    const index = shownIds.indexOf(id);
-    return [
-      { id: 'move-up', label: 'Move up', disabled: index === 0, onClick: () => onMove(id, null, -1) },
-      { id: 'move-down', label: 'Move down', disabled: index === shownIds.length - 1, onClick: () => onMove(id, null, 1) },
-      { type: 'divider', id: 'divider' },
-      { id: 'hide', label: 'Hide', disabled: shownIds.length <= 1, onClick: () => onToggleHidden(id) }
-    ];
-  };
-
-  const viewsMenuItems = viewIds.filter(isKnown).map((id) => {
-    const shown = shownIds.includes(id);
-    return {
-      id: `toggle-${id}`,
-      label: RAIL_VIEWS[id].title,
-      disabled: shown && shownIds.length <= 1,
-      rightSection: shown ? <span className="ml-auto">✓</span> : null,
-      onClick: () => onToggleHidden(id)
-    };
-  });
-
-  return (
-    <MenuDropdown
-      {...menuProps}
-      items={viewsMenuItems}
-      showTickMark={false}
-      opened={menu === 'views'}
-      onChange={(opened) => setMenu(opened ? 'views' : null)}
-      data-testid="rail-views-menu"
-    >
-      <StyledWrapper
-        aria-label="Sidebar views"
-        data-testid="activity-rail"
-        onContextMenu={(e) => {
-          e.preventDefault();
-          setMenu('views');
-        }}
-      >
-        {shownIds.filter(isKnown).map((id) => (
-          <RailButton
-            key={id}
-            id={id}
-            active={id === activeId}
-            paneOpen={paneOpen}
-            menuOpen={menu === id}
-            menuItems={buttonMenuItems(id)}
-            onSelect={onSelect}
-            onMove={onMove}
-            onOpenMenu={setMenu}
-            onCloseMenu={() => setMenu(null)}
-          />
-        ))}
-      </StyledWrapper>
-    </MenuDropdown>
-  );
-};
+const ActivityRail = ({ viewIds, activeId, paneOpen, onSelect, onMove }) => (
+  <StyledWrapper aria-label="Sidebar views" data-testid="activity-rail">
+    {viewIds.filter((id) => RAIL_VIEWS[id]).map((id) => (
+      <RailButton key={id} id={id} active={id === activeId} paneOpen={paneOpen} onSelect={onSelect} onMove={onMove} />
+    ))}
+  </StyledWrapper>
+);
 
 export default ActivityRail;

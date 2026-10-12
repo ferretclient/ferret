@@ -34,4 +34,3 @@ export const setLocalStorageValue = (key, value) => {
 export const SIDEBAR_VIEW_KEY = 'ferret.sidebarView';
 export const SIDEBAR_PANE_OPEN_KEY = 'ferret.sidebarPaneOpen';
 export const SIDEBAR_RAIL_ORDER_KEY = 'ferret.sidebarRailOrder';
-export const SIDEBAR_RAIL_HIDDEN_KEY = 'ferret.sidebarRailHidden';
