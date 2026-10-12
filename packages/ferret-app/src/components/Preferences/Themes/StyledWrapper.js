@@ -102,38 +102,6 @@ const StyledWrapper = styled.div`
     }
   }
 
-  .design-preview {
-    width: 120px;
-    height: 70px;
-    margin-bottom: 10px;
-    display: flex;
-    overflow: hidden;
-  }
-
-  .design-preview-sidebar {
-    width: 26px;
-    height: 100%;
-  }
-
-  .design-preview-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 8px;
-    gap: 6px;
-  }
-
-  .design-preview-row {
-    height: 12px;
-    width: 100%;
-  }
-
-  .design-preview-button {
-    height: 12px;
-    width: 34px;
-    margin-top: auto;
-  }
-
   .layout-preview {
     width: 120px;
     height: 70px;

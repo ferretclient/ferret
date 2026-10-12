@@ -5,8 +5,8 @@ import StyledWrapper from './StyledWrapper';
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateLeftSidebarWidth, updateIsDragging, toggleSidebarSearch } from 'providers/ReduxStore/slices/app';
-import { getLocalStorageValue, setLocalStorageValue, SIDEBAR_WIDTH_KEY, SIDEBAR_SECTION_ORDER_KEY, SIDEBAR_VIEW_KEY, SIDEBAR_PANE_OPEN_KEY } from 'utils/common/localStorage';
-import { resolveActiveView, parseSidebarView, parsePaneOpen } from 'utils/sidebar/rail-view';
+import { getLocalStorageValue, setLocalStorageValue, SIDEBAR_WIDTH_KEY, SIDEBAR_SECTION_ORDER_KEY, SIDEBAR_VIEW_KEY, SIDEBAR_PANE_OPEN_KEY, SIDEBAR_RAIL_ORDER_KEY, SIDEBAR_RAIL_HIDDEN_KEY } from 'utils/common/localStorage';
+import { resolveActiveView, parseSidebarView, parsePaneOpen, orderRailViews, shownRailViews, placeShownRailViews, toggleRailViewHidden } from 'utils/sidebar/rail-view';
 import { useTheme } from 'providers/Theme';
 import ActivityRail from './ActivityRail';
 import { RAIL_WIDTH } from './ActivityRail/StyledWrapper';
@@ -74,7 +74,28 @@ const Sidebar = () => {
   const railMode = layout === 'islands';
   const [savedView, setSavedView] = useState(() => getLocalStorageValue(SIDEBAR_VIEW_KEY, null, parseSidebarView));
   const [paneOpen, setPaneOpen] = useState(() => getLocalStorageValue(SIDEBAR_PANE_OPEN_KEY, true, parsePaneOpen));
-  const activeViewId = resolveActiveView(visibleSectionIds, savedView);
+  // The rail has its own order and its own hidden views, separate from the accordion's section order.
+  const [savedRailOrder, setSavedRailOrder] = useState(() => getLocalStorageValue(SIDEBAR_RAIL_ORDER_KEY, [], parseSectionOrder));
+  const [hiddenRailViews, setHiddenRailViews] = useState(() => getLocalStorageValue(SIDEBAR_RAIL_HIDDEN_KEY, [], parseSectionOrder));
+  const railViewIds = useMemo(
+    () => orderRailViews(defaultSections.map((section) => section.id).filter((id) => isSidebarSectionVisible(preferences, id)), savedRailOrder),
+    [defaultSections, preferences, savedRailOrder]
+  );
+  const shownRailViewIds = shownRailViews(railViewIds, hiddenRailViews);
+  const activeViewId = resolveActiveView(shownRailViewIds, savedView);
+  const saveRailOrder = (ids) => {
+    setSavedRailOrder(ids);
+    setLocalStorageValue(SIDEBAR_RAIL_ORDER_KEY, JSON.stringify(ids));
+  };
+  const handleMoveRailView = (id, targetId, offset = 0) => {
+    const rearranged = targetId ? moveSectionTo(shownRailViewIds, id, targetId) : moveSectionBy(shownRailViewIds, id, offset);
+    saveRailOrder(placeShownRailViews(railViewIds, shownRailViewIds, rearranged));
+  };
+  const handleToggleRailViewHidden = (id) => {
+    const hidden = toggleRailViewHidden(railViewIds, hiddenRailViews, id);
+    setHiddenRailViews(hidden);
+    setLocalStorageValue(SIDEBAR_RAIL_HIDDEN_KEY, JSON.stringify(hidden));
+  };
   const handleSelectView = (id) => {
     if (id === activeViewId && paneOpen) {
       setPaneOpen(false);
@@ -171,7 +192,17 @@ const Sidebar = () => {
       <StyledWrapper className="flex relative h-full">
         <aside className="sidebar" data-testid="sidebar" style={{ width: currentWidth, transition: dragging ? 'none' : 'width 0.2s ease-in-out' }}>
           <div className="flex flex-row h-full w-full">
-            {railMode && <ActivityRail viewIds={visibleSectionIds} activeId={activeViewId} paneOpen={paneOpen} onSelect={handleSelectView} />}
+            {railMode && (
+              <ActivityRail
+                viewIds={railViewIds}
+                hiddenIds={hiddenRailViews}
+                activeId={activeViewId}
+                paneOpen={paneOpen}
+                onSelect={handleSelectView}
+                onMove={handleMoveRailView}
+                onToggleHidden={handleToggleRailViewHidden}
+              />
+            )}
             <div className="flex flex-col w-full" style={railMode ? { flex: '1 1 0', minWidth: 0 } : { width: displayWidth }} hidden={railPaneClosed}>
               <div className="flex flex-col flex-grow sidebar-sections-container" style={{ minHeight: 0, overflow: 'hidden' }}>
                 <div className="sidebar-sections flex flex-col flex-1">

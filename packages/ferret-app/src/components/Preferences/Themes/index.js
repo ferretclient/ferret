@@ -4,7 +4,6 @@ import { useTheme } from 'providers/Theme';
 import themes, { getLightThemes, getDarkThemes } from 'themes/index';
 import { IconBrightnessUp, IconMoon, IconDeviceDesktop } from '@tabler/icons';
 import StyledWrapper from './StyledWrapper';
-import DesignPicker from './DesignPicker/index';
 import LayoutPicker from './LayoutPicker/index';
 
 const ThemePreview = ({ themeId, isDark }) => {
@@ -104,8 +103,6 @@ const Themes = () => {
         </div>
 
         <div className="section-divider" />
-
-        <DesignPicker />
 
         <LayoutPicker />
 

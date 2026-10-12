@@ -40,6 +40,18 @@ const StyledWrapper = styled.nav`
       color: ${(props) => props.theme.sidebar.color};
     }
 
+    &.dragging {
+      opacity: 0.4;
+    }
+
+    &.drop-target {
+      outline: 2px dashed var(--ferret-accent, ${(props) => props.theme.brand});
+    }
+
+    &.rail-more {
+      margin-top: auto;
+    }
+
     &.active.pane-open::before {
       content: '';
       position: absolute;

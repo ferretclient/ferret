@@ -13,6 +13,8 @@ const choose = async (page, layout: 'classic' | 'islands') => {
   await closePreferencesTab(page);
 };
 
+const railLabels = (page) => page.getByTestId('activity-rail').locator('button[data-testid^="rail-view-"]').evaluateAll((buttons) => buttons.map((button) => button.getAttribute('aria-label')));
+
 test.describe('Interface layout', () => {
   test.beforeEach(async ({ page }) => {
     await page.locator('[data-app-state="loaded"]').waitFor();
@@ -89,6 +91,48 @@ test.describe('Interface layout', () => {
 
     await page.getByTestId('rail-view-collections').click();
     await expect(page.getByTestId('sidebar-section-collections')).toBeVisible();
+  });
+
+  test('the rail starts in the order Collections, History, API Specs, Mock Servers', async ({ page }) => {
+    await choose(page, 'islands');
+
+    await expect(railLabels(page)).resolves.toEqual(['Collections', 'History', 'API Specs', 'Mock Servers']);
+  });
+
+  test('a view can be moved from its right-click menu, and moved back', async ({ page }) => {
+    await choose(page, 'islands');
+
+    await page.getByTestId('rail-view-history').click({ button: 'right' });
+    await page.getByTestId('rail-view-menu-history-move-down').click();
+    await expect.poll(() => railLabels(page)).toEqual(['Collections', 'API Specs', 'History', 'Mock Servers']);
+
+    await page.getByTestId('rail-view-history').click({ button: 'right' });
+    await page.getByTestId('rail-view-menu-history-move-up').click();
+    await expect.poll(() => railLabels(page)).toEqual(['Collections', 'History', 'API Specs', 'Mock Servers']);
+  });
+
+  test('a view can be dragged to a new place on the rail', async ({ page }) => {
+    await choose(page, 'islands');
+
+    await page.getByTestId('rail-view-api-specs').dragTo(page.getByTestId('rail-view-collections'));
+    await expect.poll(() => railLabels(page)).toEqual(['API Specs', 'Collections', 'History', 'Mock Servers']);
+
+    await page.getByTestId('rail-view-api-specs').dragTo(page.getByTestId('rail-view-history'));
+    await expect.poll(() => railLabels(page)).toEqual(['Collections', 'History', 'API Specs', 'Mock Servers']);
+  });
+
+  test('a view can be hidden from its menu and brought back from the rail menu', async ({ page }) => {
+    await choose(page, 'islands');
+
+    await page.getByTestId('rail-view-history').click({ button: 'right' });
+    await page.getByTestId('rail-view-menu-history-hide').click();
+    await expect.poll(() => railLabels(page)).toEqual(['Collections', 'API Specs', 'Mock Servers']);
+
+    await page.getByTestId('activity-rail').click({ button: 'right', position: { x: 20, y: 150 } });
+    await expect(page.getByTestId('rail-views-menu-toggle-collections')).toContainText('✓');
+    await expect(page.getByTestId('rail-views-menu-toggle-history')).not.toContainText('✓');
+    await page.getByTestId('rail-views-menu-toggle-history').click();
+    await expect.poll(() => railLabels(page)).toEqual(['Collections', 'History', 'API Specs', 'Mock Servers']);
   });
 
   test('classic panes have no activity rail', async ({ page }) => {
