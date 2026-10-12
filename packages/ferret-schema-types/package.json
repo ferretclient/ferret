@@ -1,6 +1,6 @@
 {
   "name": "@ferretclient/schema-types",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "TypeScript types for Ferret schema",
   "author": "Ferret",
   "main": "dist/schema-types.js",
