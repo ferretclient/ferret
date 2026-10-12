@@ -44,7 +44,7 @@ test.describe('Interface layout', () => {
 
     const sidebar = await page.getByTestId('island-sidebar').boundingBox();
     const main = await page.getByTestId('island-main').boundingBox();
-    expect(main.x - (sidebar.x + sidebar.width)).toBeGreaterThanOrEqual(6);
+    expect(main.x - (sidebar.x + sidebar.width)).toBeGreaterThanOrEqual(3);
 
     const radius = await page.getByTestId('island-main').evaluate((element) => parseFloat(getComputedStyle(element).borderTopLeftRadius));
     expect(radius).toBeGreaterThanOrEqual(8);

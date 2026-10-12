@@ -161,6 +161,6 @@ describe('ThemeProvider design', () => {
     expect(variable('--ferret-island-border')).toBe(themes.light.border.border1);
     expect(variable('--ferret-island-radius')).toBe(themes.light.border.radius.xl);
     expect(variable('--ferret-canvas')).not.toBe('');
-    expect(variable('--ferret-island-gap')).toBe('8px');
+    expect(variable('--ferret-island-gap')).toBe('4px');
   });
 });

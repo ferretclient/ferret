@@ -122,7 +122,7 @@ export const ThemeProvider = (props) => {
     root.style.setProperty('--ferret-island-bg', theme.background.base);
     root.style.setProperty('--ferret-island-radius', theme.border.radius.xl);
     root.style.setProperty('--ferret-island-border', theme.border.border1);
-    root.style.setProperty('--ferret-island-gap', '8px');
+    root.style.setProperty('--ferret-island-gap', '4px');
     try {
       root.style.setProperty('--ferret-accent', theme.brand);
       root.style.setProperty('--ferret-accent-soft', transparentize(0.88, theme.brand));

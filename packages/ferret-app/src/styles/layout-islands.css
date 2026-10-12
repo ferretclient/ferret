@@ -10,12 +10,12 @@
 
 .islands-shell {
   background: var(--ferret-canvas);
-  padding: var(--ferret-island-gap, 8px);
-  gap: var(--ferret-island-gap, 8px);
+  padding: var(--ferret-island-gap, 4px);
+  gap: var(--ferret-island-gap, 4px);
 }
 
 .islands-row {
-  gap: var(--ferret-island-gap, 8px);
+  gap: var(--ferret-island-gap, 4px);
 }
 
 .island {
