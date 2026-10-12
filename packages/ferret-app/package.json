@@ -1,6 +1,6 @@
 {
   "name": "@ferretclient/app",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -34,9 +34,9 @@
     "@tiptap/pm": "^2.11.2",
     "@tiptap/react": "^2.11.2",
     "@tiptap/starter-kit": "^2.11.2",
-    "@ferretclient/common": "0.2.1",
-    "@ferretclient/graphql-docs": "0.2.1",
-    "@ferretclient/schema": "0.2.1",
+    "@ferretclient/common": "0.3.0",
+    "@ferretclient/graphql-docs": "0.3.0",
+    "@ferretclient/schema": "0.3.0",
     "@xterm/addon-fit": "^0.10.0",
     "@xterm/xterm": "^5.5.0",
     "classnames": "^2.3.1",
