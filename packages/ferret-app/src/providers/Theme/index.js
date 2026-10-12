@@ -113,13 +113,16 @@ export const ThemeProvider = (props) => {
     const root = window.document.documentElement;
     root.dataset.design = design;
     try {
+      root.style.setProperty('--ferret-accent', theme.brand);
+      root.style.setProperty('--ferret-accent-soft', transparentize(0.88, theme.brand));
       root.style.setProperty('--ferret-focus-ring', transparentize(0.45, theme.brand));
       root.style.setProperty('--ferret-selection', transparentize(0.75, theme.brand));
     } catch {
-      root.style.removeProperty('--ferret-focus-ring');
-      root.style.removeProperty('--ferret-selection');
+      ['--ferret-accent', '--ferret-accent-soft', '--ferret-focus-ring', '--ferret-selection'].forEach((name) => root.style.removeProperty(name));
     }
-  }, [design, theme.brand]);
+    root.style.setProperty('--ferret-shadow-sm', theme.shadow.sm);
+    root.style.setProperty('--ferret-shadow-md', theme.shadow.md);
+  }, [design, theme.brand, theme.shadow]);
 
   const value = {
     theme,

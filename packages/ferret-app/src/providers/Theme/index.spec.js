@@ -83,4 +83,22 @@ describe('ThemeProvider design', () => {
     expect(document.documentElement.style.getPropertyValue('--ferret-focus-ring')).not.toBe('');
     expect(document.documentElement.style.getPropertyValue('--ferret-selection')).not.toBe('');
   });
+
+  it('shares the accent and the shadows with the stylesheet, and the shadows follow the design', async () => {
+    const user = userEvent.setup();
+    renderProbe();
+    const root = document.documentElement;
+    const variable = (name) => root.style.getPropertyValue(name);
+
+    ['--ferret-accent', '--ferret-accent-soft', '--ferret-shadow-sm', '--ferret-shadow-md'].forEach((name) => {
+      expect(variable(name)).not.toBe('');
+    });
+    expect(variable('--ferret-accent')).toBe(themes.light.brand);
+    const classicShadow = variable('--ferret-shadow-sm');
+
+    await user.click(screen.getByRole('button', { name: 'modern' }));
+
+    expect(variable('--ferret-shadow-sm')).not.toBe(classicShadow);
+    expect(variable('--ferret-accent')).toBe(themes.light.brand);
+  });
 });

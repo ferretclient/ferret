@@ -16,6 +16,7 @@ Ferret started as a fork of [Bruno](https://github.com/usebruno/bruno) and is a 
 - **Check for updates** in Preferences → Support. Nothing happens in the background: you confirm the check, then choose to download, then choose to install. The installer is fetched from this repository's releases and compared with the SHA-256 checksum published with the release before it can be started. Windows runs the installer and closes Ferret, macOS opens the disk image, and Linux shows the AppImage in its folder. The installers are not signed yet, so Windows and macOS still show their usual warning.
 - **Third-party notices** in Preferences → Support → Legal, shipped with every installer.
 - Teal and azure default themes.
+- A second interface **design**. In Preferences → Themes you can choose Classic, the look Ferret started with, or Modern, which has rounder corners, softer borders and shadows, pill-style tabs and a rounded sidebar. The design is independent of the color theme, so every theme works with both.
 - The Windows uninstaller asks whether to delete Ferret's data (default workspace, collections, settings). Silent uninstalls and updates keep it.
 
 ### Changed

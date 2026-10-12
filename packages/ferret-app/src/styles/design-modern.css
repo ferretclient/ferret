@@ -58,3 +58,34 @@ html[data-design='modern'] :is(button, a, [role='tab'], [role='menuitem']):focus
 html[data-design='modern'] ::selection {
   background: var(--ferret-selection, rgba(13, 148, 136, 0.25));
 }
+
+/*
+ * Sidebar: rows become soft, rounded items with a little breathing room instead of full-bleed bars.
+ * The row keeps its own hover and selected colors; only its shape and margin change.
+ */
+html[data-design='modern'] .collection-item-name {
+  margin: 1px 6px;
+  width: calc(100% - 12px);
+  border-radius: 8px;
+}
+
+/*
+ * Tabs (request panes, settings): the active tab is a soft accent-colored pill instead of an underlined label.
+ * The existing rule paints the underline with !important, so it is cleared the same way.
+ */
+html[data-design='modern'] .tabs .tab {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border-bottom-color: transparent !important;
+}
+
+html[data-design='modern'] .tabs .tab.active {
+  background: var(--ferret-accent-soft, rgba(13, 148, 136, 0.12));
+  border-bottom-color: transparent !important;
+}
+
+/* The URL bar sits on a soft shadow, so it reads as the main control of the request. */
+html[data-design='modern'] .query-url-wrapper .url-input-group {
+  border-radius: 10px;
+  box-shadow: var(--ferret-shadow-sm);
+}
