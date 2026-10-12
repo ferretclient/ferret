@@ -111,6 +111,9 @@
       "tar": "7.5.22"
     },
     "brace-expansion@5": "5.0.9",
+    "httpsnippet": {
+      "form-data": "4.0.6"
+    },
     "minimatch@10": {
       "brace-expansion": "5.0.9"
     },
