@@ -1,9 +1,10 @@
 import React from 'react';
 import { Validator } from 'jsonschema';
 import toast from 'react-hot-toast';
-import { parseToRgb } from 'polished';
+import { parseToRgb, transparentize } from 'polished';
 import themes from 'themes/index';
 import themeSchema from 'themes/schema';
+import { isKnownLayout, DEFAULT_LAYOUT } from 'themes/layouts/index';
 import useLocalStorage from 'hooks/useLocalStorage/index';
 
 import { createContext, useContext, useEffect, useState, useMemo } from 'react';
@@ -32,6 +33,9 @@ export const ThemeProvider = (props) => {
   const [displayedTheme, setDisplayedTheme] = useState(() => getEffectiveTheme(storedTheme));
   const [themeVariantLight, setThemeVariantLight] = useLocalStorage('ferret.themeVariantLight', 'light');
   const [themeVariantDark, setThemeVariantDark] = useLocalStorage('ferret.themeVariantDark', 'dark');
+  // The layout arranges the main screen (classic panes or islands); the theme above colors it.
+  const [storedLayout, setLayout] = useLocalStorage('ferret.layout', DEFAULT_LAYOUT);
+  const layout = isKnownLayout(storedLayout) ? storedLayout : DEFAULT_LAYOUT;
 
   // Listen for system theme changes (only affects 'system' mode)
   useEffect(() => {
@@ -67,7 +71,7 @@ export const ThemeProvider = (props) => {
   // displayedTheme can have 2 values: 'light', 'dark'
 
   // Compute theme object directly from storedTheme to avoid race conditions
-  const theme = useMemo(() => {
+  const baseTheme = useMemo(() => {
     const isLightMode = getEffectiveTheme(storedTheme) === 'light';
     const variantName = isLightMode ? themeVariantLight : themeVariantDark;
     const fallbackTheme = isLightMode ? themes.light : themes.dark;
@@ -101,15 +105,43 @@ export const ThemeProvider = (props) => {
     return selectedTheme;
   }, [storedTheme, themeVariantLight, themeVariantDark]);
 
+  const theme = baseTheme;
+
+  // Styles that are not written with styled-components read the layout from the root element, and the
+  // theme's colors through CSS variables, so they follow both choices.
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.dataset.layout = layout;
+    // What the islands layout paints with: the canvas between the islands, and how each island looks.
+    root.style.setProperty('--ferret-canvas', theme.background.crust || theme.sidebar.bg);
+    root.style.setProperty('--ferret-island-bg', theme.background.base);
+    root.style.setProperty('--ferret-island-radius', theme.border.radius.xl);
+    root.style.setProperty('--ferret-island-border', theme.border.border1);
+    root.style.setProperty('--ferret-island-gap', '4px');
+    try {
+      root.style.setProperty('--ferret-accent', theme.brand);
+      root.style.setProperty('--ferret-accent-soft', transparentize(0.88, theme.brand));
+      root.style.setProperty('--ferret-focus-ring', transparentize(0.45, theme.brand));
+      root.style.setProperty('--ferret-selection', transparentize(0.75, theme.brand));
+    } catch {
+      ['--ferret-accent', '--ferret-accent-soft', '--ferret-focus-ring', '--ferret-selection'].forEach((name) => root.style.removeProperty(name));
+    }
+    root.style.setProperty('--ferret-shadow-sm', theme.shadow.sm);
+    root.style.setProperty('--ferret-shadow-md', theme.shadow.md);
+  }, [layout, theme]);
+
   const value = {
     theme,
+    baseTheme,
     storedTheme,
     displayedTheme,
     setStoredTheme,
     themeVariantLight,
     setThemeVariantLight,
     themeVariantDark,
-    setThemeVariantDark
+    setThemeVariantDark,
+    layout,
+    setLayout
   };
 
   return (

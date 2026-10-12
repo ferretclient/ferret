@@ -13,6 +13,8 @@ import TabPanelErrorBoundary from 'components/RequestTabPanel/TabPanelErrorBound
 import { useSelector } from 'react-redux';
 import { isElectron } from 'utils/common/platform';
 import StyledWrapper from './StyledWrapper';
+import IslandsLayout from './IslandsLayout/index';
+import { useTheme } from 'providers/Theme';
 import 'swagger-ui-react/swagger-ui.css';
 import Devtools from 'components/Devtools';
 import useGrpcEventListeners from 'utils/network/grpc-event-listeners';
@@ -47,8 +49,11 @@ export default function Main() {
   const isConsoleOpen = useSelector((state) => state.logs.isConsoleOpen);
   const saveTransientRequestModals = useSelector((state) => state.collections.saveTransientRequestModals);
 
+  const { layout } = useTheme();
   const mainSectionRef = useRef(null);
   const [showRosettaBanner, setShowRosettaBanner] = useState(false);
+  // Kept as state, not written onto an element, so either layout renders it correctly after a switch.
+  const [appLoaded, setAppLoaded] = useState(false);
 
   // Initialize event listeners
   useGrpcEventListeners();
@@ -66,9 +71,7 @@ export default function Main() {
     const { ipcRenderer } = window;
 
     const removeAppLoadedListener = ipcRenderer.on('main:app-loaded', (init) => {
-      if (mainSectionRef.current) {
-        mainSectionRef.current.setAttribute('data-app-state', 'loaded');
-      }
+      setAppLoaded(true);
       setShowRosettaBanner(init.isRunningInRosetta);
     });
 
@@ -76,6 +79,21 @@ export default function Main() {
       removeAppLoadedListener();
     };
   }, []);
+
+  // What sits next to the sidebar. Both layouts show it; only the arrangement around it differs.
+  const mainContent = showManageWorkspacePage ? (
+    <ManageWorkspace />
+  ) : (
+    <>
+      <RequestTabs />
+      <div className="relative flex flex-col flex-grow overflow-hidden">
+        <TabPanelErrorBoundary key={activeTabUid} tabUid={activeTabUid}>
+          <RequestTabPanel key={activeTabUid} />
+        </TabPanelErrorBoundary>
+        <AppPreviewKeepAlive />
+      </div>
+    </>
+  );
 
   return (
     // <ErrorCapture>
@@ -94,35 +112,31 @@ export default function Main() {
           </div>
         </Portal>
       ) : null}
-      <div
-        ref={mainSectionRef}
-        className="flex-1 min-h-0 flex"
-        data-app-state="loading"
-        style={{
-          height: isConsoleOpen ? `calc(100vh - 60px - ${isConsoleOpen ? '300px' : '0px'})` : 'calc(100vh - 60px)'
-        }}
-      >
-        <StyledWrapper className={className} style={{ height: '100%', zIndex: 1 }}>
-          <Sidebar />
-          <section className="flex flex-grow flex-col overflow-hidden">
-            {showManageWorkspacePage ? (
-              <ManageWorkspace />
-            ) : (
-              <>
-                <RequestTabs />
-                <div className="relative flex flex-col flex-grow overflow-hidden">
-                  <TabPanelErrorBoundary key={activeTabUid} tabUid={activeTabUid}>
-                    <RequestTabPanel key={activeTabUid} />
-                  </TabPanelErrorBoundary>
-                  <AppPreviewKeepAlive />
-                </div>
-              </>
-            )}
-          </section>
-        </StyledWrapper>
-      </div>
+      {layout === 'islands' ? (
+        <IslandsLayout mainSectionRef={mainSectionRef} className={className} appState={appLoaded ? 'loaded' : 'loading'}>
+          {mainContent}
+        </IslandsLayout>
+      ) : (
+        <>
+          <div
+            ref={mainSectionRef}
+            className="flex-1 min-h-0 flex"
+            data-app-state={appLoaded ? 'loaded' : 'loading'}
+            style={{
+              height: isConsoleOpen ? `calc(100vh - 60px - ${isConsoleOpen ? '300px' : '0px'})` : 'calc(100vh - 60px)'
+            }}
+          >
+            <StyledWrapper className={className} style={{ height: '100%', zIndex: 1 }}>
+              <Sidebar />
+              <section className="flex flex-grow flex-col overflow-hidden">
+                {mainContent}
+              </section>
+            </StyledWrapper>
+          </div>
 
-      <Devtools mainSectionRef={mainSectionRef} />
+          <Devtools mainSectionRef={mainSectionRef} />
+        </>
+      )}
       <StatusBar />
       <TransientRequestModalsRenderer modals={saveTransientRequestModals} />
       <OpenCollection />
