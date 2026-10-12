@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { IconRefresh } from '@tabler/icons';
+import Checkbox from 'ui/Checkbox';
+import useLocalStorage from 'hooks/useLocalStorage';
 import Portal from 'components/Portal';
 import Modal from 'components/Modal';
 import { describeUpdateResult, describeInstallAction, formatDownloadSize, downloadPercent } from 'utils/updates';
@@ -155,6 +157,7 @@ const CheckForUpdates = () => {
   const [result, setResult] = useState(null);
   const [progress, setProgress] = useState({ received: 0, total: 0 });
   const [failure, setFailure] = useState('');
+  const [allowBeta, setAllowBeta] = useLocalStorage('ferret.allowBetaUpdates', false);
   // Lets a check or download that finishes after the user cancelled be ignored instead of reopening a dialog.
   const activeRef = useRef(0);
 
@@ -171,7 +174,7 @@ const CheckForUpdates = () => {
     setPhase('checking');
     let outcome;
     try {
-      outcome = await window.ipcRenderer.invoke('renderer:check-for-updates');
+      outcome = await window.ipcRenderer.invoke('renderer:check-for-updates', { allowBeta: allowBeta === true });
     } catch (error) {
       outcome = { status: 'error', message: error?.message };
     }
@@ -255,6 +258,17 @@ const CheckForUpdates = () => {
                 download it, or open its page in your browser.
               </li>
             </ul>
+            <Checkbox
+              checked={allowBeta === true}
+              onChange={(event) => setAllowBeta(event.target.checked)}
+              label="Allow beta updates"
+              className="mb-1"
+              data-testid="check-for-updates-allow-beta"
+            />
+            <p className="mb-3 text-muted">
+              Normally only official versions are offered. With this on, beta versions (release candidates) are
+              offered too. They are for trying new features and may have bugs.
+            </p>
             <p>Do you want to continue?</p>
           </Modal>
         </Portal>

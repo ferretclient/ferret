@@ -35,14 +35,27 @@ describe('compareVersions', () => {
 });
 
 describe('findLatestRelease', () => {
-  it('picks the highest version, pre-releases included, ignoring drafts and non-version tags', () => {
+  it('picks the highest official version, ignoring drafts, non-version tags and betas', () => {
     const latest = findLatestRelease([
       release('v0.1.0'),
       release('v0.3.0', { draft: true }),
       release('v0.2.0', { prerelease: true }),
+      release('v0.4.0-rc.1', { prerelease: true }),
       release('nightly')
     ]);
     expect(latest.tag_name).toBe('v0.2.0');
+  });
+
+  it('also considers betas when they are allowed', () => {
+    const releases = [release('v0.2.0'), release('v0.3.0-rc.2'), release('v0.3.0-rc.10'), release('v0.1.0')];
+
+    expect(findLatestRelease(releases, { allowBeta: true }).tag_name).toBe('v0.3.0-rc.10');
+  });
+
+  it('prefers the official release over its own release candidates', () => {
+    const releases = [release('v0.3.0-rc.3'), release('v0.3.0'), release('v0.3.0-rc.1')];
+
+    expect(findLatestRelease(releases, { allowBeta: true }).tag_name).toBe('v0.3.0');
   });
 
   it('returns null when nothing qualifies', () => {
@@ -60,11 +73,21 @@ describe('checkForUpdates', () => {
       status: 'update-available',
       currentVersion: '0.2.0',
       latestVersion: '0.3.0',
-      prerelease: true,
+      prerelease: false,
       url: 'https://github.com/ferretclient/ferret/releases/tag/v0.3.0'
     });
     expect(fetchImpl).toHaveBeenCalledTimes(1);
     expect(fetchImpl.mock.calls[0][0]).toBe(RELEASES_API_URL);
+  });
+
+  it('does not offer a beta unless betas are allowed, and marks it as a beta when they are', async () => {
+    const feed = () => respond([release('v0.2.0'), release('v0.3.0-rc.1', { prerelease: true })]);
+
+    const official = await checkForUpdates({ currentVersion: '0.2.0', fetchImpl: feed() });
+    expect(official.status).toBe('up-to-date');
+
+    const beta = await checkForUpdates({ currentVersion: '0.2.0', fetchImpl: feed(), allowBeta: true });
+    expect(beta).toMatchObject({ status: 'update-available', latestVersion: '0.3.0-rc.1', prerelease: true });
   });
 
   it('reports up to date when the newest release is the running version or older', async () => {

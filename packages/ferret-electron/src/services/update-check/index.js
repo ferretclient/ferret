@@ -45,11 +45,17 @@ const compareVersions = (a, b) => {
   return Math.sign(left.prerelease.length - right.prerelease.length);
 };
 
+// A beta is a version with a pre-release part (1.0.0-rc.1). GitHub's own "pre-release" flag cannot tell them
+// apart: it is set on every release below 1.0, official ones included.
+const isBetaVersion = (version) => (parseVersion(version)?.prerelease.length ?? 0) > 0;
+
 // GitHub's "latest" endpoint skips pre-releases, which is every release below 1.0, so the whole list is read.
-const findLatestRelease = (releases) => {
+// Only official versions are considered unless `allowBeta` is set.
+const findLatestRelease = (releases, { allowBeta = false } = {}) => {
   const published = (Array.isArray(releases) ? releases : []).filter((release) => release
     && !release.draft
-    && parseVersion(release.tag_name));
+    && parseVersion(release.tag_name)
+    && (allowBeta || !isBetaVersion(release.tag_name)));
   return published.reduce((latest, release) => (!latest || compareVersions(release.tag_name, latest.tag_name) > 0 ? release : latest), null);
 };
 
@@ -98,11 +104,12 @@ const pickInstaller = (release, { version, platform, arch }) => {
 };
 
 /**
- * Reads the published releases once and compares the newest to `currentVersion`.
+ * Reads the published releases once and compares the newest to `currentVersion`. Betas (release candidates) are
+ * only offered when `allowBeta` is true.
  * Never throws: every failure is reported as a result so the renderer can show it.
  * Nothing is downloaded or installed here; the result only names the installer that fits this computer.
  */
-const checkForUpdates = async ({ currentVersion, fetchImpl, platform = process.platform, arch = process.arch }) => {
+const checkForUpdates = async ({ currentVersion, fetchImpl, allowBeta = false, platform = process.platform, arch = process.arch }) => {
   try {
     const response = await fetchImpl(RELEASES_API_URL, {
       headers: { 'Accept': 'application/vnd.github+json', 'User-Agent': `ferret/${currentVersion}` },
@@ -117,7 +124,7 @@ const checkForUpdates = async ({ currentVersion, fetchImpl, platform = process.p
       return { status: 'error', currentVersion, message: `GitHub answered with HTTP ${response.status}.` };
     }
 
-    const latest = findLatestRelease(await response.json());
+    const latest = findLatestRelease(await response.json(), { allowBeta });
     if (!latest) {
       return { status: 'unavailable', currentVersion, url: RELEASES_PAGE_URL };
     }
@@ -129,7 +136,7 @@ const checkForUpdates = async ({ currentVersion, fetchImpl, platform = process.p
       status: newer ? 'update-available' : 'up-to-date',
       currentVersion,
       latestVersion,
-      prerelease: Boolean(latest.prerelease),
+      prerelease: isBetaVersion(latestVersion),
       url: safeReleaseUrl(latest.html_url),
       ...(installer ? { installer } : {})
     };

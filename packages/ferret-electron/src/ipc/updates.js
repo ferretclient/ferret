@@ -15,10 +15,12 @@ let activeDownload = null;
 
 const describeInstaller = ({ name, action, size }) => ({ name, action, size });
 
-const checkForUpdatesOnRequest = async () => {
+// `allowBeta` comes from the window, so only a real `true` counts.
+const checkForUpdatesOnRequest = async (_event, { allowBeta } = {}) => {
   const result = await checkForUpdates({
     currentVersion: app.getVersion(),
-    fetchImpl: net.fetch
+    fetchImpl: net.fetch,
+    allowBeta: allowBeta === true
   });
   pendingInstaller = result.installer || null;
   downloadedFile = null;

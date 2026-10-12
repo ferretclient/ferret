@@ -39,6 +39,19 @@ describe('update IPC', () => {
     ]);
   });
 
+  it('allows betas only when the window explicitly asks for them', async () => {
+    checkForUpdates.mockResolvedValue(available);
+
+    await registerUpdatesIpc.checkForUpdatesOnRequest({}, { allowBeta: true });
+    expect(checkForUpdates).toHaveBeenLastCalledWith(expect.objectContaining({ allowBeta: true }));
+
+    await registerUpdatesIpc.checkForUpdatesOnRequest({}, { allowBeta: 'yes' });
+    expect(checkForUpdates).toHaveBeenLastCalledWith(expect.objectContaining({ allowBeta: false }));
+
+    await registerUpdatesIpc.checkForUpdatesOnRequest({});
+    expect(checkForUpdates).toHaveBeenLastCalledWith(expect.objectContaining({ allowBeta: false }));
+  });
+
   it('tells the window which installer fits, without handing it the download addresses', async () => {
     checkForUpdates.mockResolvedValue(available);
     const result = await registerUpdatesIpc.checkForUpdatesOnRequest();

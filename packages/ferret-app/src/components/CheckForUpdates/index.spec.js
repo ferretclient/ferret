@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import { render, screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { ThemeProvider } from 'providers/Theme';
 import CheckForUpdates from './index';
 
 // The real Modal needs the full theme; the buttons it exposes are all these tests rely on.
@@ -21,11 +22,12 @@ const unsubscribe = jest.fn();
 const on = jest.fn(() => unsubscribe);
 
 beforeEach(() => {
+  localStorage.clear();
   invoke.mockReset();
   openExternal.mockReset();
   unsubscribe.mockReset();
   on.mockClear();
-  window.ipcRenderer = { invoke, openExternal, on };
+  window.ipcRenderer = { invoke, openExternal, on, send: jest.fn() };
 });
 
 afterEach(() => {
@@ -33,7 +35,7 @@ afterEach(() => {
 });
 
 const openConfirmDialog = async (user) => {
-  render(<CheckForUpdates />);
+  render(<ThemeProvider><CheckForUpdates /></ThemeProvider>);
   await user.click(screen.getByTestId('support-check-for-updates'));
 };
 
@@ -45,6 +47,31 @@ describe('CheckForUpdates', () => {
     expect(screen.getByTestId('check-for-updates-confirm-modal')).toHaveTextContent('api.github.com');
     expect(screen.getByTestId('check-for-updates-confirm-modal')).toHaveTextContent('Nothing is downloaded or installed');
     expect(invoke).not.toHaveBeenCalled();
+  });
+
+  it('offers official versions only, until the beta option is ticked', async () => {
+    const user = userEvent.setup();
+    await openConfirmDialog(user);
+
+    const allowBeta = screen.getByLabelText('Allow beta updates');
+    expect(allowBeta).not.toBeChecked();
+    expect(invoke).not.toHaveBeenCalled();
+
+    await user.click(allowBeta);
+    expect(allowBeta).toBeChecked();
+    expect(invoke).not.toHaveBeenCalled();
+  });
+
+  it('asks for betas too when the option is ticked, and remembers the choice', async () => {
+    invoke.mockResolvedValue({ status: 'up-to-date', currentVersion: '0.2.0', latestVersion: '0.2.0' });
+    const user = userEvent.setup();
+    await openConfirmDialog(user);
+
+    await user.click(screen.getByLabelText('Allow beta updates'));
+    await user.click(screen.getByRole('button', { name: 'Yes, check' }));
+
+    expect(invoke).toHaveBeenCalledWith('renderer:check-for-updates', { allowBeta: true });
+    expect(JSON.parse(localStorage.getItem('ferret.allowBetaUpdates'))).toBe(true);
   });
 
   it('makes no request when the user cancels', async () => {
@@ -72,7 +99,7 @@ describe('CheckForUpdates', () => {
 
     expect(await screen.findByTestId('check-for-updates-result')).toHaveTextContent('Version 0.3.0 is available');
     expect(invoke).toHaveBeenCalledTimes(1);
-    expect(invoke).toHaveBeenCalledWith('renderer:check-for-updates');
+    expect(invoke).toHaveBeenCalledWith('renderer:check-for-updates', { allowBeta: false });
     expect(openExternal).not.toHaveBeenCalled();
 
     await user.click(screen.getByRole('button', { name: 'Open release page' }));
