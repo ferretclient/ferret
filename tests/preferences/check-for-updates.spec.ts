@@ -98,6 +98,18 @@ const stubReleaseFeed = (electronApp) => electronApp.evaluate(({ net }) => {
 
 const fetchCount = (electronApp) => electronApp.evaluate(() => (globalThis as any).__updateFetchCount);
 
+// A feed with an official release and a newer beta, to check which one is offered.
+const stubFeedWithBeta = (electronApp) => electronApp.evaluate(({ net }) => {
+  net.fetch = (async () => ({
+    ok: true,
+    status: 200,
+    json: async () => [
+      { tag_name: 'v99.0.0', html_url: 'https://github.com/ferretclient/ferret/releases/tag/v99.0.0', draft: false, prerelease: true },
+      { tag_name: 'v99.1.0-rc.1', html_url: 'https://github.com/ferretclient/ferret/releases/tag/v99.1.0-rc.1', draft: false, prerelease: true }
+    ]
+  })) as any;
+});
+
 test.describe('Check for updates', () => {
   test.beforeEach(async ({ page, electronApp }) => {
     await page.locator('[data-app-state="loaded"]').waitFor();
@@ -122,6 +134,33 @@ test.describe('Check for updates', () => {
 
     await expect(dialog).toBeHidden();
     expect(await fetchCount(electronApp)).toBe(0);
+  });
+
+  test('offers only official versions, and betas too once Allow beta updates is ticked', async ({ page, electronApp }) => {
+    await stubFeedWithBeta(electronApp);
+    const confirm = page.getByTestId('check-for-updates-confirm-modal');
+    const allowBeta = confirm.getByLabel('Allow beta updates');
+
+    await page.getByTestId('support-check-for-updates').click();
+    await expect(allowBeta).not.toBeChecked();
+    await confirm.getByRole('button', { name: 'Yes, check' }).click();
+    await expect(page.getByTestId('check-for-updates-result')).toContainText('Version 99.0.0 is available');
+    await expect(page.getByTestId('check-for-updates-result')).not.toContainText('rc.1');
+    await page.getByTestId('check-for-updates-result-modal').getByRole('button', { name: 'Close' }).click();
+
+    await page.getByTestId('support-check-for-updates').click();
+    await expect(allowBeta).not.toBeChecked();
+    await allowBeta.check();
+    await confirm.getByRole('button', { name: 'Yes, check' }).click();
+    await expect(page.getByTestId('check-for-updates-result-modal')).toContainText('Version 99.1.0-rc.1 is available');
+    await expect(page.getByTestId('check-for-updates-result-modal')).toContainText('beta version');
+    await page.getByTestId('check-for-updates-result-modal').getByRole('button', { name: 'Close' }).click();
+
+    // The choice is remembered, so it is ticked the next time; clear it so other tests start official-only.
+    await page.getByTestId('support-check-for-updates').click();
+    await expect(allowBeta).toBeChecked();
+    await allowBeta.uncheck();
+    await confirm.getByRole('button', { name: 'Cancel' }).click();
   });
 
   test('contacts the release feed once after the user confirms and reports the result', async ({ page, electronApp }) => {

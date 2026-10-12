@@ -6,7 +6,7 @@ export const describeUpdateResult = (result) => {
     case 'update-available':
       return {
         message: `Version ${result.latestVersion} is available. You are running ${result.currentVersion}.`,
-        note: result.prerelease ? 'This is a pre-release.' : null,
+        note: result.prerelease ? 'This is a beta version (release candidate), not an official release.' : null,
         canOpenReleasePage: true,
         canDownload: Boolean(result.installer)
       };

@@ -4,7 +4,7 @@ describe('describeUpdateResult', () => {
   it('offers the release page only when a newer version exists', () => {
     const update = describeUpdateResult({ status: 'update-available', currentVersion: '0.2.0', latestVersion: '0.3.0', prerelease: true });
     expect(update.message).toBe('Version 0.3.0 is available. You are running 0.2.0.');
-    expect(update.note).toBe('This is a pre-release.');
+    expect(update.note).toBe('This is a beta version (release candidate), not an official release.');
     expect(update.canOpenReleasePage).toBe(true);
 
     expect(describeUpdateResult({ status: 'up-to-date', currentVersion: '0.2.0' }).canOpenReleasePage).toBe(false);
