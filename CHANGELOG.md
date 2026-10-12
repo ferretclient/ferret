@@ -2,6 +2,16 @@
 
 All notable changes to Ferret are listed here. The format follows [Keep a Changelog](https://keepachangelog.com), and versions follow [semantic versioning](https://semver.org). Versions below 1.0 are pre-releases.
 
+## [0.3.0] - 2026-10-13
+
+### Added
+
+- An **Islands** layout. In Preferences → Themes → Layout you can put the sidebar, the editor and the console on separate rounded surfaces with a thin gap between them. In Islands the sidebar gets an activity rail: one icon per view (Collections, History, API Specs, Mock Servers) that shows that view alone, and choosing the active icon again collapses the pane to just the rail. Drag the icons (or press Alt+Up/Down on one) to rearrange them, and use the dots button at the bottom to choose which views are shown. Classic panes stay the default.
+
+### Security
+
+- Updated the `tar` that `@mapbox/node-pre-gyp` pulls in to 7.5.22, so no `tar` older than 7.5.21 is in the dependency tree any more.
+
 ## [0.2.1] - 2026-10-13
 
 ### Added
@@ -27,7 +37,6 @@ Ferret started as a fork of [Bruno](https://github.com/usebruno/bruno) and is a 
 - **Check for updates** in Preferences → Support. Nothing happens in the background: you confirm the check, then choose to download, then choose to install. The installer is fetched from this repository's releases and compared with the SHA-256 checksum published with the release before it can be started. Windows runs the installer and closes Ferret, macOS opens the disk image, and Linux shows the AppImage in its folder. The installers are not signed yet, so Windows and macOS still show their usual warning.
 - **Third-party notices** in Preferences → Support → Legal, shipped with every installer.
 - Teal and azure default themes.
-- An **Islands** layout. In Preferences → Themes → Layout you can put the sidebar, the editor and the console on separate rounded surfaces with a thin gap between them. In Islands the sidebar gets an activity rail: one icon per view (Collections, History, API Specs, Mock Servers) that shows that view alone, and choosing the active icon again collapses the pane to just the rail. Drag the icons (or press Alt+Up/Down on one) to rearrange them, and use the dots button at the bottom to choose which views are shown. Classic panes stay the default.
 - The Windows uninstaller asks whether to delete Ferret's data (default workspace, collections, settings). Silent uninstalls and updates keep it.
 
 ### Changed

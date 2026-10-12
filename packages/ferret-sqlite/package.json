@@ -1,6 +1,6 @@
 {
   "name": "@ferretclient/sqlite",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "license": "MIT",
   "main": "dist/node/cjs/index.js",
   "module": "dist/node/esm/index.js",
