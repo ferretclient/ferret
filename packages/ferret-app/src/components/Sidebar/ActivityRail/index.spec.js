@@ -118,12 +118,13 @@ describe('ActivityRail', () => {
     expect(onToggleHidden).toHaveBeenCalledWith('api-specs');
   });
 
-  it('opens the same choice from the "…" button', async () => {
+  it('opens no menu on a left click', async () => {
     const user = userEvent.setup();
     renderRail();
 
-    await user.click(screen.getByTestId('rail-choose-views'));
+    await user.click(screen.getByTestId('rail-view-history'));
+    await user.click(screen.getByTestId('activity-rail'));
 
-    expect(await screen.findByTestId('rail-views-menu-toggle-collections')).toBeInTheDocument();
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
   });
 });

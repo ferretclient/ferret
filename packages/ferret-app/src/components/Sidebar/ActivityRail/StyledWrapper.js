@@ -48,10 +48,6 @@ const StyledWrapper = styled.nav`
       outline: 2px dashed var(--ferret-accent, ${(props) => props.theme.brand});
     }
 
-    &.rail-more {
-      margin-top: auto;
-    }
-
     &.active.pane-open::before {
       content: '';
       position: absolute;

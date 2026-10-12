@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { IconBox, IconFileCode, IconServer, IconHistory, IconDots } from '@tabler/icons';
+import { IconBox, IconFileCode, IconServer, IconHistory } from '@tabler/icons';
 import MenuDropdown from 'ui/MenuDropdown';
 import { shownRailViews } from 'utils/sidebar/rail-view';
 import StyledWrapper from './StyledWrapper';
@@ -79,7 +79,7 @@ const RailButton = ({ id, active, paneOpen, menuOpen, menuItems, onSelect, onMov
  *
  * `viewIds` is every view on offer in the saved order and `hiddenIds` the ones left off the rail. A button can be
  * dragged (or moved with Alt+Arrow) to rearrange the rail; right-clicking a button offers to move or hide it, and
- * right-clicking the rail itself, or its "…" button, chooses which views are shown.
+ * right-clicking the rail itself chooses which views are shown. Nothing opens on a left click.
  * Choosing the active view again is up to the owner (it closes the pane); this component only reports clicks.
  * `onMove(id, targetId, offset)` moves a view onto `targetId`, or by `offset` places when there is no target.
  */
@@ -111,48 +111,38 @@ const ActivityRail = ({ viewIds, hiddenIds = [], activeId, paneOpen, onSelect, o
   });
 
   return (
-    <StyledWrapper
-      aria-label="Sidebar views"
-      data-testid="activity-rail"
-      onContextMenu={(e) => {
-        e.preventDefault();
-        setMenu('views');
-      }}
+    <MenuDropdown
+      {...menuProps}
+      items={viewsMenuItems}
+      showTickMark={false}
+      opened={menu === 'views'}
+      onChange={(opened) => setMenu(opened ? 'views' : null)}
+      data-testid="rail-views-menu"
     >
-      {shownIds.filter(isKnown).map((id) => (
-        <RailButton
-          key={id}
-          id={id}
-          active={id === activeId}
-          paneOpen={paneOpen}
-          menuOpen={menu === id}
-          menuItems={buttonMenuItems(id)}
-          onSelect={onSelect}
-          onMove={onMove}
-          onOpenMenu={setMenu}
-          onCloseMenu={() => setMenu(null)}
-        />
-      ))}
-      <MenuDropdown
-        {...menuProps}
-        items={viewsMenuItems}
-        showTickMark={false}
-        opened={menu === 'views'}
-        onChange={(opened) => setMenu(opened ? 'views' : null)}
-        data-testid="rail-views-menu"
+      <StyledWrapper
+        aria-label="Sidebar views"
+        data-testid="activity-rail"
+        onContextMenu={(e) => {
+          e.preventDefault();
+          setMenu('views');
+        }}
       >
-        <button
-          type="button"
-          className="rail-button rail-more"
-          title="Choose views"
-          aria-label="Choose views"
-          data-testid="rail-choose-views"
-          onClick={() => setMenu(menu === 'views' ? null : 'views')}
-        >
-          <IconDots size={18} stroke={1.5} aria-hidden="true" />
-        </button>
-      </MenuDropdown>
-    </StyledWrapper>
+        {shownIds.filter(isKnown).map((id) => (
+          <RailButton
+            key={id}
+            id={id}
+            active={id === activeId}
+            paneOpen={paneOpen}
+            menuOpen={menu === id}
+            menuItems={buttonMenuItems(id)}
+            onSelect={onSelect}
+            onMove={onMove}
+            onOpenMenu={setMenu}
+            onCloseMenu={() => setMenu(null)}
+          />
+        ))}
+      </StyledWrapper>
+    </MenuDropdown>
   );
 };
 

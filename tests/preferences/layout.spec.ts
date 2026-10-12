@@ -93,6 +93,19 @@ test.describe('Interface layout', () => {
     await expect(page.getByTestId('sidebar-section-collections')).toBeVisible();
   });
 
+  test('left clicks on the rail open no menu; only a right click does', async ({ page }) => {
+    await choose(page, 'islands');
+
+    await page.getByTestId('rail-view-history').click();
+    await page.getByTestId('activity-rail').click({ position: { x: 20, y: 200 } });
+    await expect(page.getByRole('menu')).toHaveCount(0);
+
+    await page.getByTestId('rail-view-history').click({ button: 'right' });
+    await expect(page.getByRole('menu')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await page.getByTestId('rail-view-collections').click();
+  });
+
   test('the rail starts in the order Collections, History, API Specs, Mock Servers', async ({ page }) => {
     await choose(page, 'islands');
 
