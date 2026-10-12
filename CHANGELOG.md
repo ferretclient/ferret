@@ -2,7 +2,18 @@
 
 All notable changes to Ferret are listed here. The format follows [Keep a Changelog](https://keepachangelog.com), and versions follow [semantic versioning](https://semver.org). Versions below 1.0 are pre-releases.
 
-## [0.2.0] - Unreleased
+## [0.2.1] - 2026-10-13
+
+### Added
+
+- **Allow beta updates** in the Check for updates dialog. Ferret offers only official versions by default; tick the box to be offered release candidates (such as 0.3.0-rc.1) too. The choice is remembered, and nothing is sent until you confirm a check.
+
+### Changed
+
+- Updated `form-data` to 4.0.6 and removed the unused `multer` dependency.
+- The "This is a pre-release" note in the update dialog now appears only for release candidates, not for every 0.x release.
+
+## [0.2.0] - 2026-10-12
 
 Ferret started as a fork of [Bruno](https://github.com/usebruno/bruno) and is a fully local, offline API client. This is the first version meant for other people.
 
@@ -13,7 +24,7 @@ Ferret started as a fork of [Bruno](https://github.com/usebruno/bruno) and is a 
 - **Import from Bruno**: single collections, zips, exports, a folder of collections and a whole workspace.
 - **Help pages** inside the app, including a first-request walkthrough.
 - **Sidebar sections** can be reordered by dragging and hidden in Preferences → Display.
-- **Check for updates** in Preferences → Support. Nothing happens in the background: you confirm the check, then choose to download, then choose to install. The installer is fetched from this repository's releases and compared with the SHA-256 checksum published with the release before it can be started. Windows runs the installer and closes Ferret, macOS opens the disk image, and Linux shows the AppImage in its folder. The installers are not signed yet, so Windows and macOS still show their usual warning. Only official versions are offered unless you tick **Allow beta updates** in the check dialog, which also offers release candidates (such as 0.3.0-rc.1).
+- **Check for updates** in Preferences → Support. Nothing happens in the background: you confirm the check, then choose to download, then choose to install. The installer is fetched from this repository's releases and compared with the SHA-256 checksum published with the release before it can be started. Windows runs the installer and closes Ferret, macOS opens the disk image, and Linux shows the AppImage in its folder. The installers are not signed yet, so Windows and macOS still show their usual warning.
 - **Third-party notices** in Preferences → Support → Legal, shipped with every installer.
 - Teal and azure default themes.
 - The Windows uninstaller asks whether to delete Ferret's data (default workspace, collections, settings). Silent uninstalls and updates keep it.

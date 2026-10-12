@@ -1,6 +1,6 @@
 {
   "name": "@ferretclient/js",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "main": "src/index.js",
   "files": [
@@ -13,9 +13,9 @@
     "sandbox:bundle-libraries": "node ./src/sandbox/bundle-libraries.js"
   },
   "dependencies": {
-    "@ferretclient/common": "0.2.0",
-    "@ferretclient/query": "0.2.0",
-    "@ferretclient/requests": "0.2.0",
+    "@ferretclient/common": "0.2.1",
+    "@ferretclient/query": "0.2.1",
+    "@ferretclient/requests": "0.2.1",
     "ajv": "^8.18.0",
     "ajv-formats": "^2.1.1",
     "atob": "^2.1.2",
