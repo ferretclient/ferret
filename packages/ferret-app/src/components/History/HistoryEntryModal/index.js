@@ -5,8 +5,10 @@ import Modal from 'components/Modal';
 import StatusBadge from 'ui/StatusBadge';
 import MethodBadge from 'ui/MethodBadge';
 import { addTab } from 'providers/ReduxStore/slices/tabs';
+import { insertTaskIntoQueue, removeTaskFromQueue } from 'providers/ReduxStore/slices/app';
+import { mountCollection } from 'providers/ReduxStore/slices/collections/actions';
 import { findItemInCollectionByPathname, getDefaultRequestPaneTab } from 'utils/collections';
-import { formatSize, formatDuration } from 'utils/common';
+import { formatSize, formatDuration, uuid } from 'utils/common';
 import { formatHistoryBody, getHistoryStatusLabel, getHistoryStatusTone } from 'utils/history';
 import { getHistoryEntry, deleteHistoryEntry } from 'hooks/useRequestHistory';
 import StyledWrapper from './StyledWrapper';
@@ -67,17 +69,46 @@ const HistoryEntryModal = ({ summary, onClose, onDeleted }) => {
     };
   }, [summary.id]);
 
-  // The saved request this send came from, when its collection is open and the file still exists.
+  // The saved request this send came from. A collection's requests are only loaded once it is mounted, so
+  // for one that has not been opened yet the request is opened by mounting the collection first.
   const savedItem = collection && summary.item_pathname ? findItemInCollectionByPathname(collection, summary.item_pathname) : null;
+  const isStillLoading = Boolean(collection && (collection.mountStatus !== 'mounted' || collection.isLoading));
+  const needsMounting = Boolean(collection && summary.item_pathname && !savedItem && isStillLoading);
+  const openRequestTitle = (() => {
+    if (savedItem) return 'Open the saved request';
+    if (needsMounting) return 'Open the collection and the saved request';
+    if (!summary.item_pathname) return 'This request was not saved to a file';
+    if (!collection) return 'The collection is not open';
+    return 'The saved request is no longer in its collection';
+  })();
 
   const handleOpenRequest = () => {
-    dispatch(addTab({
-      uid: savedItem.uid,
-      collectionUid: collection.uid,
-      requestPaneTab: getDefaultRequestPaneTab(savedItem),
-      type: savedItem.type,
-      pathname: savedItem.pathname
-    }));
+    if (savedItem) {
+      dispatch(addTab({
+        uid: savedItem.uid,
+        collectionUid: collection.uid,
+        requestPaneTab: getDefaultRequestPaneTab(savedItem),
+        type: savedItem.type,
+        pathname: savedItem.pathname
+      }));
+    } else {
+      // The tasks middleware opens the tab as soon as the mounted collection has loaded the request.
+      const taskUid = uuid();
+      dispatch(insertTaskIntoQueue({
+        uid: taskUid,
+        type: 'OPEN_REQUEST',
+        collectionUid: collection.uid,
+        itemPathname: summary.item_pathname,
+        preview: false
+      }));
+      if (collection.mountStatus !== 'mounting' && collection.mountStatus !== 'mounted') {
+        dispatch(mountCollection({
+          collectionUid: collection.uid,
+          collectionPathname: collection.pathname,
+          ferretConfig: collection.ferretConfig
+        })).catch(() => dispatch(removeTaskFromQueue({ taskUid })));
+      }
+    }
     onClose();
   };
 
@@ -104,7 +135,7 @@ const HistoryEntryModal = ({ summary, onClose, onDeleted }) => {
         dataTestId="history-entry-modal"
         footerLeft={(
           <div className="flex items-center gap-4">
-            <button type="button" className="text-link" onClick={handleOpenRequest} disabled={!savedItem} data-testid="history-open-request" title={savedItem ? 'Open the saved request' : 'The saved request is not available'}>
+            <button type="button" className="text-link" onClick={handleOpenRequest} disabled={!savedItem && !needsMounting} data-testid="history-open-request" title={openRequestTitle}>
               Open request
             </button>
             <button type="button" className="text-link" onClick={handleDelete} data-testid="history-delete-entry">
