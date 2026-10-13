@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { focusTab, reorderTabs } from 'providers/ReduxStore/slices/tabs';
 import NewRequest from 'components/Sidebar/NewRequest';
 import CollectionHeader from './CollectionHeader';
+import CollectionTabs from './CollectionTabs';
 import RequestTab from './RequestTab';
 import StyledWrapper from './StyledWrapper';
 import DraggableTab from './DraggableTab';
@@ -122,6 +123,7 @@ const RequestTabs = () => {
       )}
       {collectionRequestTabs && collectionRequestTabs.length ? (
         <>
+          <CollectionTabs />
           {activeCollection && (
             <CollectionHeader
               collection={activeCollection}

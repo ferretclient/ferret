@@ -91,6 +91,12 @@ export const buildCommonLocators = (page: Page) => ({
     draftIndicator: () => page.locator('.request-tab.active .has-changes-icon'),
     tabDraftIndicator: (tab: Locator) => tab.locator('.has-changes-icon')
   },
+  collectionTabs: {
+    all: () => page.getByTestId('collection-tab'),
+    select: (name: string) => page.getByTestId('collection-tab').filter({ has: page.getByTitle(name, { exact: true }) }).getByTestId('collection-tab-select'),
+    close: (name: string) => page.getByTestId('collection-tab').filter({ has: page.getByTitle(name, { exact: true }) }).getByTestId('collection-tab-close'),
+    unsavedMark: (name: string) => page.getByTestId('collection-tab').filter({ has: page.getByTitle(name, { exact: true }) }).getByTestId('collection-tab-unsaved')
+  },
   paneTabs: {
     responsiveTab: (key: string) => page.getByTestId(`responsive-tab-${key}`),
     // request and response may have more tabs, pass the pane to isolate further.
